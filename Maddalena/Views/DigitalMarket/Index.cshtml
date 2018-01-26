@@ -1,0 +1,131 @@
+﻿@model IEnumerable<Maddalena.Modules.DigitalMarket.DigitalItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">
+                    @Html.DisplayNameFor(model => model.Name)
+                    <br/>
+                    <small class="text-muted">
+                        @Html.DisplayNameFor(model => model.Category)
+                    </small>
+                </h4>
+                <p class="card-text">
+                    @Html.DisplayNameFor(model => model.Description)
+                </p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
+                </p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    @if (item.PayWhatYouWant)
+                    {
+                        <span>Pay what you want</span>
+                    }
+                    else
+                    {
+                        <span>@item.Price</span> @item.Currency
+                    }
+                </small>
+            </div>
+        </div>
+    }
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    
+                </th>
+                <th>
+                   
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayWhatYouWant)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Currency)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HasPreview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VideoPreview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bought)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Views)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullText)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Visible)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayWhatYouWant)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HasPreview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VideoPreview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bought)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Views)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullText)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,12 @@
+D:\Maddalena\Maddalena\Maddalena\bin\Debug\netcoreapp2.0\Maddalena.deps.json
+D:\Maddalena\Maddalena\Maddalena\bin\Debug\netcoreapp2.0\Maddalena.runtimeconfig.json
+D:\Maddalena\Maddalena\Maddalena\bin\Debug\netcoreapp2.0\Maddalena.runtimeconfig.dev.json
+D:\Maddalena\Maddalena\Maddalena\bin\Debug\netcoreapp2.0\Maddalena.dll
+D:\Maddalena\Maddalena\Maddalena\bin\Debug\netcoreapp2.0\Maddalena.pdb
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.csproj.CoreCompileInputs.cache
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.AssemblyInfoInputs.cache
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.AssemblyInfo.cs
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.dll
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.pdb
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\Maddalena.csprojResolveAssemblyReference.cache
+D:\Maddalena\Maddalena\Maddalena\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

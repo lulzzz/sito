@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Maddalena</name>
+    </assembly>
+    <members>
+        <member name="P:Maddalena.Identity.ApplicationUser.SecurityStamp">
+            <summary>
+                A random value that must change whenever a users credentials change
+                (password changed, login removed)
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserClaim.UserId">
+            <summary>
+            Claim type
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserClaim.Type">
+            <summary>
+            Claim type
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserClaim.Value">
+            <summary>
+            Claim value
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserToken.LoginProvider">
+            <summary>
+            The provider that the token came from.
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserToken.Name">
+            <summary>
+            The name of the token.
+            </summary>
+        </member>
+        <member name="P:Maddalena.Identity.IdentityUserToken.Value">
+            <summary>
+            The value of the token.
+            </summary>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.Address">
+            <summary>
+            Most basic and generic form of address.
+            Just the full address string and a lat/long
+            </summary>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.AddressType">
+            <remarks>
+            http://code.google.com/apis/maps/documentation/geocoding/#Types
+            </remarks>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.BusinessKey">
+            <remarks>
+            https://developers.google.com/maps/documentation/business/webservices/auth#business-specific_parameters
+            </remarks>
+        </member>
+        <member name="F:Maddalena.Modules.Geocoding.BusinessKey.channel">
+            <summary>
+            More details about channel
+            https://developers.google.com/maps/documentation/directions/get-api-key
+            https://developers.google.com/maps/premium/reports/usage-reports#channels
+            </summary>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.Geocoder">
+            <remarks>
+            http://code.google.com/apis/maps/documentation/geocoding/
+            </remarks>
+        </member>
+        <member name="M:Maddalena.Modules.Geocoding.Geocoder.EvaluateStatus(System.String)">
+            <remarks>
+            http://code.google.com/apis/maps/documentation/geocoding/#StatusCodes
+            </remarks>
+        </member>
+        <member name="M:Maddalena.Modules.Geocoding.Geocoder.EvaluateType(System.String)">
+            <remarks>
+            http://code.google.com/apis/maps/documentation/geocoding/#Types
+            </remarks>
+        </member>
+        <member name="M:Maddalena.Modules.Geocoding.Geocoder.EvaluateLocationType(System.String)">
+            <remarks>
+            https://developers.google.com/maps/documentation/geocoding/?csw=1#Results
+            </remarks>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.GoogleLocationType">
+            <remarks>
+            https://developers.google.com/maps/documentation/geocoding/?csw=1#Results
+            </remarks>
+        </member>
+        <member name="T:Maddalena.Modules.Geocoding.ParsedAddress">
+            <summary>
+            Generic parsed address with each field separated out form the original FormattedAddress
+            </summary>
+        </member>
+        <member name="P:Maddalena.Modules.Geocoding.ResultItem.Request">
+            <summary>
+            Original input for this response
+            </summary>
+        </member>
+        <member name="P:Maddalena.Modules.Geocoding.ResultItem.Response">
+            <summary>
+            Output for the given input
+            </summary>
+        </member>
+    </members>
+</doc>
