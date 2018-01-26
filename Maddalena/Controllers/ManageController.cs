@@ -320,6 +320,8 @@ namespace Maddalena.Controllers
                 RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user)
             };
 
+            if (model.HasAuthenticator && !model.Is2faEnabled) return RedirectToAction("EnableAuthenticator");
+
             return View(model);
         }
 
