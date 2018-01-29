@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Maddalena.Modules.Blog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,20 +8,24 @@ namespace Maddalena.Controllers
     public class BlogController : Controller
     {
         // GET: Blog
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
 
-        // GET: Blog/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        // GET: Blog/Edit/5
+        public ActionResult Edit(int id) => View();
 
         // GET: Blog/Create
-        public ActionResult Create()
+        public ActionResult Create() => View();
+
+        // GET: Blog/Delete/5
+        public ActionResult Delete(int id) => View();
+
+
+        // GET: Blog/Details/5
+        public async Task<ActionResult> Details(string id)
         {
+            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
+            if (article == null) return NotFound();
+
             return View();
         }
 
@@ -44,11 +46,6 @@ namespace Maddalena.Controllers
             }
         }
 
-        // GET: Blog/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
         // POST: Blog/Edit/5
         [HttpPost]
@@ -67,21 +64,14 @@ namespace Maddalena.Controllers
             }
         }
 
-        // GET: Blog/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Blog/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await BlogArticle.DeleteAsync(x => x.Id == id);
                 return RedirectToAction(nameof(Index));
             }
             catch

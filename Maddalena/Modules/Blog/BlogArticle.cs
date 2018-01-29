@@ -1,9 +1,6 @@
-﻿using Maddalena.Identity;
+﻿using DnsClient.Protocol;
+using Maddalena.Identity;
 using Maddalena.Mongo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Maddalena.Modules.Blog
 {
@@ -13,6 +10,8 @@ namespace Maddalena.Modules.Blog
 
         public string Name { get; set; }
 
+        public string Link { get; internal set; }
+
         public string Category { get; set; }
 
         public string Description { get; set; }
@@ -21,18 +20,7 @@ namespace Maddalena.Modules.Blog
 
         public bool Visible { get; set; }
 
-        public bool PayWhatYouWant { get; set; }
-
-        public string Currency { get; set; }
-
-        public decimal Price { get; set; }
-
-        public bool HasPreview { get; set; }
-
-        public bool VideoPreview { get; set; }
-
-        public decimal Bought { get; set; }
-
         public decimal Views { get; set; }
+        
     }
 }
