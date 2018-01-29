@@ -1,0 +1,12 @@
+D:\PROGETTI\sito\Maddalena\bin\Any CPU\Release\netcoreapp2.0\Maddalena.deps.json
+D:\PROGETTI\sito\Maddalena\bin\Any CPU\Release\netcoreapp2.0\Maddalena.runtimeconfig.json
+D:\PROGETTI\sito\Maddalena\bin\Any CPU\Release\netcoreapp2.0\Maddalena.runtimeconfig.dev.json
+D:\PROGETTI\sito\Maddalena\bin\Any CPU\Release\netcoreapp2.0\Maddalena.dll
+D:\PROGETTI\sito\Maddalena\bin\Any CPU\Release\netcoreapp2.0\Maddalena.pdb
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.AssemblyInfoInputs.cache
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.AssemblyInfo.cs
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.dll
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.pdb
+D:\PROGETTI\sito\Maddalena\obj\Any CPU\Release\netcoreapp2.0\Maddalena.csprojResolveAssemblyReference.cache

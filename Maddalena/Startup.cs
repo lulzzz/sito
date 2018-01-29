@@ -48,7 +48,7 @@ namespace Maddalena
                     policy => policy.Requirements.Add(new DynamicPolicy()));
             });
             services.AddSingleton<IAuthorizationHandler, DynamicPolicyHandler<DynamicAccessStore>>();
-
+            
             services.AddMvc();
         }
 
