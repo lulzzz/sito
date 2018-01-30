@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Maddalena.Identity;
 using Maddalena.Modules.Blog;
+using Markdig;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,8 +11,27 @@ namespace Maddalena.Controllers
 {
     public class BlogController : Controller
     {
+        private static readonly MarkdownPipeline pipeline;
+
+        static BlogController()
+        {
+            BlogArticle.DescendingIndex(x => x.Link);
+            BlogArticle.DescendingIndex(x=>x.DateTime);
+
+            pipeline = (new MarkdownPipelineBuilder()).UseAbbreviations()
+                .UseAdvancedExtensions()
+                .UseAutoIdentifiers()
+                .UseBootstrap()
+                .UseMathematics()
+                .UseMediaLinks()
+                .UseNoFollowLinks()
+                .UsePragmaLines()
+                .UseSmartyPants()
+                .Build();
+        }
+
         // GET: Blog
-        public ActionResult Index() => View();
+        public ActionResult Index() => View(BlogArticle.Queryable().OrderByDescending(x=>x.DateTime).Take(20));
 
         // GET: Blog/Edit/5
         public ActionResult Edit(int id) => View();
@@ -21,22 +44,29 @@ namespace Maddalena.Controllers
 
 
         // GET: Blog/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Read(string id)
         {
             var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
             if (article == null) return NotFound();
 
-            return View();
+            //await BlogArticle.IncreaseAsync(article, x => x.Views, 1);
+
+            return View(article);
         }
 
         // POST: Blog/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(BlogArticle article)
         {
             try
             {
-                // TODO: Add insert logic here
+                article.Id = string.Empty;
+                article.DateTime = DateTime.Now;
+                article.Author = await ApplicationUser.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                article.RenderedBody = Markdown.ToHtml(article.Body, pipeline);
+
+                await BlogArticle.CreateAsync(article);
 
                 return RedirectToAction(nameof(Index));
             }

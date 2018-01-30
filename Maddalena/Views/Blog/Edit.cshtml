@@ -1,15 +1,16 @@
 ﻿@model Maddalena.Modules.Blog.BlogArticle
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Add a new article to the blog</h2>
+<h2>Edit</h2>
 
+<h4>BlogArticle</h4>
 <hr />
 <div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
+    <div class="col-md-4">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -28,18 +29,38 @@
             </div>
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body" class="form-control" rows="7"></textarea>
+                <input asp-for="Body" class="form-control" />
                 <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RenderedBody" class="control-label"></label>
+                <input asp-for="RenderedBody" class="form-control" />
+                <span asp-validation-for="RenderedBody" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="Visible" checked="checked" /> @Html.DisplayNameFor(model => model.Visible)
+                        <input asp-for="Visible" /> @Html.DisplayNameFor(model => model.Visible)
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="Views" class="control-label"></label>
+                <input asp-for="Views" class="form-control" />
+                <span asp-validation-for="Views" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullText" class="control-label"></label>
+                <input asp-for="FullText" class="form-control" />
+                <span asp-validation-for="FullText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

@@ -1,52 +1,43 @@
-﻿@{
+﻿@using Maddalena.Modules.Blog
+@{
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
-    <div class="col-md-3">
-        @if (!User.Identity.IsAuthenticated)
+    <div class="col-md-9">
+        @{
+            var articles = BlogArticle.Queryable().OrderByDescending(x => x.DateTime).Take(5);
+        }
+        
+        @foreach (var article in articles)
         {
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="/account/register">Register</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="/account/login">Log in</a>
-                </li>
-            </ul>
+            <h2>@article.Title</h2>
+
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Raw(article.RenderedBody)
+                </div>
+                <hr />
+            </div>
         }
     </div>
     <div class="col-md-3">
-        <h2>An italian nerd in Prague</h2>
-        <p>
-            Hi ! <br />
-            Welcome to my house 😁<br />
-            This place is a blog, an application playground, a source code repository,
-            a system to share fact, photos and bullishits with my friends and family,
-            the interface for an homemade artificial intelligence and last but not least
-            my personal computer 😜
-        </p>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-1242825224942421"
+             data-ad-slot="8848758705"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
     </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
+</div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a href="/account/login">&gt; Log in</a>
+        }
     </div>
 </div>

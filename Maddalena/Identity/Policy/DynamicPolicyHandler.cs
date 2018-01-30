@@ -5,7 +5,7 @@ namespace Maddalena.Identity.Policy
 {
     public class DynamicPolicyHandler<T> : AuthorizationHandler<DynamicPolicy> where T: IDynamicAccessStore, new()
     {
-        IDynamicAccessStore store = new T();
+        readonly IDynamicAccessStore store = new T();
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, DynamicPolicy requirement)
         {
