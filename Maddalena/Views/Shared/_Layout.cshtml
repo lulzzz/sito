@@ -47,6 +47,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/manage/index">My account</a>
                         </li>
+                        @if(User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/blog">Blog</a>
+                            </li>
+                        }
                     }
                 </ul>
                 <form action="/search" class="form-inline my-2 my-lg-0">
@@ -58,22 +64,22 @@
         <div class="container body-content">
             <div class="row" style="margin-top: 32px">
                 <div class="col-md-12" style="min-height: 60vh">
-                    
+
                     @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
-                    { 
+                    {
                         <div class="alert alert-danger alert-dismissible fade show text-center">
                             <button type="button" class="close" data-dismiss="alert">×</button>
-                            
+
                             @foreach (var error in ViewData.ModelState[""].Errors)
                             {
-                                @error.ErrorMessage <br/>
+                                @error.ErrorMessage <br />
                             }
                         </div>
                     }
                     @RenderBody()
                 </div>
             </div>
-            <hr/>
+            <hr />
             <footer>
                 <p>&copy; 2017 - Matteo Fabbri</p>
             </footer>
@@ -85,6 +91,22 @@
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-@RenderSection("Scripts", required: false)
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//stat.mercati.news/";
+            _paq.push(['setTrackerUrl', u + 'piwik.php']);
+            _paq.push(['setSiteId', '1']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-10">
         @{
             var articles = BlogArticle.Queryable().OrderByDescending(x => x.DateTime).Take(5);
         }
@@ -20,17 +20,8 @@
             </div>
         }
     </div>
-    <div class="col-md-3">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <ins class="adsbygoogle"
-             style="display:block; text-align:center;"
-             data-ad-layout="in-article"
-             data-ad-format="fluid"
-             data-ad-client="ca-pub-1242825224942421"
-             data-ad-slot="8848758705"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <div class="col-md-2">
+        @Html.Raw(Maddalena.Modules.Adv.Google.Display)
     </div>
 </div>
 <div class="row">

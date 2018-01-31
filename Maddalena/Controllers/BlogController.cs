@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using Maddalena.Identity;
 using Maddalena.Modules.Blog;
 using Markdig;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BlogController : Controller
     {
         private static readonly MarkdownPipeline pipeline;
@@ -19,11 +21,30 @@ namespace Maddalena.Controllers
             BlogArticle.DescendingIndex(x=>x.DateTime);
 
             pipeline = (new MarkdownPipelineBuilder()).UseAbbreviations()
-                .UseAdvancedExtensions()
+                .UseAbbreviations()
                 .UseAutoIdentifiers()
-                .UseBootstrap()
+                .UseCitations()
+                .UseCustomContainers()
+                .UseDefinitionLists()
+                .UseEmphasisExtras()
+                .UseFigures()
+                .UseFooters()
+                .UseFootnotes()
+                .UseGridTables()
                 .UseMathematics()
-                .UseMediaLinks()
+                .UsePipeTables()
+                .UseListExtras()
+                .UseTaskLists()
+                .UseDiagrams()
+                .UseAutoLinks()
+                .UseGenericAttributes()
+                .UseBootstrap()
+                .UseMediaLinks(new Markdig.Extensions.MediaLinks.MediaOptions
+                {
+                    Width = "",
+                    Class = "",
+                    Height = "embed-responsive-item"
+                })
                 .UseNoFollowLinks()
                 .UsePragmaLines()
                 .UseSmartyPants()
@@ -44,6 +65,7 @@ namespace Maddalena.Controllers
 
 
         // GET: Blog/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Read(string id)
         {
             var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
