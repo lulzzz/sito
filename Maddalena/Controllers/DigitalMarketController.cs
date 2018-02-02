@@ -73,13 +73,13 @@ namespace Maddalena.Controllers
                     return View();
                 }
 
-                item.Attach("content",content.FileName,content.OpenReadStream());
+                item.Attachments.Add(await UploadFile.Create(content,User));
 
                 var preview  = Request.Form.Files.GetFile("preview");
                 item.HasPreview = preview != null;
                 item.VideoPreview = preview?.FileName?.EndsWith(".mp4") ?? false;
 
-                if(preview != null) item.Attach("preview",preview.FileName,preview.OpenReadStream());
+                if(preview != null) item.Attachments.Add(await UploadFile.Create(preview, User));
 
                 await DigitalItem.CreateAsync(item);
 
@@ -124,7 +124,7 @@ namespace Maddalena.Controllers
 
                     await oldContent.Delete();
                     item.Attachments.Remove(oldContent);
-                    item.Attach("content", content.FileName, content.OpenReadStream());
+                    item.Attachments.Add(await UploadFile.Create(content, User));
                 }
 
                 var preview = Request.Form.Files.GetFile("preview");
@@ -140,7 +140,7 @@ namespace Maddalena.Controllers
 
                     await oldPreview.Delete();
                     item.Attachments.Remove(oldPreview);
-                    item.Attach("preview", preview.FileName, preview.OpenReadStream());
+                    item.Attachments.Add(await UploadFile.Create(preview, User));
                 }
 
                 await DigitalItem.UpdateAsync(item);

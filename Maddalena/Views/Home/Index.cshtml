@@ -20,15 +20,17 @@
             </div>
         }
     </div>
-    <div class="col-md-2">
-        @Html.Raw(Maddalena.Modules.Adv.Google.Display)
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 text-right">
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <a href="/account/login">&gt; Log in</a>
-        }
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-12">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="/account/login" class="btn btn-outline-primary my-2 my-sm-0">&gt; Log in</a>
+                }
+            </div>
+        </div>
+        <div class="row">
+            @Html.Raw(Maddalena.Modules.Adv.Google.Display)
+        </div>
     </div>
 </div>

@@ -33,27 +33,7 @@ namespace Maddalena.Mongo
             }
         }
 
-
-        [BsonIgnore]
-        public virtual string[] ToDataTable
-        {
-            get
-            {
-                var enu = GetType()
-                    .GetProperties()
-                    .Where(x => x.Name != "FullText" && x.Name != "ToDataTable")
-                    .Select(x => x.GetValue(this)?.ToString() ?? "")
-                    .ToArray();
-
-                return enu;
-            }
-        }
-
-        public List<Attachment> Attachments { get; set; } = new List<Attachment>();
-
-        public void Attach(string name, string filename, Stream data) => Attachments.Add(new Attachment(Id, name, filename, data));
-
-        public void Attach(string filename, Stream data) => Attachments.Add(new Attachment(Id, filename, filename, data));
+        public List<UploadFile> Attachments { get; set; } = new List<UploadFile>();
 
         #region STATICS
 

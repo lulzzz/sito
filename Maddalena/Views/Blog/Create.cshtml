@@ -7,8 +7,9 @@
 <h2>Add a new article to the blog</h2>
 
 <hr />
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -28,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body" class="form-control" rows="7"></textarea>
+                <textarea asp-for="Body" id="articleBody" class="form-control" rows="7"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,6 +43,29 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data" action="/file/upload" class="ajax-form">
+                    <input type="file" name="files" multiple />
+                    <input type="hidden" name="onSuccess" value="AddFiles" />
+                    <input type="submit" />
+                </form>
+            </div>
+            <script>
+                var counter = 0;
+                function AddFiles(response)
+                {
+                    response.data.forEach(function (entry)
+                    {
+                        $("#articleBody").val($("#articleBody").val() + "\r\n![porco dio](http://localhost:57476/file/download/" + entry.gridName + ")\r\n");
+                        counter++;
+                    });
+                    
+                }
+            </script>
+        </div>
     </div>
 </div>
 

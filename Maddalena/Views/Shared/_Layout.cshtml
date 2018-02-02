@@ -47,7 +47,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/manage/index">My account</a>
                         </li>
-                        @if(User.IsInRole("admin"))
+                        @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="/blog">Blog</a>
@@ -90,6 +90,7 @@
     <script src="~/lib/bootstrap/js/popper.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/js/jquery.ajax.form.js"></script>
 
     <!-- Matomo -->
     <script type="text/javascript">
@@ -104,6 +105,35 @@
             var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
         })();
+
+        $(document).ready(function () {
+            var options =
+            {
+                success: showResponse  // post-submit callback 
+
+                // other available options: 
+                //url:       url         // override for form's 'action' attribute 
+                //type:      type        // 'get' or 'post', override for form's 'method' attribute 
+                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
+                //clearForm: true        // clear all form fields after successful submit 
+                //resetForm: true        // reset the form after successful submit 
+
+                // $.ajax options can be used here too, for example: 
+                //timeout:   3000 
+            };
+
+            // bind form using 'ajaxForm' 
+            $('.ajax-form').ajaxForm(options);
+        }); 
+
+        function showResponse(response, statusText, xhr, $form)
+        {
+            var s = window[response.onSuccess];
+            s(response);
+        } 
+
+       
+
     </script>
     <!-- End Matomo Code -->
 
