@@ -3,24 +3,40 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-9">
         @{
             var articles = BlogArticle.Queryable().OrderByDescending(x => x.DateTime).Take(5);
         }
         
         @foreach (var article in articles)
         {
-            <h2>@article.Title</h2>
+            <section>
+                <article>
+                    <h2>@article.Title</h2>
 
-            <div class="row">
-                <div class="col-md-12">
-                    @Html.Raw(article.RenderedBody)
-                </div>
-                <hr />
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Raw(article.RenderedBody)
+                        </div>
+                        <hr/>
+                    </div>
+                </article>
+            </section>
         }
     </div>
     <div class="col-md-3">
+        <div class="row">
+            <div class="col-12">
+                <p lang="en">
+                    Hi ! 
+                    Welcome to my personal space on the net.
+                    <br/>
+                    This is not blog, or a portfolio.
+                    <br/>
+
+                </p>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 @if (!User.Identity.IsAuthenticated)

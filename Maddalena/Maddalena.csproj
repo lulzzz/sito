@@ -39,6 +39,7 @@
     <Folder Include="Modules\File\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\ckeditor\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+﻿@model List<string>
+
+<h3>Upload</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" action="/upload" enctype="multipart/form-data">
+            <input type="file" multiple name="files" />
+            <input type="submit"/>
+        </form>
+    </div>
+    @if (Model.Count > 0)
+    {
+        <hr/>
+        foreach (var file in Model)
+        { 
+             <a href="/download/@file">/download/@file</a>
+        }
+    }
+</div>

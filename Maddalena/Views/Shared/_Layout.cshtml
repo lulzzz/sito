@@ -1,6 +1,4 @@
 ﻿@using Maddalena.Identity
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +8,7 @@
     <title>@ViewData["Title"] - Matteo Fabbri</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/simplemde/simplemde.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -39,18 +38,18 @@
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
                             <a class="nav-link" href="/manage/index">My account</a>
                         </li>
-                        @if (User.IsInRole("admin"))
+                        if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="/blog">Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user">Users</a>
                             </li>
                         }
                     }
@@ -106,10 +105,15 @@
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
         })();
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             var options =
             {
-                success: showResponse  // post-submit callback 
+                success: function (response, statusText, xhr, $form)
+                         {
+                            var s = window[response.onSuccess];
+                            s(response);
+                         } 
 
                 // other available options: 
                 //url:       url         // override for form's 'action' attribute 
@@ -125,14 +129,6 @@
             // bind form using 'ajaxForm' 
             $('.ajax-form').ajaxForm(options);
         }); 
-
-        function showResponse(response, statusText, xhr, $form)
-        {
-            var s = window[response.onSuccess];
-            s(response);
-        } 
-
-       
 
     </script>
     <!-- End Matomo Code -->

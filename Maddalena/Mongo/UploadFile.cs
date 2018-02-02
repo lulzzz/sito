@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Maddalena.Identity;
@@ -33,15 +32,13 @@ namespace Maddalena.Mongo
                 ACL = acl ?? new ACL { Public = true }
             };
 
-            var gridName = $"{Guid.NewGuid().ToString("N")}{upload.DateTime.Ticks}{upload.FileName}";
+            var gridName = $"{Guid.NewGuid():N}{upload.DateTime.Ticks}{upload.FileName}";
 
             await GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
 
             upload.GridName = gridName;
             await UploadFile.CreateAsync(upload);
             return upload;
-
-            
         }
 
         public string GridName { get; set; }

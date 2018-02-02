@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Maddalena.Modules.Geocoding;
 using Maddalena.Mongo;
 using MongoDB.Bson.Serialization.Attributes;
@@ -63,5 +66,15 @@ namespace Maddalena.Identity
         public virtual string PasswordHash { get; set; }
 
         public override string ToString() => DisplayName;
+
+        public async Task<IEnumerable<string>> GetRoles()
+        {
+            var memerships = (await RoleMembership.WhereAsync(x => x.UserId == Id)).ToArray();
+            var roles = memerships.Select(memership => ApplicationRole.First(x => x.Id == memership.RoleId))
+                .Select(x => x.Name)
+                .ToArray();
+
+            return roles;
+        }
     }
 }

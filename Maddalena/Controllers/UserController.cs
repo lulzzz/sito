@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Identity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -31,8 +29,12 @@ namespace Maddalena.Controllers
         public async Task<ActionResult> AddToRole(string role, string user)
         {
             var u = await _userManager.FindByNameAsync(user);
+
+            if (!await _roleManager.RoleExistsAsync(role))
+                await _roleManager.CreateAsync(new ApplicationRole(role));
+
             if (u == null) return NotFound();
-            
+
             await _userManager.AddToRoleAsync(u, role);
 
             return RedirectToAction(nameof(Index));

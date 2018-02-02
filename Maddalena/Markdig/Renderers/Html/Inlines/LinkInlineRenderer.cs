@@ -20,7 +20,7 @@ namespace Markdig.Renderers.Html.Inlines
         {
             if (renderer.EnableHtmlForInline)
             {
-                renderer.Write(link.IsImage ? "<img src=\"" : "<a href=\"");
+                renderer.Write(link.IsImage ? "<p class=\"text-center\"><img src=\"" : "<a href=\"");
                 renderer.WriteEscapeUrl(link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url : link.Url);
                 renderer.Write("\"");
                 renderer.WriteAttributes(link);
@@ -52,7 +52,7 @@ namespace Markdig.Renderers.Html.Inlines
             {
                 if (renderer.EnableHtmlForInline)
                 {
-                    renderer.Write(" />");
+                    renderer.Write(" /></p>");
                 }
             }
             else
