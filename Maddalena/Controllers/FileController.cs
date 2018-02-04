@@ -17,14 +17,27 @@ namespace Maddalena.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Upload(string onSuccess, List<IFormFile> files)
+        public async Task<IActionResult> Upload()
         {
+            var files = Request.Form.Files.ToArray();
+
             var list = new List<UploadFile>();
             foreach(var x in files)
             {
                 list.Add(await UploadFile.Create(x, User));
             }
-            return Json(new { OnSuccess = onSuccess, Data = list });
+            return Json(new
+            {
+                success = true,
+                time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                data = new
+                {
+                    baseurl = @"http://mercati.news/file/download/",
+                    messages = list.Select(x=>$"File {x.FileName} was uploaded"),
+                    files = list.Select(x=>x.GridName),
+                    code = 220
+                }
+            });
         }
 
         public async Task<IActionResult> Download(string id)
@@ -35,6 +48,23 @@ namespace Maddalena.Controllers
 
             return File(await file.Download(), file.ContentType, file.FileName, file.DateTime, new EntityTagHeaderValue($"\"{file.GetHashCode()}\""));
         }
+
+        public IActionResult Dropbox() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Dropbox(List<IFormFile> files)
+        {
+            foreach (var x in files)
+            {
+                await UploadFile.Create(x, User, new ACL
+                {
+                    AllowUsers =new List<string>(new[] { "matteo" })
+                });
+            }
+            return View();
+        }
+
 
         // GET: File/Details/5
         public ActionResult Details(int id)

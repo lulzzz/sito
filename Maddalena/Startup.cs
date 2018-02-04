@@ -74,8 +74,13 @@ namespace Maddalena
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "dropbox",
+                    template: "dropbox");
+
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}",
+                    defaults: new { controller = "File", action = "Dropbox", id = "" });
             });
         }
     }
