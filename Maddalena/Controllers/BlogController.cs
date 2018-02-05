@@ -57,10 +57,6 @@ namespace Maddalena.Controllers
         // GET: Blog/Create
         public ActionResult Create() => View();
 
-        // GET: Blog/Delete/5
-        public ActionResult Delete(int id) => View();
-
-
         // GET: Blog/Details/5
         [AllowAnonymous]
         public async Task<ActionResult> Read(string id)
@@ -122,10 +118,20 @@ namespace Maddalena.Controllers
             }
         }
 
-        // POST: Blog/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+        // GET: Blog/Delete/5
         public async Task<ActionResult> Delete(string id)
+        {
+            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
+            if (article == null) return NotFound();
+
+            return View(article);
+        }
+
+        // POST: Blog/Delete/5
+        [HttpPost("delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeletePost(string id)
         {
             try
             {
