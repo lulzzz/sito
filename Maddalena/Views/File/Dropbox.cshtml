@@ -5,3 +5,24 @@
 
 <h2>Dropbox</h2>
 
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    Vuoi inviarmi un file ? <br/>
+                    Questo è il modo più rapido e veloce: seleziona, clicca e io ricevo
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline" method="post" action="/file/dropbox" enctype="multipart/form-data">
+                    <input type="file" name="files" multiple>
+                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
