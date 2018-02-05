@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Mongo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
 namespace Maddalena.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class FileController : Controller
     {
-        // GET: File
-        public ActionResult Index()
-        {
-            return View();
-        }
+        #region ANON ZONE
 
+        [AllowAnonymous]
         public async Task<IActionResult> Upload()
         {
             var files = Request.Form.Files.ToArray();
 
             var list = new List<UploadFile>();
-            foreach(var x in files)
+            foreach (var x in files)
             {
                 list.Add(await UploadFile.Create(x, User));
             }
@@ -33,13 +32,14 @@ namespace Maddalena.Controllers
                 data = new
                 {
                     baseurl = @"http://mercati.news/file/download/",
-                    messages = list.Select(x=>$"File {x.FileName} was uploaded"),
-                    files = list.Select(x=>x.GridName),
+                    messages = list.Select(x => $"File {x.FileName} was uploaded"),
+                    files = list.Select(x => x.GridName),
                     code = 220
                 }
             });
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Download(string id)
         {
             var file = await UploadFile.FirstOrDefaultAsync(x => x.GridName == id);
@@ -49,9 +49,11 @@ namespace Maddalena.Controllers
             return File(await file.Download(), file.ContentType, file.FileName, file.DateTime, new EntityTagHeaderValue($"\"{file.GetHashCode()}\""));
         }
 
+        [AllowAnonymous]
         public IActionResult Dropbox() => View();
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Dropbox(List<IFormFile> files)
         {
@@ -59,24 +61,26 @@ namespace Maddalena.Controllers
             {
                 await UploadFile.Create(x, User, new ACL
                 {
-                    AllowUsers =new List<string>(new[] { "matteo" })
+                    AllowUsers = new List<string>(new[] { "matteo" })
                 });
             }
             return View();
         }
 
+        #endregion
+
+        // GET: File
+        public ActionResult Index() => View();
 
         // GET: File/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var file = await UploadFile.FirstOrDefaultAsync(x => x.GridName == id);
+            return file != null ? (ActionResult)View(file) : NotFound();
         }
 
         // GET: File/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => View();
 
         // POST: File/Create
         [HttpPost]
