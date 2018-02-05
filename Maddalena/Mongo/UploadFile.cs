@@ -37,7 +37,7 @@ namespace Maddalena.Mongo
             await GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
 
             upload.GridName = gridName;
-            await UploadFile.CreateAsync(upload);
+            await CreateAsync(upload);
             return upload;
         }
 

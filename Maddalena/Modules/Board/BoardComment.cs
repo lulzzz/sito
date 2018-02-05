@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Maddalena.Identity;
 using Maddalena.Mongo;
 
 namespace Maddalena.Modules.Board
 {
-    public class BoardPost : DBObject<BoardPost>
+    public class BoardComment
     {
-        static BoardPost()
-        {
-            DescendingIndex(x => x.Timestamp);
-            DescendingIndex(x => x.Board);
-        }
-
         public ObjectRef<ApplicationUser> User { get; set; }
 
         public DateTime Timestamp { get; set; }
@@ -22,9 +15,5 @@ namespace Maddalena.Modules.Board
         public string Body { get; set; }
 
         public string Extra { get; set; }
-
-        public decimal Views { get; set; }
-
-        public List<BoardComment> Comments { get; set; } = new List<BoardComment>();
     }
 }

@@ -23,7 +23,7 @@ namespace Markdig.Parsers
         {
             // These properties are not changing between a parent and a children BlockProcessor
             this.root = root;
-            this.parserStateCache = root.parserStateCache;
+            parserStateCache = root.parserStateCache;
             StringBuilders = root.StringBuilders;
             Document = root.Document;
             Parsers = root.Parsers;

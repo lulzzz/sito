@@ -1,5 +1,4 @@
 ﻿using System;
-using DnsClient.Protocol;
 using Maddalena.Identity;
 using Maddalena.Mongo;
 
@@ -7,6 +6,13 @@ namespace Maddalena.Modules.Blog
 {
     public class BlogArticle : DBObject<BlogArticle>
     {
+        static BlogArticle()
+        {
+            DescendingIndex(x => x.Link);
+            DescendingIndex(x => x.DateTime);
+            DescendingIndex(x => x.Tags);
+        }
+
         public ObjectRef<ApplicationUser> Author { get; set; }
 
         public string Title { get; set; }

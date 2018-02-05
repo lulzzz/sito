@@ -11,9 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Modules\File\**" />
     <Compile Remove="Pages\**" />
+    <Content Remove="Modules\File\**" />
     <Content Remove="Pages\**" />
+    <EmbeddedResource Remove="Modules\File\**" />
     <EmbeddedResource Remove="Pages\**" />
+    <None Remove="Modules\File\**" />
     <None Remove="Pages\**" />
   </ItemGroup>
 
@@ -36,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\File\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>

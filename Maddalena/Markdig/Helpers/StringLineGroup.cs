@@ -202,7 +202,7 @@ namespace Markdig.Helpers
 
             public Iterator(StringLineGroup lines)
             {
-                this._lines = lines;
+                _lines = lines;
                 Start = -1;
                 _offset = -1;
                 SliceIndex = 0;

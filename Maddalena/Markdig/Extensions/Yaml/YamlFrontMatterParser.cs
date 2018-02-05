@@ -20,7 +20,7 @@ namespace Markdig.Extensions.Yaml
         /// </summary>
         public YamlFrontMatterParser()
         {
-            this.OpeningCharacters = new[] { '-' };
+            OpeningCharacters = new[] { '-' };
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Markdig.Extensions.Yaml
                 if (hasFullYamlFrontMatter)
                 {
                     // Create a front matter block
-                    var block = this.CreateFrontMatterBlock(processor);
+                    var block = CreateFrontMatterBlock(processor);
                     block.Column = processor.Column;
                     block.Span.Start = 0;
                     block.Span.End = line.Start;
