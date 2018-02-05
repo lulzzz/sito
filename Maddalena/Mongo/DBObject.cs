@@ -148,6 +148,14 @@ namespace Maddalena.Mongo
             MongoCollection.ReplaceOne(filter, obj);
         }
 
+
+        public static async Task ReplaceAsync(T obj)
+        {
+            var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
+            await MongoCollection.ReplaceOneAsync(filter, obj);
+        }
+
+
         public static T AddToAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);

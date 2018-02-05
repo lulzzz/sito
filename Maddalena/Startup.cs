@@ -75,12 +75,12 @@ namespace Maddalena
             {
                 routes.MapRoute(
                     name: "dropbox",
-                    template: "dropbox");
+                    template: "dropbox",
+                    defaults: new { controller = "File", action = "Dropbox", id = "" });
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}",
-                    defaults: new { controller = "File", action = "Dropbox", id = "" });
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

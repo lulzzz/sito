@@ -54,9 +54,6 @@ namespace Maddalena.Controllers
         // GET: Blog
         public ActionResult Index() => View(BlogArticle.Queryable().OrderByDescending(x=>x.DateTime).Take(20));
 
-        // GET: Blog/Edit/5
-        public ActionResult Edit(int id) => View();
-
         // GET: Blog/Create
         public ActionResult Create() => View();
 
@@ -86,7 +83,6 @@ namespace Maddalena.Controllers
                 article.Id = string.Empty;
                 article.DateTime = DateTime.Now;
                 article.Author = await ApplicationUser.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
-                article.RenderedBody = Markdown.ToHtml(article.Body, pipeline);
 
                 await BlogArticle.CreateAsync(article);
 
@@ -98,16 +94,26 @@ namespace Maddalena.Controllers
             }
         }
 
+        // GET: Blog/Edit/5
+        public async Task<ActionResult> Edit(string id)
+        {
+            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
+            if (article == null) return NotFound();
+
+            //await BlogArticle.IncreaseAsync(article, x => x.Views, 1);
+
+            return View(article);
+        }
+
 
         // POST: Blog/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(BlogArticle article)
         {
             try
             {
-                // TODO: Add update logic here
-
+                await BlogArticle.ReplaceAsync(article);
                 return RedirectToAction(nameof(Index));
             }
             catch

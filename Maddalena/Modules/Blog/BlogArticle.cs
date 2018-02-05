@@ -19,13 +19,10 @@ namespace Maddalena.Modules.Blog
 
         public string Body { get; set; }
 
-        public string RenderedBody { get; set; }
-
         public string[] Tags { get; set; }
 
         public bool Visible { get; set; }
 
         public double Views { get; set; }
-        
     }
 }

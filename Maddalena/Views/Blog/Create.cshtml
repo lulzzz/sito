@@ -8,9 +8,9 @@
 
 <hr />
 
-<div class="row">
-    <div class="col-md-9">
-        <form asp-action="Create">
+<form asp-action="Create" style="width:100%">
+    <div class="row">
+        <div class="col-md-9">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -23,14 +23,19 @@
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
                 <textarea asp-for="Body" id="area_editor" class="form-control" rows="7"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -39,39 +44,14 @@
                     </label>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-    <div class="col-md-3">
-        <div class="row">
-            <div class="col-md-12">
-                <form method="post" enctype="multipart/form-data" action="/file/upload" class="ajax-form">
-                    <input type="file" name="files" multiple />
-                    <input type="hidden" name="onSuccess" value="AddFiles" />
-                    <input type="submit" />
-                </form>
-            </div>
-            <script>
-                var counter = 0;
-                function AddFiles(response)
-                {
-                    response.data.forEach(function (entry)
-                    {
-                        $("#articleBody").val($("#articleBody").val() + "\r\n![porco dio](http://localhost:57476/file/download/" + entry.gridName + ")\r\n");
-                        counter++;
-                    });
-                    
-                }
-            </script>
         </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-12">
+            <a asp-action="Index">&lt; Back to List</a>
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
