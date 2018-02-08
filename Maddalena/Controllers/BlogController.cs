@@ -36,7 +36,7 @@ namespace Maddalena.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<ActionResult> Cat(string id)
+        public async Task<ActionResult> Category(string id)
         {
             var article = await BlogArticle.WhereAsync(x => x.Category == id);
             if (article == null) return NotFound();

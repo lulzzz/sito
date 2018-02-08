@@ -35,11 +35,12 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <select>
+                <select asp-for="Category">
+                    <option value=""></option>
                     @foreach (var cat in BlogArticle.Categories)
-                    {
-                        <option value="@cat">@cat</option>
-                    }
+    {
+                <option value="@cat">@cat</option>
+}
                 </select>
 
                 <input asp-for="Category" class="form-control" />
