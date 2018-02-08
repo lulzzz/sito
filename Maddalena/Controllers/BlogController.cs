@@ -35,6 +35,7 @@ namespace Maddalena.Controllers
             return View(article);
         }
 
+
         // POST: Blog/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

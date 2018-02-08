@@ -95,6 +95,12 @@ namespace Maddalena.Mongo
 
         public static IQueryable<T> Queryable() => MongoCollection.AsQueryable();
 
+        public static IEnumerable<K> Select<K>(Func<T, K> sel)
+        {
+            var filter = Builders<T>.Filter.Empty;
+            return MongoCollection.Find(filter).ToEnumerable().Select(sel);
+        }
+
         public static IEnumerable<T> SortBy(Expression<Func<T, object>> sel)
         {
             var filter = Builders<T>.Filter.Empty;
