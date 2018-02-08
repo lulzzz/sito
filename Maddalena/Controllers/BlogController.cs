@@ -35,6 +35,18 @@ namespace Maddalena.Controllers
             return View(article);
         }
 
+        [AllowAnonymous]
+        public async Task<ActionResult> Cat(string id)
+        {
+            var article = await BlogArticle.WhereAsync(x => x.Category == id);
+            if (article == null) return NotFound();
+
+            ViewData["Title"] = id;
+
+            return View(article);
+        }
+
+
         // POST: Blog/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,7 +118,7 @@ namespace Maddalena.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
     }
