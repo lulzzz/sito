@@ -121,7 +121,7 @@ namespace Maddalena.Controllers
         {
             try
             {
-                await BlogArticle.DeleteAsync(x => x.Id == id);
+                await BlogArticle.DeleteAsync(x => x.Link == id);
                 return RedirectToAction(nameof(Index));
             }
             catch
