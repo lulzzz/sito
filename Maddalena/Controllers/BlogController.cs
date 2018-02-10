@@ -46,6 +46,14 @@ namespace Maddalena.Controllers
             return View(article);
         }
 
+        [AllowAnonymous]
+        public async Task<ActionResult> Search(string q)
+        {
+            var articleList = await BlogArticle.FullTextSearchAsync(q);
+            if (articleList == null) return NotFound();
+
+            return View(articleList);
+        }
 
         // POST: Blog/Create
         [HttpPost]

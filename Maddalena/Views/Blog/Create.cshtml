@@ -12,7 +12,7 @@
     function addValue()
     { 
         var text = $("#txtNewCategory").val();
-        $('#category').append('<option value="select" selected="selected">' + text + '</option>');
+        $('#category').append('<option value="'+text+'" selected="selected">' + text + '</option>');
     }
 </script>
 
@@ -42,7 +42,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <select id="category" class="form-control">
+                <select name="category" id="category" class="form-control">
                     @foreach (var cat in BlogArticle.Categories)
                     {
                         <option value="@cat">@cat</option>

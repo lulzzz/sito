@@ -74,6 +74,17 @@ namespace Maddalena
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "search",
+                    template: "search",
+                    defaults: new { controller = "Blog", action = "Search", id = "" });
+
+                routes.MapRoute(
+                    name: "read",
+                    template: "read",
+                    defaults: new { controller = "Blog", action = "Read", id = "" });
+
+
+                routes.MapRoute(
                     name: "dropbox",
                     template: "dropbox",
                     defaults: new { controller = "File", action = "Dropbox", id = "" });

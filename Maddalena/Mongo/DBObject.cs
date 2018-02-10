@@ -70,6 +70,14 @@ namespace Maddalena.Mongo
             return res.ToEnumerable();
         }
 
+        public static async Task<IEnumerable<T>> FullTextSearchAsync(string text)
+        {
+            var filter = Builders<T>.Filter.Text(text);
+            var res = await MongoCollection.FindAsync(filter);
+
+            return res.ToEnumerable();
+        }
+
         public static T Random
         {
             get
