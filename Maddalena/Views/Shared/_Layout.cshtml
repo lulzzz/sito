@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/jodit/jodit.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome-all.min.css" />
 
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/popper.js"></script>
@@ -17,7 +19,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/jquery.ajax.form.js"></script>
     <script src="~/lib/jodit/jodit.min.js"></script>
-
+    <script src="~/lib/font-awesome/js/fontawesome.min.js"></script>
+    <script src="~/lib/font-awesome/js/fontawesome-all.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -52,8 +55,8 @@
                     }
                 </ul>
                 <form action="/search" class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Cerca" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
                 </form>
             </div>
         </nav>
@@ -77,8 +80,22 @@
                 </div>
             </div>
             <hr />
-            <footer>
-                <p>&#169; 2017 - Matteo Fabbri</p>
+            <footer class="text-light bg-dark">
+                <div class="row">
+                    <div class="col-4">
+                        <p>&#169; 2017 - Matteo Fabbri</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="https://twitter.com/theqult" target="_blank">&gt; <i class="fab fa-twitter-square"></i> Twitter</a>
+                        <br />
+                        <a href="https://www.linkedin.com/in/theqult/" target="_blank">&gt; <i class="fab fa-linkedin"></i> Linkedin</a>
+                        <br />
+                        <a href="https://www.instagram.com/theqult" target="_blank">&gt; <i class="fab fa-linkedin"></i> Instagram</a>
+                    </div>
+                    <div class="col-4">
+                        <a href="/account/login">&gt; Accesso</a>
+                    </div>
+                </div>
             </footer>
         </div>
     </div>
