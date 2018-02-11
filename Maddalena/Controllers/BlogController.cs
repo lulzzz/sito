@@ -43,7 +43,7 @@ namespace Maddalena.Controllers
 
             ViewData["Title"] = id;
 
-            return View(article);
+            return View("List",article);
         }
 
         [AllowAnonymous]
@@ -52,7 +52,7 @@ namespace Maddalena.Controllers
             var articleList = await BlogArticle.FullTextSearchAsync(q);
             if (articleList == null) return NotFound();
 
-            return View(articleList);
+            return View("List", articleList);
         }
 
         // POST: Blog/Create
