@@ -1,6 +1,7 @@
 ﻿using Maddalena.Identity;
 using Maddalena.Identity.Policy;
 using Maddalena.Identity.Stores;
+using Maddalena.Mongo;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +17,7 @@ namespace Maddalena
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            configuration.AddMongolino();
         }
 
         public IConfiguration Configuration { get; }

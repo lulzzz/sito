@@ -99,4 +99,8 @@
     <None Include="wwwroot\lib\tinymce\tinymce.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mongolino\Mongolino\Mongolino.csproj" />
+  </ItemGroup>
+
 </Project>
