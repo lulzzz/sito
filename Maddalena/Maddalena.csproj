@@ -23,7 +23,6 @@
 
 
   <ItemGroup>
-    <PackageReference Include="FontAwesome" Version="4.7.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
@@ -46,6 +45,27 @@
 
   <ItemGroup>
     <None Include="wwwroot\lib\jodit\jodit.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-brands.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-brands.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-regular.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-regular.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-solid.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-solid.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-v4-shims.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fa-v4-shims.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fontawesome-all.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fontawesome-all.min.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fontawesome.js" />
+    <None Include="wwwroot\lib\font-awesome\js\fontawesome.min.js" />
+    <None Include="wwwroot\lib\font-awesome\sprites\fa-brands.svg" />
+    <None Include="wwwroot\lib\font-awesome\sprites\fa-regular.svg" />
+    <None Include="wwwroot\lib\font-awesome\sprites\fa-solid.svg" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\lib\font-awesome\webfonts\fa-solid-900.woff2" />
     <None Include="wwwroot\lib\tinymce\jquery.tinymce.min.js" />
     <None Include="wwwroot\lib\tinymce\langs\readme.md" />
     <None Include="wwwroot\lib\tinymce\plugins\advlist\plugin.min.js" />

@@ -46,6 +46,14 @@ namespace Maddalena.Controllers
             return View(article);
         }
 
+        [AllowAnonymous]
+        public async Task<ActionResult> Search(string q)
+        {
+            var articleList = await BlogArticle.FullTextSearchAsync(q);
+            if (articleList == null) return NotFound();
+
+            return View(articleList);
+        }
 
         // POST: Blog/Create
         [HttpPost]
@@ -113,7 +121,7 @@ namespace Maddalena.Controllers
         {
             try
             {
-                await BlogArticle.DeleteAsync(x => x.Id == id);
+                await BlogArticle.DeleteAsync(x => x.Link == id);
                 return RedirectToAction(nameof(Index));
             }
             catch

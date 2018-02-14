@@ -70,7 +70,7 @@ namespace Maddalena.Controllers
         #endregion
 
         // GET: File
-        public ActionResult Index() => View();
+        public ActionResult Index() => View(UploadFile.All);
 
         // GET: File/Details/5
         public async Task<ActionResult> Details(string id)

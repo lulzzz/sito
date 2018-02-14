@@ -10,7 +10,7 @@
                 <a href="/read/@item.Link">@item.Title</a>
             </h1>
             <p>
-                @item.Body.Substring(0,Math.Min(item.Body.Length,300))
+                @Html.Raw(item.Body.Substring(0,Math.Min(item.Body.Length,300)))
             </p>
         </div>
         <div class="col-md-2">
