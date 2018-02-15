@@ -5,7 +5,7 @@ namespace Maddalena.Modules.DigitalMarket
 {
     public class DigitalItem : DBObject<DigitalItem>
     {
-        public ObjectRef<MongoIdentityUser> User { get; set; }
+        public ObjectRef<ApplicationUser> User { get; set; }
 
         public string Name { get; set; }
 

@@ -13,13 +13,13 @@ namespace Maddalena.Controllers
     [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
-        private readonly UserManager<MongoIdentityUser> _userManager;
-        private readonly SignInManager<MongoIdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<MongoIdentityRole> _roleManager;
 
         public RoleController(
-          UserManager<MongoIdentityUser> userManager,
-          SignInManager<MongoIdentityUser> signInManager,
+          UserManager<ApplicationUser> userManager,
+          SignInManager<ApplicationUser> signInManager,
           RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;

@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.Mongo;
+using Maddalena.Security;
 
 namespace Maddalena
 {
-    public static class Extensions
+    public static class Extensions2
     {
-        public static async Task<MongoIdentityUser> ToUser(this ClaimsPrincipal claim)
+        public static async Task<ApplicationUser> ToUser(this ClaimsPrincipal claim)
         {
             if (claim?.Identity?.Name == null) return null;
 
-            return await MongoIdentityUser.FirstOrDefaultAsync(x => x.UserName == claim.Identity.Name);
+            return await ApplicationUser.FirstOrDefaultAsync(x => x.UserName == claim.Identity.Name);
         }
     }
 }

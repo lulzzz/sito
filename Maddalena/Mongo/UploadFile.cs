@@ -44,7 +44,7 @@ namespace Maddalena.Mongo
 
         public string GridName { get; set; }
 
-        public ObjectRef<MongoIdentityUser> Uploader { get; set; }
+        public ObjectRef<ApplicationUser> Uploader { get; set; }
         
         public DateTimeOffset DateTime { get; set; }
 

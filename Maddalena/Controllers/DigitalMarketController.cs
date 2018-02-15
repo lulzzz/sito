@@ -14,10 +14,10 @@ namespace Maddalena.Controllers
     public class DigitalMarketController : Controller
     {
 
-        private readonly UserManager<MongoIdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger _logger;
 
-        public DigitalMarketController(UserManager<MongoIdentityUser> userManager,ILogger<AccountController> logger)
+        public DigitalMarketController(UserManager<ApplicationUser> userManager,ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -61,7 +61,7 @@ namespace Maddalena.Controllers
                 item.Views = 0;
                 item.Bought = 0;
 
-                item.User = new ObjectRef<MongoIdentityUser>
+                item.User = new ObjectRef<ApplicationUser>
                 {
                     Value = await _userManager.GetUserAsync(User)
                 };

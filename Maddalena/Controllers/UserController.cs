@@ -11,10 +11,10 @@ namespace Maddalena.Controllers
     //[Authorize(Roles = "admin")]
     public class UserController : Controller
     {
-        private readonly UserManager<MongoIdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<MongoIdentityRole> _roleManager;
 
-        public UserController(UserManager<MongoIdentityUser> userManager, RoleManager<MongoIdentityRole> roleManager)
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -23,7 +23,7 @@ namespace Maddalena.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View(MongoIdentityUser.All);
+            return View(ApplicationUser.All);
         }
 
         public async Task<ActionResult> AddToRole(string role, string user)
@@ -43,7 +43,7 @@ namespace Maddalena.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(string id)
         {
-            var user = MongoIdentityUser.FirstOrDefault(x => x.UserName == id);
+            var user = ApplicationUser.FirstOrDefault(x => x.UserName == id);
 
             if (user == null) return NotFound();
 
@@ -53,7 +53,7 @@ namespace Maddalena.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, MongoIdentityUser user)
+        public ActionResult Edit(string id, ApplicationUser user)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Maddalena.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(string id)
         {
-            var user = MongoIdentityUser.FirstOrDefault(x => x.UserName == id);
+            var user = ApplicationUser.FirstOrDefault(x => x.UserName == id);
 
             if (user == null) return NotFound();
 

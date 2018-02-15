@@ -1,11 +1,12 @@
-﻿using Mongolino;
+﻿using Maddalena.Security;
+using Maddalena.Security.DynamicPolicy;
+using Mongolino;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Mongo;
-using Microsoft.AspNetCore.Identity.Mongo.DynamicPolicy;
 using Microsoft.AspNetCore.Identity.Mongo.Stores;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,7 @@ namespace Maddalena
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<MongoIdentityUser, MongoIdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, MongoIdentityRole>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireLowercase = false;
@@ -33,13 +34,13 @@ namespace Maddalena
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireDigit = false;
                 })
-                .AddRoleStore<RoleStore<MongoIdentityUser>>()
-                .AddUserStore<UserStore<MongoIdentityUser>>()
+                .AddRoleStore<RoleStore<ApplicationUser>>()
+                .AddUserStore<UserStore<ApplicationUser>>()
                 .AddDefaultTokenProviders();
 
             // Identity Services
-            services.AddTransient<IUserStore<MongoIdentityUser>, UserStore<MongoIdentityUser>>();
-            services.AddTransient<IRoleStore<MongoIdentityRole>, RoleStore<MongoIdentityUser>>();
+            services.AddTransient<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            services.AddTransient<IRoleStore<MongoIdentityRole>, RoleStore<ApplicationUser>>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
