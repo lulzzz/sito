@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Modules.DigitalMarket;
+using Maddalena.Security;
 using Mongolino;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

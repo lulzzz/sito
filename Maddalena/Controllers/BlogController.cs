@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Modules.Blog;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;

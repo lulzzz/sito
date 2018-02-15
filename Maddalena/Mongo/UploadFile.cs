@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.StaticFiles;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Identity.Mongo;
 using Mongolino;
 

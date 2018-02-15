@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Maddalena.Modules.Geocoding;
 using Microsoft.AspNetCore.Identity.Mongo;
 using Mongolino;
 
@@ -9,6 +9,15 @@ namespace Maddalena.Security
 {
     public class ApplicationUser : DBObject<ApplicationUser>, IMongoIdentityUser
     {
+        public string Name { get; set; }
+        public string MiddleName { get; set; }
+        public string FamilyName { get; set; }
+        public Address Address { get; set; }
+        public Task<IEnumerable<string>> GetRoles()
+        {
+            throw new NotImplementedException();
+        }
+
         public string UserName { get; set; }
         public string NormalizedUserName { get; set; }
         public string SecurityStamp { get; set; }
@@ -23,10 +32,5 @@ namespace Maddalena.Security
         public int AccessFailedCount { get; set; }
         public string AuthenticatorKey { get; set; }
         public string PasswordHash { get; set; }
-
-        public Task<IEnumerable<string>> GetRoles()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
