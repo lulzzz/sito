@@ -1,8 +1,8 @@
-﻿using Maddalena.Identity;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.Mongo;
 
 namespace Maddalena
 {

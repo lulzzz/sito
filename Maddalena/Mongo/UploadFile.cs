@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Maddalena.Identity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.StaticFiles;
 using MongoDB.Bson;
 using MongoDB.Driver.GridFS;
+using Mongolino;
 
 namespace Maddalena.Mongo
 {
