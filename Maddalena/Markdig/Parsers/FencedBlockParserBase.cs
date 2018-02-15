@@ -3,11 +3,11 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Helpers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Parsers
+namespace Maddalena.Markdig.Parsers
 {
     public abstract class FencedBlockParserBase : BlockParser, IAttributesParseable
     {

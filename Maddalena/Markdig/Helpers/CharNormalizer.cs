@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// Class used to simplify a unicode char to a simple ASCII string

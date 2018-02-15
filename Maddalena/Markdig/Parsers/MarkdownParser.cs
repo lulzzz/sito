@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Markdig.Helpers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Parsers
+namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
     /// Delegates called when processing a document

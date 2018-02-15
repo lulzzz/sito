@@ -3,10 +3,10 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Renderers
+namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
     /// Base interface for a renderer for a Markdown <see cref="MarkdownDocument"/>.

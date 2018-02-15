@@ -4,10 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using Markdig.Parsers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Renderers.Html
+namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
     /// An HTML renderer for a <see cref="CodeBlock"/> and <see cref="FencedCodeBlock"/>.

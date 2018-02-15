@@ -3,12 +3,11 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Markdig.Helpers;
-using Markdig.Parsers;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
 
-namespace Markdig.Extensions.Emoji
+namespace Maddalena.Markdig.Extensions.Emoji
 {
     /// <summary>
     /// The inline parser used to for emoji.

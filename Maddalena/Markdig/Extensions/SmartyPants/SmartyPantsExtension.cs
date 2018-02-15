@@ -2,10 +2,10 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Parsers.Inlines;
-using Markdig.Renderers;
+using Maddalena.Markdig.Parsers.Inlines;
+using Maddalena.Markdig.Renderers;
 
-namespace Markdig.Extensions.SmartyPants
+namespace Maddalena.Markdig.Extensions.SmartyPants
 {
     /// <summary>
     /// Extension to enable SmartyPants.

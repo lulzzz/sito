@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
-using Markdig.Parsers;
 
-namespace Markdig.Syntax
+using Maddalena.Markdig.Parsers;
+
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// Represents a group of lines that is treated as raw HTML (and will not be escaped in HTML output).

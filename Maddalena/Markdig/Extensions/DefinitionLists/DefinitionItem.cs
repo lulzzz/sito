@@ -1,7 +1,7 @@
-using Markdig.Parsers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Extensions.DefinitionLists
+namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
     /// A definition item contains zero to multiple <see cref="DefinitionTerm"/> 

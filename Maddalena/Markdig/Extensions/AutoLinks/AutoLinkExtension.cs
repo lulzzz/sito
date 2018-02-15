@@ -2,11 +2,11 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Renderers;
-using Markdig.Renderers.Normalize;
-using Markdig.Renderers.Normalize.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Normalize;
+using Maddalena.Markdig.Renderers.Normalize.Inlines;
 
-namespace Markdig.Extensions.AutoLinks
+namespace Maddalena.Markdig.Extensions.AutoLinks
 {
     /// <summary>
     /// Extension to automatically create <see cref="LinkInline"/> when a link url http: or mailto: is found.

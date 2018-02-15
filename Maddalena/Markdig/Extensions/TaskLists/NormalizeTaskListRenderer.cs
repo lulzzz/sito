@@ -1,6 +1,6 @@
-using Markdig.Renderers.Normalize;
+using Maddalena.Markdig.Renderers.Normalize;
 
-namespace Markdig.Extensions.TaskLists
+namespace Maddalena.Markdig.Extensions.TaskLists
 {
     public class NormalizeTaskListRenderer : NormalizeObjectRenderer<TaskList>
     {

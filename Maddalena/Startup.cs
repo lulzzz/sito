@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Mongo;
-using Microsoft.AspNetCore.Identity.Mongo.Policy;
+using Microsoft.AspNetCore.Identity.Mongo.DynamicPolicy;
 using Microsoft.AspNetCore.Identity.Mongo.Stores;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,13 +33,13 @@ namespace Maddalena
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireDigit = false;
                 })
-                .AddRoleStore<RoleStore>()
-                .AddUserStore<UserStore>()
+                .AddRoleStore<RoleStore<MongoIdentityUser>>()
+                .AddUserStore<UserStore<MongoIdentityUser>>()
                 .AddDefaultTokenProviders();
 
             // Identity Services
-            services.AddTransient<IUserStore<MongoIdentityUser>, UserStore>();
-            services.AddTransient<IRoleStore<MongoIdentityRole>, RoleStore>();
+            services.AddTransient<IUserStore<MongoIdentityUser>, UserStore<MongoIdentityUser>>();
+            services.AddTransient<IRoleStore<MongoIdentityRole>, RoleStore<MongoIdentityUser>>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

@@ -3,9 +3,9 @@
 // See the license.txt file in the project root for more information.
 
 using System.Collections.Generic;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Syntax
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// Extensions for visiting <see cref="Block"/> or <see cref="Inline"/>

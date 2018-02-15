@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 
-namespace Markdig.Syntax.Inlines
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// A Link inline (Section 6.5 CommonMark specs)

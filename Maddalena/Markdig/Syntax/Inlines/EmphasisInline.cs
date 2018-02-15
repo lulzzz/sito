@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 
-namespace Markdig.Syntax.Inlines
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// An emphasis and strong emphasis (Section 6.4 CommonMark specs).

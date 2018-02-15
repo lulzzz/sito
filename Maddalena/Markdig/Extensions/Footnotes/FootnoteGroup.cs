@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
-using Markdig.Parsers;
-using Markdig.Syntax;
 
-namespace Markdig.Extensions.Footnotes
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
+
+namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
     /// A block that contains all the footnotes at the end of a <see cref="MarkdownDocument"/>.

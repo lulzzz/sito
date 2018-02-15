@@ -2,13 +2,12 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Helpers;
-using Markdig.Parsers;
+using System;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
 
-namespace Markdig.Extensions.ListExtras
+namespace Maddalena.Markdig.Extensions.ListExtras
 {
-    using System;
-
     /// <summary>
     /// Parser that adds supports for parsing alpha/roman list items (e.g: `a)` or `a.` or `ii.` or `II.`)
     /// </summary>

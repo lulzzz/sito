@@ -6,12 +6,12 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Markdig.Helpers;
-using Markdig.Renderers.Html;
-using Markdig.Renderers.Html.Inlines;
-using Markdig.Syntax;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Renderers.Html.Inlines;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Renderers
+namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
     /// Default HTML renderer for a Markdown <see cref="MarkdownDocument"/> object.

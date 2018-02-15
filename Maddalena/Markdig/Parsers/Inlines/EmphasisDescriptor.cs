@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Markdig.Parsers.Inlines
+namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
     /// Descriptor for an emphasis.

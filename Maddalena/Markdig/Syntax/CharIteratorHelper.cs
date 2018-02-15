@@ -1,6 +1,6 @@
-using Markdig.Helpers;
+using Maddalena.Markdig.Helpers;
 
-namespace Markdig.Syntax
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// Helpers for the <see cref="ICharIterator"/> class.

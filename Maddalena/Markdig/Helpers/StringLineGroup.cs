@@ -5,11 +5,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Markdig.Extensions.Tables;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// A group of <see cref="StringLine"/>.

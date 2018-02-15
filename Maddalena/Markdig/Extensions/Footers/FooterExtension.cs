@@ -2,10 +2,10 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Extensions.Figures;
-using Markdig.Renderers;
+using Maddalena.Markdig.Extensions.Figures;
+using Maddalena.Markdig.Renderers;
 
-namespace Markdig.Extensions.Footers
+namespace Maddalena.Markdig.Extensions.Footers
 {
     /// <summary>
     /// Extension that provides footer.

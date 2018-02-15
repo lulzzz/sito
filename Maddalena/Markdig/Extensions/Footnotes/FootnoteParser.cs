@@ -2,12 +2,12 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.Footnotes
+namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
     /// The block parser for a <see cref="Footnote"/>.

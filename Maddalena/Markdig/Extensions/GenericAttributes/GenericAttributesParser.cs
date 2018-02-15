@@ -3,13 +3,13 @@
 // See the license.txt file in the project root for more information.
 
 using System.Collections.Generic;
-using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.GenericAttributes
+namespace Maddalena.Markdig.Extensions.GenericAttributes
 {
     /// <summary>
     /// An inline parser used to parse a HTML attributes that can be attached to the previous <see cref="Inline"/> or current <see cref="Block"/>.

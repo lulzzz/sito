@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Madd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Identity.Mongo", "..\Microsoft.AspNetCore.Identity.Mongo\Microsoft.AspNetCore.Identity.Mongo\Microsoft.AspNetCore.Identity.Mongo.csproj", "{FF9B1F9B-B8B0-4EBD-B597-2A3DBA6303EF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mongolino", "..\Mongolino\Mongolino\Mongolino.csproj", "{B251FA58-E1A4-4786-8AAA-D2440671DA04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FF9B1F9B-B8B0-4EBD-B597-2A3DBA6303EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF9B1F9B-B8B0-4EBD-B597-2A3DBA6303EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF9B1F9B-B8B0-4EBD-B597-2A3DBA6303EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B251FA58-E1A4-4786-8AAA-D2440671DA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B251FA58-E1A4-4786-8AAA-D2440671DA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B251FA58-E1A4-4786-8AAA-D2440671DA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B251FA58-E1A4-4786-8AAA-D2440671DA04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

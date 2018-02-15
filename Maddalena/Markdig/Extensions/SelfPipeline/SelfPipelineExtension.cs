@@ -3,9 +3,9 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Renderers;
+using Maddalena.Markdig.Renderers;
 
-namespace Markdig.Extensions.SelfPipeline
+namespace Maddalena.Markdig.Extensions.SelfPipeline
 {
     /// <summary>
     /// Extension to enable SelfPipeline, to configure a Markdown parsing/convertion to HTML automatically 

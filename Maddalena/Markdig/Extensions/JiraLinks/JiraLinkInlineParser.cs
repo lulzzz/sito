@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
+
 using System;
 using System.Text;
-using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.JiraLinks
+namespace Maddalena.Markdig.Extensions.JiraLinks
 {
     /// <summary>
     /// Finds and replaces JIRA links inline

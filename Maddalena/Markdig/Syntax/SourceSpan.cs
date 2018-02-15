@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Markdig.Syntax
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// A span of text.

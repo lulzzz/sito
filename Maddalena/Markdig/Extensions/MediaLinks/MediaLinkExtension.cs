@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
-using Markdig.Renderers.Html.Inlines;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Renderers.Html.Inlines;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.MediaLinks
+namespace Maddalena.Markdig.Extensions.MediaLinks
 {
     /// <summary>
     ///     Extension for extending image Markdown links in case a video or an audio file is linked and output proper link.

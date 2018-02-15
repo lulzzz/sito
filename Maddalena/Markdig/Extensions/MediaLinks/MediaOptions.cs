@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Markdig.Extensions.MediaLinks
+namespace Maddalena.Markdig.Extensions.MediaLinks
 {
     /// <summary>
     /// Options for the <see cref="MediaLinkExtension"/>.

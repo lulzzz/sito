@@ -2,11 +2,11 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Parsers.Inlines;
-using Markdig.Renderers;
-using Markdig.Renderers.Normalize;
+using Maddalena.Markdig.Parsers.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Normalize;
 
-namespace Markdig.Extensions.TaskLists
+namespace Maddalena.Markdig.Extensions.TaskLists
 {
     /// <summary>
     /// Extension to enable TaskList.

@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Markdig.Parsers
+namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
     /// A List of <see cref="BlockParser"/>.

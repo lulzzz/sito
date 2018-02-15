@@ -4,9 +4,8 @@
 
 using System;
 using System.IO;
-using System.Text;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// A line reader from a <see cref="TextReader"/> that can provide precise source position
