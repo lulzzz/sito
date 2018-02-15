@@ -16,14 +16,14 @@ namespace Maddalena.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<MongoIdentityUser> _userManager;
+        private readonly SignInManager<MongoIdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<MongoIdentityUser> userManager,
+            SignInManager<MongoIdentityUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -208,7 +208,7 @@ namespace Maddalena.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+            var user = new MongoIdentityUser { UserName = model.Username, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
@@ -293,7 +293,7 @@ namespace Maddalena.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new MongoIdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

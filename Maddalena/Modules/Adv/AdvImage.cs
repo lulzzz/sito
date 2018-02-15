@@ -5,7 +5,7 @@ namespace Maddalena.Modules.Adv
 {
     public class AdvImage : DBObject<AdvImage>
     {
-        public ObjectRef<ApplicationUser> User { get; set; }
+        public ObjectRef<MongoIdentityUser> User { get; set; }
 
         public string Name { get; set; }
 

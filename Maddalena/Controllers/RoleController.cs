@@ -13,14 +13,14 @@ namespace Maddalena.Controllers
     [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<MongoIdentityUser> _userManager;
+        private readonly SignInManager<MongoIdentityUser> _signInManager;
+        private readonly RoleManager<MongoIdentityRole> _roleManager;
 
         public RoleController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          RoleManager<ApplicationRole> roleManager)
+          UserManager<MongoIdentityUser> userManager,
+          SignInManager<MongoIdentityUser> signInManager,
+          RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -50,7 +50,7 @@ namespace Maddalena.Controllers
         // POST: Role/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApplicationRole role)
+        public async Task<ActionResult> Create(MongoIdentityRole role)
         {
             try
             {

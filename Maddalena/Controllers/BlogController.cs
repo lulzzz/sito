@@ -64,7 +64,7 @@ namespace Maddalena.Controllers
             {
                 article.Id = string.Empty;
                 article.DateTime = DateTime.Now;
-                article.Author = await ApplicationUser.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                article.Author = await MongoIdentityUser.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
 
                 await BlogArticle.CreateAsync(article);
 
