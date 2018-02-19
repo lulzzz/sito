@@ -30,7 +30,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.5.0" />
     <PackageReference Include="Mongolino" Version="1.2.4" />
-    <PackageReference Include="Stripe.net" Version="13.0.0" />
+    <PackageReference Include="Stripe.net" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -36,7 +36,7 @@ namespace Maddalena.Mongo
 
             var gridName = $"{Guid.NewGuid():N}{upload.DateTime.Ticks}{upload.FileName}";
 
-            await GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
+            await MongoDB.Driver.GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
 
             upload.GridName = gridName;
             await CreateAsync(upload);
