@@ -47,7 +47,7 @@ namespace Maddalena.Controllers
 
             if (file == null || !file.ACL.IsAllowed(User)) return NotFound();
 
-            return File(await file.Download(), file.ContentType, file.FileName, file.DateTime, new EntityTagHeaderValue($"\"{file.GetHashCode()}\""));
+            return File(GridFS.Bucket.OpenDownloadStreamByName(file.GridName), file.ContentType, file.FileName, file.DateTime, new EntityTagHeaderValue($"\"{file.GetHashCode()}\""));
         }
 
         [AllowAnonymous]

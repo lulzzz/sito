@@ -3,10 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Maddalena.Security;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.StaticFiles;
-using MongoDB.Bson;
-using MongoDB.Driver.GridFS;
 using Mongolino;
 
 namespace Maddalena.Mongo
@@ -36,7 +33,7 @@ namespace Maddalena.Mongo
 
             var gridName = $"{Guid.NewGuid():N}{upload.DateTime.Ticks}{upload.FileName}";
 
-            await MongoDB.Driver.GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
+            await GridFS.Bucket.UploadFromStreamAsync(gridName, file.OpenReadStream());
 
             upload.GridName = gridName;
             await CreateAsync(upload);
@@ -60,9 +57,5 @@ namespace Maddalena.Mongo
         public string FileName { get; set; }
 
         public ACL ACL { get; set; }
-
-        public Task<GridFSDownloadStream<ObjectId>> Download() => GridFS.Bucket.OpenDownloadStreamByNameAsync(GridName);
-
-        public Task Delete() => GridFS.Bucket.DeleteAsync(Id);
     }
 }
