@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 
 namespace Maddalena
 {
     public class GridFS
     {
-        public static object Bucket { get; internal set; }
+        static GridFS()
+        {
+            var client = new MongoClient();
+            var db = client.GetDatabase("grid");
+            Bucket = new GridFSBucket(db);
+        }
+
+        public static GridFSBucket Bucket { get; }
     }
 }

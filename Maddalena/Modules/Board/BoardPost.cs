@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Maddalena.Security;
-using Microsoft.AspNetCore.Identity.Mongo;
 using Mongolino;
 
 namespace Maddalena.Modules.Board

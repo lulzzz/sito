@@ -1,11 +1,11 @@
-﻿using Maddalena.Security;
+﻿using AspNetCore.Identity.Mongo;
+using Maddalena.Security;
 using Maddalena.Security.DynamicPolicy;
 using Mongolino;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

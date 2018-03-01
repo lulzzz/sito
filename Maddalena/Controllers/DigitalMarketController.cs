@@ -5,7 +5,6 @@ using Maddalena.Security;
 using Mongolino;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

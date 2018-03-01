@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AspNetCore.Identity.Mongo;
 using Maddalena.Modules.Geocoding;
-using Microsoft.AspNetCore.Identity.Mongo;
 using Mongolino;
 
 namespace Maddalena.Security
