@@ -1,5 +1,5 @@
 ﻿@using Maddalena.Identity
-
+@using Maddalena.Modules.Blog
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Matteo Fabbri</title>
 
-    <meta name="description" content="Matteo Fabbri, un nerd italiano che vive a Praga" />
+    <meta name="description" content="An italian nerd in Prague" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Il Blog di Matteo Fabbri" />
-    <meta property="og:description" content="Matteo Fabbri, un nerd italiano che vive a Praga" />
+    <meta property="og:description" content="An italian nerd in Prague" />
     <meta property="og:url" content="https://matteofabbri.org/" />
-    <meta property="og:site_name" content="Matteo Fabbri, un nerd italiano che vive a Praga" />
+    <meta property="og:site_name" content="An italian nerd in Prague" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:description" content="Matteo Fabbri, un nerd italiano che vive a Praga" />
+    <meta name="twitter:description" content="An italian nerd in Prague" />
     <meta name="twitter:title" content="Il Blog di Matteo Fabbri" />
     <meta name="twitter:site" content="" />
 
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome-all.min.css" />
 
-    <link rel="canonical" href="http://mgpf.it/" />
+    <link rel="canonical" href="http://matteofabbri.org/" />
 
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/popper.js"></script>
@@ -40,7 +40,10 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Matteo Fabbri</a>
+            <a class="navbar-brand" href="/">
+                <img src="~/images/icon.jpg" class="img-fluid img-circle" style="max-height:54px;border-radius:50% !important;" alt="Cinque Terre">
+                Matteo Fabbri
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -75,9 +78,15 @@
                 </form>
             </div>
         </nav>
+        <div class="row">
+            <div class="col-12">
+                <img class="img-fluid" src="~/images/cover.jpg" />
+            </div>
+        </div>
+
         <div class="container body-content">
             <div class="row" style="margin-top: 32px">
-                <div class="col-md-12" style="min-height: 60vh">
+                <div class="col-md-9" style="min-height: 60vh">
 
                     @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
                     {
@@ -93,27 +102,53 @@
                     }
                     @RenderBody()
                 </div>
-            </div>
-            <hr />
-            <footer>
-                <div class="row">
-                    <div class="col-4">
-                        <p>&#169; 2017 - Matteo Fabbri</p>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <section>
+                                <ul class="list-group">
+                                    @foreach (var cat in BlogArticle.Categories)
+                                    {
+                                        <li class="list-group-item">
+                                            <a href="/blog/category/@cat">@cat</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </section>
+                            <section style="margin-top:32px">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="https://github.com/matteofabbri" target="_blank"><i class="fab fa-github-square"></i> GitHub</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="https://twitter.com/theqult" target="_blank"><i class="fab fa-twitter-square"></i> Twitter</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="https://www.linkedin.com/in/theqult/" target="_blank"><i class="fab fa-linkedin"></i> Linkedin</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="https://www.instagram.com/theqult" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <a href="https://github.com/matteofabbri" target="_blank">&gt;  <i class="fab fa-github-square"></i> GitHub</a>
-                        <br />
-                        <a href="https://twitter.com/theqult" target="_blank">&gt; <i class="fab fa-twitter-square"></i> Twitter</a>
-                        <br />
-                        <a href="https://www.linkedin.com/in/theqult/" target="_blank">&gt; <i class="fab fa-linkedin"></i> Linkedin</a>
-                        <br />
-                        <a href="https://www.instagram.com/theqult" target="_blank">&gt; <i class="fab fa-linkedin"></i> Instagram</a>
-                    </div>
-                    <div class="col-4">
-                        <a href="/account/login">&gt; Accesso</a>
+                    <div class="row" style="margin-top:32px">
+                        <div class="col-12 text-center">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- Display -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-1242825224942421"
+                                 data-ad-slot="4007495569"
+                                 data-ad-format="auto"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
     </div>
     <script>
@@ -129,33 +164,32 @@
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
         })();
 
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
             var editor = new Jodit('#area_editor',
-            {
-                textIcons: false,
-                iframe: false,
-                iframeStyle: '*,.jodit_wysiwyg {color:red;}',
-                height: 300,
-                defaultMode: Jodit.MODE_WYSIWYG,
-                observer: {
-                    timeout: 100
-                },
-                uploader: {
-                    url: 'http://mercati.news/file/upload'
-                },
-                /*filebrowser: {
-                    // buttons: ['list', 'tiles', 'sort'],
-                    ajax: {
-                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                {
+                    textIcons: false,
+                    iframe: false,
+                    iframeStyle: '*,.jodit_wysiwyg {color:red;}',
+                    height: 300,
+                    defaultMode: Jodit.MODE_WYSIWYG,
+                    observer: {
+                        timeout: 100
+                    },
+                    uploader: {
+                        url: 'http://mercati.news/file/upload'
+                    },
+                    /*filebrowser: {
+                        // buttons: ['list', 'tiles', 'sort'],
+                        ajax: {
+                            url: 'https://xdsoft.net/jodit/connector/index.php'
+                        }
+                    },*/
+                    commandToHotkeys: {
+                        'openreplacedialog': 'ctrl+p'
                     }
-                },*/
-                commandToHotkeys: {
-                    'openreplacedialog': 'ctrl+p'
-                }
-                // buttons: ['symbol'],
-                // disablePlugins: 'hotkeys,mobile'
-            });
+                    // buttons: ['symbol'],
+                    // disablePlugins: 'hotkeys,mobile'
+                });
 
 
             var options =
