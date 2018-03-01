@@ -4,10 +4,10 @@
 
 using System;
 using System.Globalization;
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Html;
 
-namespace Markdig.Extensions.Tables
+namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
     /// A HTML renderer for a <see cref="Table"/>

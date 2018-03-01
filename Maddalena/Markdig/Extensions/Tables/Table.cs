@@ -3,10 +3,10 @@
 // See the license.txt file in the project root for more information.
 
 using System.Collections.Generic;
-using Markdig.Parsers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Extensions.Tables
+namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
     /// Defines a table that contains an optional <see cref="TableRow"/>.

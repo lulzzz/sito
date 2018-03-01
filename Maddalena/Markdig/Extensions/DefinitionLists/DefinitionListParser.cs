@@ -3,10 +3,10 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Parsers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Extensions.DefinitionLists
+namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
     /// The block parser for a <see cref="DefinitionList"/>.

@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 
-namespace Markdig.Syntax.Inlines
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// Represents a code span (Section 6.3 CommonMark specs)

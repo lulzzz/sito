@@ -4,7 +4,7 @@
 
 using System.Diagnostics;
 
-namespace Markdig.Syntax.Inlines
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// A Raw HTML (Section 6.8 CommonMark specs).

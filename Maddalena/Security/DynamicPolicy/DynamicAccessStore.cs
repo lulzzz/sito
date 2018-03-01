@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Maddalena.Mongo;
+using Mongolino;
 
-namespace Maddalena.Identity.Policy
+namespace Maddalena.Security.DynamicPolicy
 {
     public class DynamicAccessStore : IDynamicAccessStore
     {

@@ -3,9 +3,9 @@
 // See the license.txt file in the project root for more information.
 
 using System.Diagnostics;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.Abbreviations
+namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
     /// The inline abbreviation.

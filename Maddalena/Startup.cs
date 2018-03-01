@@ -1,11 +1,11 @@
-﻿using Maddalena.Identity;
-using Maddalena.Identity.Policy;
-using Maddalena.Identity.Stores;
+﻿using Maddalena.Security;
+using Maddalena.Security.DynamicPolicy;
+using Mongolino;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +16,7 @@ namespace Maddalena
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            configuration.AddMongolino();
         }
 
         public IConfiguration Configuration { get; }
@@ -23,21 +24,14 @@ namespace Maddalena
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-                {
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireDigit = false;
-                })
-                .AddRoleStore<RoleStore>()
-                .AddUserStore<UserStore>()
-                .AddDefaultTokenProviders();
-
-            // Identity Services
-            services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
-            services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+            services.AddMongoIdentityProvider<ApplicationUser>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

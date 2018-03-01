@@ -2,10 +2,10 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Renderers;
-using Markdig.Renderers.Html.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Html.Inlines;
 
-namespace Markdig.Extensions.NoRefLinks
+namespace Maddalena.Markdig.Extensions.NoRefLinks
 {
     /// <summary>
     /// Extension to automatically render rel=nofollow to all links in an HTML output.

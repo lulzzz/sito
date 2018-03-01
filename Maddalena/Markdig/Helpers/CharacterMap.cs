@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// Allows to associate characters to a data structures and query efficiently for them.

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Maddalena.Identity.Policy
+namespace Maddalena.Security.DynamicPolicy
 {
     public class DynamicPolicyHandler<T> : AuthorizationHandler<DynamicPolicy> where T: IDynamicAccessStore, new()
     {

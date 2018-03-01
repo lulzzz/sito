@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Maddalena.Identity;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers
@@ -15,12 +16,12 @@ namespace Maddalena.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly RoleManager<MongoIdentityRole> _roleManager;
 
         public RoleController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
-          RoleManager<ApplicationRole> roleManager)
+          RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -50,7 +51,7 @@ namespace Maddalena.Controllers
         // POST: Role/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApplicationRole role)
+        public async Task<ActionResult> Create(MongoIdentityRole role)
         {
             try
             {

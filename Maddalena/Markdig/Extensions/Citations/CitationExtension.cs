@@ -2,12 +2,12 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Parsers.Inlines;
-using Markdig.Renderers;
-using Markdig.Renderers.Html.Inlines;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Parsers.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Html.Inlines;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.Citations
+namespace Maddalena.Markdig.Extensions.Citations
 {
     /// <summary>
     /// Extension for cite ""...""

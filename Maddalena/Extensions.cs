@@ -1,12 +1,10 @@
-﻿using Maddalena.Identity;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Maddalena.Security;
 
 namespace Maddalena
 {
-    public static class Extensions
+    public static class Extensions2
     {
         public static async Task<ApplicationUser> ToUser(this ClaimsPrincipal claim)
         {

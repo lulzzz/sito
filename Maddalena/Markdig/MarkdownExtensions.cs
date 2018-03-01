@@ -3,37 +3,37 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Extensions.Abbreviations;
-using Markdig.Extensions.AutoIdentifiers;
-using Markdig.Extensions.AutoLinks;
-using Markdig.Extensions.Bootstrap;
-using Markdig.Extensions.Citations;
-using Markdig.Extensions.CustomContainers;
-using Markdig.Extensions.DefinitionLists;
-using Markdig.Extensions.Diagrams;
-using Markdig.Extensions.Emoji;
-using Markdig.Extensions.EmphasisExtras;
-using Markdig.Extensions.Figures;
-using Markdig.Extensions.Footers;
-using Markdig.Extensions.Footnotes;
-using Markdig.Extensions.GenericAttributes;
-using Markdig.Extensions.Hardlines;
-using Markdig.Extensions.JiraLinks;
-using Markdig.Extensions.ListExtras;
-using Markdig.Extensions.Mathematics;
-using Markdig.Extensions.MediaLinks;
-using Markdig.Extensions.NoRefLinks;
-using Markdig.Extensions.PragmaLines;
-using Markdig.Extensions.SelfPipeline;
-using Markdig.Extensions.SmartyPants;
-using Markdig.Extensions.NonAsciiNoEscape;
-using Markdig.Extensions.Tables;
-using Markdig.Extensions.TaskLists;
-using Markdig.Extensions.Yaml;
-using Markdig.Parsers;
-using Markdig.Parsers.Inlines;
+using Maddalena.Markdig.Extensions.Abbreviations;
+using Maddalena.Markdig.Extensions.AutoIdentifiers;
+using Maddalena.Markdig.Extensions.AutoLinks;
+using Maddalena.Markdig.Extensions.Bootstrap;
+using Maddalena.Markdig.Extensions.Citations;
+using Maddalena.Markdig.Extensions.CustomContainers;
+using Maddalena.Markdig.Extensions.DefinitionLists;
+using Maddalena.Markdig.Extensions.Diagrams;
+using Maddalena.Markdig.Extensions.Emoji;
+using Maddalena.Markdig.Extensions.EmphasisExtras;
+using Maddalena.Markdig.Extensions.Figures;
+using Maddalena.Markdig.Extensions.Footers;
+using Maddalena.Markdig.Extensions.Footnotes;
+using Maddalena.Markdig.Extensions.GenericAttributes;
+using Maddalena.Markdig.Extensions.Hardlines;
+using Maddalena.Markdig.Extensions.JiraLinks;
+using Maddalena.Markdig.Extensions.ListExtras;
+using Maddalena.Markdig.Extensions.Mathematics;
+using Maddalena.Markdig.Extensions.MediaLinks;
+using Maddalena.Markdig.Extensions.NonAsciiNoEscape;
+using Maddalena.Markdig.Extensions.NoRefLinks;
+using Maddalena.Markdig.Extensions.PragmaLines;
+using Maddalena.Markdig.Extensions.SelfPipeline;
+using Maddalena.Markdig.Extensions.SmartyPants;
+using Maddalena.Markdig.Extensions.Tables;
+using Maddalena.Markdig.Extensions.TaskLists;
+using Maddalena.Markdig.Extensions.Yaml;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Parsers.Inlines;
 
-namespace Markdig
+namespace Maddalena.Markdig
 {
     /// <summary>
     /// Provides extension methods for <see cref="MarkdownPipeline"/> to enable several Markdown extensions.

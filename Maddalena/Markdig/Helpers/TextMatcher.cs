@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// Match a text against a list of ASCII string using internally a tree to speedup the lookup

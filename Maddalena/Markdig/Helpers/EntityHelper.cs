@@ -34,7 +34,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Markdig.Helpers
+namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
     /// Helper class to decode an entity.

@@ -1,6 +1,7 @@
 using Maddalena.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Microsoft.AspNetCore.Mvc
+namespace Maddalena.Extensions
 {
     public static class UrlHelperExtensions
     {

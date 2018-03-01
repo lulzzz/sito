@@ -3,11 +3,11 @@
 // See the license.txt file in the project root for more information.
 
 using System.Diagnostics;
-using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Syntax;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Extensions.Abbreviations
+namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
     /// An abbreviation object stored at the document level. See extension methods in <see cref="AbbreviationHelper"/>.

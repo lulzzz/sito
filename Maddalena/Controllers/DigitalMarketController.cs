@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Maddalena.Identity;
 using Maddalena.Modules.DigitalMarket;
-using Maddalena.Mongo;
+using Maddalena.Security;
+using Mongolino;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -73,13 +74,13 @@ namespace Maddalena.Controllers
                     return View();
                 }
 
-                item.Attachments.Add(await UploadFile.Create(content,User));
+                //item.Attachments.Add(await UploadFile.Create(content,User));
 
                 var preview  = Request.Form.Files.GetFile("preview");
                 item.HasPreview = preview != null;
                 item.VideoPreview = preview?.FileName?.EndsWith(".mp4") ?? false;
 
-                if(preview != null) item.Attachments.Add(await UploadFile.Create(preview, User));
+                //if(preview != null) item.Attachments.Add(await UploadFile.Create(preview, User));
 
                 await DigitalItem.CreateAsync(item);
 
@@ -118,13 +119,13 @@ namespace Maddalena.Controllers
                 var content = Request.Form.Files.GetFile("content");
                 if (content != null)
                 {
-                    var oldContent = item.Attachments.FirstOrDefault(x => x.Name == "content");
+                    //var oldContent = item.Attachments.FirstOrDefault(x => x.Name == "content");
 
-                    if (oldContent == null) return NotFound();
+                    //if (oldContent == null) return NotFound();
 
-                    await oldContent.Delete();
-                    item.Attachments.Remove(oldContent);
-                    item.Attachments.Add(await UploadFile.Create(content, User));
+                    //await oldContent.Delete();
+                    //item.Attachments.Remove(oldContent);
+                    //item.Attachments.Add(await UploadFile.Create(content, User));
                 }
 
                 var preview = Request.Form.Files.GetFile("preview");
@@ -134,13 +135,13 @@ namespace Maddalena.Controllers
                     item.HasPreview = true;
                     item.VideoPreview = preview.FileName?.EndsWith(".mp4") ?? false;
 
-                    var oldPreview = item.Attachments.FirstOrDefault(x => x.Name == "preview");
+                    //var oldPreview = item.Attachments.FirstOrDefault(x => x.Name == "preview");
 
-                    if (oldPreview == null) return NotFound();
+                    //if (oldPreview == null) return NotFound();
 
-                    await oldPreview.Delete();
-                    item.Attachments.Remove(oldPreview);
-                    item.Attachments.Add(await UploadFile.Create(preview, User));
+                    //await oldPreview.Delete();
+                    //item.Attachments.Remove(oldPreview);
+                    //item.Attachments.Add(await UploadFile.Create(preview, User));
                 }
 
                 await DigitalItem.UpdateAsync(item);

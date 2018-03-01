@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Markdig.Syntax
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// Contains all the <see cref="LinkReferenceDefinition"/> found in a document.

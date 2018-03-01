@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Maddalena.Identity;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers
@@ -12,9 +13,9 @@ namespace Maddalena.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly RoleManager<MongoIdentityRole> _roleManager;
 
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -31,7 +32,7 @@ namespace Maddalena.Controllers
             var u = await _userManager.FindByNameAsync(user);
 
             if (!await _roleManager.RoleExistsAsync(role))
-                await _roleManager.CreateAsync(new ApplicationRole(role));
+                await _roleManager.CreateAsync(new MongoIdentityRole(role));
 
             if (u == null) return NotFound();
 

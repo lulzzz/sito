@@ -1,9 +1,9 @@
-using Markdig.Renderers;
-using Markdig.Renderers.Normalize;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Normalize;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.AutoLinks
+namespace Maddalena.Markdig.Extensions.AutoLinks
 {
     public class NormalizeAutoLinkRenderer : NormalizeObjectRenderer<LinkInline>
     {

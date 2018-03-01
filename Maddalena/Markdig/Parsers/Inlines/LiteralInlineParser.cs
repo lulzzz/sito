@@ -2,11 +2,11 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Helpers;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Parsers.Inlines
+namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
     /// An inline parser for parsing <see cref="LiteralInline"/>.

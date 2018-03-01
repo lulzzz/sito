@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Maddalena.Identity;
+using Maddalena.Extensions;
 using Maddalena.Models.AccountViewModels;
+using Maddalena.Security;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
-using System.Runtime.CompilerServices;
-using Markdig.Helpers;
 
-namespace Markdig.Parsers
+using System.Runtime.CompilerServices;
+using Maddalena.Markdig.Helpers;
+
+namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
     /// Extensions used by <see cref="BlockState"/>.

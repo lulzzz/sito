@@ -1,10 +1,11 @@
 // Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
-using System.Diagnostics;
-using Markdig.Helpers;
 
-namespace Markdig.Syntax.Inlines
+using System.Diagnostics;
+using Maddalena.Markdig.Helpers;
+
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// An entity HTML.

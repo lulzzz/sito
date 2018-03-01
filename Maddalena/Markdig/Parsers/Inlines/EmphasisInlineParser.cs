@@ -4,12 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using Markdig.Helpers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Syntax;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Parsers.Inlines
+namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
     /// An inline parser for <see cref="EmphasisInline"/>.

@@ -2,11 +2,11 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
-using Markdig.Renderers;
-using Markdig.Renderers.Html;
-using Markdig.Syntax;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Html;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig.Extensions.DefinitionLists
+namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
     /// A HTML renderer for <see cref="DefinitionList"/>, <see cref="DefinitionItem"/> and <see cref="DefinitionTerm"/>.

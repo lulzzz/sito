@@ -1,10 +1,6 @@
-using Markdig.Renderers.Normalize;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Maddalena.Markdig.Renderers.Normalize;
 
-namespace Markdig.Extensions.JiraLinks
+namespace Maddalena.Markdig.Extensions.JiraLinks
 {
     public class NormalizeJiraLinksRenderer : NormalizeObjectRenderer<JiraLink>
     {

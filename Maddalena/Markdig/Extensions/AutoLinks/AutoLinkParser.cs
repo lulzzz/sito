@@ -4,11 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using Markdig.Helpers;
-using Markdig.Parsers;
-using Markdig.Syntax.Inlines;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Syntax.Inlines;
 
-namespace Markdig.Extensions.AutoLinks
+namespace Maddalena.Markdig.Extensions.AutoLinks
 {
     /// <summary>
     /// The inline parser used to for autolinks.

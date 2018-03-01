@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Maddalena.Identity;
 using Maddalena.Modules.Blog;
+using Maddalena.Security;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers

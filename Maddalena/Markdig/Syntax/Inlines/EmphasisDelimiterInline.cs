@@ -3,10 +3,10 @@
 // See the license.txt file in the project root for more information.
 
 using System;
-using Markdig.Parsers;
-using Markdig.Parsers.Inlines;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Parsers.Inlines;
 
-namespace Markdig.Syntax.Inlines
+namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
     /// A delimiter used for parsing emphasis.

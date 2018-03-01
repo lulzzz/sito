@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Maddalena.Identity.Policy
+namespace Maddalena.Security.DynamicPolicy
 {
     public class DynamicPolicy : IAuthorizationRequirement
     {

@@ -1,7 +1,8 @@
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Maddalena.Services;
 
-namespace Maddalena.Services
+namespace Maddalena.Extensions
 {
     public static class EmailSenderExtensions
     {

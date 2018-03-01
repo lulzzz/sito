@@ -1,16 +1,17 @@
 // Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
+
 using System;
 using System.IO;
 using System.Reflection;
-using Markdig.Extensions.SelfPipeline;
-using Markdig.Parsers;
-using Markdig.Renderers;
-using Markdig.Renderers.Normalize;
-using Markdig.Syntax;
+using Maddalena.Markdig.Extensions.SelfPipeline;
+using Maddalena.Markdig.Parsers;
+using Maddalena.Markdig.Renderers;
+using Maddalena.Markdig.Renderers.Normalize;
+using Maddalena.Markdig.Syntax;
 
-namespace Markdig
+namespace Maddalena.Markdig
 {
     /// <summary>
     /// Provides methods for parsing a Markdown string to a syntax tree and converting it to other formats.

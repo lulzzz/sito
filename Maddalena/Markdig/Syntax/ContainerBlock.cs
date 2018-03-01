@@ -7,10 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Markdig.Helpers;
-using Markdig.Parsers;
+using Maddalena.Markdig.Helpers;
+using Maddalena.Markdig.Parsers;
 
-namespace Markdig.Syntax
+namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
     /// A base class for container blocks.
