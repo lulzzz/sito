@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Identity.Mongo;
 using Maddalena.Modules.Geocoding;
@@ -9,13 +10,20 @@ namespace Maddalena.Security
 {
     public class ApplicationUser : DBObject<ApplicationUser>, IMongoIdentityUser
     {
+        public string DisplayName { get; set; }
+
         public string Name { get; set; }
         public string MiddleName { get; set; }
         public string FamilyName { get; set; }
+
         public Address Address { get; set; }
-        public Task<IEnumerable<string>> GetRoles()
+
+        public async Task<IEnumerable<string>> GetRoles()
         {
-            throw new NotImplementedException();
+            return (await RoleMembership.WhereAsync(x => x.UserId == Id))
+                 .Select(m => ApplicationRole.First(x => x.Id == m.RoleId))
+                 .Select(x => x.Name)
+                 .ToArray();
         }
 
         public string UserName { get; set; }
