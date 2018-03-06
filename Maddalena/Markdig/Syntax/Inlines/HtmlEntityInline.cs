@@ -8,19 +8,19 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// An entity HTML.
+    ///     An entity HTML.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.LeafInline" />
     [DebuggerDisplay("{Original} -> {Transcoded}")]
     public class HtmlEntityInline : LeafInline
     {
         /// <summary>
-        /// Gets or sets the original HTML entity name
+        ///     Gets or sets the original HTML entity name
         /// </summary>
         public StringSlice Original { get; set; }
 
         /// <summary>
-        /// Gets or sets the transcoded literal that will be used for output
+        ///     Gets or sets the transcoded literal that will be used for output
         /// </summary>
         public StringSlice Transcoded { get; set; }
     }

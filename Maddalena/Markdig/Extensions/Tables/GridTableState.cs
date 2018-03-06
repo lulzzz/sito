@@ -9,13 +9,12 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// Internal state used by the <see cref="GridTableParser"/>
+    ///     Internal state used by the <see cref="GridTableParser" />
     /// </summary>
     internal class GridTableState
     {
-        public int Start { get; set; }
-
         public StringLineGroup Lines;
+        public int Start { get; set; }
 
         public List<ColumnSlice> ColumnSlices { get; private set; }
 
@@ -29,6 +28,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 Lines = new StringLineGroup(4);
             }
+
             Lines.Add(line);
         }
 
@@ -55,7 +55,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             }
 
             /// <summary>
-            /// Gets or sets the index position of this column (after the |)
+            ///     Gets or sets the index position of this column (after the |)
             /// </summary>
             public int Start { get; set; }
 

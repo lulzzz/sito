@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Figures
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="FigureCaption"/>.
+    ///     A HTML renderer for a <see cref="FigureCaption" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{FigureCaption}" />
     public class HtmlFigureCaptionRenderer : HtmlObjectRenderer<FigureCaption>

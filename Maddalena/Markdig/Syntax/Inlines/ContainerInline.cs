@@ -10,23 +10,33 @@ using System.IO;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// A base class for container for <see cref="Inline"/>.
+    ///     A base class for container for <see cref="Inline" />.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.Inline" />
     public class ContainerInline : Inline, IEnumerable<Inline>
     {
         /// <summary>
-        /// Gets the first child.
+        ///     Gets the first child.
         /// </summary>
         public Inline FirstChild { get; private set; }
 
         /// <summary>
-        /// Gets the last child.
+        ///     Gets the last child.
         /// </summary>
         public Inline LastChild { get; private set; }
 
+        IEnumerator<Inline> IEnumerable<Inline>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         /// <summary>
-        /// Clears this instance by removing all its children.
+        ///     Clears this instance by removing all its children.
         /// </summary>
         public void Clear()
         {
@@ -36,12 +46,13 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 child.Parent = null;
                 child = child.PreviousSibling;
             }
+
             FirstChild = null;
             LastChild = null;
         }
 
         /// <summary>
-        /// Appends a child to this container.
+        ///     Appends a child to this container.
         /// </summary>
         /// <param name="child">The child to append to this container..</param>
         /// <returns>This instance</returns>
@@ -65,11 +76,12 @@ namespace Maddalena.Markdig.Syntax.Inlines
             {
                 LastChild.InsertAfter(child);
             }
+
             return this;
         }
 
         /// <summary>
-        /// Checks if this instance contains the specified child.
+        ///     Checks if this instance contains the specified child.
         /// </summary>
         /// <param name="childToFind">The child to find.</param>
         /// <returns><c>true</c> if this instance contains the specified child; <c>false</c> otherwise</returns>
@@ -83,13 +95,15 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 {
                     return true;
                 }
+
                 child = next;
             }
+
             return false;
         }
 
         /// <summary>
-        /// Finds all the descendants.
+        ///     Finds all the descendants.
         /// </summary>
         /// <typeparam name="T">Type of the descendants to find</typeparam>
         /// <returns>An enumeration of T</returns>
@@ -100,9 +114,9 @@ namespace Maddalena.Markdig.Syntax.Inlines
             {
                 var next = child.NextSibling;
 
-                if (child  is T)
+                if (child is T)
                 {
-                    yield return (T)child;
+                    yield return (T) child;
                 }
 
                 if (child is ContainerInline)
@@ -112,13 +126,13 @@ namespace Maddalena.Markdig.Syntax.Inlines
                         yield return subChild;
                     }
                 }
-               
+
                 child = next;
             }
         }
 
         /// <summary>
-        /// Moves all the children of this container after the specified inline.
+        ///     Moves all the children of this container after the specified inline.
         /// </summary>
         /// <param name="parent">The parent.</param>
         public void MoveChildrenAfter(Inline parent)
@@ -138,7 +152,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Embraces this instance by the specified container.
+        ///     Embraces this instance by the specified container.
         /// </summary>
         /// <param name="container">The container to use to embrace this instance.</param>
         /// <exception cref="System.ArgumentNullException">If the container is null</exception>
@@ -154,6 +168,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 container.AppendChild(child);
                 child = next;
             }
+
             AppendChild(container);
         }
 
@@ -208,6 +223,11 @@ namespace Maddalena.Markdig.Syntax.Inlines
             }
         }
 
+        public Enumerator GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
         public struct Enumerator : IEnumerator<Inline>
         {
             private readonly ContainerInline container;
@@ -237,6 +257,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
                     nextChild = currentChild.NextSibling;
                     return true;
                 }
+
                 nextChild = null;
                 return false;
             }
@@ -245,21 +266,6 @@ namespace Maddalena.Markdig.Syntax.Inlines
             {
                 currentChild = nextChild = container.FirstChild;
             }
-        }
-
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        IEnumerator<Inline> IEnumerable<Inline>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

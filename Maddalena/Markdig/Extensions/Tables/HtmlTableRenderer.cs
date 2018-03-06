@@ -10,7 +10,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="Table"/>
+    ///     A HTML renderer for a <see cref="Table" />
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Extensions.Tables.TableBlock}" />
     public class HtmlTableRenderer : HtmlObjectRenderer<Table>
@@ -39,7 +39,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 foreach (var tableColumnDefinition in table.ColumnDefinitions)
                 {
-                    var width = Math.Round(tableColumnDefinition.Width*100)/100;
+                    var width = Math.Round(tableColumnDefinition.Width * 100) / 100;
                     var widthValue = string.Format(CultureInfo.InvariantCulture, "{0:0.##}", width);
                     renderer.WriteLine($"<col style=\"width:{widthValue}%\">");
                 }
@@ -47,7 +47,7 @@ namespace Maddalena.Markdig.Extensions.Tables
 
             foreach (var rowObj in table)
             {
-                var row = (TableRow)rowObj;
+                var row = (TableRow) rowObj;
                 if (row.IsHeader)
                 {
                     // Allow a single thead
@@ -56,6 +56,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                         renderer.WriteLine("<thead>");
                         isHeaderOpen = true;
                     }
+
                     hasAlreadyHeader = true;
                 }
                 else if (!hasBody)
@@ -69,11 +70,12 @@ namespace Maddalena.Markdig.Extensions.Tables
                     renderer.WriteLine("<tbody>");
                     hasBody = true;
                 }
+
                 renderer.WriteLine("<tr>");
                 for (int i = 0; i < row.Count; i++)
                 {
                     var cellObj = row[i];
-                    var cell = (TableCell)cellObj;
+                    var cell = (TableCell) cellObj;
 
                     renderer.EnsureLine();
                     renderer.Write(row.IsHeader ? "<th" : "<td");
@@ -81,16 +83,20 @@ namespace Maddalena.Markdig.Extensions.Tables
                     {
                         renderer.Write($" colspan=\"{cell.ColumnSpan}\"");
                     }
+
                     if (cell.RowSpan != 1)
                     {
                         renderer.Write($" rowspan=\"{cell.RowSpan}\"");
                     }
+
                     if (table.ColumnDefinitions.Count > 0)
                     {
                         var columnIndex = cell.ColumnIndex < 0 || cell.ColumnIndex >= table.ColumnDefinitions.Count
                             ? i
                             : cell.ColumnIndex;
-                        columnIndex = columnIndex >= table.ColumnDefinitions.Count ? table.ColumnDefinitions.Count - 1 : columnIndex;
+                        columnIndex = columnIndex >= table.ColumnDefinitions.Count
+                            ? table.ColumnDefinitions.Count - 1
+                            : columnIndex;
                         var alignment = table.ColumnDefinitions[columnIndex].Alignment;
                         if (alignment.HasValue)
                         {
@@ -108,6 +114,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                             }
                         }
                     }
+
                     renderer.WriteAttributes(cell);
                     renderer.Write(">");
 
@@ -116,11 +123,13 @@ namespace Maddalena.Markdig.Extensions.Tables
                     {
                         renderer.ImplicitParagraph = true;
                     }
+
                     renderer.Write(cell);
                     renderer.ImplicitParagraph = previousImplicitParagraph;
 
                     renderer.WriteLine(row.IsHeader ? "</th>" : "</td>");
                 }
+
                 renderer.WriteLine("</tr>");
             }
 
@@ -132,6 +141,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 renderer.WriteLine("</thead>");
             }
+
             renderer.WriteLine("</table>");
         }
     }

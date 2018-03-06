@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// An Normalize renderer for a <see cref="CodeBlock"/> and <see cref="FencedCodeBlock"/>.
+    ///     An Normalize renderer for a <see cref="CodeBlock" /> and <see cref="FencedCodeBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.CodeBlock}" />
     public class CodeBlockRenderer : NormalizeObjectRenderer<CodeBlock>
@@ -25,6 +25,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
                 {
                     renderer.Write(fencedCodeBlock.Info);
                 }
+
                 if (!string.IsNullOrEmpty(fencedCodeBlock.Arguments))
                 {
                     renderer.Write(" ").Write(fencedCodeBlock.Arguments);

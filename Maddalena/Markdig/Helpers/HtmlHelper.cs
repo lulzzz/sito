@@ -8,19 +8,19 @@ using System.Text;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Helper to parse several HTML tags.
+    ///     Helper to parse several HTML tags.
     /// </summary>
     public static class HtmlHelper
     {
-        private static readonly char[] SearchBackAndAmp = { '\\', '&' };
-        private static readonly char[] SearchAmp = { '&' };
+        private static readonly char[] SearchBackAndAmp = {'\\', '&'};
+        private static readonly char[] SearchAmp = {'&'};
         private static readonly string[] EscapeUrlsForAscii = new string[128];
 
         static HtmlHelper()
         {
             for (int i = 0; i < EscapeUrlsForAscii.Length; i++)
             {
-                if (i <= 32 || @"""'<>[\]^`{|}~".IndexOf((char)i) >= 0 || i == 127)
+                if (i <= 32 || @"""'<>[\]^`{|}~".IndexOf((char) i) >= 0 || i == 127)
                 {
                     EscapeUrlsForAscii[i] = $"%{i:X2}";
                 }
@@ -30,6 +30,7 @@ namespace Maddalena.Markdig.Helpers
                 }
             }
         }
+
         public static string EscapeUrlCharacter(char c)
         {
             return c < 128 ? EscapeUrlsForAscii[c] : null;
@@ -57,6 +58,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             c = text.NextChar();
 
             builder.Append('<');
@@ -95,6 +97,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             builder.Append(c);
 
             while (true)
@@ -137,6 +140,7 @@ namespace Maddalena.Markdig.Helpers
                         {
                             return false;
                         }
+
                         text.NextChar();
                         builder.Append('>');
                         return true;
@@ -169,6 +173,7 @@ namespace Maddalena.Markdig.Helpers
                                 {
                                     return false;
                                 }
+
                                 if (c != openingStringChar)
                                 {
                                     builder.Append(c);
@@ -178,6 +183,7 @@ namespace Maddalena.Markdig.Helpers
                                     break;
                                 }
                             }
+
                             builder.Append(c);
                             c = text.NextChar();
                         }
@@ -191,10 +197,13 @@ namespace Maddalena.Markdig.Helpers
                                 {
                                     return false;
                                 }
-                                if (c == ' ' || c == '\n' || c == '"' || c == '\'' || c == '=' || c == '<' || c == '>' || c == '`')
+
+                                if (c == ' ' || c == '\n' || c == '"' || c == '\'' || c == '=' || c == '<' ||
+                                    c == '>' || c == '`')
                                 {
                                     break;
                                 }
+
                                 matchCount++;
                                 builder.Append(c);
                                 c = text.NextChar();
@@ -220,6 +229,7 @@ namespace Maddalena.Markdig.Helpers
                         {
                             return false;
                         }
+
                         builder.Append(c);
 
                         while (true)
@@ -284,7 +294,7 @@ namespace Maddalena.Markdig.Helpers
                 text.NextChar() == 'D' &&
                 text.NextChar() == 'A' &&
                 text.NextChar() == 'T' &&
-                text.NextChar() == 'A' && 
+                text.NextChar() == 'A' &&
                 (c = text.NextChar()) == '[')
             {
                 builder.Append("CDATA[");
@@ -313,9 +323,11 @@ namespace Maddalena.Markdig.Helpers
                             return false;
                         }
                     }
+
                     builder.Append(c);
                 }
             }
+
             return false;
         }
 
@@ -329,6 +341,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             builder.Append(c);
 
             bool skipSpaces = false;
@@ -360,6 +373,7 @@ namespace Maddalena.Markdig.Helpers
 
                 builder.Append(c);
             }
+
             return false;
         }
 
@@ -371,6 +385,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             builder.Append('-');
             builder.Append('-');
             if (text.PeekChar(1) == '>')
@@ -395,8 +410,10 @@ namespace Maddalena.Markdig.Helpers
                         text.NextChar();
                         return true;
                     }
+
                     return false;
                 }
+
                 countHyphen = c == '-' ? countHyphen + 1 : 0;
                 builder.Append(c);
             }
@@ -420,13 +437,14 @@ namespace Maddalena.Markdig.Helpers
                     text.NextChar();
                     return true;
                 }
+
                 prevChar = c;
                 builder.Append(c);
             }
         }
 
         /// <summary>
-        /// Destructively unescape a string: remove backslashes before punctuation or symbol characters.
+        ///     Destructively unescape a string: remove backslashes before punctuation or symbol characters.
         /// </summary>
         /// <param name="text">The string data that will be changed by unescaping any punctuation or symbol characters.</param>
         /// <param name="removeBackSlash">if set to <c>true</c> [remove back slash].</param>
@@ -455,6 +473,7 @@ namespace Maddalena.Markdig.Helpers
                     sb = StringBuilderCache.Local();
                     sb.Length = 0;
                 }
+
                 c = text[searchPos];
                 if (removeBackSlash && c == '\\')
                 {
@@ -475,7 +494,8 @@ namespace Maddalena.Markdig.Helpers
                     int entityNameStart;
                     int entityNameLength;
                     int numericEntity;
-                    var match = ScanEntity(new StringSlice(text, searchPos, text.Length - 1), out numericEntity, out entityNameStart, out entityNameLength);
+                    var match = ScanEntity(new StringSlice(text, searchPos, text.Length - 1), out numericEntity,
+                        out entityNameStart, out entityNameLength);
                     if (match == 0)
                     {
                         searchPos++;
@@ -486,7 +506,8 @@ namespace Maddalena.Markdig.Helpers
 
                         if (entityNameLength > 0)
                         {
-                            var namedEntity = new StringSlice(text, entityNameStart, entityNameStart + entityNameLength - 1);
+                            var namedEntity = new StringSlice(text, entityNameStart,
+                                entityNameStart + entityNameLength - 1);
                             var decoded = EntityHelper.DecodeEntity(namedEntity.ToString());
                             if (decoded != null)
                             {
@@ -531,10 +552,11 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Scans an entity.
-        /// Returns number of chars matched.
+        ///     Scans an entity.
+        ///     Returns number of chars matched.
         /// </summary>
-        public static int ScanEntity<T>(T slice, out int numericEntity, out int namedEntityStart,  out int namedEntityLength) where T : ICharIterator
+        public static int ScanEntity<T>(T slice, out int numericEntity, out int namedEntityStart,
+            out int namedEntityLength) where T : ICharIterator
         {
             // Credits: code from CommonMark.NET
             // Copyright (c) 2014, Kārlis Gaņģis All rights reserved. 
@@ -558,7 +580,7 @@ namespace Maddalena.Markdig.Helpers
             var start = slice.Start;
             char c = slice.NextChar();
             int counter = 0;
-            
+
             if (c == '#')
             {
                 c = slice.PeekChar();
@@ -572,19 +594,19 @@ namespace Maddalena.Markdig.Helpers
                         if (c >= '0' && c <= '9')
                         {
                             if (++counter == 9) return 0;
-                            numericEntity = numericEntity*16 + (c - '0');
+                            numericEntity = numericEntity * 16 + (c - '0');
                             continue;
                         }
                         else if (c >= 'A' && c <= 'F')
                         {
                             if (++counter == 9) return 0;
-                            numericEntity = numericEntity*16 + (c - 'A' + 10);
+                            numericEntity = numericEntity * 16 + (c - 'A' + 10);
                             continue;
                         }
                         else if (c >= 'a' && c <= 'f')
                         {
                             if (++counter == 9) return 0;
-                            numericEntity = numericEntity*16 + (c - 'a' + 10);
+                            numericEntity = numericEntity * 16 + (c - 'a' + 10);
                             continue;
                         }
 
@@ -604,7 +626,7 @@ namespace Maddalena.Markdig.Helpers
                         if (c >= '0' && c <= '9')
                         {
                             if (++counter == 9) return 0;
-                            numericEntity = numericEntity*10 + (c - '0');
+                            numericEntity = numericEntity * 10 + (c - '0');
                             continue;
                         }
 

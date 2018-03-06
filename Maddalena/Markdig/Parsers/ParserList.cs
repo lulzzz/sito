@@ -10,7 +10,7 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Base class for a list of parsers.
+    ///     Base class for a list of parsers.
     /// </summary>
     /// <typeparam name="T">Type of the parser</typeparam>
     /// <typeparam name="TState">The type of the parser state.</typeparam>
@@ -43,6 +43,7 @@ namespace Maddalena.Markdig.Parsers
                         {
                             charCounter[openingChar] = 0;
                         }
+
                         charCounter[openingChar]++;
                     }
                 }
@@ -87,17 +88,17 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Gets the list of global parsers (that don't have any opening characters defined)
+        ///     Gets the list of global parsers (that don't have any opening characters defined)
         /// </summary>
         public T[] GlobalParsers => globalParsers;
 
         /// <summary>
-        /// Gets all the opening characters defined.
+        ///     Gets all the opening characters defined.
         /// </summary>
         public char[] OpeningCharacters => charMap.OpeningCharacters;
 
         /// <summary>
-        /// Gets the list of parsers valid for the specified opening character.
+        ///     Gets the list of parsers valid for the specified opening character.
         /// </summary>
         /// <param name="openingChar">The opening character.</param>
         /// <returns>A list of parsers valid for the specified opening character or null if no parsers registered.</returns>
@@ -108,12 +109,15 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Searches for an opening character from a registered parser in the specified string.
+        ///     Searches for an opening character from a registered parser in the specified string.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="start">The start.</param>
         /// <param name="end">The end.</param>
-        /// <returns>Index position within the string of the first opening character found in the specified text; if not found, returns -1</returns>
+        /// <returns>
+        ///     Index position within the string of the first opening character found in the specified text; if not found,
+        ///     returns -1
+        /// </returns>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
         public int IndexOfOpeningCharacter(string text, int start, int end)
         {
@@ -121,11 +125,11 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Initializes this instance with specified parser state.
+        ///     Initializes this instance with specified parser state.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">
-        /// Unexpected null parser found
-        /// or
+        ///     Unexpected null parser found
+        ///     or
         /// </exception>
         private void Initialize()
         {

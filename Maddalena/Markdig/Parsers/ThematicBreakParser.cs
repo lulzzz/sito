@@ -8,18 +8,18 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A block parser for a <see cref="ThematicBreakBlock"/>.
+    ///     A block parser for a <see cref="ThematicBreakBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class ThematicBreakParser : BlockParser
     {
         /// <summary>
-        /// A singleton instance used by other parsers.
+        ///     A singleton instance used by other parsers.
         /// </summary>
         public static readonly ThematicBreakParser Default = new ThematicBreakParser();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ThematicBreakParser"/> class.
+        ///     Initializes a new instance of the <see cref="ThematicBreakParser" /> class.
         /// </summary>
         public ThematicBreakParser()
         {

@@ -9,13 +9,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for parsing <see cref="AutolinkInline"/>.
+    ///     An inline parser for parsing <see cref="AutolinkInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class AutolineInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutolineInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="AutolineInlineParser" /> class.
         /// </summary>
         public AutolineInlineParser()
         {
@@ -24,7 +24,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to enable HTML parsing. Default is <c>true</c>
+        ///     Gets or sets a value indicating whether to enable HTML parsing. Default is <c>true</c>
         /// </summary>
         public bool EnableHtmlParsing { get; set; }
 
@@ -41,7 +41,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 {
                     IsEmail = isEmail,
                     Url = link,
-                    Span = new SourceSpan(processor.GetSourcePosition(saved.Start, out line, out column), processor.GetSourcePosition(slice.Start - 1)),
+                    Span = new SourceSpan(processor.GetSourcePosition(saved.Start, out line, out column),
+                        processor.GetSourcePosition(slice.Start - 1)),
                     Line = line,
                     Column = column
                 };
@@ -58,7 +59,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 processor.Inline = new HtmlInline()
                 {
                     Tag = htmlTag,
-                    Span = new SourceSpan(processor.GetSourcePosition(saved.Start, out line, out column), processor.GetSourcePosition(slice.Start - 1)),
+                    Span = new SourceSpan(processor.GetSourcePosition(saved.Start, out line, out column),
+                        processor.GetSourcePosition(slice.Start - 1)),
                     Line = line,
                     Column = column
                 };

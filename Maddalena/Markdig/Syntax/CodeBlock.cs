@@ -7,15 +7,15 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Repressents an indented code block.
+    ///     Repressents an indented code block.
     /// </summary>
     /// <remarks>
-    /// Related to CommonMark spec: 4.4 Indented code blocks 
+    ///     Related to CommonMark spec: 4.4 Indented code blocks
     /// </remarks>
     public class CodeBlock : LeafBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeBlock"/> class.
+        ///     Initializes a new instance of the <see cref="CodeBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser.</param>
         public CodeBlock(BlockParser parser) : base(parser)

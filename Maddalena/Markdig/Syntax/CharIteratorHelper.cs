@@ -3,7 +3,7 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Helpers for the <see cref="ICharIterator"/> class.
+    ///     Helpers for the <see cref="ICharIterator" /> class.
     /// </summary>
     public static class CharIteratorHelper
     {
@@ -18,9 +18,11 @@ namespace Maddalena.Markdig.Syntax
                 {
                     countNewLines++;
                 }
+
                 hasWhitespaces = true;
                 c = iterator.NextChar();
             }
+
             return hasWhitespaces;
         }
     }

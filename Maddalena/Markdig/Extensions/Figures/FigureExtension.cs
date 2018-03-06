@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Figures
 {
     /// <summary>
-    /// Extension to allow usage of figures and figure captions.
+    ///     Extension to allow usage of figures and figure captions.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class FigureExtension : IMarkdownExtension

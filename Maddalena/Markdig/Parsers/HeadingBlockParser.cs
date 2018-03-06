@@ -8,14 +8,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Block parser for a <see cref="HeadingBlock"/>.
+    ///     Block parser for a <see cref="HeadingBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class HeadingBlockParser : BlockParser, IAttributesParseable
     {
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="HeadingBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="HeadingBlockParser" /> class.
         /// </summary>
         public HeadingBlockParser()
         {
@@ -23,7 +22,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// A delegates that allows to process attached attributes after #
+        ///     A delegates that allows to process attached attributes after #
         /// </summary>
         public TryParseAttributesDelegate TryParseAttributes { get; set; }
 
@@ -58,6 +57,7 @@ namespace Maddalena.Markdig.Parsers
                 {
                     break;
                 }
+
                 c = line.NextChar();
                 leadingCount++;
             }
@@ -71,7 +71,7 @@ namespace Maddalena.Markdig.Parsers
                     HeaderChar = matchingChar,
                     Level = leadingCount,
                     Column = column,
-                    Span = { Start =  sourcePosition }
+                    Span = {Start = sourcePosition}
                 };
                 processor.NewBlocks.Push(headingBlock);
                 processor.GoToColumn(column + leadingCount + 1);
@@ -85,7 +85,9 @@ namespace Maddalena.Markdig.Parsers
                 // The optional closing sequence of #s must be preceded by a space and may be followed by spaces only.
                 int endState = 0;
                 int countClosingTags = 0;
-                for (int i = processor.Line.End; i >= processor.Line.Start - 1; i--)  // Go up to Start - 1 in order to match the space after the first ###
+                for (int i = processor.Line.End;
+                    i >= processor.Line.Start - 1;
+                    i--) // Go up to Start - 1 in order to match the space after the first ###
                 {
                     c = processor.Line.Text[i];
                     if (endState == 0)
@@ -94,8 +96,10 @@ namespace Maddalena.Markdig.Parsers
                         {
                             continue;
                         }
+
                         endState = 1;
                     }
+
                     if (endState == 1)
                     {
                         if (c == matchingChar)
@@ -110,6 +114,7 @@ namespace Maddalena.Markdig.Parsers
                             {
                                 processor.Line.End = i - 1;
                             }
+
                             break;
                         }
                         else
@@ -132,7 +137,7 @@ namespace Maddalena.Markdig.Parsers
 
         public override bool Close(BlockProcessor processor, Block block)
         {
-            var heading = (HeadingBlock)block;
+            var heading = (HeadingBlock) block;
             heading.Lines.Trim();
             return true;
         }

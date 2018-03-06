@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A delegates that allows to porcess attached attributes at <see cref="BlockParser"/> time.
+    ///     A delegates that allows to porcess attached attributes at <see cref="BlockParser" /> time.
     /// </summary>
     /// <param name="processor">The processor.</param>
     /// <param name="slice">The slice to look for attached attributes.</param>
@@ -18,12 +18,13 @@ namespace Maddalena.Markdig.Parsers
         BlockProcessor processor, ref StringSlice slice, IBlock block);
 
     /// <summary>
-    /// An interface used to tag <see cref="BlockParser"/> that supports parsing <see cref="Markdig.Renderers.Html.HtmlAttributes"/>
+    ///     An interface used to tag <see cref="BlockParser" /> that supports parsing
+    ///     <see cref="Markdig.Renderers.Html.HtmlAttributes" />
     /// </summary>
     public interface IAttributesParseable
     {
         /// <summary>
-        /// A delegates that allows to process attached attributes
+        ///     A delegates that allows to process attached attributes
         /// </summary>
         TryParseAttributesDelegate TryParseAttributes { get; set; }
     }

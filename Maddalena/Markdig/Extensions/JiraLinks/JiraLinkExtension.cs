@@ -10,8 +10,8 @@ using Maddalena.Markdig.Renderers.Normalize.Inlines;
 namespace Maddalena.Markdig.Extensions.JiraLinks
 {
     /// <summary>
-    /// Simple inline parser extension for Markdig to find, and 
-    /// automatically add links to JIRA issue numbers.
+    ///     Simple inline parser extension for Markdig to find, and
+    ///     automatically add links to JIRA issue numbers.
     /// </summary>
     public class JiraLinkExtension : IMarkdownExtension
     {
@@ -42,5 +42,4 @@ namespace Maddalena.Markdig.Extensions.JiraLinks
             }
         }
     }
-    
 }

@@ -11,17 +11,17 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
-    /// A block parser for abbreviations.
+    ///     A block parser for abbreviations.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class AbbreviationParser : BlockParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbbreviationParser"/> class.
+        ///     Initializes a new instance of the <see cref="AbbreviationParser" /> class.
         /// </summary>
         public AbbreviationParser()
         {
-            OpeningCharacters = new[] { '*' };
+            OpeningCharacters = new[] {'*'};
         }
 
         public override BlockState TryOpen(BlockProcessor processor)
@@ -52,6 +52,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
             {
                 return BlockState.None;
             }
+
             slice.NextChar();
 
             slice.Trim();
@@ -69,6 +70,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
             {
                 processor.Document.ProcessInlinesBegin += DocumentOnProcessInlinesBegin;
             }
+
             processor.Document.AddAbbreviation(abbr.Label, abbr);
 
             return BlockState.BreakDiscard;
@@ -91,7 +93,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
 
             inlineProcessor.LiteralInlineParser.PostMatch += (InlineProcessor processor, ref StringSlice slice) =>
             {
-                var literal = (LiteralInline)processor.Inline;
+                var literal = (LiteralInline) processor.Inline;
                 var originalLiteral = literal;
 
                 ContainerInline container = null;
@@ -102,7 +104,8 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                 for (int i = content.Start; i < content.End; i++)
                 {
                     string match;
-                    if (matcher.TryMatch(text, i, content.End - i + 1, out match) && IsValidAbbreviation(match, content, i))
+                    if (matcher.TryMatch(text, i, content.End - i + 1, out match) &&
+                        IsValidAbbreviation(match, content, i))
                     {
                         var indexAfterMatch = i + match.Length;
 
@@ -117,12 +120,12 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                         if (container == null)
                         {
                             container = literal.Parent ??
-                                new ContainerInline
-                                {
-                                    Span = originalLiteral.Span,
-                                    Line = originalLiteral.Line,
-                                    Column = originalLiteral.Column,
-                                };
+                                        new ContainerInline
+                                        {
+                                            Span = originalLiteral.Span,
+                                            Line = originalLiteral.Line,
+                                            Column = originalLiteral.Column,
+                                        };
                         }
 
                         int line;
@@ -145,7 +148,6 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                             {
                                 container.AppendChild(literal);
                             }
-
                         }
 
                         literal.Span.End = abbrInline.Span.Start - 1;
@@ -184,6 +186,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                     {
                         container.AppendChild(literal);
                     }
+
                     processor.Inline = container;
                 }
             };
@@ -210,6 +213,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                 {
                     break;
                 }
+
                 index--;
             }
 
@@ -234,8 +238,10 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                 {
                     break;
                 }
+
                 index++;
             }
+
             return true;
         }
     }

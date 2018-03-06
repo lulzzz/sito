@@ -1,12 +1,12 @@
 ﻿namespace Maddalena.Modules.Geocoding
 {
-	public class ComponentFilter
-	{
-		public string Filter { get; set; }
+    public class ComponentFilter
+    {
+        public ComponentFilter(string component, string value)
+        {
+            Filter = string.Format("{0}:{1}", component, value);
+        }
 
-		public ComponentFilter(string component, string value)
-		{
-			Filter = string.Format("{0}:{1}", component, value);
-		}
-	}
+        public string Filter { get; set; }
+    }
 }

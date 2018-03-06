@@ -1,13 +1,13 @@
 ﻿using AspNetCore.Identity.Mongo;
 using Maddalena.Security;
 using Maddalena.Security.DynamicPolicy;
-using Mongolino;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mongolino;
 
 namespace Maddalena
 {
@@ -42,7 +42,7 @@ namespace Maddalena
                     policy => policy.Requirements.Add(new DynamicPolicy()));
             });
             services.AddSingleton<IAuthorizationHandler, DynamicPolicyHandler<DynamicAccessStore>>();
-            
+
             services.AddMvc();
         }
 
@@ -70,18 +70,18 @@ namespace Maddalena
                 routes.MapRoute(
                     name: "search",
                     template: "search",
-                    defaults: new { controller = "Blog", action = "Search", id = "" });
+                    defaults: new {controller = "Blog", action = "Search", id = ""});
 
                 routes.MapRoute(
                     name: "read",
                     template: "read",
-                    defaults: new { controller = "Blog", action = "Read", id = "" });
+                    defaults: new {controller = "Blog", action = "Read", id = ""});
 
 
                 routes.MapRoute(
                     name: "dropbox",
                     template: "dropbox",
-                    defaults: new { controller = "File", action = "Dropbox", id = "" });
+                    defaults: new {controller = "File", action = "Dropbox", id = ""});
 
                 routes.MapRoute(
                     name: "default",

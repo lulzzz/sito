@@ -11,13 +11,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.AutoLinks
 {
     /// <summary>
-    /// The inline parser used to for autolinks.
+    ///     The inline parser used to for autolinks.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class AutoLinkParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoLinkParser"/> class.
+        ///     Initializes a new instance of the <see cref="AutoLinkParser" /> class.
         /// </summary>
         public AutoLinkParser()
         {
@@ -64,18 +64,21 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                     {
                         return false;
                     }
+
                     break;
                 case 'f':
                     if (!slice.MatchLowercase("tp://", 1))
                     {
                         return false;
                     }
+
                     break;
                 case 'm':
                     if (!slice.MatchLowercase("ailto:", 1))
                     {
                         return false;
                     }
+
                     break;
 
                 case 'w':
@@ -83,6 +86,7 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                     {
                         return false;
                     }
+
                     break;
             }
 
@@ -109,6 +113,7 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                         {
                             link = link.Substring(0, i + 1);
                         }
+
                         break;
                     }
                 }
@@ -123,18 +128,21 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                     {
                         return false;
                     }
+
                     break;
                 case 'f':
                     if (string.Equals(link, "ftp://", StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }
+
                     break;
                 case 'm':
                     if (string.Equals(link, "mailto:", StringComparison.OrdinalIgnoreCase) || !link.Contains("@"))
                     {
                         return false;
                     }
+
                     break;
 
                 case 'w':
@@ -143,6 +151,7 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                     {
                         return false;
                     }
+
                     break;
             }
 
@@ -170,7 +179,8 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                 Span = inline.Span,
                 Line = line,
                 Column = column,
-                Content = new StringSlice(slice.Text, startPosition + skipFromBeginning, startPosition + link.Length - 1),
+                Content = new StringSlice(slice.Text, startPosition + skipFromBeginning,
+                    startPosition + link.Length - 1),
                 IsClosed = true
             });
             processor.Inline = inline;
@@ -235,12 +245,14 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                             // Not optimized for GC, but we don't expect this case much
                             pendingEmphasis = new List<char>();
                         }
+
                         if (!pendingEmphasis.Contains(emphasisDelimiter.DelimiterChar))
                         {
                             pendingEmphasis.Add(emphasisDelimiter.DelimiterChar);
                         }
                     }
                 }
+
                 currentInline = currentInline.Parent;
             }
 

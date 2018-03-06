@@ -10,13 +10,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// An HTML renderer for a <see cref="CodeBlock"/> and <see cref="FencedCodeBlock"/>.
+    ///     An HTML renderer for a <see cref="CodeBlock" /> and <see cref="FencedCodeBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.CodeBlock}" />
     public class CodeBlockRenderer : HtmlObjectRenderer<CodeBlock>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeBlockRenderer"/> class.
+        ///     Initializes a new instance of the <see cref="CodeBlockRenderer" /> class.
         /// </summary>
         public CodeBlockRenderer()
         {
@@ -26,7 +26,7 @@ namespace Maddalena.Markdig.Renderers.Html
         public bool OutputAttributesOnPre { get; set; }
 
         /// <summary>
-        /// Gets a map of fenced code block infos that should be rendered as div blocks instead of pre/code blocks.
+        ///     Gets a map of fenced code block infos that should be rendered as div blocks instead of pre/code blocks.
         /// </summary>
         public HashSet<string> BlocksAsDiv { get; }
 
@@ -46,9 +46,9 @@ namespace Maddalena.Markdig.Renderers.Html
                 if (renderer.EnableHtmlForBlock)
                 {
                     renderer.Write("<div")
-                            .WriteAttributes(obj.TryGetAttributes(),
-                                cls => cls.StartsWith(infoPrefix) ? cls.Substring(infoPrefix.Length) : cls)
-                            .Write(">");
+                        .WriteAttributes(obj.TryGetAttributes(),
+                            cls => cls.StartsWith(infoPrefix) ? cls.Substring(infoPrefix.Length) : cls)
+                        .Write(">");
                 }
 
                 renderer.WriteLeafRawLines(obj, true, true, true);
@@ -57,7 +57,6 @@ namespace Maddalena.Markdig.Renderers.Html
                 {
                     renderer.WriteLine("</div>");
                 }
-
             }
             else
             {

@@ -9,13 +9,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for <see cref="LineBreakInline"/>.
+    ///     An inline parser for <see cref="LineBreakInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class LineBreakInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineBreakInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="LineBreakInlineParser" /> class.
         /// </summary>
         public LineBreakInlineParser()
         {
@@ -23,7 +23,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to interpret softline breaks as hardline breaks. Default is false
+        ///     Gets or sets a value indicating whether to interpret softline breaks as hardline breaks. Default is false
         /// </summary>
         public bool EnableSoftAsHard { get; set; }
 
@@ -43,7 +43,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
             int column;
             processor.Inline = new LineBreakInline
             {
-                Span = { Start = processor.GetSourcePosition(startPosition, out line, out column)},
+                Span = {Start = processor.GetSourcePosition(startPosition, out line, out column)},
                 IsHard = EnableSoftAsHard || (slice.Start != 0 && hasDoubleSpacesBefore),
                 Line = line,
                 Column = column

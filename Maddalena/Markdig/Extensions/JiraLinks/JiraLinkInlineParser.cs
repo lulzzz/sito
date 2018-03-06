@@ -12,12 +12,12 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.JiraLinks
 {
     /// <summary>
-    /// Finds and replaces JIRA links inline
+    ///     Finds and replaces JIRA links inline
     /// </summary>
     public class JiraLinkInlineParser : InlineParser
     {
-        private readonly JiraLinkOptions _options;
         private readonly string _baseUrl;
+        private readonly JiraLinkOptions _options;
 
         public JiraLinkInlineParser(JiraLinkOptions options)
         {
@@ -33,7 +33,7 @@ namespace Maddalena.Markdig.Extensions.JiraLinks
             var pc = slice.PeekCharExtra(-1);
             if (!pc.IsWhiteSpaceOrZero() && pc != '(')
             {
-                return false; 
+                return false;
             }
 
             var current = slice.CurrentChar;
@@ -65,7 +65,7 @@ namespace Maddalena.Markdig.Extensions.JiraLinks
             var startIssue = slice.Start;
             var endIssue = slice.Start;
 
-            while (current.IsDigit()) 
+            while (current.IsDigit())
             {
                 endIssue = slice.Start;
                 current = slice.NextChar();
@@ -112,5 +112,4 @@ namespace Maddalena.Markdig.Extensions.JiraLinks
             return true;
         }
     }
-
 }

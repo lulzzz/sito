@@ -7,13 +7,13 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Represents a group of lines that is treated as raw HTML (and will not be escaped in HTML output).
+    ///     Represents a group of lines that is treated as raw HTML (and will not be escaped in HTML output).
     /// </summary>
     /// <seealso cref="Markdig.Syntax.LeafBlock" />
     public class HtmlBlock : LeafBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlBlock"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser.</param>
         public HtmlBlock(BlockParser parser) : base(parser)
@@ -21,7 +21,7 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Gets or sets the type of block.
+        ///     Gets or sets the type of block.
         /// </summary>
         public HtmlBlockType Type { get; set; }
     }

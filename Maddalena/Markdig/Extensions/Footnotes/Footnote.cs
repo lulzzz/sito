@@ -9,11 +9,16 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
-    /// A block for a footnote.
+    ///     A block for a footnote.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.ContainerBlock" />
     public class Footnote : ContainerBlock
     {
+        /// <summary>
+        ///     The label span
+        /// </summary>
+        public SourceSpan LabelSpan;
+
         public Footnote(BlockParser parser) : base(parser)
         {
             Links = new List<FootnoteLink>();
@@ -21,24 +26,20 @@ namespace Maddalena.Markdig.Extensions.Footnotes
         }
 
         /// <summary>
-        /// Gets or sets the label used by this footnote.
+        ///     Gets or sets the label used by this footnote.
         /// </summary>
         public string Label { get; set; }
 
         /// <summary>
-        /// Gets or sets the order of this footnote (determined by the order of the <see cref="FootnoteLink"/> in the document)
+        ///     Gets or sets the order of this footnote (determined by the order of the <see cref="FootnoteLink" /> in the
+        ///     document)
         /// </summary>
         public int Order { get; set; }
 
         /// <summary>
-        /// Gets the links referencing this footnote.
+        ///     Gets the links referencing this footnote.
         /// </summary>
         public List<FootnoteLink> Links { get; private set; }
-
-        /// <summary>
-        /// The label span
-        /// </summary>
-        public SourceSpan LabelSpan;
 
         internal bool IsLastLineEmpty { get; set; }
     }

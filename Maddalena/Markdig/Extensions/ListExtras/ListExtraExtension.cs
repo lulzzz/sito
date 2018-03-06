@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.ListExtras
 {
     /// <summary>
-    /// Extension for adding new type of list items (a., A., i., I.)
+    ///     Extension for adding new type of list items (a., A., i., I.)
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class ListExtraExtension : IMarkdownExtension

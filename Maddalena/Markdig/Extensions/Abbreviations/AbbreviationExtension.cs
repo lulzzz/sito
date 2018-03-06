@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
-    /// Extension to allow abbreviations.
+    ///     Extension to allow abbreviations.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class AbbreviationExtension : IMarkdownExtension

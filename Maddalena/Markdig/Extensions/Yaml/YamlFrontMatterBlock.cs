@@ -8,13 +8,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Yaml
 {
     /// <summary>
-    /// A YAML frontmatter block.
+    ///     A YAML frontmatter block.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.CodeBlock" />
     public class YamlFrontMatterBlock : CodeBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="YamlFrontMatterBlock"/> class.
+        ///     Initializes a new instance of the <see cref="YamlFrontMatterBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser.</param>
         public YamlFrontMatterBlock(BlockParser parser) : base(parser)

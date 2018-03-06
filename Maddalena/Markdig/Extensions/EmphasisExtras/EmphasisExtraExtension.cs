@@ -10,13 +10,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.EmphasisExtras
 {
     /// <summary>
-    /// Extension for strikethrough, subscript, superscript, inserted and marked.
+    ///     Extension for strikethrough, subscript, superscript, inserted and marked.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class EmphasisExtraExtension : IMarkdownExtension
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmphasisExtraExtension"/> class.
+        ///     Initializes a new instance of the <see cref="EmphasisExtraExtension" /> class.
         /// </summary>
         /// <param name="options">The options.</param>
         public EmphasisExtraExtension(EmphasisExtraOptions options = EmphasisExtraOptions.Default)
@@ -25,7 +25,7 @@ namespace Maddalena.Markdig.Extensions.EmphasisExtras
         }
 
         /// <summary>
-        /// Gets the options.
+        ///     Gets the options.
         /// </summary>
         public EmphasisExtraOptions Options { get; }
 
@@ -52,14 +52,17 @@ namespace Maddalena.Markdig.Extensions.EmphasisExtras
                     {
                         hasTilde = true;
                     }
+
                     if (requireSup && emphasis.Character == '^')
                     {
                         hasSup = true;
                     }
+
                     if (requirePlus && emphasis.Character == '+')
                     {
                         hasPlus = true;
                     }
+
                     if (requireEqual && emphasis.Character == '=')
                     {
                         hasEqual = true;
@@ -70,14 +73,17 @@ namespace Maddalena.Markdig.Extensions.EmphasisExtras
                 {
                     parser.EmphasisDescriptors.Add(new EmphasisDescriptor('~', 1, 2, true));
                 }
+
                 if (requireSup && !hasSup)
                 {
                     parser.EmphasisDescriptors.Add(new EmphasisDescriptor('^', 1, 1, true));
                 }
+
                 if (requirePlus && !hasPlus)
                 {
                     parser.EmphasisDescriptors.Add(new EmphasisDescriptor('+', 2, 2, true));
                 }
+
                 if (requireEqual && !hasEqual)
                 {
                     parser.EmphasisDescriptors.Add(new EmphasisDescriptor('=', 2, 2, true));

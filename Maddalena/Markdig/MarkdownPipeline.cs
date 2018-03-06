@@ -11,16 +11,19 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig
 {
     /// <summary>
-    /// This class is the Markdown pipeline build from a <see cref="MarkdownPipelineBuilder"/>.
+    ///     This class is the Markdown pipeline build from a <see cref="MarkdownPipelineBuilder" />.
     /// </summary>
     public class MarkdownPipeline
     {
+        internal ProcessDocumentDelegate DocumentProcessed;
         // This class is immutable
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MarkdownPipeline" /> class.
+        ///     Initializes a new instance of the <see cref="MarkdownPipeline" /> class.
         /// </summary>
-        internal MarkdownPipeline(OrderedList<IMarkdownExtension> extensions, BlockParserList blockParsers, InlineParserList inlineParsers, StringBuilderCache cache, TextWriter debugLog, ProcessDocumentDelegate documentProcessed)
+        internal MarkdownPipeline(OrderedList<IMarkdownExtension> extensions, BlockParserList blockParsers,
+            InlineParserList inlineParsers, StringBuilderCache cache, TextWriter debugLog,
+            ProcessDocumentDelegate documentProcessed)
         {
             if (blockParsers == null) throw new ArgumentNullException(nameof(blockParsers));
             if (inlineParsers == null) throw new ArgumentNullException(nameof(inlineParsers));
@@ -36,7 +39,7 @@ namespace Maddalena.Markdig
         internal bool PreciseSourceLocation { get; set; }
 
         /// <summary>
-        /// The read-only list of extensions used to build this pipeline.
+        ///     The read-only list of extensions used to build this pipeline.
         /// </summary>
         public OrderedList<IMarkdownExtension> Extensions { get; }
 
@@ -49,10 +52,8 @@ namespace Maddalena.Markdig
         // TODO: Move the log to a better place
         internal TextWriter DebugLog { get; }
 
-        internal ProcessDocumentDelegate DocumentProcessed;
-
         /// <summary>
-        /// Allows to setup a <see cref="IMarkdownRenderer"/>.
+        ///     Allows to setup a <see cref="IMarkdownRenderer" />.
         /// </summary>
         /// <param name="renderer">The markdown renderer to setup</param>
         public void Setup(IMarkdownRenderer renderer)

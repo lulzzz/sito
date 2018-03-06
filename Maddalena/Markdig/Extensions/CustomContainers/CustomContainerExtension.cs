@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.CustomContainers
 {
     /// <summary>
-    /// Extension to allow custom containers.
+    ///     Extension to allow custom containers.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class CustomContainerExtension : IMarkdownExtension
@@ -33,6 +33,7 @@ namespace Maddalena.Markdig.Extensions.CustomContainers
                     {
                         return new CustomContainerInline();
                     }
+
                     return previousCreateEmphasisInline?.Invoke(emphasisChar, strong);
                 };
             }
@@ -48,13 +49,13 @@ namespace Maddalena.Markdig.Extensions.CustomContainers
                     // Must be inserted before CodeBlockRenderer
                     htmlRenderer.ObjectRenderers.Insert(0, new HtmlCustomContainerRenderer());
                 }
+
                 if (!htmlRenderer.ObjectRenderers.Contains<HtmlCustomContainerInlineRenderer>())
                 {
                     // Must be inserted before EmphasisRenderer
                     htmlRenderer.ObjectRenderers.Insert(0, new HtmlCustomContainerInlineRenderer());
                 }
             }
-
         }
     }
 }

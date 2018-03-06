@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Extensions.MediaLinks
 {
     /// <summary>
-    /// Options for the <see cref="MediaLinkExtension"/>.
+    ///     Options for the <see cref="MediaLinkExtension" />.
     /// </summary>
     public class MediaOptions
     {

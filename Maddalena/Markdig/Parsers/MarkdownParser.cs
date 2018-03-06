@@ -10,26 +10,26 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Delegates called when processing a document
+    ///     Delegates called when processing a document
     /// </summary>
     /// <param name="document">The markdown document.</param>
     public delegate void ProcessDocumentDelegate(MarkdownDocument document);
 
     /// <summary>
-    /// The Markdown parser.
+    ///     The Markdown parser.
     /// </summary>
     public sealed class MarkdownParser
     {
         private readonly BlockProcessor blockProcessor;
-        private readonly InlineProcessor inlineProcessor;
         private readonly MarkdownDocument document;
         private readonly ProcessDocumentDelegate documentProcessed;
+        private readonly InlineProcessor inlineProcessor;
         private readonly bool preciseSourceLocation;
 
         private LineReader lineReader;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MarkdownParser" /> class.
+        ///     Initializes a new instance of the <see cref="MarkdownParser" /> class.
         /// </summary>
         /// <param name="text">The reader.</param>
         /// <param name="pipeline">The pipeline.</param>
@@ -52,7 +52,8 @@ namespace Maddalena.Markdig.Parsers
             blockProcessor = new BlockProcessor(stringBuilderCache, document, pipeline.BlockParsers);
 
             // Initialize the inline parsers
-            inlineProcessor = new InlineProcessor(stringBuilderCache, document, pipeline.InlineParsers, pipeline.PreciseSourceLocation)
+            inlineProcessor = new InlineProcessor(stringBuilderCache, document, pipeline.InlineParsers,
+                pipeline.PreciseSourceLocation)
             {
                 DebugLog = pipeline.DebugLog
             };
@@ -61,7 +62,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Parses the specified markdown into an AST <see cref="MarkdownDocument"/>
+        ///     Parses the specified markdown into an AST <see cref="MarkdownDocument" />
         /// </summary>
         /// <param name="text">A Markdown text</param>
         /// <param name="pipeline">The pipeline used for the parsing.</param>
@@ -78,14 +79,14 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Parses the current <see cref="Reader"/> into a Markdown <see cref="MarkdownDocument"/>.
+        ///     Parses the current <see cref="Reader" /> into a Markdown <see cref="MarkdownDocument" />.
         /// </summary>
         /// <returns>A document instance</returns>
         private MarkdownDocument Parse()
         {
             ProcessBlocks();
             ProcessInlines();
-            
+
             // Allow to call a hook after processing a document
             documentProcessed?.Invoke(document);
             return document;
@@ -97,33 +98,26 @@ namespace Maddalena.Markdig.Parsers
             {
                 // Get the precise position of the begining of the line
                 var lineText = lineReader.ReadLine();
-                
+
                 // If this is the end of file and the last line is empty
                 if (lineText == null)
                 {
                     break;
                 }
+
                 blockProcessor.ProcessLine(lineText.Value);
             }
+
             blockProcessor.CloseAll(true);
         }
 
         /// <summary>
-        /// Fixups the zero character by replacing it to a secure character (Section 2.3 Insecure characters, CommonMark specs)
+        ///     Fixups the zero character by replacing it to a secure character (Section 2.3 Insecure characters, CommonMark specs)
         /// </summary>
         /// <param name="text">The text to secure.</param>
         private string FixupZero(string text)
         {
             return text.Replace('\0', CharHelper.ZeroSafeChar);
-        }
-
-        private class ContainerItemCache : DefaultObjectCache<ContainerItem>
-        {
-            protected override void Reset(ContainerItem instance)
-            {
-                instance.Container = null;
-                instance.Index = 0;
-            }
         }
 
         private void ProcessInlines()
@@ -161,6 +155,7 @@ namespace Maddalena.Markdig.Parsers
                                 container[item.Index] = inlineProcessor.BlockNew;
                             }
                         }
+
                         leafBlock.OnProcessInlinesEnd(inlineProcessor);
                     }
                     else if (block is ContainerBlock)
@@ -176,14 +171,16 @@ namespace Maddalena.Markdig.Parsers
                             // Else we have processed it
                             item.Index++;
                         }
+
                         var newItem = cache.Get();
-                        newItem.Container = (ContainerBlock)block;
+                        newItem.Container = (ContainerBlock) block;
                         block.OnProcessInlinesBegin(inlineProcessor);
                         newItem.Index = 0;
                         blocks.Push(newItem);
                         goto process_new_block;
                     }
                 }
+
                 item = blocks.Pop();
                 container = item.Container;
                 container.OnProcessInlinesEnd(inlineProcessor);
@@ -192,8 +189,21 @@ namespace Maddalena.Markdig.Parsers
             }
         }
 
+        private class ContainerItemCache : DefaultObjectCache<ContainerItem>
+        {
+            protected override void Reset(ContainerItem instance)
+            {
+                instance.Container = null;
+                instance.Index = 0;
+            }
+        }
+
         private class ContainerItem
         {
+            public ContainerBlock Container;
+
+            public int Index;
+
             public ContainerItem()
             {
             }
@@ -202,10 +212,6 @@ namespace Maddalena.Markdig.Parsers
             {
                 Container = container;
             }
-
-            public ContainerBlock Container;
-
-            public int Index;
         }
     }
 }

@@ -14,14 +14,20 @@ namespace Maddalena.Controllers
         static BlogController()
         {
             BlogArticle.DescendingIndex(x => x.Link);
-            BlogArticle.DescendingIndex(x=>x.DateTime);
+            BlogArticle.DescendingIndex(x => x.DateTime);
         }
 
         // GET: Blog
-        public ActionResult Index() => View(BlogArticle.Queryable().OrderByDescending(x=>x.DateTime).Take(20));
+        public ActionResult Index()
+        {
+            return View(BlogArticle.Queryable().OrderByDescending(x => x.DateTime).Take(20));
+        }
 
         // GET: Blog/Create
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
         // GET: Blog/Details/5
         [AllowAnonymous]
@@ -43,7 +49,7 @@ namespace Maddalena.Controllers
 
             ViewData["Title"] = id;
 
-            return View("List",article);
+            return View("List", article);
         }
 
         [AllowAnonymous]
@@ -82,7 +88,7 @@ namespace Maddalena.Controllers
             var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
             if (article == null) return NotFound();
 
-            await BlogArticle.UpdateAsync(article, x => x.Views, article.Views+1);
+            await BlogArticle.UpdateAsync(article, x => x.Views, article.Views + 1);
 
             return View(article);
         }

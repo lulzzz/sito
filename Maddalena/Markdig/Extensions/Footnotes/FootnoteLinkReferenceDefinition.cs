@@ -7,13 +7,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
-    /// A link reference definition stored at the <see cref="MarkdownDocument"/> level.
+    ///     A link reference definition stored at the <see cref="MarkdownDocument" /> level.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.LinkReferenceDefinition" />
     public class FootnoteLinkReferenceDefinition : LinkReferenceDefinition
     {
         /// <summary>
-        /// Gets or sets the footnote related to this link reference definition.
+        ///     Gets or sets the footnote related to this link reference definition.
         /// </summary>
         public Footnote Footnote { get; set; }
     }

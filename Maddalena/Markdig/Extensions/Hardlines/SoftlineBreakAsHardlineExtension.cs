@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Hardlines
 {
     /// <summary>
-    /// Extension to generate hardline break for softline breaks.
+    ///     Extension to generate hardline break for softline breaks.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class SoftlineBreakAsHardlineExtension : IMarkdownExtension

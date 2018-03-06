@@ -9,7 +9,7 @@ using Maddalena.Markdig.Renderers.Normalize.Inlines;
 namespace Maddalena.Markdig.Extensions.AutoLinks
 {
     /// <summary>
-    /// Extension to automatically create <see cref="LinkInline"/> when a link url http: or mailto: is found.
+    ///     Extension to automatically create <see cref="LinkInline" /> when a link url http: or mailto: is found.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class AutoLinkExtension : IMarkdownExtension

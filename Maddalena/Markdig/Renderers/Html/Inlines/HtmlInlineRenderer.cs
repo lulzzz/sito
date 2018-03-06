@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Html.Inlines
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="HtmlInline"/>.
+    ///     A HTML renderer for a <see cref="HtmlInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.HtmlInline}" />
     public class HtmlInlineRenderer : HtmlObjectRenderer<HtmlInline>

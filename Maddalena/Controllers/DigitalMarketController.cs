@@ -2,22 +2,22 @@
 using System.Threading.Tasks;
 using Maddalena.Modules.DigitalMarket;
 using Maddalena.Security;
-using Mongolino;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Mongolino;
 
 namespace Maddalena.Controllers
 {
     [Authorize]
     public class DigitalMarketController : Controller
     {
-
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger _logger;
 
-        public DigitalMarketController(UserManager<ApplicationUser> userManager,ILogger<AccountController> logger)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public DigitalMarketController(UserManager<ApplicationUser> userManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace Maddalena.Controllers
         {
             var items = DigitalItem.SortByDescending(x => x.Bought)
                 .Take(20);
-                
+
             return View(items);
         }
 
@@ -48,7 +48,10 @@ namespace Maddalena.Controllers
             return item != null ? (ActionResult) View(item) : NotFound();
         }
 
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
         // POST: DigitalItem/Create
         [HttpPost]
@@ -69,13 +72,13 @@ namespace Maddalena.Controllers
                 var content = Request.Form.Files.GetFile("content");
                 if (content == null)
                 {
-                    ModelState.AddModelError("content","Content missing");
+                    ModelState.AddModelError("content", "Content missing");
                     return View();
                 }
 
                 //item.Attachments.Add(await UploadFile.Create(content,User));
 
-                var preview  = Request.Form.Files.GetFile("preview");
+                var preview = Request.Form.Files.GetFile("preview");
                 item.HasPreview = preview != null;
                 item.VideoPreview = preview?.FileName?.EndsWith(".mp4") ?? false;
 
@@ -95,7 +98,7 @@ namespace Maddalena.Controllers
         {
             var item = await DigitalItem.FirstOrDefaultAsync(x => x.Id == id);
 
-            return item != null ? (ActionResult)View(item) : NotFound();
+            return item != null ? (ActionResult) View(item) : NotFound();
         }
 
         // POST: DigitalItem/Edit/5

@@ -10,7 +10,7 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Extensions.Emoji
 {
     /// <summary>
-    /// The inline parser used to for emoji.
+    ///     The inline parser used to for emoji.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class EmojiParser : InlineParser
@@ -20,112 +20,8 @@ namespace Maddalena.Markdig.Extensions.Emoji
 
         private TextMatchHelper textMatchHelper;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmojiParser"/> class.
-        /// </summary>
-        public EmojiParser(bool enableSmiley = true)
-        {
-            EnableSmiley = enableSmiley;
-            OpeningCharacters = null;
-            EmojiToUnicode = new Dictionary<string, string>(EmojiToUnicodeDefault);
-            SmileyToEmoji = new Dictionary<string, string>(SmileyToEmojiDefault);
-        }
-
-        /// <summary>
-        /// Gets or sets a boolean indicating whether to process smiley.
-        /// </summary>
-        public bool EnableSmiley { get; set; }
-
-        /// <summary>
-        /// Gets the emoji to unicode mapping. This can be modified before this parser is initialized.
-        /// </summary>
-        public Dictionary<string, string>  EmojiToUnicode { get; }
-
-        /// <summary>
-        /// Gets the smiley to emoji mapping. This can be modified before this parser is initialized.
-        /// </summary>
-        public Dictionary<string, string>  SmileyToEmoji { get; }
-
-        public override void Initialize()
-        {
-            var firstChars = new HashSet<char>();
-            var textToMatch = new HashSet<string>();
-
-            foreach (var emoji in EmojiToUnicode)
-            {
-                firstChars.Add(emoji.Key[0]);
-                textToMatch.Add(emoji.Key);
-            }
-
-            foreach (var smiley in SmileyToEmoji)
-            {
-                firstChars.Add(smiley.Key[0]);
-                textToMatch.Add(smiley.Key);
-            }
-
-            textMatchHelper = new TextMatchHelper(textToMatch);
-
-            OpeningCharacters = new List<char>(firstChars).ToArray();
-            Array.Sort(OpeningCharacters);
-        }
-
-        public override bool Match(InlineProcessor processor, ref StringSlice slice)
-        {
-            string match;
-
-            // Previous char must be a space
-            if (!slice.PeekCharExtra(-1).IsWhiteSpaceOrZero())
-            {
-                return false;
-            }
-
-            // Try to match an existing emoji
-            var startPosition = slice.Start;
-            if (!textMatchHelper.TryMatch(slice.Text, slice.Start, slice.Length, out match))
-            {
-                return false;
-            }
-
-            string emoji = match;
-            if (EnableSmiley)
-            {
-                // If we have a smiley, we decode it to emoji
-                if (!SmileyToEmoji.TryGetValue(match, out emoji))
-                {
-                    emoji = match;
-                }
-            }
-
-            // Decode the eomji to unicode
-            string unicode;
-            if (!EmojiToUnicode.TryGetValue(emoji, out unicode))
-            {
-                // Should not happen but in case
-                return false;
-            }
-
-            // Move the cursor to the character after the matched string
-            slice.Start += match.Length;
-
-            // Push the EmojiInline
-            int line;
-            int column;
-            processor.Inline = new EmojiInline(unicode)
-            {
-                Span =
-                {
-                    Start = processor.GetSourcePosition(startPosition, out line, out column),
-                },
-                Line = line,
-                Column = column,
-                Match = match
-            };
-            processor.Inline.Span.End = processor.Inline.Span.Start + match.Length - 1;
-
-            return true;
-        }
-        
         #region Emojis and Smileys
+
         static EmojiParser()
         {
             EmojiToUnicodeDefault = new Dictionary<string, string>()
@@ -1002,13 +898,13 @@ namespace Maddalena.Markdig.Extensions.Emoji
                 {":small_blue_diamond:", "🔹"},
 
                 // Custom additions
-                { ":custom_arrow_left:", "←"},
-                { ":custom_arrow_right:", "→"},
-                { ":custom_arrow_left_right:", "↔"},
+                {":custom_arrow_left:", "←"},
+                {":custom_arrow_right:", "→"},
+                {":custom_arrow_left_right:", "↔"},
 
-                { ":custom_arrow_left_strong:", "⇐"},
-                { ":custom_arrow_right_strong:", "⇒"},
-                { ":custom_arrow_left_right_strong:", "⇔"},
+                {":custom_arrow_left_strong:", "⇐"},
+                {":custom_arrow_right_strong:", "⇒"},
+                {":custom_arrow_left_right_strong:", "⇔"},
             };
 
             SmileyToEmojiDefault = new Dictionary<string, string>()
@@ -1080,15 +976,121 @@ namespace Maddalena.Markdig.Extensions.Emoji
                 {";-)", ":wink:"},
 
                 // Custom arrows
-                {"<-", ":custom_arrow_left:" },
-                {"->", ":custom_arrow_rigth:" },
-                {"<->", ":custom_arrow_left_rigth:" },
+                {"<-", ":custom_arrow_left:"},
+                {"->", ":custom_arrow_rigth:"},
+                {"<->", ":custom_arrow_left_rigth:"},
 
-                {"<=", ":custom_arrow_left_strong:" },
-                {"=>", ":custom_arrow_rigth_strong:" },
-                {"<=>", ":custom_arrow_left_rigth_strong:" },
+                {"<=", ":custom_arrow_left_strong:"},
+                {"=>", ":custom_arrow_rigth_strong:"},
+                {"<=>", ":custom_arrow_left_rigth_strong:"},
             };
         }
+
         #endregion
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="EmojiParser" /> class.
+        /// </summary>
+        public EmojiParser(bool enableSmiley = true)
+        {
+            EnableSmiley = enableSmiley;
+            OpeningCharacters = null;
+            EmojiToUnicode = new Dictionary<string, string>(EmojiToUnicodeDefault);
+            SmileyToEmoji = new Dictionary<string, string>(SmileyToEmojiDefault);
+        }
+
+        /// <summary>
+        ///     Gets or sets a boolean indicating whether to process smiley.
+        /// </summary>
+        public bool EnableSmiley { get; set; }
+
+        /// <summary>
+        ///     Gets the emoji to unicode mapping. This can be modified before this parser is initialized.
+        /// </summary>
+        public Dictionary<string, string> EmojiToUnicode { get; }
+
+        /// <summary>
+        ///     Gets the smiley to emoji mapping. This can be modified before this parser is initialized.
+        /// </summary>
+        public Dictionary<string, string> SmileyToEmoji { get; }
+
+        public override void Initialize()
+        {
+            var firstChars = new HashSet<char>();
+            var textToMatch = new HashSet<string>();
+
+            foreach (var emoji in EmojiToUnicode)
+            {
+                firstChars.Add(emoji.Key[0]);
+                textToMatch.Add(emoji.Key);
+            }
+
+            foreach (var smiley in SmileyToEmoji)
+            {
+                firstChars.Add(smiley.Key[0]);
+                textToMatch.Add(smiley.Key);
+            }
+
+            textMatchHelper = new TextMatchHelper(textToMatch);
+
+            OpeningCharacters = new List<char>(firstChars).ToArray();
+            Array.Sort(OpeningCharacters);
+        }
+
+        public override bool Match(InlineProcessor processor, ref StringSlice slice)
+        {
+            string match;
+
+            // Previous char must be a space
+            if (!slice.PeekCharExtra(-1).IsWhiteSpaceOrZero())
+            {
+                return false;
+            }
+
+            // Try to match an existing emoji
+            var startPosition = slice.Start;
+            if (!textMatchHelper.TryMatch(slice.Text, slice.Start, slice.Length, out match))
+            {
+                return false;
+            }
+
+            string emoji = match;
+            if (EnableSmiley)
+            {
+                // If we have a smiley, we decode it to emoji
+                if (!SmileyToEmoji.TryGetValue(match, out emoji))
+                {
+                    emoji = match;
+                }
+            }
+
+            // Decode the eomji to unicode
+            string unicode;
+            if (!EmojiToUnicode.TryGetValue(emoji, out unicode))
+            {
+                // Should not happen but in case
+                return false;
+            }
+
+            // Move the cursor to the character after the matched string
+            slice.Start += match.Length;
+
+            // Push the EmojiInline
+            int line;
+            int column;
+            processor.Inline = new EmojiInline(unicode)
+            {
+                Span =
+                {
+                    Start = processor.GetSourcePosition(startPosition, out line, out column),
+                },
+                Line = line,
+                Column = column,
+                Match = match
+            };
+            processor.Inline.Span.End = processor.Inline.Span.Start + match.Length - 1;
+
+            return true;
+        }
     }
 }

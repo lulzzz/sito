@@ -1,12 +1,12 @@
 namespace Maddalena.Modules.Geocoding
 {
-	public enum GoogleStatus
-	{
-		Error,
-		Ok,
-		ZeroResults,
-		OverQueryLimit,
-		RequestDenied,
-		InvalidRequest
-	}
+    public enum GoogleStatus
+    {
+        Error,
+        Ok,
+        ZeroResults,
+        OverQueryLimit,
+        RequestDenied,
+        InvalidRequest
+    }
 }

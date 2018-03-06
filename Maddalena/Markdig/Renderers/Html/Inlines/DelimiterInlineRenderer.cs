@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Html.Inlines
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="DelimiterInline"/>.
+    ///     A HTML renderer for a <see cref="DelimiterInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.DelimiterInline}" />
     public class DelimiterInlineRenderer : HtmlObjectRenderer<DelimiterInline>

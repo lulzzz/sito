@@ -7,15 +7,15 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Repressents a fenced code block.
+    ///     Repressents a fenced code block.
     /// </summary>
     /// <remarks>
-    /// Related to CommonMark spec: 4.5 Fenced code blocks
+    ///     Related to CommonMark spec: 4.5 Fenced code blocks
     /// </remarks>
     public class FencedCodeBlock : CodeBlock, IFencedBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FencedCodeBlock"/> class.
+        ///     Initializes a new instance of the <see cref="FencedCodeBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser.</param>
         public FencedCodeBlock(BlockParser parser) : base(parser)
@@ -28,31 +28,31 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Gets or sets the language parsed after the first line of 
-        /// the fenced code block. May be null.
+        ///     Gets or sets the indent count when the fenced code block was indented
+        ///     and we need to remove up to indent count chars spaces from the begining of a line.
+        /// </summary>
+        internal int IndentCount { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the language parsed after the first line of
+        ///     the fenced code block. May be null.
         /// </summary>
         public string Info { get; set; }
 
         /// <summary>
-        /// Gets or sets the arguments after the <see cref="Info"/>.
-        /// May be null.
+        ///     Gets or sets the arguments after the <see cref="Info" />.
+        ///     May be null.
         /// </summary>
         public string Arguments { get; set; }
 
         /// <summary>
-        /// Gets or sets the fenced character count used to open this fenced code block.
+        ///     Gets or sets the fenced character count used to open this fenced code block.
         /// </summary>
         public int FencedCharCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the fenced character used to open and close this fenced code block.
+        ///     Gets or sets the fenced character used to open and close this fenced code block.
         /// </summary>
         public char FencedChar { get; set; }
-
-        /// <summary>
-        /// Gets or sets the indent count when the fenced code block was indented 
-        /// and we need to remove up to indent count chars spaces from the begining of a line.
-        /// </summary>
-        internal int IndentCount { get; set; }
     }
 }

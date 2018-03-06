@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="FootnoteLink"/>.
+    ///     A HTML renderer for a <see cref="FootnoteLink" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Extensions.Footnotes.FootnoteLink}" />
     public class HtmlFootnoteLinkRenderer : HtmlObjectRenderer<FootnoteLink>
@@ -19,6 +19,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
             FootnoteLinkClass = "footnote-ref";
             FootnoteBackLinkClass = "footnote-back-ref";
         }
+
         public string BackLinkString { get; set; }
 
         public string FootnoteLinkClass { get; set; }

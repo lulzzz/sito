@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="HtmlBlock"/>.
+    ///     A HTML renderer for a <see cref="HtmlBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.HtmlBlock}" />
     public class HtmlBlockRenderer : HtmlObjectRenderer<HtmlBlock>

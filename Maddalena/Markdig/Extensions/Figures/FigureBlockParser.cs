@@ -8,17 +8,17 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Figures
 {
     /// <summary>
-    /// The block parser for a <see cref="Figure"/> block.
+    ///     The block parser for a <see cref="Figure" /> block.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class FigureBlockParser : BlockParser
-    { 
+    {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FencedBlockParserBase"/> class.
+        ///     Initializes a new instance of the <see cref="FencedBlockParserBase" /> class.
         /// </summary>
         public FigureBlockParser()
         {
-            OpeningCharacters = new [] {'^'};
+            OpeningCharacters = new[] {'^'};
         }
 
         public override BlockState TryOpen(BlockProcessor processor)
@@ -42,6 +42,7 @@ namespace Maddalena.Markdig.Extensions.Figures
                 {
                     break;
                 }
+
                 count++;
                 c = line.NextChar();
             }
@@ -74,6 +75,7 @@ namespace Maddalena.Markdig.Extensions.Figures
                 caption.AppendLine(ref line, caption.Column, processor.LineIndex, processor.CurrentLineStartPosition);
                 figure.Add(caption);
             }
+
             processor.NewBlocks.Push(figure);
 
             // Discard the current line as it is already parsed
@@ -82,7 +84,7 @@ namespace Maddalena.Markdig.Extensions.Figures
 
         public override BlockState TryContinue(BlockProcessor processor, Block block)
         {
-            var figure = (Figure)block;
+            var figure = (Figure) block;
             var count = figure.OpeningCharacterCount;
             var matchChar = figure.OpeningCharacter;
             var c = processor.CurrentChar;
@@ -111,7 +113,8 @@ namespace Maddalena.Markdig.Extensions.Figures
                         Column = column + line.Start - startPosition,
                         IsOpen = false
                     };
-                    caption.AppendLine(ref line, caption.Column, processor.LineIndex, processor.CurrentLineStartPosition);
+                    caption.AppendLine(ref line, caption.Column, processor.LineIndex,
+                        processor.CurrentLineStartPosition);
                     figure.Add(caption);
                 }
 

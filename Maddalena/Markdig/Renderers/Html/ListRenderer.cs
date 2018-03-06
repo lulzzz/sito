@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="ListBlock"/>.
+    ///     A HTML renderer for a <see cref="ListBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.ListBlock}" />
     public class ListRenderer : HtmlObjectRenderer<ListBlock>
@@ -29,6 +29,7 @@ namespace Maddalena.Markdig.Renderers.Html
                     {
                         renderer.Write(" start=\"").Write(listBlock.OrderedStart).Write("\"");
                     }
+
                     renderer.WriteAttributes(listBlock);
                     renderer.WriteLine(">");
                 }
@@ -42,7 +43,7 @@ namespace Maddalena.Markdig.Renderers.Html
 
             foreach (var item in listBlock)
             {
-                var listItem = (ListItemBlock)item;
+                var listItem = (ListItemBlock) item;
                 var previousImplicit = renderer.ImplicitParagraph;
                 renderer.ImplicitParagraph = !listBlock.IsLoose;
 

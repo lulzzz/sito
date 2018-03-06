@@ -7,13 +7,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Html.Inlines
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="LinkInline"/>.
+    ///     A HTML renderer for a <see cref="LinkInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.LinkInline}" />
     public class LinkInlineRenderer : HtmlObjectRenderer<LinkInline>
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to always add rel="nofollow" for links or not.
+        ///     Gets or sets a value indicating whether to always add rel="nofollow" for links or not.
         /// </summary>
         public bool AutoRelNoFollow { get; set; }
 
@@ -26,12 +26,14 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
                 renderer.Write("\"");
                 renderer.WriteAttributes(link);
             }
+
             if (link.IsImage)
             {
                 if (renderer.EnableHtmlForInline)
                 {
                     renderer.Write(" alt=\"");
                 }
+
                 var wasEnableHtmlForInline = renderer.EnableHtmlForInline;
                 renderer.EnableHtmlForInline = false;
                 renderer.WriteChildren(link);
@@ -64,8 +66,10 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
                     {
                         renderer.Write(" rel=\"nofollow\"");
                     }
+
                     renderer.Write(">");
                 }
+
                 renderer.WriteChildren(link);
                 if (renderer.EnableHtmlForInline)
                 {

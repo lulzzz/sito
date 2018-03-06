@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetCore.Identity.Mongo;
 using Maddalena.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -14,14 +11,14 @@ namespace Maddalena.Controllers
     [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<MongoIdentityRole> _roleManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public RoleController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          RoleManager<MongoIdentityRole> roleManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<MongoIdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

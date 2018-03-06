@@ -7,20 +7,20 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Html.Inlines
 {
     /// <summary>
-    /// A HTML renderer for an <see cref="EmphasisInline"/>.
+    ///     A HTML renderer for an <see cref="EmphasisInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.EmphasisInline}" />
     public class EmphasisInlineRenderer : HtmlObjectRenderer<EmphasisInline>
     {
         /// <summary>
-        /// Delegates to get the tag associated to an <see cref="EmphasisInline"/> object.
+        ///     Delegates to get the tag associated to an <see cref="EmphasisInline" /> object.
         /// </summary>
         /// <param name="obj">The object.</param>
-        /// <returns>The HTML tag associated to this <see cref="EmphasisInline"/> object</returns>
+        /// <returns>The HTML tag associated to this <see cref="EmphasisInline" /> object</returns>
         public delegate string GetTagDelegate(EmphasisInline obj);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmphasisInlineRenderer"/> class.
+        ///     Initializes a new instance of the <see cref="EmphasisInlineRenderer" /> class.
         /// </summary>
         public EmphasisInlineRenderer()
         {
@@ -28,7 +28,7 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
         }
 
         /// <summary>
-        /// Gets or sets the GetTag delegate.
+        ///     Gets or sets the GetTag delegate.
         /// </summary>
         public GetTagDelegate GetTag { get; set; }
 
@@ -40,6 +40,7 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
                 tag = GetTag(obj);
                 renderer.Write("<").Write(tag).WriteAttributes(obj).Write(">");
             }
+
             renderer.WriteChildren(obj);
             if (renderer.EnableHtmlForInline)
             {
@@ -48,7 +49,7 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
         }
 
         /// <summary>
-        /// Gets the default HTML tag for ** and __ emphasis.
+        ///     Gets the default HTML tag for ** and __ emphasis.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
@@ -58,6 +59,7 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
             {
                 return obj.IsDouble ? "strong" : "em";
             }
+
             return null;
         }
     }

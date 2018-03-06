@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Normalize.Inlines
 {
     /// <summary>
-    /// A Normalize renderer for an <see cref="EmphasisInline"/>.
+    ///     A Normalize renderer for an <see cref="EmphasisInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.Inlines.EmphasisInline}" />
     public class EmphasisInlineRenderer : NormalizeObjectRenderer<EmphasisInline>

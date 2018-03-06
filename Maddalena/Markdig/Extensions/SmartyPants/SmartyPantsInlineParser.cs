@@ -11,16 +11,101 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.SmartyPants
 {
     /// <summary>
-    /// The inline parser for SmartyPants.
+    ///     The inline parser for SmartyPants.
     /// </summary>
     public class SmartyPantsInlineParser : InlineParser, IPostInlineProcessor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SmartyPantsInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="SmartyPantsInlineParser" /> class.
         /// </summary>
         public SmartyPantsInlineParser()
         {
             OpeningCharacters = new[] {'\'', '"', '<', '>', '.', '-'};
+        }
+
+        bool IPostInlineProcessor.PostProcess(InlineProcessor state, Inline root, Inline lastChild,
+            int postInlineProcessorIndex,
+            bool isFinalProcessing)
+        {
+            // Don't try to process anything if there are no dash
+            var quotePants = state.ParserStates[Index] as ListSmartyPants;
+            if (quotePants == null || !quotePants.HasDash)
+            {
+                return true;
+            }
+
+            var child = root;
+            var pendingContainers = new Stack<Inline>();
+
+            while (true)
+            {
+                while (child != null)
+                {
+                    var next = child.NextSibling;
+
+                    if (child is LiteralInline)
+                    {
+                        var literal = (LiteralInline) child;
+
+                        var startIndex = 0;
+
+                        var indexOfDash = literal.Content.IndexOf("--", startIndex);
+                        if (indexOfDash >= 0)
+                        {
+                            var type = SmartyPantType.Dash2;
+                            if (literal.Content.PeekCharAbsolute(indexOfDash + 2) == '-')
+                            {
+                                type = SmartyPantType.Dash3;
+                            }
+
+                            var nextContent = literal.Content;
+                            var originalSpan = literal.Span;
+                            literal.Span.End -= literal.Content.End - indexOfDash + 1;
+                            literal.Content.End = indexOfDash - 1;
+                            nextContent.Start = indexOfDash + (type == SmartyPantType.Dash2 ? 2 : 3);
+
+                            var pant = new SmartyPant()
+                            {
+                                Span = new SourceSpan(literal.Content.End + 1, nextContent.Start - 1),
+                                Line = literal.Line,
+                                Column = literal.Column,
+                                OpeningCharacter = '-',
+                                Type = type
+                            };
+                            literal.InsertAfter(pant);
+
+                            var postLiteral = new LiteralInline()
+                            {
+                                Span = new SourceSpan(pant.Span.End + 1, originalSpan.End),
+                                Line = literal.Line,
+                                Column = literal.Column,
+                                Content = nextContent
+                            };
+                            pant.InsertAfter(postLiteral);
+
+                            // Use the pending literal to proceed further
+                            next = postLiteral;
+                        }
+                    }
+                    else if (child is ContainerInline)
+                    {
+                        pendingContainers.Push(((ContainerInline) child).FirstChild);
+                    }
+
+                    child = next;
+                }
+
+                if (pendingContainers.Count > 0)
+                {
+                    child = pendingContainers.Pop();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return true;
         }
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
@@ -55,6 +140,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                         slice.NextChar();
                         type = SmartyPantType.DoubleQuote; // We will resolve them at the end of parsing all inlines
                     }
+
                     break;
                 case '"':
                     type = SmartyPantType.DoubleQuote;
@@ -64,18 +150,21 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                     {
                         type = SmartyPantType.LeftAngleQuote;
                     }
+
                     break;
                 case '>':
                     if (slice.NextChar() == '>')
                     {
                         type = SmartyPantType.RightAngleQuote;
                     }
+
                     break;
                 case '.':
                     if (slice.NextChar() == '.' && slice.NextChar() == '.')
                     {
                         type = SmartyPantType.Ellipsis;
                     }
+
                     break;
                 case '-':
                     if (slice.NextChar() == '-')
@@ -84,6 +173,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                         quotePants.HasDash = true;
                         return false;
                     }
+
                     break;
             }
 
@@ -118,6 +208,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                     {
                         return false;
                     }
+
                     break;
                 case SmartyPantType.DoubleQuote:
                     postProcess = true;
@@ -133,6 +224,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                     {
                         return false;
                     }
+
                     break;
                 case SmartyPantType.LeftAngleQuote:
                     postProcess = true;
@@ -140,6 +232,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                     {
                         return false;
                     }
+
                     break;
                 case SmartyPantType.RightAngleQuote:
                     postProcess = true;
@@ -147,12 +240,14 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                     {
                         return false;
                     }
+
                     break;
                 case SmartyPantType.Ellipsis:
                     if (canOpen || !canClose)
                     {
                         return false;
                     }
+
                     break;
             }
 
@@ -179,6 +274,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                 {
                     processor.Block.ProcessInlinesEnd += BlockOnProcessInlinesEnd;
                 }
+
                 quotePants.Add(pant);
             }
 
@@ -193,6 +289,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
             {
                 processor.ParserStates[Index] = quotePants = new ListSmartyPants();
             }
+
             return quotePants;
         }
 
@@ -289,87 +386,6 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
             }
 
             pants.Clear();
-        }
-
-        bool IPostInlineProcessor.PostProcess(InlineProcessor state, Inline root, Inline lastChild, int postInlineProcessorIndex,
-            bool isFinalProcessing)
-        {
-            // Don't try to process anything if there are no dash
-            var quotePants = state.ParserStates[Index] as ListSmartyPants;
-            if (quotePants == null || !quotePants.HasDash)
-            {
-                return true;
-            }
-
-            var child = root;
-            var pendingContainers = new Stack<Inline>();
-
-            while (true)
-            {
-                while (child != null)
-                {
-                    var next = child.NextSibling;
-
-                    if (child is LiteralInline)
-                    {
-                        var literal = (LiteralInline) child;
-
-                        var startIndex = 0;
-
-                        var indexOfDash = literal.Content.IndexOf("--", startIndex);
-                        if (indexOfDash >= 0)
-                        {
-                            var type = SmartyPantType.Dash2;
-                            if (literal.Content.PeekCharAbsolute(indexOfDash + 2) == '-')
-                            {
-                                type = SmartyPantType.Dash3;
-                            }
-                            var nextContent = literal.Content;
-                            var originalSpan = literal.Span;
-                            literal.Span.End -= literal.Content.End - indexOfDash + 1;
-                            literal.Content.End = indexOfDash - 1;
-                            nextContent.Start = indexOfDash + (type == SmartyPantType.Dash2 ? 2 : 3);
-
-                            var pant = new SmartyPant()
-                            {
-                                Span = new SourceSpan(literal.Content.End + 1, nextContent.Start - 1),
-                                Line = literal.Line,
-                                Column = literal.Column,
-                                OpeningCharacter = '-',
-                                Type = type
-                            };
-                            literal.InsertAfter(pant);
-
-                            var postLiteral = new LiteralInline()
-                            {
-                                Span = new SourceSpan(pant.Span.End + 1, originalSpan.End),
-                                Line = literal.Line,
-                                Column = literal.Column,
-                                Content = nextContent
-                            };
-                            pant.InsertAfter(postLiteral);
-
-                            // Use the pending literal to proceed further
-                            next = postLiteral;
-                        }
-                    }
-                    else if (child is ContainerInline)
-                    {
-                        pendingContainers.Push(((ContainerInline)child).FirstChild);
-                    }
-
-                    child = next;
-                }
-                if (pendingContainers.Count > 0)
-                {
-                    child = pendingContainers.Pop();
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return true;
         }
 
 

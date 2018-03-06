@@ -94,6 +94,7 @@ namespace Maddalena.Markdig.Extensions.MediaLinks
 
                 return true;
             }
+
             return false;
         }
 

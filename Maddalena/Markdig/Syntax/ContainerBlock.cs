@@ -13,7 +13,7 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// A base class for container blocks.
+    ///     A base class for container blocks.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Block" />
     [DebuggerDisplay("{GetType().Name} Count = {Count}")]
@@ -22,7 +22,7 @@ namespace Maddalena.Markdig.Syntax
         private Block[] children;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerBlock"/> class.
+        ///     Initializes a new instance of the <see cref="ContainerBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser used to create this block.</param>
         protected ContainerBlock(BlockParser parser) : base(parser)
@@ -31,18 +31,9 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Gets the last child.
+        ///     Gets the last child.
         /// </summary>
         public Block LastChild => Count > 0 ? children[Count - 1] : null;
-
-        /// <summary>
-        /// Specialize enumerator.
-        /// </summary>
-        /// <returns></returns>
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
 
         IEnumerator<Block> IEnumerable<Block>.GetEnumerator()
         {
@@ -59,36 +50,19 @@ namespace Maddalena.Markdig.Syntax
             if (item == null) throw new ArgumentNullException(nameof(item));
             if (item.Parent != null)
             {
-                throw new ArgumentException("Cannot add this block as it as already attached to another container (block.Parent != null)");
+                throw new ArgumentException(
+                    "Cannot add this block as it as already attached to another container (block.Parent != null)");
             }
 
             if (Count == children.Length)
             {
                 EnsureCapacity(Count + 1);
             }
+
             children[Count++] = item;
             item.Parent = this;
 
             UpdateSpanEnd(item.Span.End);
-        }
-
-        private void EnsureCapacity(int min)
-        {
-            if (children.Length < min)
-            {
-                int num = (children.Length == 0) ? 4 : (children.Length * 2);
-                if (num < min)
-                {
-                    num = min;
-                }
-
-                var destinationArray = new Block[num];
-                if (Count > 0)
-                {
-                    Array.Copy(children, 0, destinationArray, 0, Count);
-                }
-                children = destinationArray;
-            }
         }
 
         public void Clear()
@@ -110,6 +84,7 @@ namespace Maddalena.Markdig.Syntax
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -129,6 +104,7 @@ namespace Maddalena.Markdig.Syntax
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -146,6 +122,7 @@ namespace Maddalena.Markdig.Syntax
                     return i;
                 }
             }
+
             return -1;
         }
 
@@ -154,16 +131,20 @@ namespace Maddalena.Markdig.Syntax
             if (item == null) throw new ArgumentNullException(nameof(item));
             if (item.Parent != null)
             {
-                throw new ArgumentException("Cannot add this block as it as already attached to another container (block.Parent != null)");
+                throw new ArgumentException(
+                    "Cannot add this block as it as already attached to another container (block.Parent != null)");
             }
+
             if (Count == children.Length)
             {
                 EnsureCapacity(Count + 1);
             }
+
             if (index < Count)
             {
                 Array.Copy(children, index, children, index + 1, Count - index);
             }
+
             children[index] = item;
             Count++;
             item.Parent = this;
@@ -180,6 +161,7 @@ namespace Maddalena.Markdig.Syntax
             {
                 Array.Copy(children, index + 1, children, index, Count - index);
             }
+
             children[Count] = null;
         }
 
@@ -194,6 +176,35 @@ namespace Maddalena.Markdig.Syntax
             {
                 if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException(nameof(index));
                 children[index] = value;
+            }
+        }
+
+        /// <summary>
+        ///     Specialize enumerator.
+        /// </summary>
+        /// <returns></returns>
+        public Enumerator GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
+        private void EnsureCapacity(int min)
+        {
+            if (children.Length < min)
+            {
+                int num = (children.Length == 0) ? 4 : (children.Length * 2);
+                if (num < min)
+                {
+                    num = min;
+                }
+
+                var destinationArray = new Block[num];
+                if (Count > 0)
+                {
+                    Array.Copy(children, 0, destinationArray, 0, Count);
+                }
+
+                children = destinationArray;
             }
         }
 
@@ -242,6 +253,7 @@ namespace Maddalena.Markdig.Syntax
                     index++;
                     return true;
                 }
+
                 return MoveNextRare();
             }
 

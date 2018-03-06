@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="ParagraphBlock"/>.
+    ///     A HTML renderer for a <see cref="ParagraphBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.ParagraphBlock}" />
     public class ParagraphRenderer : HtmlObjectRenderer<ParagraphBlock>
@@ -23,6 +23,7 @@ namespace Maddalena.Markdig.Renderers.Html
 
                 renderer.Write("<p").WriteAttributes(obj).Write(">");
             }
+
             renderer.WriteLeafInline(obj);
             if (!renderer.ImplicitParagraph && renderer.EnableHtmlForBlock)
             {

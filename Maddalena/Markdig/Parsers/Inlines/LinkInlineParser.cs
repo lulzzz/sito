@@ -9,13 +9,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for <see cref="LinkInline"/>.
+    ///     An inline parser for <see cref="LinkInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class LinkInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinkInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="LinkInlineParser" /> class.
         /// </summary>
         public LinkInlineParser()
         {
@@ -61,6 +61,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
                             label = null;
                         }
                     }
+
                     slice = saved;
 
                     // Else we insert a LinkDelimiter
@@ -96,7 +97,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
             return false;
         }
 
-        private bool ProcessLinkReference(InlineProcessor state, string label, bool isShortcut, SourceSpan labelSpan, LinkDelimiterInline parent, int endPosition)
+        private bool ProcessLinkReference(InlineProcessor state, string label, bool isShortcut, SourceSpan labelSpan,
+            LinkDelimiterInline parent, int endPosition)
         {
             bool isValidLink = false;
             LinkReferenceDefinition linkRef;
@@ -167,6 +169,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 state.Inline = link;
                 isValidLink = true;
             }
+
             //else
             //{
             //    // Else output a literal, leave it opened as we may have literals after
@@ -232,7 +235,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
                                 LabelSpan = openParent.LabelSpan,
                                 UrlSpan = inlineState.GetSourcePositionFromLocalSpan(linkSpan),
                                 TitleSpan = inlineState.GetSourcePositionFromLocalSpan(titleSpan),
-                                Span = new SourceSpan(openParent.Span.Start, inlineState.GetSourcePosition(text.Start -1)),
+                                Span = new SourceSpan(openParent.Span.Start,
+                                    inlineState.GetSourcePosition(text.Start - 1)),
                                 Line = openParent.Line,
                                 Column = openParent.Column,
                             };
@@ -290,7 +294,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
                                 labelSpan = inlineState.GetSourcePositionFromLocalSpan(labelSpan);
                             }
 
-                            if (ProcessLinkReference(inlineState, label, isShortcut, labelSpan, openParent, inlineState.GetSourcePosition(text.Start - 1)))
+                            if (ProcessLinkReference(inlineState, label, isShortcut, labelSpan, openParent,
+                                inlineState.GetSourcePosition(text.Start - 1)))
                             {
                                 // Remove the open parent
                                 openParent.Remove();
@@ -303,8 +308,10 @@ namespace Maddalena.Markdig.Parsers.Inlines
                             {
                                 return false;
                             }
+
                             return true;
                         }
+
                         break;
                 }
 

@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for escape characters.
+    ///     An inline parser for escape characters.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class EscapeInlineParser : InlineParser
@@ -30,7 +30,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 processor.Inline = new LiteralInline()
                 {
                     Content = new StringSlice(slice.Text, slice.Start, slice.Start),
-                    Span = { Start = processor.GetSourcePosition(startPosition, out line, out column) },
+                    Span = {Start = processor.GetSourcePosition(startPosition, out line, out column)},
                     Line = line,
                     Column = column,
                     IsFirstCharacterEscaped = true,
@@ -47,7 +47,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 {
                     IsHard = true,
                     IsBackslash = true,
-                    Span = { Start = processor.GetSourcePosition(startPosition, out line, out column) },
+                    Span = {Start = processor.GetSourcePosition(startPosition, out line, out column)},
                     Line = line,
                     Column = column
                 };
@@ -55,6 +55,7 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 slice.NextChar();
                 return true;
             }
+
             return false;
         }
     }

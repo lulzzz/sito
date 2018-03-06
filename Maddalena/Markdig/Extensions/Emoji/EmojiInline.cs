@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.Emoji
 {
     /// <summary>
-    /// An emoji inline 
+    ///     An emoji inline
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.Inline" />
     public class EmojiInline : LiteralInline
@@ -16,14 +16,14 @@ namespace Maddalena.Markdig.Extensions.Emoji
         // Inherit from LiteralInline so that rendering is already handled by default
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmojiInline"/> class.
+        ///     Initializes a new instance of the <see cref="EmojiInline" /> class.
         /// </summary>
         public EmojiInline()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmojiInline"/> class.
+        ///     Initializes a new instance of the <see cref="EmojiInline" /> class.
         /// </summary>
         /// <param name="content">The content.</param>
         public EmojiInline(string content)
@@ -32,7 +32,7 @@ namespace Maddalena.Markdig.Extensions.Emoji
         }
 
         /// <summary>
-        /// Gets or sets the original match string (either an emoji or a text smiley)
+        ///     Gets or sets the original match string (either an emoji or a text smiley)
         /// </summary>
         public string Match { get; set; }
     }

@@ -18,14 +18,6 @@ namespace Maddalena.Security
 
         public Address Address { get; set; }
 
-        public async Task<IEnumerable<string>> GetRoles()
-        {
-            return (await RoleMembership.WhereAsync(x => x.UserId == Id))
-                 .Select(m => ApplicationRole.First(x => x.Id == m.RoleId))
-                 .Select(x => x.Name)
-                 .ToArray();
-        }
-
         public string UserName { get; set; }
         public string NormalizedUserName { get; set; }
         public string SecurityStamp { get; set; }
@@ -40,5 +32,13 @@ namespace Maddalena.Security
         public int AccessFailedCount { get; set; }
         public string AuthenticatorKey { get; set; }
         public string PasswordHash { get; set; }
+
+        public async Task<IEnumerable<string>> GetRoles()
+        {
+            return (await RoleMembership.WhereAsync(x => x.UserId == Id))
+                .Select(m => ApplicationRole.First(x => x.Id == m.RoleId))
+                .Select(x => x.Name)
+                .ToArray();
+        }
     }
 }

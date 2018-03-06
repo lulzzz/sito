@@ -9,33 +9,33 @@ using System.IO;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// Base class for all syntax tree inlines.
+    ///     Base class for all syntax tree inlines.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.MarkdownObject" />
     public abstract class Inline : MarkdownObject, IInline
     {
         /// <summary>
-        /// Gets the parent container of this inline.
+        ///     Gets the parent container of this inline.
         /// </summary>
         public ContainerInline Parent { get; internal set; }
 
         /// <summary>
-        /// Gets the previous inline.
+        ///     Gets the previous inline.
         /// </summary>
         public Inline PreviousSibling { get; private set; }
 
         /// <summary>
-        /// Gets the next sibling inline.
+        ///     Gets the next sibling inline.
         /// </summary>
         public Inline NextSibling { get; internal set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is closed.
+        ///     Gets or sets a value indicating whether this instance is closed.
         /// </summary>
         public bool IsClosed { get; set; }
 
         /// <summary>
-        /// Inserts the specified inline after this instance.
+        ///     Inserts the specified inline after this instance.
         /// </summary>
         /// <param name="next">The inline to insert after this instance.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -66,7 +66,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Inserts the specified inline before this instance.
+        ///     Inserts the specified inline before this instance.
         /// </summary>
         /// <param name="previous">The inlnie previous to insert before this instance.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -96,7 +96,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Removes this instance from the current list and its parent
+        ///     Removes this instance from the current list and its parent
         /// </summary>
         public void Remove()
         {
@@ -121,7 +121,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Replaces this inline by the specified inline.
+        ///     Replaces this inline by the specified inline.
         /// </summary>
         /// <param name="inline">The inline.</param>
         /// <param name="copyChildren">if set to <c>true</c> the children of this instance are copied to the specified inline.</param>
@@ -159,6 +159,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 {
                     newContainer = null;
                 }
+
                 // TODO: This part is not efficient as it is using child.Remove()
                 // We need a method to quickly move all children without having to mess Next/Prev sibling
                 var child = container.FirstChild;
@@ -175,6 +176,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
                     {
                         lastChild.InsertAfter(child);
                     }
+
                     lastChild = child;
                     child = nextChild;
                 }
@@ -186,7 +188,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Determines whether this instance contains a parent of the specified type.
+        ///     Determines whether this instance contains a parent of the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the parent to check</typeparam>
         /// <returns><c>true</c> if this instance contains a parent of the specified type; <c>false</c> otherwise</returns>
@@ -200,13 +202,15 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 {
                     return true;
                 }
+
                 inline = inline.Parent;
             }
+
             return false;
         }
 
         /// <summary>
-        /// Iterates on parents of the specified type.
+        ///     Iterates on parents of the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the parent to iterate over</typeparam>
         /// <returns>An enumeration on the parents of the specified type</returns>
@@ -220,6 +224,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
                 {
                     yield return delimiter;
                 }
+
                 inline = inline.Parent;
             }
         }
@@ -244,7 +249,6 @@ namespace Maddalena.Markdig.Syntax.Inlines
 
         protected virtual void OnChildRemove(Inline child)
         {
-
         }
 
         protected virtual void OnChildInsert(Inline child)
@@ -252,7 +256,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Dumps this instance to <see cref="TextWriter"/>.
+        ///     Dumps this instance to <see cref="TextWriter" />.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -263,7 +267,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Dumps this instance to <see cref="TextWriter"/>.
+        ///     Dumps this instance to <see cref="TextWriter" />.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="level">The level of indent.</param>

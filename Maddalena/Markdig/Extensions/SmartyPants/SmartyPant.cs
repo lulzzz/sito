@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.SmartyPants
 {
     /// <summary>
-    /// An inline for SmartyPant.
+    ///     An inline for SmartyPant.
     /// </summary>
     [DebuggerDisplay("SmartyPant {ToString()}")]
     public class SmartyPant : LeafInline
@@ -18,7 +18,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
         public SmartyPantType Type { get; set; }
 
         /// <summary>
-        /// Converts this instance to a literal text.
+        ///     Converts this instance to a literal text.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -44,6 +44,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
                 case SmartyPantType.RightAngleQuote:
                     return ">>";
             }
+
             return OpeningCharacter != 0 ? OpeningCharacter.ToString() : string.Empty;
         }
     }

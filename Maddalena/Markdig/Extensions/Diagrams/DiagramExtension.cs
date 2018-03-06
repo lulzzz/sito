@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Diagrams
 {
     /// <summary>
-    /// Extension to allow diagrams.
+    ///     Extension to allow diagrams.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class DiagramExtension : IMarkdownExtension

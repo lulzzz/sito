@@ -42,7 +42,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <img src="~/images/icon.jpg" class="img-fluid img-circle" style="max-height:54px;border-radius:50% !important;" alt="Cinque Terre">
+                <img src="~/images/icon.jpg" class="img-fluid img-circle" style="border-radius: 50% !important; max-height: 54px;" alt="Cinque Terre">
                 Matteo Fabbri
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
         </nav>
         <div class="row">
             <div class="col-12">
-                <img class="img-fluid" src="~/images/cover.jpg" />
+                <img class="img-fluid" src="~/images/cover.jpg" style="width: 100%" />
             </div>
         </div>
 
@@ -103,20 +103,23 @@
                     }
                     @RenderBody()
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 rightColumn">
                     <div class="row">
                         <div class="col-12">
+                            @if (BlogArticle.Categories.Any())
+                            {
+                                <section>
+                                    <ul class="list-group">
+                                        @foreach (var cat in BlogArticle.Categories)
+                                        {
+                                            <li class="list-group-item">
+                                                <a href="/blog/category/@cat">@cat</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </section>
+                            }
                             <section>
-                                <ul class="list-group">
-                                    @foreach (var cat in BlogArticle.Categories)
-                                    {
-                                        <li class="list-group-item">
-                                            <a href="/blog/category/@cat">@cat</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </section>
-                            <section style="margin-top:32px">
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <a href="https://github.com/matteofabbri" target="_blank"><i class="fab fa-github-square"></i> GitHub</a>
@@ -132,17 +135,21 @@
                                     </li>
                                 </ul>
                             </section>
+
+                            @RenderSection("Links", false /*required*/)
+
                         </div>
                     </div>
-                    <div class="row" style="margin-top:32px">
+                    <div class="row" style="margin-top: 32px">
                         <div class="col-12 text-center">
                             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- Display -->
                             <ins class="adsbygoogle"
-                                 style="display:block"
+                                 style="display: block"
                                  data-ad-client="ca-pub-1242825224942421"
                                  data-ad-slot="4007495569"
-                                 data-ad-format="auto"></ins>
+                                 data-ad-format="auto">
+                            </ins>
                             <script>
                                 (adsbygoogle = window.adsbygoogle || []).push({});
                             </script>
@@ -162,7 +169,11 @@
             _paq.push(['setTrackerUrl', u + 'piwik.php']);
             _paq.push(['setSiteId', '1']);
             var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'piwik.js';
+            s.parentNode.insertBefore(g, s);
         })();
 
         $(document).ready(function () {

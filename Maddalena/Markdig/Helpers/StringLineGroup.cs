@@ -10,13 +10,13 @@ using System.Runtime.CompilerServices;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// A group of <see cref="StringLine"/>.
+    ///     A group of <see cref="StringLine" />.
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
     public struct StringLineGroup : IEnumerable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringLineGroup"/> class.
+        ///     Initializes a new instance of the <see cref="StringLineGroup" /> class.
         /// </summary>
         /// <param name="capacity"></param>
         public StringLineGroup(int capacity)
@@ -27,7 +27,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringLineGroup"/> class.
+        ///     Initializes a new instance of the <see cref="StringLineGroup" /> class.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -40,17 +40,17 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Gets the lines.
+        ///     Gets the lines.
         /// </summary>
         public StringLine[] Lines { get; private set; }
 
         /// <summary>
-        /// Gets the number of lines.
+        ///     Gets the number of lines.
         /// </summary>
         public int Count { get; private set; }
 
         /// <summary>
-        /// Clears this instance.
+        ///     Clears this instance.
         /// </summary>
         public void Clear()
         {
@@ -59,7 +59,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Removes the line at the specified index.
+        ///     Removes the line at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
         public void RemoveAt(int index)
@@ -77,7 +77,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Adds the specified line to this instance.
+        ///     Adds the specified line to this instance.
         /// </summary>
         /// <param name="line">The line.</param>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
@@ -88,7 +88,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Adds the specified slice to this instance.
+        ///     Adds the specified slice to this instance.
         /// </summary>
         /// <param name="slice">The slice.</param>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
@@ -104,7 +104,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Converts the lines to a single <see cref="StringSlice"/> by concatenating the lines.
+        ///     Converts the lines to a single <see cref="StringSlice" /> by concatenating the lines.
         /// </summary>
         /// <param name="lineOffsets">The position of the `\n` line offsets from the beginning of the returned slice.</param>
         /// <returns>A single slice concatenating the lines of this instance</returns>
@@ -121,8 +121,10 @@ namespace Maddalena.Markdig.Helpers
             {
                 if (lineOffsets != null)
                 {
-                    lineOffsets.Add(new LineOffset(Lines[0].Position, Lines[0].Column, Lines[0].Slice.Start - Lines[0].Position, Lines[0].Slice.Start, Lines[0].Slice.End + 1));
+                    lineOffsets.Add(new LineOffset(Lines[0].Position, Lines[0].Column,
+                        Lines[0].Slice.Start - Lines[0].Position, Lines[0].Slice.Start, Lines[0].Slice.End + 1));
                 }
+
                 return Lines[0];
             }
 
@@ -135,27 +137,33 @@ namespace Maddalena.Markdig.Helpers
                 {
                     if (lineOffsets != null)
                     {
-                        lineOffsets.Add(new LineOffset(Lines[i - 1].Position, Lines[i - 1].Column, Lines[i - 1].Slice.Start - Lines[i - 1].Position, previousStartOfLine, builder.Length));
+                        lineOffsets.Add(new LineOffset(Lines[i - 1].Position, Lines[i - 1].Column,
+                            Lines[i - 1].Slice.Start - Lines[i - 1].Position, previousStartOfLine, builder.Length));
                     }
+
                     builder.Append('\n');
                     previousStartOfLine = builder.Length;
                 }
+
                 if (!Lines[i].Slice.IsEmpty)
                 {
                     builder.Append(Lines[i].Slice.Text, Lines[i].Slice.Start, Lines[i].Slice.Length);
                 }
             }
+
             if (lineOffsets != null)
             {
-                lineOffsets.Add(new LineOffset(Lines[Count - 1].Position, Lines[Count - 1].Column, Lines[Count - 1].Slice.Start - Lines[Count - 1].Position, previousStartOfLine, builder.Length));
+                lineOffsets.Add(new LineOffset(Lines[Count - 1].Position, Lines[Count - 1].Column,
+                    Lines[Count - 1].Slice.Start - Lines[Count - 1].Position, previousStartOfLine, builder.Length));
             }
+
             var str = builder.ToString();
             builder.Length = 0;
             return new StringSlice(str);
         }
 
         /// <summary>
-        /// Converts this instance into a <see cref="ICharIterator"/>.
+        ///     Converts this instance into a <see cref="ICharIterator" />.
         /// </summary>
         /// <returns></returns>
         public Iterator ToCharIterator()
@@ -164,7 +172,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Trims each lines of the specified <see cref="StringLineGroup"/>.
+        ///     Trims each lines of the specified <see cref="StringLineGroup" />.
         /// </summary>
         public void Trim()
         {
@@ -186,11 +194,12 @@ namespace Maddalena.Markdig.Helpers
             {
                 Array.Copy(Lines, 0, newItems, 0, Count);
             }
+
             Lines = newItems;
         }
 
         /// <summary>
-        /// The iterator used to iterate other the lines.
+        ///     The iterator used to iterate other the lines.
         /// </summary>
         /// <seealso cref="ICharIterator" />
         public struct Iterator : ICharIterator
@@ -205,11 +214,12 @@ namespace Maddalena.Markdig.Helpers
                 _offset = -1;
                 SliceIndex = 0;
                 CurrentChar = '\0';
-                End = -2; 
+                End = -2;
                 for (int i = 0; i < lines.Count; i++)
                 {
                     End += lines.Lines[i].Slice.Length + 1; // Add chars
                 }
+
                 NextChar();
             }
 
@@ -229,7 +239,7 @@ namespace Maddalena.Markdig.Helpers
                 _offset++;
                 if (Start <= End)
                 {
-                    var slice = (StringSlice)_lines.Lines[SliceIndex];
+                    var slice = (StringSlice) _lines.Lines[SliceIndex];
                     if (_offset < slice.Length)
                     {
                         CurrentChar = slice[slice.Start + _offset];
@@ -248,19 +258,22 @@ namespace Maddalena.Markdig.Helpers
                     SliceIndex = _lines.Count;
                     _offset--;
                 }
+
                 return CurrentChar;
             }
 
             public char PeekChar(int offset = 1)
             {
-                if (offset < 0) throw new ArgumentOutOfRangeException("Negative offset are not supported for StringLineGroup", nameof(offset));
+                if (offset < 0)
+                    throw new ArgumentOutOfRangeException("Negative offset are not supported for StringLineGroup",
+                        nameof(offset));
 
                 if (Start + offset > End)
                 {
                     return '\0';
                 }
 
-                var slice = (StringSlice)_lines.Lines[SliceIndex];
+                var slice = (StringSlice) _lines.Lines[SliceIndex];
                 if (_offset + offset >= slice.Length)
                 {
                     return '\n';
@@ -278,6 +291,7 @@ namespace Maddalena.Markdig.Helpers
                     hasSpaces = true;
                     c = NextChar();
                 }
+
                 return hasSpaces;
             }
         }

@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
-    /// Extension to allow definition lists
+    ///     Extension to allow definition lists
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class DefinitionListExtension : IMarkdownExtension

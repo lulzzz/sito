@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Internal helper to allow to declare a method using AggressiveInlining without being .NET 4.0+
+    ///     Internal helper to allow to declare a method using AggressiveInlining without being .NET 4.0+
     /// </summary>
     internal static class MethodImplOptionPortable
     {
-        public const MethodImplOptions AggressiveInlining = (MethodImplOptions)256;
+        public const MethodImplOptions AggressiveInlining = (MethodImplOptions) 256;
     }
 }

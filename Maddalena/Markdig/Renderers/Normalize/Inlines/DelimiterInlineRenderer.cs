@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Normalize.Inlines
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="DelimiterInline"/>.
+    ///     A Normalize renderer for a <see cref="DelimiterInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.Inlines.DelimiterInline}" />
     public class DelimiterInlineRenderer : NormalizeObjectRenderer<DelimiterInline>

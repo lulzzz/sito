@@ -1,7 +1,53 @@
-@model Maddalena.Models.ManageViewModels.TwoFactorAuthenticationViewModel
+@model TwoFactorAuthenticationViewModel
 @{
     ViewData["Title"] = "Two-factor authentication";
     ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+@section Links
+{
+    <section>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-action="Disable2faWarning">Disable 2FA</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-action="GenerateRecoveryCodes">Reset recovery codes</a>
+            </li>
+            @if (!Model.HasAuthenticator)
+            {
+                <li class="list-group-item">
+                    <a asp-action="EnableAuthenticator">Activate two factor authentication</a>
+                </li>
+            }
+            @if (!Model.Is2faEnabled)
+            {
+                <li class="list-group-item">
+                    <a asp-action="EnableAuthenticator">Configure authenticator app</a>
+                </li>
+                <li class="list-group-item">
+                    <a asp-action="ResetAuthenticatorWarning">Reset authenticator key</a>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="/manage/index">My account</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/changePassword">Change password</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/twoFactorAuthentication">Two-factor authentication</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/account/logout">Log out</a>
+            </li>
+        </ul>
+    </section>
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -9,7 +55,8 @@
 {
     <div class="alert alert-danger">
         <strong>You have no recovery codes left.</strong>
-        <p>You must <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.
+        <p>
+            You must <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.
         </p>
     </div>
 }
@@ -17,7 +64,8 @@ else if (Model.RecoveryCodesLeft == 1)
 {
     <div class="alert alert-danger">
         <strong>You have 1 recovery code left.</strong>
-        <p>You can <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.
+        <p>
+            You can <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.
         </p>
     </div>
 }
@@ -25,41 +73,11 @@ else if (Model.RecoveryCodesLeft <= 3)
 {
     <div class="alert alert-warning">
         <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
-        <p>You should <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.
+        <p>
+            You should <a asp-action="GenerateRecoveryCodes">generate a new set of recovery codes</a>.
         </p>
     </div>
 }
-<div class="row">
-    <div class="col-md-12 text-center">
-        <div class="col-md-3">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a asp-action="Disable2faWarning">Disable 2FA</a>
-                </li>
-                <li class="list-group-item">
-                    <a asp-action="GenerateRecoveryCodes">Reset recovery codes</a>
-                </li>
-                @if (!Model.HasAuthenticator)
-                {
-                    <li class="list-group-item">
-                        <a asp-action="EnableAuthenticator">Activate two factor authentication</a>
-                    </li>
-                }
-                @if (!Model.Is2faEnabled)
-                {
-                    <li class="list-group-item">
-                        <a asp-action="EnableAuthenticator">Configure authenticator app</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a asp-action="ResetAuthenticatorWarning">Reset authenticator key</a>
-                    </li>               
-                }
-            </ul>
-        </div>
-    </div>
-</div>
-
-
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

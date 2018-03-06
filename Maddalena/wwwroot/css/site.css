@@ -6,33 +6,38 @@
 }
 
 /* Carousel */
+
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
+
+.carousel-inner .item img[src$=".svg"] { width: 100%; }
 
 /* QR code generator */
-#qrCode {
-    margin: 15px;
-}
+
+#qrCode { margin: 15px; }
 
 /* Hide/rearrange for smaller screens */
+
 @media screen and (max-width: 767px) {
     /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+    .carousel-caption { display: none; }
 }
 
-*
-{
-    -webkit-border-radius: 0 !important;
+* {
     -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
+.rightColumn 
+{
+    padding-right: 0;
+}
+
+.rightColumn section {
+    margin-bottom: 32px;
+}

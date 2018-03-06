@@ -12,8 +12,9 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.GenericAttributes
 {
     /// <summary>
-    /// Extension that allows to attach HTML attributes to the previous <see cref="Inline"/> or current <see cref="Block"/>.
-    /// This extension should be enabled last after enabling other extensions.
+    ///     Extension that allows to attach HTML attributes to the previous <see cref="Inline" /> or current
+    ///     <see cref="Block" />.
+    ///     This extension should be enabled last after enabling other extensions.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class GenericAttributesExtension : IMarkdownExtension
@@ -60,7 +61,8 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
 
                         // Update position for HtmlAttributes
                         htmlAttributes.Line = processor.LineIndex;
-                        htmlAttributes.Column = startOfAttributes - processor.CurrentLineStartPosition; // This is not accurate with tabs!
+                        htmlAttributes.Column =
+                            startOfAttributes - processor.CurrentLineStartPosition; // This is not accurate with tabs!
                         htmlAttributes.Span.Start = startOfAttributes;
                         htmlAttributes.Span.End = copy.Start - 1;
 
@@ -69,6 +71,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                     }
                 }
             }
+
             return false;
         }
     }

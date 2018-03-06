@@ -14,13 +14,15 @@ namespace Maddalena.Markdig.Extensions.AutoLinks
                 var normalizeRenderer = renderer as NormalizeRenderer;
                 var link = obj as LinkInline;
 
-                return normalizeRenderer != null && link != null && !normalizeRenderer.Options.ExpandAutoLinks && link.IsAutoLink;
+                return normalizeRenderer != null && link != null && !normalizeRenderer.Options.ExpandAutoLinks &&
+                       link.IsAutoLink;
             }
             else
             {
                 return false;
             }
         }
+
         protected override void Write(NormalizeRenderer renderer, LinkInline obj)
         {
             renderer.Write(obj.Url);

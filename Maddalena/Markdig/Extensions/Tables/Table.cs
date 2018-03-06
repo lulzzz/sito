@@ -9,20 +9,20 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// Defines a table that contains an optional <see cref="TableRow"/>.
+    ///     Defines a table that contains an optional <see cref="TableRow" />.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.ContainerBlock" />
     public class Table : ContainerBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Table"/> class.
+        ///     Initializes a new instance of the <see cref="Table" /> class.
         /// </summary>
         public Table() : this(null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Table"/> class.
+        ///     Initializes a new instance of the <see cref="Table" /> class.
         /// </summary>
         /// <param name="parser">The parser used to create this block.</param>
         public Table(BlockParser parser) : base(parser)
@@ -31,12 +31,12 @@ namespace Maddalena.Markdig.Extensions.Tables
         }
 
         /// <summary>
-        /// Gets or sets the column alignments. May be null.
+        ///     Gets or sets the column alignments. May be null.
         /// </summary>
         public List<TableColumnDefinition> ColumnDefinitions { get; }
 
         /// <summary>
-        /// Checks if the table structure is valid.
+        ///     Checks if the table structure is valid.
         /// </summary>
         /// <returns><c>True</c> if the table has rows and the number of cells per row is correct, other wise <c>false</c>.</returns>
         public bool IsValid()
@@ -46,14 +46,15 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 return false;
             }
+
             var columnCount = ColumnDefinitions.Count;
             var rows = new int[Count];
             for (int i = 0; i < Count; i++)
             {
-                var row = (TableRow)this[i];
+                var row = (TableRow) this[i];
                 for (int j = 0; j < row.Count; j++)
                 {
-                    var cell = (TableCell)row[j];
+                    var cell = (TableCell) row[j];
                     rows[i] += cell.ColumnSpan;
                     var rowSpan = cell.RowSpan - 1;
                     while (rowSpan > 0)
@@ -62,16 +63,18 @@ namespace Maddalena.Markdig.Extensions.Tables
                         rowSpan--;
                     }
                 }
+
                 if (rows[i] > columnCount)
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
         /// <summary>
-        /// Normalizes the number of columns of this table by taking the maximum columns and appending empty cells.
+        ///     Normalizes the number of columns of this table by taking the maximum columns and appending empty cells.
         /// </summary>
         public void Normalize()
         {

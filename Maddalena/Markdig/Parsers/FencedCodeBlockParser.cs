@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Parser for a <see cref="FencedCodeBlock"/>.
+    ///     Parser for a <see cref="FencedCodeBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class FencedCodeBlockParser : FencedBlockParserBase<FencedCodeBlock>
@@ -16,7 +16,7 @@ namespace Maddalena.Markdig.Parsers
         public const string DefaultInfoPrefix = "language-";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FencedCodeBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="FencedCodeBlockParser" /> class.
         /// </summary>
         public FencedCodeBlockParser()
         {
@@ -34,7 +34,7 @@ namespace Maddalena.Markdig.Parsers
             var result = base.TryContinue(processor, block);
             if (result == BlockState.Continue)
             {
-                var fence = (FencedCodeBlock)block;
+                var fence = (FencedCodeBlock) block;
                 // Remove any indent spaces
                 var c = processor.CurrentChar;
                 var indentCount = fence.IndentCount;

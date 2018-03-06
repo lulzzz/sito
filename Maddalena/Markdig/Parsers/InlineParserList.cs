@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A list of <see cref="InlineParser"/>.
+    ///     A list of <see cref="InlineParser" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.ParserList{Markdig.Parsers.InlineParser, Markdig.Parsers.InlineParserState}" />
     public class InlineParserList : ParserList<InlineParser, InlineProcessor>
@@ -24,11 +24,12 @@ namespace Maddalena.Markdig.Parsers
                     postInlineProcessors.Add(delimProcessor);
                 }
             }
+
             PostInlineProcessors = postInlineProcessors.ToArray();
         }
 
         /// <summary>
-        /// Gets the registered post inline processors.
+        ///     Gets the registered post inline processors.
         /// </summary>
         public IPostInlineProcessor[] PostInlineProcessors { get; private set; }
     }

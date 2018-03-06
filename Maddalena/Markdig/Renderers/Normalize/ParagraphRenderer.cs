@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="ParagraphBlock"/>.
+    ///     A Normalize renderer for a <see cref="ParagraphBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.ParagraphBlock}" />
     public class ParagraphRenderer : NormalizeObjectRenderer<ParagraphBlock>

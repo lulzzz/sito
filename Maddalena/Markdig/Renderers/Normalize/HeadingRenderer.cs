@@ -7,12 +7,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// An Normalize renderer for a <see cref="HeadingBlock"/>.
+    ///     An Normalize renderer for a <see cref="HeadingBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.HeadingBlock}" />
     public class HeadingRenderer : NormalizeObjectRenderer<HeadingBlock>
     {
-        private static readonly string[] HeadingTexts = {
+        private static readonly string[] HeadingTexts =
+        {
             "#",
             "##",
             "###",

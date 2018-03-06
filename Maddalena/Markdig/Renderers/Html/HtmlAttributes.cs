@@ -10,34 +10,34 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// Attached HTML attributes to a <see cref="MarkdownObject"/>.
+    ///     Attached HTML attributes to a <see cref="MarkdownObject" />.
     /// </summary>
     public class HtmlAttributes : MarkdownObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlAttributes"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlAttributes" /> class.
         /// </summary>
         public HtmlAttributes()
         {
         }
 
         /// <summary>
-        /// Gets or sets the HTML id/identifier. May be null.
+        ///     Gets or sets the HTML id/identifier. May be null.
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the CSS classes attached. May be null.
+        ///     Gets or sets the CSS classes attached. May be null.
         /// </summary>
         public List<string> Classes { get; set; }
 
         /// <summary>
-        /// Gets or sets the additional properties. May be null.
+        ///     Gets or sets the additional properties. May be null.
         /// </summary>
         public List<KeyValuePair<string, string>> Properties { get; set; }
 
         /// <summary>
-        /// Adds a CSS class.
+        ///     Adds a CSS class.
         /// </summary>
         /// <param name="name">The css class name.</param>
         public void AddClass(string name)
@@ -46,7 +46,7 @@ namespace Maddalena.Markdig.Renderers.Html
             if (Classes == null)
             {
                 Classes = new List<string>(2);
-                    // Use half list compare to default capacity (4), as we don't expect lots of classes
+                // Use half list compare to default capacity (4), as we don't expect lots of classes
             }
 
             if (!Classes.Contains(name))
@@ -56,7 +56,7 @@ namespace Maddalena.Markdig.Renderers.Html
         }
 
         /// <summary>
-        /// Adds a property.
+        ///     Adds a property.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
@@ -65,13 +65,16 @@ namespace Maddalena.Markdig.Renderers.Html
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (Properties == null)
             {
-                Properties = new List<KeyValuePair<string, string>>(2); // Use half list compare to default capacity (4), as we don't expect lots of classes
+                Properties =
+                    new List<KeyValuePair<string, string>>(
+                        2); // Use half list compare to default capacity (4), as we don't expect lots of classes
             }
+
             Properties.Add(new KeyValuePair<string, string>(name, value));
         }
 
         /// <summary>
-        /// Adds the specified property only if it does not already exist.
+        ///     Adds the specified property only if it does not already exist.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
@@ -80,7 +83,11 @@ namespace Maddalena.Markdig.Renderers.Html
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (Properties == null)
             {
-                Properties = new List<KeyValuePair<string, string>>(4) {new KeyValuePair<string, string>(name, value == null ? null : Convert.ToString(value, CultureInfo.InvariantCulture))};
+                Properties = new List<KeyValuePair<string, string>>(4)
+                {
+                    new KeyValuePair<string, string>(name,
+                        value == null ? null : Convert.ToString(value, CultureInfo.InvariantCulture))
+                };
             }
             else
             {
@@ -95,19 +102,27 @@ namespace Maddalena.Markdig.Renderers.Html
                         break;
                     }
                 }
+
                 if (copyProp)
                 {
-                    Properties.Add(new KeyValuePair<string, string>(name, value == null ? null : Convert.ToString(value, CultureInfo.InvariantCulture)));
+                    Properties.Add(new KeyValuePair<string, string>(name,
+                        value == null ? null : Convert.ToString(value, CultureInfo.InvariantCulture)));
                 }
             }
         }
 
         /// <summary>
-        /// Copies/merge the values from this instance to the specified <see cref="HtmlAttributes"/> instance.
+        ///     Copies/merge the values from this instance to the specified <see cref="HtmlAttributes" /> instance.
         /// </summary>
         /// <param name="htmlAttributes">The HTML attributes.</param>
-        /// <param name="mergeIdAndProperties">If set to <c>true</c> it will merge properties to the target htmlAttributes. Default is <c>false</c></param>
-        /// <param name="shared">If set to <c>true</c> it will try to share Classes and Properties if destination don't have them, otherwise it will make a copy. Default is <c>true</c></param>
+        /// <param name="mergeIdAndProperties">
+        ///     If set to <c>true</c> it will merge properties to the target htmlAttributes. Default
+        ///     is <c>false</c>
+        /// </param>
+        /// <param name="shared">
+        ///     If set to <c>true</c> it will try to share Classes and Properties if destination don't have them,
+        ///     otherwise it will make a copy. Default is <c>true</c>
+        /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
         public void CopyTo(HtmlAttributes htmlAttributes, bool mergeIdAndProperties = false, bool shared = true)
         {
@@ -117,6 +132,7 @@ namespace Maddalena.Markdig.Renderers.Html
             {
                 htmlAttributes.Id = Id;
             }
+
             if (htmlAttributes.Classes == null)
             {
                 htmlAttributes.Classes = shared ? Classes : Classes != null ? new List<string>(Classes) : null;
@@ -128,7 +144,8 @@ namespace Maddalena.Markdig.Renderers.Html
 
             if (htmlAttributes.Properties == null)
             {
-                htmlAttributes.Properties = shared ? Properties : Properties != null ? new List<KeyValuePair<string, string>>(Properties) : null;
+                htmlAttributes.Properties = shared ? Properties :
+                    Properties != null ? new List<KeyValuePair<string, string>>(Properties) : null;
             }
             else if (Properties != null)
             {
@@ -148,14 +165,14 @@ namespace Maddalena.Markdig.Renderers.Html
     }
 
     /// <summary>
-    /// Extensions for a <see cref="MarkdownObject"/> to allow accessing <see cref="HtmlAttributes"/>
+    ///     Extensions for a <see cref="MarkdownObject" /> to allow accessing <see cref="HtmlAttributes" />
     /// </summary>
     public static class HtmlAttributesExtensions
     {
-        private static readonly object Key = typeof (HtmlAttributes);
+        private static readonly object Key = typeof(HtmlAttributes);
 
         /// <summary>
-        /// Tries the get <see cref="HtmlAttributes"/> stored on a <see cref="MarkdownObject"/>.
+        ///     Tries the get <see cref="HtmlAttributes" /> stored on a <see cref="MarkdownObject" />.
         /// </summary>
         /// <param name="obj">The markdown object.</param>
         /// <returns>The attached html attributes or null if not found</returns>
@@ -165,7 +182,7 @@ namespace Maddalena.Markdig.Renderers.Html
         }
 
         /// <summary>
-        /// Gets or creates the <see cref="HtmlAttributes"/> stored on a <see cref="MarkdownObject"/>
+        ///     Gets or creates the <see cref="HtmlAttributes" /> stored on a <see cref="MarkdownObject" />
         /// </summary>
         /// <param name="obj">The markdown object.</param>
         /// <returns>The attached html attributes</returns>
@@ -177,11 +194,12 @@ namespace Maddalena.Markdig.Renderers.Html
                 attributes = new HtmlAttributes();
                 obj.SetAttributes(attributes);
             }
+
             return attributes;
         }
 
         /// <summary>
-        /// Sets <see cref="HtmlAttributes" /> to the <see cref="MarkdownObject" />
+        ///     Sets <see cref="HtmlAttributes" /> to the <see cref="MarkdownObject" />
         /// </summary>
         /// <param name="obj">The markdown object.</param>
         /// <param name="attributes">The attributes to attach.</param>

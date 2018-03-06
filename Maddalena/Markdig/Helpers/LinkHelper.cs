@@ -9,7 +9,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Helpers to parse Markdown links.
+    ///     Helpers to parse Markdown links.
     /// </summary>
     public static class LinkHelper
     {
@@ -40,6 +40,7 @@ namespace Maddalena.Markdig.Helpers
                         {
                             continue;
                         }
+
                         c = char.IsUpper(c) ? char.ToLowerInvariant(c) : c;
                         headingBuffer.Append(c);
                         hasLetter = true;
@@ -53,10 +54,12 @@ namespace Maddalena.Markdig.Helpers
                             {
                                 headingBuffer.Length--;
                             }
+
                             if (headingBuffer[headingBuffer.Length - 1] != c)
                             {
                                 headingBuffer.Append(c);
                             }
+
                             previousIsSpace = false;
                         }
                         else if (c.IsDigit())
@@ -71,6 +74,7 @@ namespace Maddalena.Markdig.Helpers
                             {
                                 headingBuffer.Append('-');
                             }
+
                             previousIsSpace = true;
                         }
                     }
@@ -108,6 +112,7 @@ namespace Maddalena.Markdig.Helpers
                     headingBuffer.Append(c == ' ' ? '-' : c);
                 }
             }
+
             var result = headingBuffer.ToString();
             headingBuffer.Length = 0;
             return result;
@@ -197,6 +202,7 @@ namespace Maddalena.Markdig.Helpers
                         builder.Length = 0;
                         return false;
                     }
+
                     builder.Append(c);
                 }
                 else if (c == ':')
@@ -206,15 +212,18 @@ namespace Maddalena.Markdig.Helpers
                         builder.Length = 0;
                         return false;
                     }
+
                     state = 1;
                     break;
-                } else if (c == '@')
+                }
+                else if (c == '@')
                 {
                     if (state > 0)
                     {
                         builder.Length = 0;
                         return false;
                     }
+
                     state = -1;
                     break;
                 }
@@ -226,7 +235,7 @@ namespace Maddalena.Markdig.Helpers
             }
 
             // append ':' or '@' 
-            builder.Append(c); 
+            builder.Append(c);
 
             if (state < 0)
             {
@@ -268,6 +277,7 @@ namespace Maddalena.Markdig.Helpers
                         {
                             break;
                         }
+
                         domainCharCount = 0;
                         hasMinus = false;
                     }
@@ -275,6 +285,7 @@ namespace Maddalena.Markdig.Helpers
                     {
                         break;
                     }
+
                     builder.Append(c);
                     pc = c;
                 }
@@ -325,7 +336,8 @@ namespace Maddalena.Markdig.Helpers
             return TryParseInlineLink(ref text, out link, out title, out linkSpan, out titleSpan);
         }
 
-        public static bool TryParseInlineLink(StringSlice text, out string link, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan)
+        public static bool TryParseInlineLink(StringSlice text, out string link, out string title,
+            out SourceSpan linkSpan, out SourceSpan titleSpan)
         {
             return TryParseInlineLink(ref text, out link, out title, out linkSpan, out titleSpan);
         }
@@ -337,7 +349,8 @@ namespace Maddalena.Markdig.Helpers
             return TryParseInlineLink(ref text, out link, out title, out linkSpan, out titleSpan);
         }
 
-        public static bool TryParseInlineLink(ref StringSlice text, out string link, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan)
+        public static bool TryParseInlineLink(ref StringSlice text, out string link, out string title,
+            out SourceSpan linkSpan, out SourceSpan titleSpan)
         {
             // 1. An inline link consists of a link text followed immediately by a left parenthesis (, 
             // 2. optional whitespace,  TODO: specs: is it whitespace or multiple whitespaces?
@@ -394,6 +407,7 @@ namespace Maddalena.Markdig.Helpers
                             {
                                 titleSpan = SourceSpan.Empty;
                             }
+
                             text.TrimStart();
                             c = text.CurrentChar;
 
@@ -450,6 +464,7 @@ namespace Maddalena.Markdig.Helpers
                             {
                                 break;
                             }
+
                             hasOnlyWhiteSpacesSinceLastLine = -1;
                         }
                     }
@@ -560,7 +575,6 @@ namespace Maddalena.Markdig.Helpers
                     }
 
                     buffer.Append(c);
-
                 } while (c != '\0');
             }
             else
@@ -623,12 +637,14 @@ namespace Maddalena.Markdig.Helpers
                             int entityNameStart;
                             int entityNameLength;
                             int entityValue;
-                            if (HtmlHelper.ScanEntity(text, out entityValue, out entityNameStart, out entityNameLength) > 0)
+                            if (HtmlHelper.ScanEntity(text, out entityValue, out entityNameStart,
+                                    out entityNameLength) > 0)
                             {
                                 isValid = true;
                                 break;
                             }
                         }
+
                         if (IsTrailingUrlStopCharacter(c) && IsEndOfUri(text.PeekChar(), true))
                         {
                             isValid = true;
@@ -656,13 +672,15 @@ namespace Maddalena.Markdig.Helpers
         private static bool IsTrailingUrlStopCharacter(char c)
         {
             // Trailing punctuation (specifically, ?, !, ., ,, :, *, _, and ~) will not be considered part of the autolink, though they may be included in the interior of the link:
-            return c == '?' || c == '!' || c == '.' || c == ',' || c == ':' || c == '*' || c == '*' || c == '_' || c == '~';
+            return c == '?' || c == '!' || c == '.' || c == ',' || c == ':' || c == '*' || c == '*' || c == '_' ||
+                   c == '~';
         }
 
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
         private static bool IsEndOfUri(char c, bool isAutoLink)
         {
-            return c == '\0' || c.IsSpaceOrTab() || c.IsControl() || (isAutoLink && c == '<'); // TODO: specs unclear. space is strict or relaxed? (includes tabs?)
+            return c == '\0' || c.IsSpaceOrTab() || c.IsControl() ||
+                   (isAutoLink && c == '<'); // TODO: specs unclear. space is strict or relaxed? (includes tabs?)
         }
 
         public static bool TryParseLinkReferenceDefinition<T>(T text, out string label, out string url,
@@ -671,7 +689,8 @@ namespace Maddalena.Markdig.Helpers
             return TryParseLinkReferenceDefinition(ref text, out label, out url, out title);
         }
 
-        public static bool TryParseLinkReferenceDefinition<T>(ref T text, out string label, out string url, out string title)
+        public static bool TryParseLinkReferenceDefinition<T>(ref T text, out string label, out string url,
+            out string title)
             where T : ICharIterator
         {
             SourceSpan labelSpan;
@@ -681,7 +700,9 @@ namespace Maddalena.Markdig.Helpers
                 out titleSpan);
         }
 
-        public static bool TryParseLinkReferenceDefinition<T>(ref T text, out string label, out string url, out string title, out SourceSpan labelSpan, out SourceSpan urlSpan, out SourceSpan titleSpan) where T : ICharIterator
+        public static bool TryParseLinkReferenceDefinition<T>(ref T text, out string label, out string url,
+            out string title, out SourceSpan labelSpan, out SourceSpan urlSpan, out SourceSpan titleSpan)
+            where T : ICharIterator
         {
             url = null;
             title = null;
@@ -699,6 +720,7 @@ namespace Maddalena.Markdig.Helpers
                 label = null;
                 return false;
             }
+
             text.NextChar(); // Skip ':'
 
             // Skip any whitespace before the url
@@ -709,6 +731,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             urlSpan.End = text.Start - 1;
 
             var saved = text;
@@ -785,12 +808,14 @@ namespace Maddalena.Markdig.Helpers
         }
 
 
-        public static bool TryParseLabel<T>(ref T lines, out string label, out SourceSpan labelSpan) where T : ICharIterator
+        public static bool TryParseLabel<T>(ref T lines, out string label, out SourceSpan labelSpan)
+            where T : ICharIterator
         {
             return TryParseLabel(ref lines, false, out label, out labelSpan);
         }
 
-        public static bool TryParseLabel<T>(ref T lines, bool allowEmpty, out string label, out SourceSpan labelSpan) where T : ICharIterator
+        public static bool TryParseLabel<T>(ref T lines, bool allowEmpty, out string label, out SourceSpan labelSpan)
+            where T : ICharIterator
         {
             label = null;
             char c = lines.CurrentChar;
@@ -799,6 +824,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 return false;
             }
+
             var buffer = StringBuilderCache.Local();
 
             var startLabel = -1;
@@ -842,6 +868,7 @@ namespace Maddalena.Markdig.Helpers
                                 {
                                     break;
                                 }
+
                                 buffer.Length = i;
                                 endLabel--;
                             }
@@ -860,6 +887,7 @@ namespace Maddalena.Markdig.Helpers
                                 isValid = true;
                             }
                         }
+
                         break;
                     }
                 }
@@ -877,6 +905,7 @@ namespace Maddalena.Markdig.Helpers
                     {
                         startLabel = lines.Start;
                     }
+
                     hasEscape = true;
                 }
                 else
@@ -889,6 +918,7 @@ namespace Maddalena.Markdig.Helpers
                         {
                             startLabel = lines.Start;
                         }
+
                         endLabel = lines.Start;
                         buffer.Append(c);
                         if (!isWhitespace)
@@ -897,6 +927,7 @@ namespace Maddalena.Markdig.Helpers
                         }
                     }
                 }
+
                 previousWhitespace = isWhitespace;
             }
 

@@ -7,13 +7,13 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// A list item (Section 5.2 CommonMark specs)
+    ///     A list item (Section 5.2 CommonMark specs)
     /// </summary>
     /// <seealso cref="Markdig.Syntax.ContainerBlock" />
     public class ListItemBlock : ContainerBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListItemBlock"/> class.
+        ///     Initializes a new instance of the <see cref="ListItemBlock" /> class.
         /// </summary>
         /// <param name="parser">The parser used to create this block.</param>
         public ListItemBlock(BlockParser parser) : base(parser)

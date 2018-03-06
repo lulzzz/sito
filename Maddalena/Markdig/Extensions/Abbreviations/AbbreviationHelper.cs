@@ -9,11 +9,11 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
-    /// Extension methods for <see cref="Abbreviation"/>.
+    ///     Extension methods for <see cref="Abbreviation" />.
     /// </summary>
     public static class AbbreviationHelper
     {
-        private static readonly object DocumentKey = typeof (Abbreviation);
+        private static readonly object DocumentKey = typeof(Abbreviation);
 
         public static bool HasAbbreviations(this MarkdownDocument document)
         {
@@ -32,6 +32,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
                 map = new Dictionary<string, Abbreviation>();
                 document.SetData(DocumentKey, map);
             }
+
             map[label] = abbr;
         }
 

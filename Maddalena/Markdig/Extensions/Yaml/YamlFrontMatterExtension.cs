@@ -9,7 +9,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Yaml
 {
     /// <summary>
-    /// Extension to discard a YAML frontmatter at the beginning of a Markdown document.
+    ///     Extension to discard a YAML frontmatter at the beginning of a Markdown document.
     /// </summary>
     public class YamlFrontMatterExtension : IMarkdownExtension
     {

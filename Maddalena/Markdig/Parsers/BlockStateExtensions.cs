@@ -8,12 +8,12 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Extensions used by <see cref="BlockState"/>.
+    ///     Extensions used by <see cref="BlockState" />.
     /// </summary>
     public static class BlockStateExtensions
     {
         /// <summary>
-        /// Determines whether this <see cref="BlockState"/> is discarded.
+        ///     Determines whether this <see cref="BlockState" /> is discarded.
         /// </summary>
         /// <param name="blockState">State of the block.</param>
         /// <returns><c>true</c> if the block state is in discard state</returns>
@@ -24,7 +24,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Determines whether this <see cref="BlockState"/> is in a continue state.
+        ///     Determines whether this <see cref="BlockState" /> is in a continue state.
         /// </summary>
         /// <param name="blockState">State of the block.</param>
         /// <returns><c>true</c> if the block state is in continue state</returns>
@@ -35,7 +35,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Determines whether this <see cref="BlockState"/> is in a break state.
+        ///     Determines whether this <see cref="BlockState" /> is in a break state.
         /// </summary>
         /// <param name="blockState">State of the block.</param>
         /// <returns><c>true</c> if the block state is in break state</returns>

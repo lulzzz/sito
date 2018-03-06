@@ -9,7 +9,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
-    /// A HTML renderer for <see cref="DefinitionList"/>, <see cref="DefinitionItem"/> and <see cref="DefinitionTerm"/>.
+    ///     A HTML renderer for <see cref="DefinitionList" />, <see cref="DefinitionItem" /> and <see cref="DefinitionTerm" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Extensions.DefinitionLists.DefinitionList}" />
     public class HtmlDefinitionListRenderer : HtmlObjectRenderer<DefinitionList>
@@ -36,11 +36,13 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                             {
                                 renderer.EnsureLine();
                             }
+
                             renderer.WriteLine("</dd>");
                             lastWasSimpleParagraph = false;
                             hasOpendd = false;
                             countdd = 0;
                         }
+
                         renderer.Write("<dt").WriteAttributes(definitionTerm).Write(">");
                         renderer.WriteLeafInline(definitionTerm);
                         renderer.WriteLine("</dt>");
@@ -64,20 +66,24 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                             renderer.ImplicitParagraph = true;
                             lastWasSimpleParagraph = true;
                         }
+
                         renderer.Write(definitionTermOrContent);
                         renderer.ImplicitParagraph = saveImplicitParagraph;
                         countdd++;
                     }
                 }
+
                 if (hasOpendd)
                 {
                     if (!lastWasSimpleParagraph)
                     {
                         renderer.EnsureLine();
                     }
+
                     renderer.WriteLine("</dd>");
                 }
             }
+
             renderer.EnsureLine();
             renderer.WriteLine("</dl>");
         }
