@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="1.0.0" />
+    <PackageReference Include="DatabaseSchemaReader" Version="2.5.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
@@ -31,7 +32,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.5.0" />
     <PackageReference Include="Mongolino" Version="1.2.4" />
-    <PackageReference Include="Stripe.net" Version="13.3.0" />
+    <PackageReference Include="Stripe.net" Version="13.3.1" />
   </ItemGroup>
 
   <ItemGroup>
