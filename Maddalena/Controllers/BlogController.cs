@@ -3,19 +3,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Modules.Blog;
 using Maddalena.Security;
+using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         static BlogController()
         {
             BlogArticle.DescendingIndex(x => x.Link);
             BlogArticle.DescendingIndex(x=>x.DateTime);
         }
+
+        public BlogController(
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager,
+    IEmailSender emailSender,
+    ILogger logger) : base(userManager, signInManager, emailSender, logger)
+        {
+        }
+
 
         // GET: Blog
         public ActionResult Index() => View(BlogArticle.Queryable().OrderByDescending(x=>x.DateTime).Take(20));
@@ -64,7 +76,7 @@ namespace Maddalena.Controllers
             {
                 article.Id = string.Empty;
                 article.DateTime = DateTime.Now;
-                article.Author = await ApplicationUser.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+                article.Author = User.Identity.Name;
 
                 await BlogArticle.CreateAsync(article);
 

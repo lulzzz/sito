@@ -26,7 +26,7 @@ namespace Maddalena.Mongo
                 FileName = file.FileName,
                 Length = file.Length,
                 Name = file.Name,
-                Uploader = await claimPrincipal.ToUser(),
+                Uploader = claimPrincipal.Identity?.Name ?? "anon",
                 DateTime = DateTimeOffset.Now,
                 ACL = acl ?? new ACL { Public = true }
             };
@@ -42,7 +42,7 @@ namespace Maddalena.Mongo
 
         public string GridName { get; set; }
 
-        public ObjectRef<ApplicationUser> Uploader { get; set; }
+        public string Uploader { get; set; }
         
         public DateTimeOffset DateTime { get; set; }
 

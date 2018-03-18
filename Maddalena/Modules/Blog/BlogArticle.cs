@@ -26,7 +26,7 @@ namespace Maddalena.Modules.Blog
             get { return All.Select(x => x.Category).Distinct(); }
         }
 
-        public ObjectRef<ApplicationUser> Author { get; set; }
+        public string Author { get; set; }
 
         [Required]
         public string Title { get; set; }

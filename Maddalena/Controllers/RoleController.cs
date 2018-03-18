@@ -2,43 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AspNetCore.Identity.Mongo;
 using Maddalena.Security;
+using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly RoleManager<MongoIdentityRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> RoleManager;
 
         public RoleController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
-          RoleManager<MongoIdentityRole> roleManager)
+          RoleManager<ApplicationRole> roleManager,
+          IEmailSender emailSender,
+          ILogger logger) : base(userManager,signInManager,emailSender,logger)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
+            RoleManager = roleManager;
         }
 
 
         // GET: Role
         public ActionResult Index()
         {
-            return View(_roleManager.Roles);
+            return View(RoleManager.Roles);
         }
 
         // GET: Role/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var role = await _roleManager.FindByNameAsync(id);
+            var role = await RoleManager.FindByNameAsync(id);
             return View(role);
         }
 
@@ -51,11 +50,11 @@ namespace Maddalena.Controllers
         // POST: Role/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(MongoIdentityRole role)
+        public async Task<ActionResult> Create(ApplicationRole role)
         {
             try
             {
-                await _roleManager.CreateAsync(role);
+                await RoleManager.CreateAsync(role);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -13,7 +13,7 @@ namespace Maddalena.Modules.Board
             DescendingIndex(x => x.Board);
         }
 
-        public ObjectRef<ApplicationUser> User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public DateTime Timestamp { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,4 +11,24 @@
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }
-        
+
+@section Side
+    {
+    <section>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="/manage/index">My account</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/changePassword">Change password</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/twoFactorAuthentication">Two-factor authentication</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/account/logout">Log out</a>
+            </li>
+        </ul>
+    </section>
+
+}

@@ -23,15 +23,14 @@
 
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.Identity.Mongo" Version="1.0.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-preview1-final" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.5.0" />
     <PackageReference Include="Mongolino" Version="1.2.4" />
-    <PackageReference Include="Stripe.net" Version="13.3.0" />
+    <PackageReference Include="Stripe.net" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,6 +118,10 @@
     <None Include="wwwroot\lib\tinymce\themes\mobile\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\themes\modern\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\tinymce.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.AspNetCore.Identity.MongoDB\Microsoft.AspNetCore.Identity.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,3 +2,5 @@
 /Maddalena/bin
 /Maddalena/obj
 /.vs
+/Microsoft.AspNetCore.Identity.MongoDB/obj
+/Microsoft.AspNetCore.Identity.MongoDB/bin/Release/netstandard2.0

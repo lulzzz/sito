@@ -6,7 +6,7 @@ namespace Maddalena.Modules.Board
 {
     public class BoardComment
     {
-        public ObjectRef<ApplicationUser> User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public DateTime Timestamp { get; set; }
 

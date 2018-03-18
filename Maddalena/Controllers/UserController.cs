@@ -1,51 +1,56 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using AspNetCore.Identity.Mongo;
 using Maddalena.Security;
+using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<MongoIdentityRole> _roleManager;
+        RoleManager<ApplicationRole> _roleManager;
 
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<MongoIdentityRole> roleManager)
+        public UserController(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
+            SignInManager<ApplicationUser> SignInManager,
+            IEmailSender emailSender,
+            ILogger logger) : base(userManager, SignInManager, emailSender, logger)
         {
-            _userManager = userManager;
             _roleManager = roleManager;
         }
+
 
         // GET: User
         public ActionResult Index()
         {
-            return View(ApplicationUser.All);
+            return View();
         }
 
         public async Task<ActionResult> AddToRole(string role, string user)
         {
-            var u = await _userManager.FindByNameAsync(user);
+            var u = await UserManager.FindByNameAsync(user);
 
             if (!await _roleManager.RoleExistsAsync(role))
-                await _roleManager.CreateAsync(new MongoIdentityRole(role));
+                await _roleManager.CreateAsync(new ApplicationRole(role));
 
             if (u == null) return NotFound();
 
-            await _userManager.AddToRoleAsync(u, role);
+            await UserManager.AddToRoleAsync(u, role);
 
             return RedirectToAction(nameof(Index));
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            var user = ApplicationUser.FirstOrDefault(x => x.UserName == id);
+            var user = await UserManager.FindByNameAsync(id);
 
             if (user == null) return NotFound();
 
@@ -70,9 +75,9 @@ namespace Maddalena.Controllers
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            var user = ApplicationUser.FirstOrDefault(x => x.UserName == id);
+            var user = await UserManager.FindByNameAsync(id);
 
             if (user == null) return NotFound();
 

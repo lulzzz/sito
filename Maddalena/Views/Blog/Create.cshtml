@@ -9,10 +9,9 @@
 
 <hr />
 <script>
-    function addValue()
-    { 
+    function addValue() {
         var text = $("#txtNewCategory").val();
-        $('#category').append('<option value="'+text+'" selected="selected">' + text + '</option>');
+        $('#category').append('<option value="' + text + '" selected="selected">' + text + '</option>');
     }
 </script>
 
@@ -74,3 +73,55 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    $(document).ready(function () {
+        var editor = new Jodit('#area_editor',
+            {
+                textIcons: false,
+                iframe: false,
+                iframeStyle: '*,.jodit_wysiwyg {color:red;}',
+                height: 300,
+                defaultMode: Jodit.MODE_WYSIWYG,
+                observer: {
+                    timeout: 100
+                },
+                uploader: {
+                    url: 'http://mercati.news/file/upload'
+                },
+                /*filebrowser: {
+                    // buttons: ['list', 'tiles', 'sort'],
+                    ajax: {
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                    }
+                },*/
+                commandToHotkeys: {
+                    'openreplacedialog': 'ctrl+p'
+                }
+                // buttons: ['symbol'],
+                // disablePlugins: 'hotkeys,mobile'
+            });
+
+
+        var options =
+            {
+                success: function (response, statusText, xhr, $form) {
+                    var s = window[response.onSuccess];
+                    s(response);
+                }
+
+                // other available options:
+                //url:       url         // override for form's 'action' attribute
+                //type:      type        // 'get' or 'post', override for form's 'method' attribute
+                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                //clearForm: true        // clear all form fields after successful submit
+                //resetForm: true        // reset the form after successful submit
+
+                // $.ajax options can be used here too, for example:
+                //timeout:   3000
+            };
+
+        // bind form using 'ajaxForm'
+        $('.ajax-form').ajaxForm(options);
+    });
+
+</script>

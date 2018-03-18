@@ -1,5 +1,4 @@
-﻿using AspNetCore.Identity.Mongo;
-using Maddalena.Security;
+﻿using Maddalena.Security;
 using Maddalena.Security.DynamicPolicy;
 using Mongolino;
 using Maddalena.Services;
@@ -8,6 +7,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace Maddalena
 {
@@ -24,14 +26,24 @@ namespace Maddalena
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMongoIdentityProvider<ApplicationUser>(options =>
+            services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser,ApplicationRole>("mongodb://localhost/maddalena", options =>
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
-            });
+
+            }).AddDefaultTokenProviders();
+
+            /*services.AddMongoIdentityProvider<ApplicationUser>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            });*/
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

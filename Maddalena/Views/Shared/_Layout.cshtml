@@ -1,5 +1,4 @@
 ﻿@using Maddalena.Modules.Blog
-﻿@using AspNetCore.Identity.Mongo
 
 <!DOCTYPE html>
 <html>
@@ -81,7 +80,7 @@
         </nav>
         <div class="row">
             <div class="col-12">
-                <img class="img-fluid" src="~/images/cover.jpg" />
+                <img class="img-fluid" src="~/images/cover.jpg" style="width:100%" />
             </div>
         </div>
 
@@ -103,20 +102,25 @@
                     }
                     @RenderBody()
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" id="side">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12" style="padding-right:0px">
+                            @if (BlogArticle.Categories.Any())
+                            {
+                                <section>
+                                    <ul class="list-group">
+                                        @foreach (var cat in BlogArticle.Categories)
+                                        {
+                                            <li class="list-group-item">
+                                                <a href="/blog/category/@cat">@cat</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </section>
+                            }
+                            @RenderSection("Side", required: false)
+
                             <section>
-                                <ul class="list-group">
-                                    @foreach (var cat in BlogArticle.Categories)
-                                    {
-                                        <li class="list-group-item">
-                                            <a href="/blog/category/@cat">@cat</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </section>
-                            <section style="margin-top:32px">
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <a href="https://github.com/matteofabbri" target="_blank"><i class="fab fa-github-square"></i> GitHub</a>
@@ -135,7 +139,7 @@
                         </div>
                     </div>
                     <div class="row" style="margin-top:32px">
-                        <div class="col-12 text-center">
+                        <div class="col-12 text-center" style="padding-right:0px">
                             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- Display -->
                             <ins class="adsbygoogle"
@@ -152,72 +156,6 @@
             </div>
         </div>
     </div>
-    <script>
-        var _paq = _paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function () {
-            var u = "//stat.mercati.news/";
-            _paq.push(['setTrackerUrl', u + 'piwik.php']);
-            _paq.push(['setSiteId', '1']);
-            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
-        })();
-
-        $(document).ready(function () {
-            var editor = new Jodit('#area_editor',
-                {
-                    textIcons: false,
-                    iframe: false,
-                    iframeStyle: '*,.jodit_wysiwyg {color:red;}',
-                    height: 300,
-                    defaultMode: Jodit.MODE_WYSIWYG,
-                    observer: {
-                        timeout: 100
-                    },
-                    uploader: {
-                        url: 'http://mercati.news/file/upload'
-                    },
-                    /*filebrowser: {
-                        // buttons: ['list', 'tiles', 'sort'],
-                        ajax: {
-                            url: 'https://xdsoft.net/jodit/connector/index.php'
-                        }
-                    },*/
-                    commandToHotkeys: {
-                        'openreplacedialog': 'ctrl+p'
-                    }
-                    // buttons: ['symbol'],
-                    // disablePlugins: 'hotkeys,mobile'
-                });
-
-
-            var options =
-                {
-                    success: function (response, statusText, xhr, $form) {
-                        var s = window[response.onSuccess];
-                        s(response);
-                    }
-
-                    // other available options:
-                    //url:       url         // override for form's 'action' attribute
-                    //type:      type        // 'get' or 'post', override for form's 'method' attribute
-                    //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
-                    //clearForm: true        // clear all form fields after successful submit
-                    //resetForm: true        // reset the form after successful submit
-
-                    // $.ajax options can be used here too, for example:
-                    //timeout:   3000
-                };
-
-            // bind form using 'ajaxForm'
-            $('.ajax-form').ajaxForm(options);
-        });
-
-    </script>
-    <!-- End Matomo Code -->
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
