@@ -36,6 +36,12 @@ namespace Maddalena
 
             }).AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "127806004786-jsnf1cr38s8aps1higamtjivectofv21.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "QGrQnAvHGazDN-hM2Aaa2v5f";
+            });
+
             /*services.AddMongoIdentityProvider<ApplicationUser>(options =>
             {
                 options.Password.RequiredLength = 6;

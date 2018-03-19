@@ -109,21 +109,24 @@
     <div class="col-md-4">
         <h4>User roles</h4>
         <p>
-            @{ var roles = await Model.GetRoles(); }
+            @{ /*
+              @{ var roles = await Model.GetRoles(); }
 
-                @if (roles.Any())
-                {
+                    @if (roles.Any())
+                    {
                     <ul>
-                        @foreach (var role in roles)
-                        {
-                            <li>@role</li>
-                        }
+                           @foreach (var role in roles)
+                           {
+                               <li>@role</li>
+                           }
                     </ul>
-                }
-                else
-                {
+                    }
+                    else
+                    {
                     <span class="text-danger">No active roles for this user</span>
-                }
+                    }
+                    */
+            }
         </p>
 
         <form method="post" action="/user/addToRole">
@@ -131,7 +134,7 @@
                 <label class="control-label" for="Name">Role name</label>
                 <input class="form-control" type="text" id="role" name="role" value="">
                 <input type="hidden" name="user" value="@Model.UserName">
-                <input type="submit"/>
+                <input type="submit" />
             </div>
         </form>
     </div>
