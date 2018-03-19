@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Normalize.Inlines
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="HtmlInline"/>.
+    ///     A Normalize renderer for a <see cref="HtmlInline" />.
     /// </summary>
     public class NormalizeHtmlInlineRenderer : NormalizeObjectRenderer<HtmlInline>
     {

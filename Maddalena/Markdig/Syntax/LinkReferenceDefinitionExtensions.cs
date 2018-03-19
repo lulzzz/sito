@@ -7,7 +7,7 @@ using System;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Extension methods for accessing <see cref="LinkReferenceDefinition"/> attached at the document level.
+    ///     Extension methods for accessing <see cref="LinkReferenceDefinition" /> attached at the document level.
     /// </summary>
     public static class LinkReferenceDefinitionExtensions
     {
@@ -21,17 +21,20 @@ namespace Maddalena.Markdig.Syntax
             {
                 return false;
             }
+
             return references.Links.ContainsKey(label);
         }
 
-        public static void SetLinkReferenceDefinition(this MarkdownDocument document, string label, LinkReferenceDefinition linkReferenceDefinition)
+        public static void SetLinkReferenceDefinition(this MarkdownDocument document, string label,
+            LinkReferenceDefinition linkReferenceDefinition)
         {
             if (label == null) throw new ArgumentNullException(nameof(label));
             var references = document.GetLinkReferenceDefinitions();
             references.Set(label, linkReferenceDefinition);
         }
 
-        public static bool TryGetLinkReferenceDefinition(this MarkdownDocument document, string label, out LinkReferenceDefinition linkReferenceDefinition)
+        public static bool TryGetLinkReferenceDefinition(this MarkdownDocument document, string label,
+            out LinkReferenceDefinition linkReferenceDefinition)
         {
             if (label == null) throw new ArgumentNullException(nameof(label));
             linkReferenceDefinition = null;
@@ -40,6 +43,7 @@ namespace Maddalena.Markdig.Syntax
             {
                 return false;
             }
+
             return references.TryGet(label, out linkReferenceDefinition);
         }
 
@@ -52,6 +56,7 @@ namespace Maddalena.Markdig.Syntax
                 document.SetData(DocumentKey, references);
                 document.Add(references);
             }
+
             return references;
         }
     }

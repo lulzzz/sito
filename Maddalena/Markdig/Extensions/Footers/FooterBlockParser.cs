@@ -9,13 +9,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Footers
 {
     /// <summary>
-    /// A block parser for a <see cref="FooterBlock"/>.
+    ///     A block parser for a <see cref="FooterBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class FooterBlockParser : BlockParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FooterBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="FooterBlockParser" /> class.
         /// </summary>
         public FooterBlockParser()
         {
@@ -39,12 +39,14 @@ namespace Maddalena.Markdig.Extensions.Footers
             {
                 return BlockState.None;
             }
+
             processor.NextChar(); // Grab 2nd^
             var c = processor.NextChar(); // grab space
             if (c.IsSpaceOrTab())
             {
                 processor.NextColumn();
             }
+
             processor.NewBlocks.Push(new FooterBlock(this)
             {
                 Span = new SourceSpan(startPosition, processor.Line.End),
@@ -80,8 +82,10 @@ namespace Maddalena.Markdig.Extensions.Footers
                 {
                     processor.NextChar(); // Skip following space
                 }
+
                 block.UpdateSpanEnd(processor.Line.End);
             }
+
             return result;
         }
     }

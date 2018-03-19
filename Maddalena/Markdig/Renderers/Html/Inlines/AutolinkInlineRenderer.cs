@@ -7,13 +7,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Html.Inlines
 {
     /// <summary>
-    /// A HTML renderer for an <see cref="AutolinkInline"/>.
+    ///     A HTML renderer for an <see cref="AutolinkInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.Inlines.AutolinkInline}" />
     public class AutolinkInlineRenderer : HtmlObjectRenderer<AutolinkInline>
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to always add rel="nofollow" for links or not.
+        ///     Gets or sets a value indicating whether to always add rel="nofollow" for links or not.
         /// </summary>
         public bool AutoRelNoFollow { get; set; }
 
@@ -26,6 +26,7 @@ namespace Maddalena.Markdig.Renderers.Html.Inlines
                 {
                     renderer.Write("mailto:");
                 }
+
                 renderer.WriteEscapeUrl(obj.Url);
                 renderer.Write('"');
                 renderer.WriteAttributes(obj);

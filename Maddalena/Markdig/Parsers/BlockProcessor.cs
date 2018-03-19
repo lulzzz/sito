@@ -11,14 +11,20 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// The block processor.
+    ///     The block processor.
     /// </summary>
     public class BlockProcessor
     {
-        private BlockProcessor root;
-        private int currentStackIndex;
         private readonly BlockParserStateCache parserStateCache;
+        private int currentStackIndex;
+
+        /// <summary>
+        ///     The current line being processed.
+        /// </summary>
+        public StringSlice Line;
+
         private int originalLineStart = 0;
+        private BlockProcessor root;
 
         private BlockProcessor(BlockProcessor root)
         {
@@ -35,7 +41,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockProcessor" /> class.
+        ///     Initializes a new instance of the <see cref="BlockProcessor" /> class.
         /// </summary>
         /// <param name="stringBuilders">The string builders cache.</param>
         /// <param name="document">The document to build blocks into.</param>
@@ -59,112 +65,109 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Gets the new blocks to push. A <see cref="BlockParser"/> is required to push new blocks that it creates to this property.
+        ///     Gets the new blocks to push. A <see cref="BlockParser" /> is required to push new blocks that it creates to this
+        ///     property.
         /// </summary>
         public Stack<Block> NewBlocks { get; }
 
         /// <summary>
-        /// Gets the list of <see cref="BlockParser"/> configured with this parser state.
+        ///     Gets the list of <see cref="BlockParser" /> configured with this parser state.
         /// </summary>
         public BlockParserList Parsers { get; }
 
         /// <summary>
-        /// Gets the current active container.
+        ///     Gets the current active container.
         /// </summary>
         public ContainerBlock CurrentContainer { get; private set; }
 
         /// <summary>
-        /// Gets the last block that is opened.
+        ///     Gets the last block that is opened.
         /// </summary>
         public Block CurrentBlock { get; private set; }
 
         /// <summary>
-        /// Gets the last block that is created.
+        ///     Gets the last block that is created.
         /// </summary>
         public Block LastBlock { get; private set; }
 
         /// <summary>
-        /// Gets the next block in a <see cref="BlockParser.TryContinue"/>.
+        ///     Gets the next block in a <see cref="BlockParser.TryContinue" />.
         /// </summary>
-        public Block NextContinue => currentStackIndex + 1 < OpenedBlocks.Count ? OpenedBlocks[currentStackIndex + 1] : null;
+        public Block NextContinue =>
+            currentStackIndex + 1 < OpenedBlocks.Count ? OpenedBlocks[currentStackIndex + 1] : null;
 
         /// <summary>
-        /// Gets the root document.
+        ///     Gets the root document.
         /// </summary>
         public MarkdownDocument Document { get; }
 
         /// <summary>
-        /// The current line being processed.
-        /// </summary>
-        public StringSlice Line;
-
-        /// <summary>
-        /// Gets or sets the current line start position.
+        ///     Gets or sets the current line start position.
         /// </summary>
         public int CurrentLineStartPosition { get; private set; }
 
         /// <summary>
-        /// Gets the index of the line in the source text.
+        ///     Gets the index of the line in the source text.
         /// </summary>
         public int LineIndex { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether the line is blank (valid only after <see cref="ParseIndent"/> has been called).
+        ///     Gets a value indicating whether the line is blank (valid only after <see cref="ParseIndent" /> has been called).
         /// </summary>
         public bool IsBlankLine => CurrentChar == '\0';
 
         /// <summary>
-        /// Gets the current character being processed.
+        ///     Gets the current character being processed.
         /// </summary>
         public char CurrentChar => Line.CurrentChar;
 
         /// <summary>
-        /// Gets or sets the column.
+        ///     Gets or sets the column.
         /// </summary>
         public int Column { get; set; }
 
         /// <summary>
-        /// Gets the position of the current character in the line being processed. 
+        ///     Gets the position of the current character in the line being processed.
         /// </summary>
         public int Start => Line.Start;
 
         /// <summary>
-        /// Gets the current indent position (number of columns between the previous indent and the current position).
+        ///     Gets the current indent position (number of columns between the previous indent and the current position).
         /// </summary>
         public int Indent => Column - ColumnBeforeIndent;
 
         /// <summary>
-        /// Gets a value indicating whether a code indentation is at the beginning of the line being processed.
+        ///     Gets a value indicating whether a code indentation is at the beginning of the line being processed.
         /// </summary>
         public bool IsCodeIndent => Indent >= 4;
 
         /// <summary>
-        /// Gets the column position before the indent occured.
+        ///     Gets the column position before the indent occured.
         /// </summary>
         public int ColumnBeforeIndent { get; private set; }
 
         /// <summary>
-        /// Gets the character position before the indent occured.
+        ///     Gets the character position before the indent occured.
         /// </summary>
         public int StartBeforeIndent { get; private set; }
 
         /// <summary>
-        /// Gets the cache of string builders.
+        ///     Gets the cache of string builders.
         /// </summary>
         public StringBuilderCache StringBuilders { get; }
 
         /// <summary>
-        /// Gets the current stack of <see cref="Block"/> being processed.
+        ///     Gets the current stack of <see cref="Block" /> being processed.
         /// </summary>
         private List<Block> OpenedBlocks { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to continue processing the current line.
+        ///     Gets or sets a value indicating whether to continue processing the current line.
         /// </summary>
         private bool ContinueProcessingLine { get; set; }
 
         /// <summary>
-        /// Returns the next character in the line being processed. Update <see cref="Start"/> and <see cref="Column"/>.
+        ///     Returns the next character in the line being processed. Update <see cref="Start" /> and <see cref="Column" />.
         /// </summary>
         /// <returns>The next character or `\0` if end of line is reached</returns>
         public char NextChar()
@@ -178,11 +181,13 @@ namespace Maddalena.Markdig.Parsers
             {
                 Column++;
             }
+
             return Line.NextChar();
         }
 
         /// <summary>
-        /// Returns the next character in the line taking into space taken by tabs. Update <see cref="Start"/> and <see cref="Column"/>.
+        ///     Returns the next character in the line taking into space taken by tabs. Update <see cref="Start" /> and
+        ///     <see cref="Column" />.
         /// </summary>
         public void NextColumn()
         {
@@ -200,7 +205,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Peeks a character at the specified offset from the current position in the line.
+        ///     Peeks a character at the specified offset from the current position in the line.
         /// </summary>
         /// <param name="offset">The offset.</param>
         /// <returns>A character peeked at the specified offset</returns>
@@ -210,7 +215,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Restarts the indent from the current position.
+        ///     Restarts the indent from the current position.
         /// </summary>
         public void RestartIndent()
         {
@@ -219,9 +224,9 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Parses the indentation from the current position in the line, updating <see cref="StartBeforeIndent"/>, 
-        /// <see cref="ColumnBeforeIndent"/>, <see cref="Start"/> and <see cref="Column"/> accordingly
-        /// taking into account space taken by tabs.
+        ///     Parses the indentation from the current position in the line, updating <see cref="StartBeforeIndent" />,
+        ///     <see cref="ColumnBeforeIndent" />, <see cref="Start" /> and <see cref="Column" /> accordingly
+        ///     taking into account space taken by tabs.
         /// </summary>
         public void ParseIndent()
         {
@@ -230,7 +235,7 @@ namespace Maddalena.Markdig.Parsers
             var startBeforeIndent = Start;
             var previousColumnBeforeIndent = ColumnBeforeIndent;
             var columnBeforeIndent = Column;
-            while (c !='\0')
+            while (c != '\0')
             {
                 if (c == '\t')
                 {
@@ -244,8 +249,10 @@ namespace Maddalena.Markdig.Parsers
                 {
                     break;
                 }
+
                 c = Line.NextChar();
             }
+
             if (columnBeforeIndent == Column)
             {
                 StartBeforeIndent = previousStartBeforeIndent;
@@ -259,7 +266,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Moves to the position to the specified column position, taking into account spaces in tabs.
+        ///     Moves to the position to the specified column position, taking into account spaces in tabs.
         /// </summary>
         /// <param name="newColumn">The new column position to move the cursor to.</param>
         public void GoToColumn(int newColumn)
@@ -277,6 +284,7 @@ namespace Maddalena.Markdig.Parsers
                 ColumnBeforeIndent = 0;
                 StartBeforeIndent = originalLineStart;
             }
+
             for (; Line.Start <= Line.End && Column < newColumn; Line.Start++)
             {
                 var c = Line.Text[Line.Start];
@@ -295,6 +303,7 @@ namespace Maddalena.Markdig.Parsers
                     Column++;
                 }
             }
+
             if (Column > newColumn)
             {
                 Column = newColumn;
@@ -306,7 +315,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Unwind any previous indent from the current character back to the first space.
+        ///     Unwind any previous indent from the current character back to the first space.
         /// </summary>
         public void UnwindAllIndents()
         {
@@ -319,11 +328,13 @@ namespace Maddalena.Markdig.Parsers
                 {
                     break;
                 }
+
                 if (!c.IsSpaceOrTab())
                 {
                     break;
                 }
             }
+
             var targetStart = Line.Start;
             // Nothing changed? Early exit
             if (previousStart == targetStart)
@@ -364,7 +375,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Moves to the position to the code indent (<see cref="ColumnBeforeIndent"/> + 4 spaces).
+        ///     Moves to the position to the code indent (<see cref="ColumnBeforeIndent" /> + 4 spaces).
         /// </summary>
         /// <param name="columnOffset">The column offset to apply to this indent.</param>
         public void GoToCodeIndent(int columnOffset = 0)
@@ -373,7 +384,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Opens the specified block.
+        ///     Opens the specified block.
         /// </summary>
         /// <param name="block">The block.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -386,7 +397,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Force closing the specified block.
+        ///     Force closing the specified block.
         /// </summary>
         /// <param name="block">The block.</param>
         public void Close(Block block)
@@ -400,13 +411,14 @@ namespace Maddalena.Markdig.Parsers
                     {
                         Close(j);
                     }
+
                     break;
                 }
             }
         }
 
         /// <summary>
-        /// Discards the specified block from the stack, remove from its parent.
+        ///     Discards the specified block from the stack, remove from its parent.
         /// </summary>
         /// <param name="block">The block.</param>
         public void Discard(Block block)
@@ -423,7 +435,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Processes a new line.
+        ///     Processes a new line.
         /// </summary>
         /// <param name="newLine">The new line.</param>
         public void ProcessLine(StringSlice newLine)
@@ -457,6 +469,7 @@ namespace Maddalena.Markdig.Parsers
             {
                 throw new InvalidOperationException("Cannot release the root parser state");
             }
+
             parserStateCache.Release(this);
         }
 
@@ -466,7 +479,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Closes a block at the specified index.
+        ///     Closes a block at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
         private void Close(int index)
@@ -486,11 +499,12 @@ namespace Maddalena.Markdig.Parsers
                     blockClosed?.Invoke(this, block);
                 }
             }
+
             OpenedBlocks.RemoveAt(index);
         }
 
         /// <summary>
-        /// Closes all the blocks opened.
+        ///     Closes all the blocks opened.
         /// </summary>
         /// <param name="force">if set to <c>true</c> [force].</param>
         internal void CloseAll(bool force)
@@ -505,13 +519,15 @@ namespace Maddalena.Markdig.Parsers
                 {
                     break;
                 }
+
                 Close(i);
             }
+
             UpdateLastBlockAndContainer();
         }
 
         /// <summary>
-        /// Mark all blocks in the stack as opened.
+        ///     Mark all blocks in the stack as opened.
         /// </summary>
         private void OpenAll()
         {
@@ -520,9 +536,9 @@ namespace Maddalena.Markdig.Parsers
                 OpenedBlocks[i].IsOpen = true;
             }
         }
-        
+
         /// <summary>
-        /// Updates the <see cref="CurrentBlock"/> and <see cref="CurrentContainer"/>.
+        ///     Updates the <see cref="CurrentBlock" /> and <see cref="CurrentContainer" />.
         /// </summary>
         /// <param name="stackIndex">Index of a block in a stack considered as the last block to update from.</param>
         private void UpdateLastBlockAndContainer(int stackIndex = -1)
@@ -549,12 +565,12 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Tries to continue matching existing opened <see cref="Block"/>.
+        ///     Tries to continue matching existing opened <see cref="Block" />.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">
-        /// A pending parser cannot add a new block when it is not the last pending block
-        /// or
-        /// The NewBlocks is not empty. This is happening if a LeafBlock is not the last to be pushed
+        ///     A pending parser cannot add a new block when it is not the last pending block
+        ///     or
+        ///     The NewBlocks is not empty. This is happening if a LeafBlock is not the last to be pushed
         /// </exception>
         private void TryContinueBlocks()
         {
@@ -606,7 +622,8 @@ namespace Maddalena.Markdig.Parsers
                 // If a parser is adding a block, it must be the last of the list
                 if ((i + 1) < OpenedBlocks.Count && NewBlocks.Count > 0)
                 {
-                    throw new InvalidOperationException("A pending parser cannot add a new block when it is not the last pending block");
+                    throw new InvalidOperationException(
+                        "A pending parser cannot add a new block when it is not the last pending block");
                 }
 
                 // If we have a leaf block
@@ -635,6 +652,7 @@ namespace Maddalena.Markdig.Parsers
                 {
                     ProcessNewBlocks(result, false);
                 }
+
                 if (isLast || !ContinueProcessingLine)
                 {
                     break;
@@ -643,7 +661,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// First phase of the process, try to open new blocks.
+        ///     First phase of the process, try to open new blocks.
         /// </summary>
         private void TryOpenBlocks()
         {
@@ -653,8 +671,10 @@ namespace Maddalena.Markdig.Parsers
                 // Security check so that the parser can't go into a crazy infinite loop if one extension is messing
                 if (previousStart == Start)
                 {
-                    throw new InvalidOperationException($"The parser is in an invalid infinite loop while trying to parse blocks at line [{LineIndex}] with line [{Line}]");
+                    throw new InvalidOperationException(
+                        $"The parser is in an invalid infinite loop while trying to parse blocks at line [{LineIndex}] with line [{Line}]");
                 }
+
                 previousStart = Start;
 
                 // Eat indent spaces before checking the character
@@ -686,7 +706,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Tries to open new blocks using the specified list of <see cref="BlockParser"/>
+        ///     Tries to open new blocks using the specified list of <see cref="BlockParser" />
         /// </summary>
         /// <param name="parsers">The parsers.</param>
         /// <returns><c>true</c> to continue processing the current line</returns>
@@ -728,6 +748,7 @@ namespace Maddalena.Markdig.Parsers
                         ContinueProcessingLine = false;
                         break;
                     }
+
                     continue;
                 }
 
@@ -765,15 +786,19 @@ namespace Maddalena.Markdig.Parsers
 
                 // We have a leaf node, we can stop
             }
+
             return false;
         }
 
         /// <summary>
-        /// Processes any new blocks that have been pushed to <see cref="NewBlocks"/>.
+        ///     Processes any new blocks that have been pushed to <see cref="NewBlocks" />.
         /// </summary>
         /// <param name="result">The last result of matching.</param>
         /// <param name="allowClosing">if set to <c>true</c> the processing of a new block will close existing opened blocks].</param>
-        /// <exception cref="System.InvalidOperationException">The NewBlocks is not empty. This is happening if a LeafBlock is not the last to be pushed</exception>
+        /// <exception cref="System.InvalidOperationException">
+        ///     The NewBlocks is not empty. This is happening if a LeafBlock is not
+        ///     the last to be pushed
+        /// </exception>
         private void ProcessNewBlocks(BlockState result, bool allowClosing)
         {
             var newBlocks = NewBlocks;
@@ -783,7 +808,8 @@ namespace Maddalena.Markdig.Parsers
 
                 if (block.Parser == null)
                 {
-                    throw new InvalidOperationException($"The new block [{block.GetType()}] must have a valid Parser property");
+                    throw new InvalidOperationException(
+                        $"The new block [{block.GetType()}] must have a valid Parser property");
                 }
 
                 block.Line = LineIndex;

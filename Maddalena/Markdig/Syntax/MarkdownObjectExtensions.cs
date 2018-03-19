@@ -8,12 +8,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Extensions for visiting <see cref="Block"/> or <see cref="Inline"/>
+    ///     Extensions for visiting <see cref="Block" /> or <see cref="Inline" />
     /// </summary>
     public static class MarkdownObjectExtensions
     {
         /// <summary>
-        /// Iterates over the descendant elements for the specified markdown element, including <see cref="Block"/> and <see cref="Inline"/>.
+        ///     Iterates over the descendant elements for the specified markdown element, including <see cref="Block" /> and
+        ///     <see cref="Inline" />.
         /// </summary>
         /// <param name="markdownObject">The markdown object.</param>
         /// <returns>An iteration over the descendant elements</returns>
@@ -67,12 +68,13 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Iterates over the descendant elements for the specified markdown <see cref="Inline" /> element and filters by the type {T}.
+        ///     Iterates over the descendant elements for the specified markdown <see cref="Inline" /> element and filters by the
+        ///     type {T}.
         /// </summary>
         /// <typeparam name="T">Type to use for filtering the descendants</typeparam>
         /// <param name="inline">The inline markdown object.</param>
         /// <returns>
-        /// An iteration over the descendant elements
+        ///     An iteration over the descendant elements
         /// </returns>
         public static IEnumerable<T> Descendants<T>(this ContainerInline inline) where T : Inline
         {
@@ -100,12 +102,13 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Iterates over the descendant elements for the specified markdown <see cref="Block" /> element and filters by the type {T}.
+        ///     Iterates over the descendant elements for the specified markdown <see cref="Block" /> element and filters by the
+        ///     type {T}.
         /// </summary>
         /// <typeparam name="T">Type to use for filtering the descendants</typeparam>
         /// <param name="block">The markdown object.</param>
         /// <returns>
-        /// An iteration over the descendant elements
+        ///     An iteration over the descendant elements
         /// </returns>
         public static IEnumerable<T> Descendants<T>(this ContainerBlock block) where T : Block
         {

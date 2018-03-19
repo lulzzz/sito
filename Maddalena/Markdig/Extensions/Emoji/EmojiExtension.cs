@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Emoji
 {
     /// <summary>
-    /// Extension to allow emoji and smiley replacement.
+    ///     Extension to allow emoji and smiley replacement.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class EmojiExtension : IMarkdownExtension

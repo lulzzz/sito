@@ -8,18 +8,18 @@ using System.Runtime.CompilerServices;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// A lightweight struct that represents a slice of a string.
+    ///     A lightweight struct that represents a slice of a string.
     /// </summary>
     /// <seealso cref="ICharIterator" />
     public struct StringSlice : ICharIterator
     {
         /// <summary>
-        /// An empty string slice.
+        ///     An empty string slice.
         /// </summary>
         public static readonly StringSlice Empty = new StringSlice(string.Empty);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringSlice"/> struct.
+        ///     Initializes a new instance of the <see cref="StringSlice" /> struct.
         /// </summary>
         /// <param name="text">The text.</param>
         public StringSlice(string text)
@@ -30,7 +30,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringSlice"/> struct.
+        ///     Initializes a new instance of the <see cref="StringSlice" /> struct.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="start">The start.</param>
@@ -45,47 +45,50 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// The text of this slice.
+        ///     The text of this slice.
         /// </summary>
         public readonly string Text;
 
         /// <summary>
-        /// Gets or sets the start position within <see cref="Text"/>.
+        ///     Gets or sets the start position within <see cref="Text" />.
         /// </summary>
         public int Start { get; set; }
 
         /// <summary>
-        /// Gets or sets the end position (inclusive) within <see cref="Text"/>.
+        ///     Gets or sets the end position (inclusive) within <see cref="Text" />.
         /// </summary>
         public int End { get; set; }
 
         /// <summary>
-        /// Gets the length.
+        ///     Gets the length.
         /// </summary>
         public int Length => End - Start + 1;
 
         /// <summary>
-        /// Gets the current character.
+        ///     Gets the current character.
         /// </summary>
         public char CurrentChar => Start <= End ? this[Start] : '\0';
 
         /// <summary>
-        /// Gets a value indicating whether this instance is empty.
+        ///     Gets a value indicating whether this instance is empty.
         /// </summary>
         public bool IsEmpty => Start > End;
 
         /// <summary>
-        /// Gets the <see cref="System.Char"/> at the specified index.
+        ///     Gets the <see cref="System.Char" /> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>A character in the slice at the specified index (not from <see cref="Start"/> but from the begining of the slice)</returns>
+        /// <returns>
+        ///     A character in the slice at the specified index (not from <see cref="Start" /> but from the begining of the
+        ///     slice)
+        /// </returns>
         public char this[int index] => Text[index];
 
         /// <summary>
-        /// Goes to the next character, incrementing the <see cref="Start" /> position.
+        ///     Goes to the next character, incrementing the <see cref="Start" /> position.
         /// </summary>
         /// <returns>
-        /// The next character. `\0` is end of the iteration.
+        ///     The next character. `\0` is end of the iteration.
         /// </returns>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
         public char NextChar()
@@ -96,12 +99,13 @@ namespace Maddalena.Markdig.Helpers
                 Start = End + 1;
                 return '\0';
             }
+
             return Text[Start];
         }
 
         /// <summary>
-        /// Peeks a character at the specified offset from the current <see cref="Start"/> position
-        /// inside the range <see cref="Start"/> and <see cref="End"/>, returns `\0` if outside this range.
+        ///     Peeks a character at the specified offset from the current <see cref="Start" /> position
+        ///     inside the range <see cref="Start" /> and <see cref="End" />, returns `\0` if outside this range.
         /// </summary>
         /// <param name="offset">The offset.</param>
         /// <returns>The character at offset, returns `\0` if none.</returns>
@@ -113,18 +117,20 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Peeks a character at the specified offset from the current beginning of the string, without taking into account <see cref="Start"/> and <see cref="End"/>
+        ///     Peeks a character at the specified offset from the current beginning of the string, without taking into account
+        ///     <see cref="Start" /> and <see cref="End" />
         /// </summary>
         /// <returns>The character at offset, returns `\0` if none.</returns>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
         public char PeekCharAbsolute(int index)
         {
-            return index >= 0 && index < Text.Length ? Text[index] : (char)0;
+            return index >= 0 && index < Text.Length ? Text[index] : (char) 0;
         }
 
         /// <summary>
-        /// Peeks a character at the specified offset from the current begining of the slice
-        /// without using the range <see cref="Start"/> or <see cref="End"/>, returns `\0` if outside the <see cref="Text"/>.
+        ///     Peeks a character at the specified offset from the current begining of the slice
+        ///     without using the range <see cref="Start" /> or <see cref="End" />, returns `\0` if outside the <see cref="Text" />
+        ///     .
         /// </summary>
         /// <param name="offset">The offset.</param>
         /// <returns>The character at offset, returns `\0` if none.</returns>
@@ -132,11 +138,11 @@ namespace Maddalena.Markdig.Helpers
         public char PeekCharExtra(int offset)
         {
             var index = Start + offset;
-            return index >= 0 && index < Text.Length ? Text[index] : (char)0;
+            return index >= 0 && index < Text.Length ? Text[index] : (char) 0;
         }
 
         /// <summary>
-        /// Matches the specified text.
+        ///     Matches the specified text.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="offset">The offset.</param>
@@ -147,7 +153,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Matches the specified text.
+        ///     Matches the specified text.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="end">The end.</param>
@@ -169,7 +175,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Expect spaces until a end of line. Return <c>false</c> otherwise.
+        ///     Expect spaces until a end of line. Return <c>false</c> otherwise.
         /// </summary>
         /// <returns><c>true</c> if whitespaces where matched until a end of line</returns>
         public bool SkipSpacesToEndOfLineOrEndOfDocument()
@@ -183,15 +189,18 @@ namespace Maddalena.Markdig.Helpers
                     {
                         return true;
                     }
+
                     continue;
                 }
+
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// Matches the specified text using lowercase comparison.
+        ///     Matches the specified text using lowercase comparison.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="offset">The offset.</param>
@@ -202,7 +211,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Matches the specified text using lowercase comparison.
+        ///     Matches the specified text using lowercase comparison.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="end">The end.</param>
@@ -224,7 +233,7 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Searches the specified text within this slice.
+        ///     Searches the specified text within this slice.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="offset">The offset.</param>
@@ -239,7 +248,8 @@ namespace Maddalena.Markdig.Helpers
                 {
                     if (MatchLowercase(text, End, i - Start))
                     {
-                        return i; ;
+                        return i;
+                        ;
                     }
                 }
             }
@@ -249,15 +259,17 @@ namespace Maddalena.Markdig.Helpers
                 {
                     if (Match(text, End, i - Start))
                     {
-                        return i; ;
+                        return i;
+                        ;
                     }
                 }
             }
+
             return -1;
         }
 
         /// <summary>
-        /// Searches for the specified character within this slice.
+        ///     Searches for the specified character within this slice.
         /// </summary>
         /// <returns>A value >= 0 if the character was found, otherwise &lt; 0</returns>
         public int IndexOf(char c)
@@ -269,14 +281,15 @@ namespace Maddalena.Markdig.Helpers
                     return i;
                 }
             }
+
             return -1;
         }
 
         /// <summary>
-        /// Trims whitespaces at the beginning of this slice starting from <see cref="Start"/> position.
+        ///     Trims whitespaces at the beginning of this slice starting from <see cref="Start" /> position.
         /// </summary>
         /// <returns>
-        ///   <c>true</c> if it has reaches the end of the iterator
+        ///     <c>true</c> if it has reaches the end of the iterator
         /// </returns>
         public bool TrimStart()
         {
@@ -289,11 +302,12 @@ namespace Maddalena.Markdig.Helpers
                     break;
                 }
             }
+
             return start != Start;
         }
 
         /// <summary>
-        /// Trims whitespaces at the beginning of this slice starting from <see cref="Start"/> position.
+        ///     Trims whitespaces at the beginning of this slice starting from <see cref="Start" /> position.
         /// </summary>
         /// <param name="spaceCount">The number of spaces trimmed.</param>
         public void TrimStart(out int spaceCount)
@@ -306,12 +320,13 @@ namespace Maddalena.Markdig.Helpers
                 {
                     break;
                 }
+
                 spaceCount++;
             }
         }
 
         /// <summary>
-        /// Trims whitespaces at the end of this slice, starting from <see cref="End"/> position.
+        ///     Trims whitespaces at the end of this slice, starting from <see cref="End" /> position.
         /// </summary>
         /// <returns></returns>
         public bool TrimEnd()
@@ -323,11 +338,12 @@ namespace Maddalena.Markdig.Helpers
                     break;
                 }
             }
+
             return IsEmpty;
         }
 
         /// <summary>
-        /// Trims whitespaces from both the start and end of this slice.
+        ///     Trims whitespaces from both the start and end of this slice.
         /// </summary>
         public void Trim()
         {
@@ -336,10 +352,10 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {
@@ -353,11 +369,12 @@ namespace Maddalena.Markdig.Helpers
 
                 return Text.Substring(Start, length);
             }
+
             return string.Empty;
         }
 
         /// <summary>
-        /// Determines whether this slice is empty or made only of whitespaces.
+        ///     Determines whether this slice is empty or made only of whitespaces.
         /// </summary>
         /// <returns><c>true</c> if this slice is empty or made only of whitespaces; <c>false</c> otherwise</returns>
         public bool IsEmptyOrWhitespace()
@@ -369,6 +386,7 @@ namespace Maddalena.Markdig.Helpers
                     return false;
                 }
             }
+
             return true;
         }
     }

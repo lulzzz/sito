@@ -12,17 +12,18 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.GenericAttributes
 {
     /// <summary>
-    /// An inline parser used to parse a HTML attributes that can be attached to the previous <see cref="Inline"/> or current <see cref="Block"/>.
+    ///     An inline parser used to parse a HTML attributes that can be attached to the previous <see cref="Inline" /> or
+    ///     current <see cref="Block" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class GenericAttributesParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericAttributesParser"/> class.
+        ///     Initializes a new instance of the <see cref="GenericAttributesParser" /> class.
         /// </summary>
         public GenericAttributesParser()
         {
-            OpeningCharacters = new[] { '{' };
+            OpeningCharacters = new[] {'{'};
         }
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
@@ -46,12 +47,16 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                         }
                     }
                 }
-                var objectToAttach = inline == null || inline == processor.Root ? (MarkdownObject) processor.Block : inline;
+
+                var objectToAttach = inline == null || inline == processor.Root
+                    ? (MarkdownObject) processor.Block
+                    : inline;
 
                 // If the current block is a Paragraph, but only the HtmlAttributes is used,
                 // Try to attach the attributes to the following block
                 var paragraph = objectToAttach as ParagraphBlock;
-                if (paragraph != null && paragraph.Inline.FirstChild == null && processor.Inline == null && slice.IsEmptyOrWhitespace())
+                if (paragraph != null && paragraph.Inline.FirstChild == null && processor.Inline == null &&
+                    slice.IsEmptyOrWhitespace())
                 {
                     var parent = paragraph.Parent;
                     var indexOfParagraph = parent.IndexOf(paragraph);
@@ -82,7 +87,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
         }
 
         /// <summary>
-        /// Tries to extra from the current position of a slice an HTML attributes {...}
+        ///     Tries to extra from the current position of a slice an HTML attributes {...}
         /// </summary>
         /// <param name="slice">The slice to parse.</param>
         /// <param name="attributes">The output attributes or null if not found or invalid</param>
@@ -128,11 +133,13 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                     {
                         c = line.NextChar();
                     }
+
                     var end = line.Start - 1;
                     if (end == start)
                     {
                         break;
                     }
+
                     var text = slice.Text.Substring(start, end - start + 1);
                     if (isClass)
                     {
@@ -140,12 +147,14 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                         {
                             classes = new List<string>();
                         }
+
                         classes.Add(text);
                     }
                     else
                     {
                         id = text;
                     }
+
                     continue;
                 }
 
@@ -156,6 +165,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                     {
                         break;
                     }
+
                     var startName = line.Start;
                     while (true)
                     {
@@ -165,6 +175,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                             break;
                         }
                     }
+
                     var name = slice.Text.Substring(startName, line.Start - startName);
 
                     var hasSpace = c.IsSpaceOrTab();
@@ -180,11 +191,12 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                         {
                             properties = new List<KeyValuePair<string, string>>();
                         }
+
                         // Add a null value for the property
                         properties.Add(new KeyValuePair<string, string>(name, null));
                         continue;
                     }
-                    
+
                     // Else we expect a regular property
                     if (line.CurrentChar != '=')
                     {
@@ -211,11 +223,13 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                             {
                                 return false;
                             }
+
                             if (c == openingStringChar)
                             {
                                 break;
                             }
                         }
+
                         endValue = line.Start - 1;
                         c = line.NextChar(); // Skip closing opening string char
                     }
@@ -229,12 +243,15 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                             {
                                 return false;
                             }
+
                             if (c.IsWhitespace() || c == '}')
                             {
                                 break;
                             }
+
                             c = line.NextChar();
                         }
+
                         endValue = line.Start - 1;
                         if (endValue == startValue)
                         {
@@ -248,6 +265,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                     {
                         properties = new List<KeyValuePair<string, string>>();
                     }
+
                     properties.Add(new KeyValuePair<string, string>(name, value));
                     continue;
                 }
@@ -267,6 +285,7 @@ namespace Maddalena.Markdig.Extensions.GenericAttributes
                 // Assign back the current processor of the line to 
                 slice = line;
             }
+
             return isValid;
         }
 

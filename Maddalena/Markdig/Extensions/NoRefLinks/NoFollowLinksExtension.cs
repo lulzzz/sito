@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html.Inlines;
 namespace Maddalena.Markdig.Extensions.NoRefLinks
 {
     /// <summary>
-    /// Extension to automatically render rel=nofollow to all links in an HTML output.
+    ///     Extension to automatically render rel=nofollow to all links in an HTML output.
     /// </summary>
     public class NoFollowLinksExtension : IMarkdownExtension
     {

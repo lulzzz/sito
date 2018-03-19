@@ -11,27 +11,28 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Link)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Visible)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Views)
-                </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Visible)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Views)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 <a href="/blog/@item.Link">
@@ -51,10 +52,10 @@
                 @Html.DisplayFor(modelItem => item.Views)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Link }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Link })
+                @Html.ActionLink("Edit", "Edit", new {id = item.Link}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Link})
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

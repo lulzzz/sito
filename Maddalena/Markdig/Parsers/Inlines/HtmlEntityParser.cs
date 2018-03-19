@@ -9,13 +9,13 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for HTML entities.
+    ///     An inline parser for HTML entities.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class HtmlEntityParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlEntityParser"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlEntityParser" /> class.
         /// </summary>
         public HtmlEntityParser()
         {
@@ -37,12 +37,15 @@ namespace Maddalena.Markdig.Parsers.Inlines
 
             if (entityNameLength > 0)
             {
-                literal = EntityHelper.DecodeEntity(new StringSlice(slice.Text, entityNameStart, entityNameStart + entityNameLength - 1).ToString());
+                literal = EntityHelper.DecodeEntity(
+                    new StringSlice(slice.Text, entityNameStart, entityNameStart + entityNameLength - 1).ToString());
             }
             else if (entityValue >= 0)
             {
-                literal = (entityValue == 0 ? null : EntityHelper.DecodeEntity(entityValue)) ?? CharHelper.ZeroSafeString;
+                literal = (entityValue == 0 ? null : EntityHelper.DecodeEntity(entityValue)) ??
+                          CharHelper.ZeroSafeString;
             }
+
             return true;
         }
 
@@ -67,7 +70,8 @@ namespace Maddalena.Markdig.Parsers.Inlines
                 {
                     Original = matched,
                     Transcoded = new StringSlice(literal),
-                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column), processor.GetSourcePosition(matched.End)),
+                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column),
+                        processor.GetSourcePosition(matched.End)),
                     Line = line,
                     Column = column
                 };

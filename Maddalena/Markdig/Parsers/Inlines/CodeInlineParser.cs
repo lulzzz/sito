@@ -9,17 +9,17 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers.Inlines
 {
     /// <summary>
-    /// An inline parser for a <see cref="CodeInline"/>.
+    ///     An inline parser for a <see cref="CodeInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     public class CodeInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="CodeInlineParser" /> class.
         /// </summary>
         public CodeInlineParser()
         {
-            OpeningCharacters = new[] { '`' };
+            OpeningCharacters = new[] {'`'};
         }
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
@@ -102,13 +102,15 @@ namespace Maddalena.Markdig.Parsers.Inlines
                         builder.Length--;
                     }
                 }
+
                 int line;
                 int column;
                 processor.Inline = new CodeInline()
                 {
                     Delimiter = match,
                     Content = builder.ToString(),
-                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column), processor.GetSourcePosition(slice.Start - 1)),
+                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column),
+                        processor.GetSourcePosition(slice.Start - 1)),
                     Line = line,
                     Column = column
                 };

@@ -1,8 +1,8 @@
 ﻿namespace Maddalena.Modules.Geocoding
 {
-	public enum DistanceUnits
-	{
-		Miles,
-		Kilometers
-	}
+    public enum DistanceUnits
+    {
+        Miles,
+        Kilometers
+    }
 }

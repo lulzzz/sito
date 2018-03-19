@@ -2,51 +2,55 @@
 
 namespace Maddalena.Modules.Geocoding
 {
-	public class Bounds
-	{
-	    public Location SouthWest { get; set; }
+    public class Bounds
+    {
+        public Bounds(double southWestLatitude, double southWestLongitude, double northEastLatitude,
+            double northEastLongitude)
+            : this(new Location(southWestLatitude, southWestLongitude),
+                new Location(northEastLatitude, northEastLongitude))
+        {
+        }
 
-	    public Location NorthEast { get; set; }
+        public Bounds(Location southWest, Location northEast)
+        {
+            if (southWest == null)
+                throw new ArgumentNullException(nameof(southWest));
 
-	    public Bounds(double southWestLatitude, double southWestLongitude, double northEastLatitude, double northEastLongitude)
-			: this(new Location(southWestLatitude, southWestLongitude), new Location(northEastLatitude, northEastLongitude)) { }
+            if (northEast == null)
+                throw new ArgumentNullException(nameof(northEast));
 
-		public Bounds(Location southWest, Location northEast)
-		{
-			if (southWest == null)
-				throw new ArgumentNullException(nameof(southWest));
+            if (southWest.Latitude > northEast.Latitude)
+                throw new ArgumentException("southWest latitude cannot be greater than northEast latitude");
 
-			if (northEast == null)
-				throw new ArgumentNullException(nameof(northEast));
+            SouthWest = southWest;
+            NorthEast = northEast;
+        }
 
-			if (southWest.Latitude > northEast.Latitude)
-				throw new ArgumentException("southWest latitude cannot be greater than northEast latitude");
+        public Location SouthWest { get; set; }
 
-			SouthWest = southWest;
-			NorthEast = northEast;
-		}
+        public Location NorthEast { get; set; }
 
-		public override bool Equals(object obj)
-		{
-			return Equals(obj as Bounds);
-		}
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Bounds);
+        }
 
-		public bool Equals(Bounds bounds)
-		{
-			if (bounds == null)
-				return false;
+        public bool Equals(Bounds bounds)
+        {
+            if (bounds == null)
+                return false;
 
-			return (SouthWest.Equals(bounds.SouthWest) && NorthEast.Equals(bounds.NorthEast));
-		}
+            return (SouthWest.Equals(bounds.SouthWest) && NorthEast.Equals(bounds.NorthEast));
+        }
 
-		public override int GetHashCode()
-		{
-			return SouthWest.GetHashCode() ^ NorthEast.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return SouthWest.GetHashCode() ^ NorthEast.GetHashCode();
+        }
 
-		public override string ToString()
-		{
-			return string.Format("{0} | {1}", SouthWest, NorthEast);
-		}
-	}
+        public override string ToString()
+        {
+            return string.Format("{0} | {1}", SouthWest, NorthEast);
+        }
+    }
 }

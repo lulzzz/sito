@@ -9,14 +9,19 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// A literal inline.
+    ///     A literal inline.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.LeafInline" />
     [DebuggerDisplay("{Content}")]
     public class LiteralInline : LeafInline
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LiteralInline"/> class.
+        ///     The content as a <see cref="StringSlice" />.
+        /// </summary>
+        public StringSlice Content;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="LiteralInline" /> class.
         /// </summary>
         public LiteralInline()
         {
@@ -24,7 +29,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LiteralInline"/> class.
+        ///     Initializes a new instance of the <see cref="LiteralInline" /> class.
         /// </summary>
         /// <param name="content">The content.</param>
         public LiteralInline(StringSlice content)
@@ -33,7 +38,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LiteralInline"/> class.
+        ///     Initializes a new instance of the <see cref="LiteralInline" /> class.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -44,12 +49,7 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// The content as a <see cref="StringSlice"/>.
-        /// </summary>
-        public StringSlice Content;
-
-        /// <summary>
-        /// A boolean indicating whether the first character of this literal is escaped by `\`.
+        ///     A boolean indicating whether the first character of this literal is escaped by `\`.
         /// </summary>
         public bool IsFirstCharacterEscaped { get; set; }
 

@@ -8,19 +8,18 @@ using System.Text;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// An implementation of <see cref="ObjectCache{T}"/> for <see cref="StringBuilder"/>
+    ///     An implementation of <see cref="ObjectCache{T}" /> for <see cref="StringBuilder" />
     /// </summary>
     /// <seealso cref="Markdig.Helpers.ObjectCache{StringBuilder}" />
     public class StringBuilderCache : DefaultObjectCache<StringBuilder>
     {
         /// <summary>
-        /// A StringBuilder that can be used locally in a method body only.
+        ///     A StringBuilder that can be used locally in a method body only.
         /// </summary>
-        [ThreadStatic]
-        private static StringBuilder local;
+        [ThreadStatic] private static StringBuilder local;
 
         /// <summary>
-        /// Provides a string builder that can only be used locally in a method. This StringBuilder MUST not be stored.
+        ///     Provides a string builder that can only be used locally in a method. This StringBuilder MUST not be stored.
         /// </summary>
         /// <returns></returns>
         public static StringBuilder Local()
@@ -30,6 +29,7 @@ namespace Maddalena.Markdig.Helpers
             {
                 sb.Length = 0;
             }
+
             return sb;
         }
 

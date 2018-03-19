@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Maddalena.Security;
-using Mongolino;
 using MongoDB.Bson.Serialization.Attributes;
+using Mongolino;
 using Newtonsoft.Json;
 
 namespace Maddalena.Modules.Blog
@@ -28,19 +28,15 @@ namespace Maddalena.Modules.Blog
 
         public string Author { get; set; }
 
-        [Required]
-        public string Title { get; set; }
+        [Required] public string Title { get; set; }
 
-        [Required]
-        public string Link { get; set; }
+        [Required] public string Link { get; set; }
 
         public DateTime DateTime { get; set; }
 
-        [Required]
-        public string Category { get; set; }
+        [Required] public string Category { get; set; }
 
-        [Required]
-        public string Body { get; set; }
+        [Required] public string Body { get; set; }
 
         public string[] Tags { get; set; }
 

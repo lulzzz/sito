@@ -7,12 +7,12 @@ using System.Text;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Extensions for StringBuilder with <see cref="StringSlice"/>
+    ///     Extensions for StringBuilder with <see cref="StringSlice" />
     /// </summary>
     public static class StringBuilderExtensions
     {
         /// <summary>
-        /// Appends the specified slice to this <see cref="StringBuilder"/> instance.
+        ///     Appends the specified slice to this <see cref="StringBuilder" /> instance.
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <param name="slice">The slice.</param>

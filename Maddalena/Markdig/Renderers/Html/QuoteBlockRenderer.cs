@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="QuoteBlock"/>.
+    ///     A HTML renderer for a <see cref="QuoteBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.QuoteBlock}" />
     public class QuoteBlockRenderer : HtmlObjectRenderer<QuoteBlock>
@@ -19,6 +19,7 @@ namespace Maddalena.Markdig.Renderers.Html
             {
                 renderer.Write("<blockquote").WriteAttributes(obj).WriteLine(">");
             }
+
             var savedImplicitParagraph = renderer.ImplicitParagraph;
             renderer.ImplicitParagraph = false;
             renderer.WriteChildren(obj);

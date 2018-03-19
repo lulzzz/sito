@@ -9,7 +9,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.JiraLinks
 {
     /// <summary>
-    /// Model for a JIRA link item
+    ///     Model for a JIRA link item
     /// </summary>
     [DebuggerDisplay("{ProjectKey}-{Issue}")]
     public class JiraLink : LinkInline
@@ -20,12 +20,12 @@ namespace Maddalena.Markdig.Extensions.JiraLinks
         }
 
         /// <summary>
-        /// JIRA Project Key
+        ///     JIRA Project Key
         /// </summary>
         public StringSlice ProjectKey { get; set; }
 
         /// <summary>
-        /// JIRA Issue Number
+        ///     JIRA Issue Number
         /// </summary>
         public StringSlice Issue { get; set; }
     }

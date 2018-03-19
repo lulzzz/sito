@@ -10,13 +10,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// Default HTML renderer for a Markdown <see cref="MarkdownDocument"/> object.
+    ///     Default HTML renderer for a Markdown <see cref="MarkdownDocument" /> object.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.TextRendererBase{Markdig.Renderers.Normalize.NormalizeRenderer}" />
     public class NormalizeRenderer : TextRendererBase<NormalizeRenderer>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NormalizeRenderer"/> class.
+        ///     Initializes a new instance of the <see cref="NormalizeRenderer" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="options">The normalize options</param>
@@ -41,7 +41,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
             ObjectRenderers.Add(new EmphasisInlineRenderer());
             ObjectRenderers.Add(new LineBreakInlineRenderer());
             ObjectRenderers.Add(new NormalizeHtmlInlineRenderer());
-            ObjectRenderers.Add(new NormalizeHtmlEntityInlineRenderer());            
+            ObjectRenderers.Add(new NormalizeHtmlEntityInlineRenderer());
             ObjectRenderers.Add(new LinkInlineRenderer());
             ObjectRenderers.Add(new LiteralInlineRenderer());
         }
@@ -123,7 +123,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
         //}
 
         /// <summary>
-        /// Writes the lines of a <see cref="LeafBlock"/>
+        ///     Writes the lines of a <see cref="LeafBlock" />
         /// </summary>
         /// <param name="leafBlock">The leaf block.</param>
         /// <param name="writeEndOfLines">if set to <c>true</c> write end of lines.</param>
@@ -155,7 +155,8 @@ namespace Maddalena.Markdig.Renderers.Normalize
                     }
                 }
             }
+
             return this;
         }
-   }
+    }
 }

@@ -10,19 +10,19 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
-    /// The block parser for a <see cref="Footnote"/>.
+    ///     The block parser for a <see cref="Footnote" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class FootnoteParser : BlockParser
     {
         /// <summary>
-        /// The key used to store at the document level the pending <see cref="FootnoteGroup"/>
+        ///     The key used to store at the document level the pending <see cref="FootnoteGroup" />
         /// </summary>
         private static readonly object DocumentKey = typeof(Footnote);
 
         public FootnoteParser()
         {
-            OpeningCharacters = new [] {'['};
+            OpeningCharacters = new[] {'['};
         }
 
         public override BlockState TryOpen(BlockProcessor processor)
@@ -33,7 +33,9 @@ namespace Maddalena.Markdig.Extensions.Footnotes
         private BlockState TryOpen(BlockProcessor processor, bool isContinue)
         {
             // We expect footnote to appear only at document level and not indented more than a code indent block
-            if (processor.IsCodeIndent || (!isContinue && processor.CurrentContainer.GetType() != typeof(MarkdownDocument)) || (isContinue && !(processor.CurrentContainer is Footnote)))
+            if (processor.IsCodeIndent ||
+                (!isContinue && processor.CurrentContainer.GetType() != typeof(MarkdownDocument)) ||
+                (isContinue && !(processor.CurrentContainer is Footnote)))
             {
                 return BlockState.None;
             }
@@ -42,7 +44,8 @@ namespace Maddalena.Markdig.Extensions.Footnotes
             string label;
             int start = processor.Start;
             SourceSpan labelSpan;
-            if (!LinkHelper.TryParseLabel(ref processor.Line, false, out label, out labelSpan) || !label.StartsWith("^") || processor.CurrentChar != ':')
+            if (!LinkHelper.TryParseLabel(ref processor.Line, false, out label, out labelSpan) ||
+                !label.StartsWith("^") || processor.CurrentChar != ':')
             {
                 processor.GoToColumn(saved);
                 return BlockState.None;
@@ -69,6 +72,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
                 processor.Document.SetData(DocumentKey, footnotes);
                 processor.Document.ProcessInlinesEnd += Document_ProcessInlinesEnd;
             }
+
             footnotes.Add(footnote);
 
             var linkRef = new FootnoteLinkReferenceDefinition()
@@ -112,6 +116,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
                     }
                 }
             }
+
             footnote.IsLastLineEmpty = false;
 
             if (processor.IsCodeIndent)
@@ -123,7 +128,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
         }
 
         /// <summary>
-        /// Add footnotes to the end of the document
+        ///     Add footnotes to the end of the document
         /// </summary>
         /// <param name="state">The processor.</param>
         /// <param name="inline">The inline.</param>
@@ -132,7 +137,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
             // Unregister
             state.Document.ProcessInlinesEnd -= Document_ProcessInlinesEnd;
 
-            var footnotes = ((FootnoteGroup)state.Document.GetData(DocumentKey));
+            var footnotes = ((FootnoteGroup) state.Document.GetData(DocumentKey));
             // Remove the footnotes from the document and readd them at the end
             state.Document.Remove(footnotes);
             state.Document.Add(footnotes);
@@ -141,8 +146,8 @@ namespace Maddalena.Markdig.Extensions.Footnotes
             footnotes.Sort(
                 (leftObj, rightObj) =>
                 {
-                    var left = (Footnote)leftObj;
-                    var right = (Footnote)rightObj;
+                    var left = (Footnote) leftObj;
+                    var right = (Footnote) rightObj;
 
                     return left.Order >= 0 && right.Order >= 0
                         ? left.Order.CompareTo(right.Order)
@@ -152,7 +157,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
             int linkIndex = 0;
             for (int i = 0; i < footnotes.Count; i++)
             {
-                var footnote = (Footnote)footnotes[i];
+                var footnote = (Footnote) footnotes[i];
                 if (footnote.Order < 0)
                 {
                     // Remove this footnote if it doesn't have any links
@@ -168,6 +173,7 @@ namespace Maddalena.Markdig.Extensions.Footnotes
                     paragraphBlock = new ParagraphBlock();
                     footnote.Add(paragraphBlock);
                 }
+
                 if (paragraphBlock.Inline == null)
                 {
                     paragraphBlock.Inline = new ContainerInline();
@@ -190,10 +196,10 @@ namespace Maddalena.Markdig.Extensions.Footnotes
 
         private static Inline CreateLinkToFootnote(InlineProcessor state, LinkReferenceDefinition linkRef, Inline child)
         {
-            var footnote = ((FootnoteLinkReferenceDefinition)linkRef).Footnote;
+            var footnote = ((FootnoteLinkReferenceDefinition) linkRef).Footnote;
             if (footnote.Order < 0)
             {
-                var footnotes = (FootnoteGroup)state.Document.GetData(DocumentKey);
+                var footnotes = (FootnoteGroup) state.Document.GetData(DocumentKey);
                 footnotes.CurrentOrder++;
                 footnote.Order = footnotes.CurrentOrder;
             }

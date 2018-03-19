@@ -9,25 +9,25 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Extensions.ListExtras
 {
     /// <summary>
-    /// Parser that adds supports for parsing alpha/roman list items (e.g: `a)` or `a.` or `ii.` or `II.`)
+    ///     Parser that adds supports for parsing alpha/roman list items (e.g: `a)` or `a.` or `ii.` or `II.`)
     /// </summary>
     /// <remarks>
-    /// Note that we don't validate roman numbers.
+    ///     Note that we don't validate roman numbers.
     /// </remarks>
     /// <seealso cref="Markdig.Parsers.OrderedListItemParser" />
     public class ListExtraItemParser : OrderedListItemParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListExtraItemParser"/> class.
+        ///     Initializes a new instance of the <see cref="ListExtraItemParser" /> class.
         /// </summary>
         public ListExtraItemParser()
         {
-            OpeningCharacters = new char[('z' - 'a' + 1)*2];
+            OpeningCharacters = new char[('z' - 'a' + 1) * 2];
             int index = 0;
             for (var c = 'A'; c <= 'Z'; c++)
             {
                 OpeningCharacters[index++] = c;
-                OpeningCharacters[index++] = (char)(c - 'A' + 'a');
+                OpeningCharacters[index++] = (char) (c - 'A' + 'a');
             }
         }
 
@@ -41,7 +41,8 @@ namespace Maddalena.Markdig.Extensions.ListExtras
             var isRomanUp = !isRomanLow && CharHelper.IsRomanLetterUpperPartial(c);
 
             // We allow to parse roman only if we start on a new list or the pending list is already a roman list)
-            if ((isRomanLow || isRomanUp) && (pendingBulletType == '\0' || pendingBulletType == 'i' || pendingBulletType == 'I'))
+            if ((isRomanLow || isRomanUp) &&
+                (pendingBulletType == '\0' || pendingBulletType == 'i' || pendingBulletType == 'I'))
             {
                 int startChar = state.Start;
                 int endChar = 0;
@@ -53,7 +54,8 @@ namespace Maddalena.Markdig.Extensions.ListExtras
                     c = state.NextChar();
                 }
 
-                result.OrderedStart = CharHelper.RomanToArabic(state.Line.Text.Substring(startChar, endChar - startChar + 1)).ToString();
+                result.OrderedStart = CharHelper
+                    .RomanToArabic(state.Line.Text.Substring(startChar, endChar - startChar + 1)).ToString();
                 result.BulletType = isRomanLow ? 'i' : 'I';
                 result.DefaultOrderedStart = isRomanLow ? "i" : "I";
             }

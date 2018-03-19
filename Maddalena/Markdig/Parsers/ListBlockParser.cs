@@ -10,7 +10,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A parser for a list block and list item block.
+    ///     A parser for a list block and list item block.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class ListBlockParser : BlockParser
@@ -18,7 +18,7 @@ namespace Maddalena.Markdig.Parsers
         private CharacterMap<ListItemParser> mapItemParsers;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="ListBlockParser" /> class.
         /// </summary>
         public ListBlockParser()
         {
@@ -30,7 +30,7 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Gets the parsers for items.
+        ///     Gets the parsers for items.
         /// </summary>
         public OrderedList<ListItemParser> ItemParsers { get; }
 
@@ -42,7 +42,8 @@ namespace Maddalena.Markdig.Parsers
             {
                 if (itemParser.OpeningCharacters == null)
                 {
-                    throw new InvalidOperationException($"The list item parser of type [{itemParser.GetType()}] cannot have OpeningCharacters to null. It must define a list of valid opening characters");
+                    throw new InvalidOperationException(
+                        $"The list item parser of type [{itemParser.GetType()}] cannot have OpeningCharacters to null. It must define a list of valid opening characters");
                 }
 
                 foreach (var openingCharacter in itemParser.OpeningCharacters)
@@ -52,9 +53,11 @@ namespace Maddalena.Markdig.Parsers
                         throw new InvalidOperationException(
                             $"A list item parser with the same opening character `{openingCharacter}` is already registered");
                     }
+
                     tempMap.Add(openingCharacter, itemParser);
                 }
             }
+
             mapItemParsers = new CharacterMap<ListItemParser>(tempMap);
         }
 
@@ -119,7 +122,7 @@ namespace Maddalena.Markdig.Parsers
 
         private BlockState TryContinueListItem(BlockProcessor state, ListItemBlock listItem)
         {
-            var list = (ListBlock)listItem.Parent;
+            var list = (ListBlock) listItem.Parent;
 
             // Allow all blanks lines if the last block is a fenced code block
             // Allow 1 blank line inside a list
@@ -136,6 +139,7 @@ namespace Maddalena.Markdig.Parsers
                         list.CountAllBlankLines++;
                         listItem.Add(new BlankLineBlock());
                     }
+
                     list.CountBlankLinesReset++;
                 }
 
@@ -150,7 +154,7 @@ namespace Maddalena.Markdig.Parsers
 
                 // Update list-item source end position
                 listItem.UpdateSpanEnd(state.Line.End);
-                
+
                 return BlockState.Continue;
             }
 
@@ -187,7 +191,7 @@ namespace Maddalena.Markdig.Parsers
             }
 
             var currentListItem = block as ListItemBlock;
-            var currentParent = block as ListBlock ?? (ListBlock)currentListItem?.Parent;
+            var currentParent = block as ListBlock ?? (ListBlock) currentListItem?.Parent;
 
             var initColumnBeforeIndent = state.ColumnBeforeIndent;
             var initColumn = state.Column;
@@ -329,7 +333,8 @@ namespace Maddalena.Markdig.Parsers
                     var item = listItem[i];
                     if (item is BlankLineBlock)
                     {
-                        if ((isLastElement &&  listIndex < listBlock.Count - 1) || (listItem.Count > 2 && (i > 0 && i < (listItem.Count - 1))))
+                        if ((isLastElement && listIndex < listBlock.Count - 1) ||
+                            (listItem.Count > 2 && (i > 0 && i < (listItem.Count - 1))))
                         {
                             listBlock.IsLoose = true;
                         }
@@ -356,8 +361,10 @@ namespace Maddalena.Markdig.Parsers
                             break;
                         }
                     }
+
                     isLastElement = false;
                 }
+
                 isLastListItem = false;
             }
 

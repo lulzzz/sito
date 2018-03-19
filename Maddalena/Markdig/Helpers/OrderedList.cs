@@ -8,11 +8,14 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// A List that provides methods for inserting/finding before/after. See remarks.
+    ///     A List that provides methods for inserting/finding before/after. See remarks.
     /// </summary>
     /// <typeparam name="T">Type of the list item</typeparam>
     /// <seealso cref="System.Collections.Generic.List{T}" />
-    /// <remarks>We use a typed list and don't use extension methods because it would pollute all list implemts and the top level namespace.</remarks>
+    /// <remarks>
+    ///     We use a typed list and don't use extension methods because it would pollute all list implemts and the top
+    ///     level namespace.
+    /// </remarks>
     public class OrderedList<T> : List<T>
     {
         public OrderedList()
@@ -34,6 +37,7 @@ namespace Maddalena.Markdig.Helpers
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -43,9 +47,10 @@ namespace Maddalena.Markdig.Helpers
             {
                 if (this[i] is TElement)
                 {
-                    return (TElement)this[i];
+                    return (TElement) this[i];
                 }
             }
+
             return default(TElement);
         }
 
@@ -55,9 +60,10 @@ namespace Maddalena.Markdig.Helpers
             {
                 if (this[i].GetType() == typeof(TElement))
                 {
-                    return (TElement)this[i];
+                    return (TElement) this[i];
                 }
             }
+
             return default(TElement);
         }
 
@@ -88,6 +94,7 @@ namespace Maddalena.Markdig.Helpers
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -100,11 +107,12 @@ namespace Maddalena.Markdig.Helpers
                     return true;
                 }
             }
+
             return false;
         }
 
         /// <summary>
-        /// Replaces <typeparamref name="TElement"/> with <paramref name="replacement"/>.
+        ///     Replaces <typeparamref name="TElement" /> with <paramref name="replacement" />.
         /// </summary>
         /// <typeparam name="TElement">Element type to find in the list</typeparam>
         /// <param name="replacement">Object to replace this element with</param>
@@ -120,6 +128,7 @@ namespace Maddalena.Markdig.Helpers
                     return true;
                 }
             }
+
             return false;
         }
     }

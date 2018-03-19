@@ -9,7 +9,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.SmartyPants
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="SmartyPant"/>.
+    ///     A HTML renderer for a <see cref="SmartyPant" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{SmartyPant}" />
     public class HtmlSmartyPantRenderer : HtmlObjectRenderer<SmartyPant>
@@ -19,7 +19,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
         private readonly SmartyPantOptions options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlSmartyPantRenderer"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlSmartyPantRenderer" /> class.
         /// </summary>
         /// <param name="options">The options.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -36,6 +36,7 @@ namespace Maddalena.Markdig.Extensions.SmartyPants
             {
                 DefaultOptions.Mapping.TryGetValue(obj.Type, out text);
             }
+
             renderer.Write(text);
         }
     }

@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Mathematics
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="MathInline"/>.
+    ///     A HTML renderer for a <see cref="MathInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Figure}" />
     public class HtmlMathInlineRenderer : HtmlObjectRenderer<MathInline>

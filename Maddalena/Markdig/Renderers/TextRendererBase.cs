@@ -13,7 +13,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
-    /// A text based <see cref="IMarkdownRenderer"/>.
+    ///     A text based <see cref="IMarkdownRenderer" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.RendererBase" />
     public abstract class TextRendererBase : RendererBase
@@ -21,7 +21,7 @@ namespace Maddalena.Markdig.Renderers
         private TextWriter writer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextRendererBase"/> class.
+        ///     Initializes a new instance of the <see cref="TextRendererBase" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -34,7 +34,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Gets or sets the writer.
+        ///     Gets or sets the writer.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">if the value is null</exception>
         public TextWriter Writer
@@ -52,7 +52,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Renders the specified markdown object (returns the <see cref="Writer"/> as a render object).
+        ///     Renders the specified markdown object (returns the <see cref="Writer" /> as a render object).
         /// </summary>
         /// <param name="markdownObject">The markdown object.</param>
         /// <returns></returns>
@@ -64,18 +64,18 @@ namespace Maddalena.Markdig.Renderers
     }
 
     /// <summary>
-    /// Typed <see cref="TextRendererBase"/>.
+    ///     Typed <see cref="TextRendererBase" />.
     /// </summary>
     /// <typeparam name="T">Type of the renderer</typeparam>
     /// <seealso cref="Markdig.Renderers.RendererBase" />
     public abstract class TextRendererBase<T> : TextRendererBase where T : TextRendererBase<T>
     {
-        private bool previousWasLine;
-        private char[] buffer;
         private readonly List<string> indents;
+        private char[] buffer;
+        private bool previousWasLine;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextRendererBase{T}"/> class.
+        ///     Initializes a new instance of the <see cref="TextRendererBase{T}" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
         protected TextRendererBase(TextWriter writer) : base(writer)
@@ -87,7 +87,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Ensures a newline.
+        ///     Ensures a newline.
         /// </summary>
         /// <returns>This instance</returns>
         public T EnsureLine()
@@ -96,7 +96,8 @@ namespace Maddalena.Markdig.Renderers
             {
                 WriteLine();
             }
-            return (T)this;
+
+            return (T) this;
         }
 
         public void PushIndent(string indent)
@@ -125,7 +126,7 @@ namespace Maddalena.Markdig.Renderers
 
 
         /// <summary>
-        /// Writes the specified content.
+        ///     Writes the specified content.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>This instance</returns>
@@ -139,7 +140,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the specified slice.
+        ///     Writes the specified slice.
         /// </summary>
         /// <param name="slice">The slice.</param>
         /// <returns>This instance</returns>
@@ -150,11 +151,12 @@ namespace Maddalena.Markdig.Renderers
             {
                 return (T) this;
             }
+
             return Write(slice.Text, slice.Start, slice.Length);
         }
 
         /// <summary>
-        /// Writes the specified slice.
+        ///     Writes the specified slice.
         /// </summary>
         /// <param name="slice">The slice.</param>
         /// <returns>This instance</returns>
@@ -165,7 +167,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the specified character.
+        ///     Writes the specified character.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>This instance</returns>
@@ -179,7 +181,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the specified content.
+        ///     Writes the specified content.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="offset">The offset.</param>
@@ -211,11 +213,12 @@ namespace Maddalena.Markdig.Renderers
                     Writer.Write(buffer, 0, length);
                 }
             }
+
             return (T) this;
         }
 
         /// <summary>
-        /// Writes a newline.
+        ///     Writes a newline.
         /// </summary>
         /// <returns>This instance</returns>
         [MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
@@ -228,7 +231,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes a content followed by a newline.
+        ///     Writes a content followed by a newline.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>This instance</returns>
@@ -242,7 +245,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the inlines of a leaf inline.
+        ///     Writes the inlines of a leaf inline.
         /// </summary>
         /// <param name="leafBlock">The leaf block.</param>
         /// <returns>This instance</returns>
@@ -259,6 +262,7 @@ namespace Maddalena.Markdig.Renderers
                     inline = inline.NextSibling;
                 }
             }
+
             return (T) this;
         }
     }

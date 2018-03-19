@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Mathematics
 {
     /// <summary>
-    /// Extension for adding inline mathematics $...$
+    ///     Extension for adding inline mathematics $...$
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class MathExtension : IMarkdownExtension
@@ -37,6 +37,7 @@ namespace Maddalena.Markdig.Extensions.Mathematics
                 {
                     htmlRenderer.ObjectRenderers.Insert(0, new HtmlMathInlineRenderer());
                 }
+
                 if (!htmlRenderer.ObjectRenderers.Contains<HtmlMathBlockRenderer>())
                 {
                     htmlRenderer.ObjectRenderers.Insert(0, new HtmlMathBlockRenderer());

@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="QuoteBlock"/>.
+    ///     A Normalize renderer for a <see cref="QuoteBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.QuoteBlock}" />
     public class QuoteBlockRenderer : NormalizeObjectRenderer<QuoteBlock>

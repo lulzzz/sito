@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Block parser for an indented <see cref="CodeBlock"/>.
+    ///     Block parser for an indented <see cref="CodeBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class IndentedCodeBlockParser : BlockParser
@@ -37,6 +37,7 @@ namespace Maddalena.Markdig.Parsers
                 // Go back to the correct column
                 processor.GoToColumn(column);
             }
+
             return result;
         }
 
@@ -55,16 +56,18 @@ namespace Maddalena.Markdig.Parsers
             {
                 processor.GoToCodeIndent();
             }
+
             if (block != null)
             {
                 block.UpdateSpanEnd(processor.Line.End);
             }
+
             return BlockState.Continue;
         }
 
         public override bool Close(BlockProcessor processor, Block block)
         {
-            var codeBlock = (CodeBlock)block;
+            var codeBlock = (CodeBlock) block;
             if (codeBlock != null)
             {
                 // Remove any trailing blankline
@@ -80,6 +83,7 @@ namespace Maddalena.Markdig.Parsers
                     }
                 }
             }
+
             return true;
         }
     }

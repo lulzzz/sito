@@ -8,13 +8,13 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Contains all the <see cref="LinkReferenceDefinition"/> found in a document.
+    ///     Contains all the <see cref="LinkReferenceDefinition" /> found in a document.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.ContainerBlock" />
     public class LinkReferenceDefinitionGroup : ContainerBlock
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinkReferenceDefinitionGroup"/> class.
+        ///     Initializes a new instance of the <see cref="LinkReferenceDefinitionGroup" /> class.
         /// </summary>
         public LinkReferenceDefinitionGroup() : base(null)
         {
@@ -22,7 +22,7 @@ namespace Maddalena.Markdig.Syntax
         }
 
         /// <summary>
-        /// Gets an association between a label and the corresponding <see cref="LinkReferenceDefinition"/>
+        ///     Gets an association between a label and the corresponding <see cref="LinkReferenceDefinition" />
         /// </summary>
         public Dictionary<string, LinkReferenceDefinition> Links { get; }
 

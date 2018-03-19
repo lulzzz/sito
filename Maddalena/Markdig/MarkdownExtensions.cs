@@ -36,23 +36,24 @@ using Maddalena.Markdig.Parsers.Inlines;
 namespace Maddalena.Markdig
 {
     /// <summary>
-    /// Provides extension methods for <see cref="MarkdownPipeline"/> to enable several Markdown extensions.
+    ///     Provides extension methods for <see cref="MarkdownPipeline" /> to enable several Markdown extensions.
     /// </summary>
     public static class MarkdownExtensions
     {
         /// <summary>
-        /// Adds the specified extension to the extensions collection.
+        ///     Adds the specified extension to the extensions collection.
         /// </summary>
         /// <typeparam name="TExtension">The type of the extension.</typeparam>
         /// <returns>The instance of <see cref="MarkdownPipelineBuilder" /></returns>
-        public static MarkdownPipelineBuilder Use<TExtension>(this MarkdownPipelineBuilder pipeline) where TExtension : class, IMarkdownExtension, new()
+        public static MarkdownPipelineBuilder Use<TExtension>(this MarkdownPipelineBuilder pipeline)
+            where TExtension : class, IMarkdownExtension, new()
         {
             pipeline.Extensions.AddIfNotAlready<TExtension>();
             return pipeline;
         }
 
         /// <summary>
-        /// Uses all extensions except the BootStrap, Emoji, SmartyPants and soft line as hard line breaks extensions.
+        ///     Uses all extensions except the BootStrap, Emoji, SmartyPants and soft line as hard line breaks extensions.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -78,9 +79,9 @@ namespace Maddalena.Markdig
                 .UseAutoLinks()
                 .UseGenericAttributes(); // Must be last as it is one parser that is modifying other parsers
         }
-        
+
         /// <summary>
-        /// Uses this extension to enable autolinks from text `http://`, `https://`, `ftp://`, `mailto:`, `www.xxx.yyy`
+        ///     Uses this extension to enable autolinks from text `http://`, `https://`, `ftp://`, `mailto:`, `www.xxx.yyy`
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -91,7 +92,8 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses this extension to disable URI escape with % characters for non-US-ASCII characters in order to workaround a bug under IE/Edge with local file links containing non US-ASCII chars. DO NOT USE OTHERWISE.
+        ///     Uses this extension to disable URI escape with % characters for non-US-ASCII characters in order to workaround a
+        ///     bug under IE/Edge with local file links containing non US-ASCII chars. DO NOT USE OTHERWISE.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -102,7 +104,8 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses YAML frontmatter extension that will parse a YAML frontmatter into the MarkdownDocument. Note that they are not rendered by any default HTML renderer.
+        ///     Uses YAML frontmatter extension that will parse a YAML frontmatter into the MarkdownDocument. Note that they are
+        ///     not rendered by any default HTML renderer.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -113,13 +116,21 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the self pipeline extension that will detect the pipeline to use from the markdown input that contains a special tag. See <see cref="SelfPipelineExtension"/>
+        ///     Uses the self pipeline extension that will detect the pipeline to use from the markdown input that contains a
+        ///     special tag. See <see cref="SelfPipelineExtension" />
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
-        /// <param name="defaultTag">The default tag to use to match the self pipeline configuration. By default, <see cref="SelfPipelineExtension.DefaultTag"/>, meaning that the HTML tag will be &lt;--markdig:extensions--&gt;</param>
-        /// <param name="defaultExtensions">The default extensions to configure if no pipeline setup was found from the Markdown document</param>
+        /// <param name="defaultTag">
+        ///     The default tag to use to match the self pipeline configuration. By default,
+        ///     <see cref="SelfPipelineExtension.DefaultTag" />, meaning that the HTML tag will be &lt;--markdig:extensions--&gt;
+        /// </param>
+        /// <param name="defaultExtensions">
+        ///     The default extensions to configure if no pipeline setup was found from the Markdown
+        ///     document
+        /// </param>
         /// <returns>The modified pipeline</returns>
-        public static MarkdownPipelineBuilder UseSelfPipeline(this MarkdownPipelineBuilder pipeline, string defaultTag = SelfPipelineExtension.DefaultTag, string defaultExtensions = null)
+        public static MarkdownPipelineBuilder UseSelfPipeline(this MarkdownPipelineBuilder pipeline,
+            string defaultTag = SelfPipelineExtension.DefaultTag, string defaultExtensions = null)
         {
             if (pipeline.Extensions.Count != 0)
             {
@@ -131,7 +142,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses pragma lines to output span with an id containing the line number (pragma-line#line_number_zero_based`)
+        ///     Uses pragma lines to output span with an id containing the line number (pragma-line#line_number_zero_based`)
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -142,7 +153,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the diagrams extension
+        ///     Uses the diagrams extension
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -153,7 +164,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses precise source code location (useful for syntax highlighting).
+        ///     Uses precise source code location (useful for syntax highlighting).
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -164,7 +175,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the task list extension.
+        ///     Uses the task list extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -175,7 +186,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the custom container extension.
+        ///     Uses the custom container extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -186,58 +197,64 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the media extension.
+        ///     Uses the media extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="options">The options.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
-        public static MarkdownPipelineBuilder UseMediaLinks(this MarkdownPipelineBuilder pipeline, MediaOptions options = null)
+        public static MarkdownPipelineBuilder UseMediaLinks(this MarkdownPipelineBuilder pipeline,
+            MediaOptions options = null)
         {
             if (!pipeline.Extensions.Contains<MediaLinkExtension>())
             {
                 pipeline.Extensions.Add(new MediaLinkExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Uses the auto-identifier extension.
+        ///     Uses the auto-identifier extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="options">The options.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
-        public static MarkdownPipelineBuilder UseAutoIdentifiers(this MarkdownPipelineBuilder pipeline, AutoIdentifierOptions options = AutoIdentifierOptions.Default)
+        public static MarkdownPipelineBuilder UseAutoIdentifiers(this MarkdownPipelineBuilder pipeline,
+            AutoIdentifierOptions options = AutoIdentifierOptions.Default)
         {
             if (!pipeline.Extensions.Contains<AutoIdentifierExtension>())
             {
                 pipeline.Extensions.Add(new AutoIdentifierExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Uses the SmartyPants extension.
+        ///     Uses the SmartyPants extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="options">The options.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
-        public static MarkdownPipelineBuilder UseSmartyPants(this MarkdownPipelineBuilder pipeline, SmartyPantOptions options = null)
+        public static MarkdownPipelineBuilder UseSmartyPants(this MarkdownPipelineBuilder pipeline,
+            SmartyPantOptions options = null)
         {
             if (!pipeline.Extensions.Contains<SmartyPantsExtension>())
             {
                 pipeline.Extensions.Add(new SmartyPantsExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Uses the bootstrap extension.
+        ///     Uses the bootstrap extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -248,7 +265,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the math extension.
+        ///     Uses the math extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -259,7 +276,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the figure extension.
+        ///     Uses the figure extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -270,7 +287,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the custom abbreviation extension.
+        ///     Uses the custom abbreviation extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -281,7 +298,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the definition lists extension.
+        ///     Uses the definition lists extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -292,24 +309,26 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the pipe table extension.
+        ///     Uses the pipe table extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="options">The options.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
-        public static MarkdownPipelineBuilder UsePipeTables(this MarkdownPipelineBuilder pipeline, PipeTableOptions options = null)
+        public static MarkdownPipelineBuilder UsePipeTables(this MarkdownPipelineBuilder pipeline,
+            PipeTableOptions options = null)
         {
             if (!pipeline.Extensions.Contains<PipeTableExtension>())
             {
                 pipeline.Extensions.Add(new PipeTableExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Uses the grid table extension.
+        ///     Uses the grid table extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -321,7 +340,7 @@ namespace Maddalena.Markdig
 
 
         /// <summary>
-        /// Uses the cite extension.
+        ///     Uses the cite extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -332,7 +351,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the footer extension.
+        ///     Uses the footer extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -343,7 +362,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the footnotes extension.
+        ///     Uses the footnotes extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -354,7 +373,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the softline break as hardline break extension
+        ///     Uses the softline break as hardline break extension
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -365,28 +384,30 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the strikethrough superscript, subscript, inserted and marked text extensions.
+        ///     Uses the strikethrough superscript, subscript, inserted and marked text extensions.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="options">The options to enable.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
-        public static MarkdownPipelineBuilder UseEmphasisExtras(this MarkdownPipelineBuilder pipeline, EmphasisExtraOptions options = EmphasisExtraOptions.Default)
+        public static MarkdownPipelineBuilder UseEmphasisExtras(this MarkdownPipelineBuilder pipeline,
+            EmphasisExtraOptions options = EmphasisExtraOptions.Default)
         {
             if (!pipeline.Extensions.Contains<EmphasisExtraExtension>())
             {
                 pipeline.Extensions.Add(new EmphasisExtraExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Uses the list extra extension to add support for `a.`, `A.`, `i.` and `I.` ordered list items.
+        ///     Uses the list extra extension to add support for `a.`, `A.`, `i.` and `I.` ordered list items.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>
-        /// The modified pipeline
+        ///     The modified pipeline
         /// </returns>
         public static MarkdownPipelineBuilder UseListExtras(this MarkdownPipelineBuilder pipeline)
         {
@@ -395,7 +416,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the generic attributes extension.
+        ///     Uses the generic attributes extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -406,22 +427,24 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Uses the emoji and smiley extension.
+        ///     Uses the emoji and smiley extension.
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <param name="enableSmiley">Enable smiley in addition to Emoji, <c>true</c> by default.</param>
         /// <returns>The modified pipeline</returns>
-        public static MarkdownPipelineBuilder UseEmojiAndSmiley(this MarkdownPipelineBuilder pipeline, bool enableSmiley = true)
+        public static MarkdownPipelineBuilder UseEmojiAndSmiley(this MarkdownPipelineBuilder pipeline,
+            bool enableSmiley = true)
         {
             if (!pipeline.Extensions.Contains<EmojiExtension>())
             {
                 pipeline.Extensions.Add(new EmojiExtension(enableSmiley));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Add rel=nofollow to all links rendered to HTML.
+        ///     Add rel=nofollow to all links rendered to HTML.
         /// </summary>
         /// <param name="pipeline"></param>
         /// <returns></returns>
@@ -432,22 +455,24 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Automatically link references to JIRA issues
+        ///     Automatically link references to JIRA issues
         /// </summary>
         /// <param name="pipeline">The pipeline</param>
         /// <param name="options">Set of required options</param>
         /// <returns>The modified pipeline</returns>
-        public static MarkdownPipelineBuilder UseJiraLinks(this MarkdownPipelineBuilder pipeline, JiraLinkOptions options)
+        public static MarkdownPipelineBuilder UseJiraLinks(this MarkdownPipelineBuilder pipeline,
+            JiraLinkOptions options)
         {
             if (!pipeline.Extensions.Contains<JiraLinkExtension>())
             {
                 pipeline.Extensions.Add(new JiraLinkExtension(options));
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// This will disable the HTML support in the markdown processor (for constraint/safe parsing).
+        ///     This will disable the HTML support in the markdown processor (for constraint/safe parsing).
         /// </summary>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>The modified pipeline</returns>
@@ -464,13 +489,17 @@ namespace Maddalena.Markdig
             {
                 inlineParser.EnableHtmlParsing = false;
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Configures the pipeline using a string that defines the extensions to activate.
+        ///     Configures the pipeline using a string that defines the extensions to activate.
         /// </summary>
-        /// <param name="pipeline">The pipeline (e.g: advanced for <see cref="UseAdvancedExtensions"/>, pipetables+gridtables for <see cref="UsePipeTables"/> and <see cref="UseGridTables"/></param>
+        /// <param name="pipeline">
+        ///     The pipeline (e.g: advanced for <see cref="UseAdvancedExtensions" />, pipetables+gridtables for
+        ///     <see cref="UsePipeTables" /> and <see cref="UseGridTables" />
+        /// </param>
         /// <param name="extensions">The extensions to activate as a string</param>
         /// <returns>The modified pipeline</returns>
         public static MarkdownPipelineBuilder Configure(this MarkdownPipelineBuilder pipeline, string extensions)
@@ -482,7 +511,7 @@ namespace Maddalena.Markdig
 
             // TODO: the extension string should come from the extension itself instead of this hardcoded switch case.
 
-            foreach (var extension in extensions.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var extension in extensions.Split(new[] {'+'}, StringSplitOptions.RemoveEmptyEntries))
             {
                 switch (extension.ToLowerInvariant())
                 {
@@ -570,9 +599,11 @@ namespace Maddalena.Markdig
                         pipeline.UseAutoLinks();
                         break;
                     default:
-                        throw new ArgumentException($"Invalid extension `{extension}` from `{extensions}`", nameof(extensions));
+                        throw new ArgumentException($"Invalid extension `{extension}` from `{extensions}`",
+                            nameof(extensions));
                 }
             }
+
             return pipeline;
         }
     }

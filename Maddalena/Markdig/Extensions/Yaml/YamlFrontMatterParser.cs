@@ -9,7 +9,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Yaml
 {
     /// <summary>
-    /// Block parser for a YAML frontmatter. 
+    ///     Block parser for a YAML frontmatter.
     /// </summary>
     /// <seealso cref="YamlFrontMatterBlock" />
     public class YamlFrontMatterParser : BlockParser
@@ -17,15 +17,15 @@ namespace Maddalena.Markdig.Extensions.Yaml
         // We reuse a FencedCodeBlock parser to grab a frontmatter, only active if it happens on the first line of the document.
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="YamlFrontMatterParser"/> class.
+        ///     Initializes a new instance of the <see cref="YamlFrontMatterParser" /> class.
         /// </summary>
         public YamlFrontMatterParser()
         {
-            OpeningCharacters = new[] { '-' };
+            OpeningCharacters = new[] {'-'};
         }
 
         /// <summary>
-        /// Creates the front matter block.
+        ///     Creates the front matter block.
         /// </summary>
         /// <param name="processor">The block processor</param>
         /// <returns>The front matter block</returns>
@@ -35,7 +35,7 @@ namespace Maddalena.Markdig.Extensions.Yaml
         }
 
         /// <summary>
-        /// Tries to match a block opening.
+        ///     Tries to match a block opening.
         /// </summary>
         /// <param name="processor">The parser processor.</param>
         /// <returns>The result of the match</returns>
@@ -52,7 +52,7 @@ namespace Maddalena.Markdig.Extensions.Yaml
             {
                 return BlockState.None;
             }
-            
+
             int count = 0;
             var line = processor.Line;
             char c = line.CurrentChar;
@@ -83,10 +83,13 @@ namespace Maddalena.Markdig.Extensions.Yaml
                         {
                             c = fullLine.NextChar();
                         }
+
                         nc = fullLine.PeekChar();
                         if (nc == '-')
                         {
-                            if (fullLine.NextChar() == '-'  && fullLine.NextChar() == '-' && fullLine.NextChar() == '-' && (fullLine.NextChar() == '\0' || fullLine.SkipSpacesToEndOfLineOrEndOfDocument()))
+                            if (fullLine.NextChar() == '-' && fullLine.NextChar() == '-' &&
+                                fullLine.NextChar() == '-' &&
+                                (fullLine.NextChar() == '\0' || fullLine.SkipSpacesToEndOfLineOrEndOfDocument()))
                             {
                                 hasFullYamlFrontMatter = true;
                                 break;
@@ -94,7 +97,9 @@ namespace Maddalena.Markdig.Extensions.Yaml
                         }
                         else if (nc == '.')
                         {
-                            if (fullLine.NextChar() == '.' && fullLine.NextChar() == '.' && fullLine.NextChar() == '.' && (fullLine.NextChar() == '\0' || fullLine.SkipSpacesToEndOfLineOrEndOfDocument()))
+                            if (fullLine.NextChar() == '.' && fullLine.NextChar() == '.' &&
+                                fullLine.NextChar() == '.' &&
+                                (fullLine.NextChar() == '\0' || fullLine.SkipSpacesToEndOfLineOrEndOfDocument()))
                             {
                                 hasFullYamlFrontMatter = true;
                                 break;
@@ -123,7 +128,7 @@ namespace Maddalena.Markdig.Extensions.Yaml
         }
 
         /// <summary>
-        /// Tries to continue matching a block already opened.
+        ///     Tries to continue matching a block already opened.
         /// </summary>
         /// <param name="processor">The parser processor.</param>
         /// <param name="block">The block already opened.</param>

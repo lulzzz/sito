@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Helper class for handling characters.
+    ///     Helper class for handling characters.
     /// </summary>
     public static class CharHelper
     {
@@ -21,11 +21,12 @@ namespace Maddalena.Markdig.Helpers
         public const string ZeroSafeString = "\uFFFD";
 
         // We don't support LCDM
-        private static IDictionary<char, int> romanMap = new Dictionary<char, int> { { 'I', 1 }, { 'V', 5 }, { 'X', 10 } };
+        private static IDictionary<char, int> romanMap = new Dictionary<char, int> {{'I', 1}, {'V', 5}, {'X', 10}};
 
-        private static readonly char[] punctuationExceptions = { '−', '-', '†', '‡' };
+        private static readonly char[] punctuationExceptions = {'−', '-', '†', '‡'};
 
-        public static void CheckOpenCloseDelimiter(char pc, char c, bool enableWithinWord, out bool canOpen, out bool canClose)
+        public static void CheckOpenCloseDelimiter(char pc, char c, bool enableWithinWord, out bool canOpen,
+            out bool canClose)
         {
             // A left-flanking delimiter run is a delimiter run that is 
             // (a) not followed by Unicode whitespace, and
@@ -43,7 +44,7 @@ namespace Maddalena.Markdig.Helpers
             var nextIsExcepted = nextIsPunctuation && punctuationExceptions.Contains(c);
 
             canOpen = !nextIsWhiteSpace &&
-                           ((!nextIsPunctuation || nextIsExcepted) || prevIsWhiteSpace || prevIsPunctuation);
+                      ((!nextIsPunctuation || nextIsExcepted) || prevIsWhiteSpace || prevIsPunctuation);
 
 
             // A right-flanking delimiter run is a delimiter run that is 
@@ -52,7 +53,7 @@ namespace Maddalena.Markdig.Helpers
             // or a punctuation character. 
             // For purposes of this definition, the beginning and the end of the line count as Unicode whitespace.
             canClose = !prevIsWhiteSpace &&
-                            ((!prevIsPunctuation || prevIsExcepted) || nextIsWhiteSpace || nextIsPunctuation);
+                       ((!prevIsPunctuation || prevIsExcepted) || nextIsWhiteSpace || nextIsPunctuation);
 
             if (!enableWithinWord)
             {
@@ -107,6 +108,7 @@ namespace Maddalena.Markdig.Helpers
                     result += candidate;
                 }
             }
+
             return result;
         }
 
@@ -132,6 +134,7 @@ namespace Maddalena.Markdig.Helpers
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -153,7 +156,8 @@ namespace Maddalena.Markdig.Helpers
         public static bool IsEscapableSymbol(this char c)
         {
             // char.IsSymbol also works with Unicode symbols that cannot be escaped based on the specification.
-            return (c > ' ' && c < '0') || (c > '9' && c < 'A') || (c > 'Z' && c < 'a') || (c > 'z' && c < 127) || c == '•';
+            return (c > ' ' && c < '0') || (c > '9' && c < 'A') || (c > 'Z' && c < 'a') || (c > 'z' && c < 127) ||
+                   c == '•';
         }
 
         //[MethodImpl(MethodImplOptionPortable.AggressiveInlining)]
@@ -173,22 +177,23 @@ namespace Maddalena.Markdig.Helpers
             if (c <= 'ÿ')
             {
                 space = c == '\0' || c == ' ' || (c >= '\t' && c <= '\r') || c == '\u00a0' || c == '\u0085';
-                punctuation = c == '\0' || (c >= 33 && c <= 47 && c != 38) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126);
+                punctuation = c == '\0' || (c >= 33 && c <= 47 && c != 38) || (c >= 58 && c <= 64) ||
+                              (c >= 91 && c <= 96) || (c >= 123 && c <= 126);
             }
             else
             {
                 var category = CharUnicodeInfo.GetUnicodeCategory(c);
                 space = category == UnicodeCategory.SpaceSeparator
-                    || category == UnicodeCategory.LineSeparator
-                    || category == UnicodeCategory.ParagraphSeparator;
+                        || category == UnicodeCategory.LineSeparator
+                        || category == UnicodeCategory.ParagraphSeparator;
                 punctuation = !space &&
-                    (category == UnicodeCategory.ConnectorPunctuation
-                    || category == UnicodeCategory.DashPunctuation
-                    || category == UnicodeCategory.OpenPunctuation
-                    || category == UnicodeCategory.ClosePunctuation
-                    || category == UnicodeCategory.InitialQuotePunctuation
-                    || category == UnicodeCategory.FinalQuotePunctuation
-                    || category == UnicodeCategory.OtherPunctuation);
+                              (category == UnicodeCategory.ConnectorPunctuation
+                               || category == UnicodeCategory.DashPunctuation
+                               || category == UnicodeCategory.OpenPunctuation
+                               || category == UnicodeCategory.ClosePunctuation
+                               || category == UnicodeCategory.InitialQuotePunctuation
+                               || category == UnicodeCategory.FinalQuotePunctuation
+                               || category == UnicodeCategory.OtherPunctuation);
             }
         }
 
@@ -298,6 +303,7 @@ namespace Maddalena.Markdig.Helpers
                 case '~':
                     return true;
             }
+
             return false;
         }
 

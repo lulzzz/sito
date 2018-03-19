@@ -8,14 +8,14 @@ using System.IO;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// A line reader from a <see cref="TextReader"/> that can provide precise source position
+    ///     A line reader from a <see cref="TextReader" /> that can provide precise source position
     /// </summary>
     public struct LineReader
     {
         private readonly string text;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineReader"/> class.
+        ///     Initializes a new instance of the <see cref="LineReader" /> class.
         /// </summary>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.ArgumentOutOfRangeException">bufferSize cannot be &lt;= 0</exception>
@@ -27,14 +27,15 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Gets the char position of the line. Valid for the next line before calling <see cref="ReadLine"/>.
+        ///     Gets the char position of the line. Valid for the next line before calling <see cref="ReadLine" />.
         /// </summary>
         public int SourcePosition { get; private set; }
 
         /// <summary>
-        /// Reads a new line from the underlying <see cref="TextReader"/> and update the <see cref="SourcePosition"/> for the next line.
+        ///     Reads a new line from the underlying <see cref="TextReader" /> and update the <see cref="SourcePosition" /> for the
+        ///     next line.
         /// </summary>
-        /// <returns>A new line or null if the end of <see cref="TextReader"/> has been reached</returns>
+        /// <returns>A new line or null if the end of <see cref="TextReader" /> has been reached</returns>
         public StringSlice? ReadLine()
         {
             if (SourcePosition >= text.Length)
@@ -45,7 +46,7 @@ namespace Maddalena.Markdig.Helpers
             var startPosition = SourcePosition;
             var position = SourcePosition;
             var slice = new StringSlice(text, startPosition, startPosition);
-            for (;position < text.Length; position++)
+            for (; position < text.Length; position++)
             {
                 var c = text[position];
                 if (c == '\r' || c == '\n')
@@ -55,6 +56,7 @@ namespace Maddalena.Markdig.Helpers
                     {
                         position++;
                     }
+
                     position++;
                     SourcePosition = position;
                     return slice;
@@ -66,5 +68,5 @@ namespace Maddalena.Markdig.Helpers
 
             return slice;
         }
-   }
+    }
 }

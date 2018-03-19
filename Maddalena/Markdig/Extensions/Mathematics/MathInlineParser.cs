@@ -10,14 +10,14 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Mathematics
 {
     /// <summary>
-    /// An inline parser for <see cref="MathInline"/>.
+    ///     An inline parser for <see cref="MathInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.InlineParser" />
     /// <seealso cref="IPostInlineProcessor" />
     public class MathInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MathInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="MathInlineParser" /> class.
         /// </summary>
         public MathInlineParser()
         {
@@ -26,7 +26,7 @@ namespace Maddalena.Markdig.Extensions.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets the default class to use when creating a math inline block.
+        ///     Gets or sets the default class to use when creating a math inline block.
         /// </summary>
         public string DefaultClass { get; set; }
 
@@ -57,7 +57,7 @@ namespace Maddalena.Markdig.Extensions.Mathematics
             bool openNextIsDigit = c.IsDigit();
             pc.CheckUnicodeCategory(out openPrevIsWhiteSpace, out openPrevIsPunctuation);
             c.CheckUnicodeCategory(out openNextIsWhiteSpace, out openNextIsPunctuation);
-            
+
             // Check that opening $/$$ is correct, using the different heuristics than for emphasis delimiters
             // If a $/$$ is not preceded by a whitespace or punctuation, or followed by a digit
             // this is a not a math block
@@ -89,7 +89,7 @@ namespace Maddalena.Markdig.Extensions.Mathematics
                 }
 
                 // Don't process sticks if we have a '\' as a previous char
-                if (pc != '\\' )
+                if (pc != '\\')
                 {
                     // Record continous whitespaces at the end
                     if (c.IsSpaceOrTab())
@@ -148,7 +148,8 @@ namespace Maddalena.Markdig.Extensions.Mathematics
                 // A closing $/$$ should be followed by at least a punctuation or a whitespace
                 // and if the character after an openning $/$$ was a whitespace, it should be 
                 // a whitespace as well for the character preceding the closing of $/$$
-                if ((!closeNextIsPunctuation && !closeNextIsWhiteSpace) || (openNextIsWhiteSpace != closePrevIsWhiteSpace))
+                if ((!closeNextIsPunctuation && !closeNextIsWhiteSpace) ||
+                    (openNextIsWhiteSpace != closePrevIsWhiteSpace))
                 {
                     return false;
                 }
@@ -167,7 +168,8 @@ namespace Maddalena.Markdig.Extensions.Mathematics
                 int column;
                 var inline = new MathInline()
                 {
-                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column), processor.GetSourcePosition(slice.End)),
+                    Span = new SourceSpan(processor.GetSourcePosition(startPosition, out line, out column),
+                        processor.GetSourcePosition(slice.End)),
                     Line = line,
                     Column = column,
                     Delimiter = match,
@@ -183,6 +185,7 @@ namespace Maddalena.Markdig.Extensions.Mathematics
                 {
                     inline.GetAttributes().AddClass(DefaultClass);
                 }
+
                 processor.Inline = inline;
                 isMatching = true;
             }

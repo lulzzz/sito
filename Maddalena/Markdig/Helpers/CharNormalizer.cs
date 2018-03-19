@@ -7,22 +7,11 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Class used to simplify a unicode char to a simple ASCII string
+    ///     Class used to simplify a unicode char to a simple ASCII string
     /// </summary>
     public static class CharNormalizer
     {
         private static readonly Dictionary<char, string> CodeToAscii;
-
-        /// <summary>
-        /// Converts a unicode char to a simple ASCII string.
-        /// </summary>
-        /// <param name="c">The input char.</param>
-        /// <returns>The simple ASCII string or null if the char itself cannot be simplified</returns>
-        public static string ConvertToAscii(char c)
-        {
-            string str;
-            return CodeToAscii.TryGetValue(c, out str) ? str : null;
-        }
 
         static CharNormalizer()
         {
@@ -1299,6 +1288,17 @@ namespace Maddalena.Markdig.Helpers
                 {'｝', "}"},
                 {'～', "~"},
             };
+        }
+
+        /// <summary>
+        ///     Converts a unicode char to a simple ASCII string.
+        /// </summary>
+        /// <param name="c">The input char.</param>
+        /// <returns>The simple ASCII string or null if the char itself cannot be simplified</returns>
+        public static string ConvertToAscii(char c)
+        {
+            string str;
+            return CodeToAscii.TryGetValue(c, out str) ? str : null;
         }
     }
 }

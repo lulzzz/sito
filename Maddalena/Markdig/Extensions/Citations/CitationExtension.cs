@@ -10,7 +10,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.Citations
 {
     /// <summary>
-    /// Extension for cite ""...""
+    ///     Extension for cite ""...""
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class CitationExtension : IMarkdownExtension

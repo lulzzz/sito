@@ -1,5 +1,4 @@
-﻿
-// Copyright (c) Alexandre Mutel. All rights reserved.
+﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
 
@@ -14,7 +13,7 @@ namespace Maddalena.Markdig.Extensions.Tables
     {
         public GridTableParser()
         {
-            OpeningCharacters = new[] { '+' };
+            OpeningCharacters = new[] {'+'};
         }
 
         public override BlockState TryOpen(BlockProcessor processor)
@@ -51,7 +50,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                     return BlockState.None;
                 }
 
-                tableState = tableState ?? new GridTableState { Start = processor.Start, ExpectRow = true };
+                tableState = tableState ?? new GridTableState {Start = processor.Start, ExpectRow = true};
                 tableState.AddColumn(columnStart - lineStart, line.Start - lineStart, columnAlign);
 
                 c = line.CurrentChar;
@@ -61,6 +60,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 return BlockState.None;
             }
+
             // Store the line (if we need later to build a ParagraphBlock because the GridTable was in fact invalid)
             tableState.AddLine(ref processor.Line);
             var table = new Table(this);
@@ -79,7 +79,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                 var columnDefinition = new TableColumnDefinition
                 {
                     // Column width proportional to the total width
-                    Width = (float)(columnSlice.End - columnSlice.Start - 1) * 100.0f / totalWidth,
+                    Width = (float) (columnSlice.End - columnSlice.Start - 1) * 100.0f / totalWidth,
                     Alignment = columnSlice.Align
                 };
                 table.ColumnDefinitions.Add(columnDefinition);
@@ -92,17 +92,19 @@ namespace Maddalena.Markdig.Extensions.Tables
 
         public override BlockState TryContinue(BlockProcessor processor, Block block)
         {
-            var gridTable = (Table)block;
-            var tableState = (GridTableState)block.GetData(typeof(GridTableState));
+            var gridTable = (Table) block;
+            var tableState = (GridTableState) block.GetData(typeof(GridTableState));
             tableState.AddLine(ref processor.Line);
             if (processor.CurrentChar == '+')
             {
                 return HandleNewRow(processor, tableState, gridTable);
             }
+
             if (processor.CurrentChar == '|')
             {
                 return HandleContents(processor, tableState, gridTable);
             }
+
             TerminateCurrentRow(processor, tableState, gridTable, true);
             // If the table is not valid we need to remove the grid table, 
             // and create a ParagraphBlock with the slices 
@@ -110,6 +112,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 Undo(processor, tableState, gridTable);
             }
+
             return BlockState.Break;
         }
 
@@ -124,19 +127,22 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 for (int i = 0; i < gridTable.Count; i++)
                 {
-                    var row = (TableRow)gridTable[i];
+                    var row = (TableRow) gridTable[i];
                     row.IsHeader = true;
                 }
             }
+
             tableState.StartRowGroup = gridTable.Count;
             if (hasRowSpan)
             {
                 HandleContents(processor, tableState, gridTable);
             }
+
             return BlockState.ContinueDiscard;
         }
 
-        private static void SetRowSpanState(List<GridTableState.ColumnSlice> columns, StringSlice line, out bool isHeaderRow, out bool hasRowSpan)
+        private static void SetRowSpanState(List<GridTableState.ColumnSlice> columns, StringSlice line,
+            out bool isHeaderRow, out bool hasRowSpan)
         {
             var lineStart = line.Start;
             isHeaderRow = line.PeekChar(1) == '=' || line.PeekChar(2) == '=';
@@ -170,12 +176,15 @@ namespace Maddalena.Markdig.Extensions.Tables
                 {
                     return false;
                 }
+
                 slice.NextChar();
             }
+
             return true;
         }
 
-        private static void TerminateCurrentRow(BlockProcessor processor, GridTableState tableState, Table gridTable, bool isLastRow)
+        private static void TerminateCurrentRow(BlockProcessor processor, GridTableState tableState, Table gridTable,
+            bool isLastRow)
         {
             var columns = tableState.ColumnSlices;
             TableRow currentRow = null;
@@ -188,11 +197,13 @@ namespace Maddalena.Markdig.Extensions.Tables
                     {
                         currentRow = new TableRow();
                     }
+
                     // If this cell does not already belong to a row
                     if (columnSlice.CurrentCell.Parent == null)
                     {
                         currentRow.Add(columnSlice.CurrentCell);
                     }
+
                     // If the cell is not going to span through to the next row
                     if (columnSlice.CurrentCell.AllowClose)
                     {
@@ -201,14 +212,16 @@ namespace Maddalena.Markdig.Extensions.Tables
                 }
 
                 // Renew the block parser processor (or reset it for the last row)
-                if (columnSlice.BlockProcessor != null && (columnSlice.CurrentCell == null || columnSlice.CurrentCell.AllowClose))
+                if (columnSlice.BlockProcessor != null &&
+                    (columnSlice.CurrentCell == null || columnSlice.CurrentCell.AllowClose))
                 {
                     columnSlice.BlockProcessor.ReleaseChild();
                     columnSlice.BlockProcessor = isLastRow ? null : processor.CreateChild();
                 }
 
                 // Create or erase the cell
-                if (isLastRow || columnSlice.CurrentColumnSpan == 0 || (columnSlice.CurrentCell != null && columnSlice.CurrentCell.AllowClose))
+                if (isLastRow || columnSlice.CurrentColumnSpan == 0 ||
+                    (columnSlice.CurrentCell != null && columnSlice.CurrentCell.AllowClose))
                 {
                     // We don't need the cell anymore if we have a last row
                     // Or the cell has a columnspan == 0
@@ -233,6 +246,7 @@ namespace Maddalena.Markdig.Extensions.Tables
             {
                 TerminateCurrentRow(processor, tableState, gridTable, false);
             }
+
             for (int i = 0; i < columns.Count;)
             {
                 var columnSlice = columns[i];
@@ -242,6 +256,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                 {
                     break;
                 }
+
                 var nextColumn = nextColumnIndex < columns.Count ? columns[nextColumnIndex] : null;
 
                 var sliceForCell = line;
@@ -266,6 +281,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                         sliceForCell.End = line.End - 1;
                     }
                 }
+
                 sliceForCell.TrimEnd();
 
                 if (!isRowLine || !IsRowSeperator(sliceForCell))
@@ -286,6 +302,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                         // Ensure that the BlockParser is aware that the TableCell is the top-level container
                         columnSlice.BlockProcessor.Open(columnSlice.CurrentCell);
                     }
+
                     // Process the content of the cell
                     columnSlice.BlockProcessor.LineIndex = processor.LineIndex;
                     columnSlice.BlockProcessor.ProcessLine(sliceForCell);
@@ -294,6 +311,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                 // Go to next column
                 i = nextColumnIndex;
             }
+
             return BlockState.ContinueDiscard;
         }
 
@@ -304,6 +322,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                 columnSlice.PreviousColumnSpan = columnSlice.CurrentColumnSpan;
                 columnSlice.CurrentColumnSpan = 0;
             }
+
             // | ------------- | ------------ | ---------------------------------------- |
             // Calculate the colspan for the new row
             int columnIndex = -1;
@@ -315,6 +334,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                 {
                     columnIndex = i;
                 }
+
                 if (columnIndex >= 0)
                 {
                     columns[columnIndex].CurrentColumnSpan++;
@@ -331,6 +351,7 @@ namespace Maddalena.Markdig.Extensions.Tables
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -354,13 +375,14 @@ namespace Maddalena.Markdig.Extensions.Tables
             var gridTable = block as Table;
             if (gridTable != null)
             {
-                var tableState = (GridTableState)block.GetData(typeof(GridTableState));
+                var tableState = (GridTableState) block.GetData(typeof(GridTableState));
                 TerminateCurrentRow(processor, tableState, gridTable, true);
                 if (!gridTable.IsValid())
                 {
                     Undo(processor, tableState, gridTable);
                 }
             }
+
             return true;
         }
     }

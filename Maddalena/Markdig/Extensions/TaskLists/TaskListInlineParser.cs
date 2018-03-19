@@ -10,12 +10,12 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.TaskLists
 {
     /// <summary>
-    /// The inline parser for SmartyPants.
+    ///     The inline parser for SmartyPants.
     /// </summary>
     public class TaskListInlineParser : InlineParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskListInlineParser"/> class.
+        ///     Initializes a new instance of the <see cref="TaskListInlineParser" /> class.
         /// </summary>
         public TaskListInlineParser()
         {
@@ -25,12 +25,12 @@ namespace Maddalena.Markdig.Extensions.TaskLists
         }
 
         /// <summary>
-        /// Gets or sets the list class used for a task list.
+        ///     Gets or sets the list class used for a task list.
         /// </summary>
         public string ListClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the list item class used for a task list.
+        ///     Gets or sets the list item class used for a task list.
         /// </summary>
         public string ListItemClass { get; set; }
 
@@ -53,10 +53,12 @@ namespace Maddalena.Markdig.Extensions.TaskLists
             {
                 return false;
             }
+
             if (slice.NextChar() != ']')
             {
                 return false;
             }
+
             // Skip last ]
             slice.NextChar();
 
@@ -65,7 +67,7 @@ namespace Maddalena.Markdig.Extensions.TaskLists
             int column;
             var taskItem = new TaskList()
             {
-                Span = { Start = processor.GetSourcePosition(startingPosition, out line, out column)},
+                Span = {Start = processor.GetSourcePosition(startingPosition, out line, out column)},
                 Line = line,
                 Column = column,
                 Checked = !c.IsSpace()

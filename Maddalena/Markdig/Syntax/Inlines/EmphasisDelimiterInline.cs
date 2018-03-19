@@ -9,13 +9,13 @@ using Maddalena.Markdig.Parsers.Inlines;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// A delimiter used for parsing emphasis.
+    ///     A delimiter used for parsing emphasis.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.DelimiterInline" />
     public class EmphasisDelimiterInline : DelimiterInline
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmphasisDelimiterInline" /> class.
+        ///     Initializes a new instance of the <see cref="EmphasisDelimiterInline" /> class.
         /// </summary>
         /// <param name="parser">The parser.</param>
         /// <param name="descriptor">The descriptor.</param>
@@ -28,17 +28,17 @@ namespace Maddalena.Markdig.Syntax.Inlines
         }
 
         /// <summary>
-        /// Gets the descriptor for this emphasis.
+        ///     Gets the descriptor for this emphasis.
         /// </summary>
         public EmphasisDescriptor Descriptor { get; }
 
         /// <summary>
-        /// The delimiter character found.
+        ///     The delimiter character found.
         /// </summary>
         public char DelimiterChar { get; }
 
         /// <summary>
-        /// The number of delimiter characters found for this delimiter.
+        ///     The number of delimiter characters found for this delimiter.
         /// </summary>
         public int DelimiterCount { get; set; }
 

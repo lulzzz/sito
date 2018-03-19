@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Abbreviations
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="AbbreviationInline"/>.
+    ///     A HTML renderer for a <see cref="AbbreviationInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{CustomContainer}" />
     public class HtmlAbbreviationRenderer : HtmlObjectRenderer<AbbreviationInline>
@@ -21,6 +21,7 @@ namespace Maddalena.Markdig.Extensions.Abbreviations
             {
                 renderer.Write("<abbr").WriteAttributes(obj).Write(" title=\"").WriteEscape(ref abbr.Text).Write("\">");
             }
+
             renderer.Write(abbr.Label);
             if (renderer.EnableHtmlForInline)
             {

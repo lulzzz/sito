@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Normalize
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="ListBlock"/>.
+    ///     A Normalize renderer for a <see cref="ListBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.ListBlock}" />
     public class ListRenderer : NormalizeObjectRenderer<ListBlock>
@@ -30,6 +30,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
                             break;
                     }
                 }
+
                 for (var i = 0; i < listBlock.Count; i++)
                 {
                     var item = listBlock[i];
@@ -48,6 +49,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
                             index++;
                             break;
                     }
+
                     if (i + 1 < listBlock.Count && listBlock.IsLoose)
                     {
                         renderer.EnsureLine();
@@ -74,6 +76,7 @@ namespace Maddalena.Markdig.Renderers.Normalize
                     }
                 }
             }
+
             renderer.CompactParagraph = compact;
 
             renderer.FinishBlock(true);

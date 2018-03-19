@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Maddalena
 {
-	public class ACL
-	{
+    public class ACL
+    {
         public bool Public { get; set; }
 
         public List<string> AllowUsers { get; set; }

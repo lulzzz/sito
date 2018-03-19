@@ -7,29 +7,29 @@ using Maddalena.Markdig.Parsers;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// A delimiter for a link.
+    ///     A delimiter for a link.
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.DelimiterInline" />
     public class LinkDelimiterInline : DelimiterInline
     {
+        /// <summary>
+        ///     The label span
+        /// </summary>
+        public SourceSpan LabelSpan;
+
         public LinkDelimiterInline(InlineParser parser) : base(parser)
         {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this delimiter is an image link.
+        ///     Gets or sets a value indicating whether this delimiter is an image link.
         /// </summary>
         public bool IsImage { get; set; }
 
         /// <summary>
-        /// Gets or sets the label of this link.
+        ///     Gets or sets the label of this link.
         /// </summary>
         public string Label { get; set; }
-
-        /// <summary>
-        /// The label span
-        /// </summary>
-        public SourceSpan LabelSpan;
 
         public override string ToLiteral()
         {

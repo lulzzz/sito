@@ -10,17 +10,17 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
-    /// Base class for a <see cref="IMarkdownRenderer"/>.
+    ///     Base class for a <see cref="IMarkdownRenderer" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.IMarkdownRenderer" />
     public abstract class RendererBase : IMarkdownRenderer
     {
         private readonly Dictionary<Type, IMarkdownObjectRenderer> renderersPerType;
-        private IMarkdownObjectRenderer previousRenderer;
         private Type previousObjectType;
+        private IMarkdownObjectRenderer previousRenderer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RendererBase"/> class.
+        ///     Initializes a new instance of the <see cref="RendererBase" /> class.
         /// </summary>
         protected RendererBase()
         {
@@ -28,26 +28,26 @@ namespace Maddalena.Markdig.Renderers
             renderersPerType = new Dictionary<Type, IMarkdownObjectRenderer>();
         }
 
-        public ObjectRendererCollection ObjectRenderers { get; }
-
-        public abstract object Render(MarkdownObject markdownObject);
-
         public bool IsFirstInContainer { get; private set; }
 
         public bool IsLastInContainer { get; private set; }
 
+        public ObjectRendererCollection ObjectRenderers { get; }
+
+        public abstract object Render(MarkdownObject markdownObject);
+
         /// <summary>
-        /// Occurs when before writing an object.
+        ///     Occurs when before writing an object.
         /// </summary>
         public event Action<IMarkdownRenderer, MarkdownObject> ObjectWriteBefore;
 
         /// <summary>
-        /// Occurs when after writing an object.
+        ///     Occurs when after writing an object.
         /// </summary>
         public event Action<IMarkdownRenderer, MarkdownObject> ObjectWriteAfter;
 
         /// <summary>
-        /// Writes the children of the specified <see cref="ContainerBlock"/>.
+        ///     Writes the children of the specified <see cref="ContainerBlock" />.
         /// </summary>
         /// <param name="containerBlock">The container block.</param>
         public void WriteChildren(ContainerBlock containerBlock)
@@ -73,7 +73,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the children of the specified <see cref="ContainerInline"/>.
+        ///     Writes the children of the specified <see cref="ContainerInline" />.
         /// </summary>
         /// <param name="containerInline">The container inline.</param>
         public void WriteChildren(ContainerInline containerInline)
@@ -103,7 +103,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the specified Markdown object.
+        ///     Writes the specified Markdown object.
         /// </summary>
         /// <typeparam name="T">A MarkdownObject type</typeparam>
         /// <param name="obj">The Markdown object to write to this renderer.</param>
@@ -134,6 +134,7 @@ namespace Maddalena.Markdig.Renderers
                     }
                 }
             }
+
             if (renderer != null)
             {
                 renderer.Write(this, obj);

@@ -8,13 +8,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A block parser for a <see cref="QuoteBlock"/>.
+    ///     A block parser for a <see cref="QuoteBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class QuoteBlockParser : BlockParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuoteBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="QuoteBlockParser" /> class.
         /// </summary>
         public QuoteBlockParser()
         {
@@ -39,6 +39,7 @@ namespace Maddalena.Markdig.Parsers
             {
                 processor.NextColumn();
             }
+
             processor.NewBlocks.Push(new QuoteBlock(this)
             {
                 QuoteChar = quoteChar,

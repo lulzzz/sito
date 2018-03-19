@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Footnotes
 {
     /// <summary>
-    /// Extension to allow footnotes.
+    ///     Extension to allow footnotes.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class FootnoteExtension : IMarkdownExtension

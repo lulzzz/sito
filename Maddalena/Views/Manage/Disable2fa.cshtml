@@ -3,6 +3,7 @@
     ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
 }
 
+
 <h2>@ViewData["Title"]</h2>
 
 <div class="alert alert-warning" role="alert">
@@ -12,8 +13,11 @@
     </p>
     <p>
         Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key
-        used in an authenticator app you should <a asp-action="ResetAuthenticatorWarning">reset your
-        authenticator keys.</a>
+        used in an authenticator app you should
+        <a asp-action="ResetAuthenticatorWarning">
+            reset your
+            authenticator keys.
+        </a>
     </p>
 </div>
 

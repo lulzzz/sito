@@ -11,7 +11,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.PragmaLines
 {
     /// <summary>
-    /// Extension to a span for each line containing the original line id (using id = pragma-line#line_number_zero_based)
+    ///     Extension to a span for each line containing the original line id (using id = pragma-line#line_number_zero_based)
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class PragmaLineExtension : IMarkdownExtension
@@ -36,7 +36,7 @@ namespace Maddalena.Markdig.Extensions.PragmaLines
         {
             var attribute = block.GetAttributes();
             var pragmaId = GetPragmaId(block);
-            if ( attribute.Id == null)
+            if (attribute.Id == null)
             {
                 attribute.Id = pragmaId;
             }
@@ -49,12 +49,11 @@ namespace Maddalena.Markdig.Extensions.PragmaLines
                 var tag = $"<a id=\"{pragmaId}\"></a>";
                 if (heading?.Inline?.FirstChild != null)
                 {
-                    heading.Inline.FirstChild.InsertBefore(new HtmlInline() { Tag = tag });
-
+                    heading.Inline.FirstChild.InsertBefore(new HtmlInline() {Tag = tag});
                 }
                 else
                 {
-                    block.Parent.Insert(index, new HtmlBlock(null) { Lines = new StringLineGroup(tag) });
+                    block.Parent.Insert(index, new HtmlBlock(null) {Lines = new StringLineGroup(tag)});
                     index++;
                 }
             }

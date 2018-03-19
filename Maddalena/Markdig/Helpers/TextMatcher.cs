@@ -8,15 +8,15 @@ using System.Collections.Generic;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Match a text against a list of ASCII string using internally a tree to speedup the lookup
+    ///     Match a text against a list of ASCII string using internally a tree to speedup the lookup
     /// </summary>
     public class TextMatchHelper
     {
-        private readonly CharNode root;
         private readonly ListCache listCache;
+        private readonly CharNode root;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextMatchHelper"/> class.
+        ///     Initializes a new instance of the <see cref="TextMatchHelper" /> class.
         /// </summary>
         /// <param name="matches">The matches to match against.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -31,14 +31,14 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Tries to match in the text, at offset position, the list of string matches registered to this instance.
+        ///     Tries to match in the text, at offset position, the list of string matches registered to this instance.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="offset">The offset.</param>
         /// <param name="length">The length.</param>
         /// <param name="match">The match string if the match was successfull.</param>
         /// <returns>
-        ///   <c>true</c> if the match was successfull; <c>false</c> otherwise
+        ///     <c>true</c> if the match was successfull; <c>false</c> otherwise
         /// </returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         public bool TryMatch(string text, int offset, int length, out string match)
@@ -55,15 +55,18 @@ namespace Maddalena.Markdig.Helpers
                 {
                     break;
                 }
+
                 node = nextNode;
                 offset++;
                 length--;
             }
+
             if (node.Content != null)
             {
                 match = node.Content;
                 return true;
             }
+
             return false;
         }
 
@@ -94,6 +97,7 @@ namespace Maddalena.Markdig.Helpers
                     {
                         nextNode.NextList = listCache.Get();
                     }
+
                     nextNode.NextList.Add(str);
                 }
             }

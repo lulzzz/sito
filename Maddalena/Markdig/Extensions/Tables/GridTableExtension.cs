@@ -7,7 +7,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// Extension that allows to use grid tables.
+    ///     Extension that allows to use grid tables.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class GridTableExtension : IMarkdownExtension

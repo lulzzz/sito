@@ -14,13 +14,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
-    /// Default HTML renderer for a Markdown <see cref="MarkdownDocument"/> object.
+    ///     Default HTML renderer for a Markdown <see cref="MarkdownDocument" /> object.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.TextRendererBase{Markdig.Renderers.HtmlRenderer}" />
     public class HtmlRenderer : TextRendererBase<HtmlRenderer>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlRenderer"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlRenderer" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
         public HtmlRenderer(TextWriter writer) : base(writer)
@@ -41,7 +41,7 @@ namespace Maddalena.Markdig.Renderers
             ObjectRenderers.Add(new EmphasisInlineRenderer());
             ObjectRenderers.Add(new LineBreakInlineRenderer());
             ObjectRenderers.Add(new HtmlInlineRenderer());
-            ObjectRenderers.Add(new HtmlEntityInlineRenderer());            
+            ObjectRenderers.Add(new HtmlEntityInlineRenderer());
             ObjectRenderers.Add(new LinkInlineRenderer());
             ObjectRenderers.Add(new LiteralInlineRenderer());
 
@@ -51,42 +51,42 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to output HTML tags when rendering. See remarks.
+        ///     Gets or sets a value indicating whether to output HTML tags when rendering. See remarks.
         /// </summary>
         /// <remarks>
-        /// This is used by some renderers to disable HTML tags when rendering some inline elements (for image links).
+        ///     This is used by some renderers to disable HTML tags when rendering some inline elements (for image links).
         /// </remarks>
         public bool EnableHtmlForInline { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to output HTML tags when rendering. See remarks.
+        ///     Gets or sets a value indicating whether to output HTML tags when rendering. See remarks.
         /// </summary>
         /// <remarks>
-        /// This is used by some renderers to disable HTML tags when rendering some block elements (for image links).
+        ///     This is used by some renderers to disable HTML tags when rendering some block elements (for image links).
         /// </remarks>
         public bool EnableHtmlForBlock { get; set; }
 
         public bool EnableHtmlEscape { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use implicit paragraph (optional &lt;p&gt;)
+        ///     Gets or sets a value indicating whether to use implicit paragraph (optional &lt;p&gt;)
         /// </summary>
         public bool ImplicitParagraph { get; set; }
 
         public bool UseNonAsciiNoEscape { get; set; }
 
         /// <summary>
-        /// Gets a value to use as the base url for all relative links
+        ///     Gets a value to use as the base url for all relative links
         /// </summary>
         public Uri BaseUrl { get; set; }
 
         /// <summary>
-        /// Allows links to be rewritten
+        ///     Allows links to be rewritten
         /// </summary>
-        public Func<string,string> LinkRewriter { get; set; }
+        public Func<string, string> LinkRewriter { get; set; }
 
         /// <summary>
-        /// Writes the content escaped for HTML.
+        ///     Writes the content escaped for HTML.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>This instance</returns>
@@ -101,7 +101,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the content escaped for HTML.
+        ///     Writes the content escaped for HTML.
         /// </summary>
         /// <param name="slice">The slice.</param>
         /// <param name="softEscape">Only escape &lt; and &amp;</param>
@@ -113,11 +113,12 @@ namespace Maddalena.Markdig.Renderers
             {
                 return this;
             }
+
             return WriteEscape(slice.Text, slice.Start, slice.Length, softEscape);
         }
 
         /// <summary>
-        /// Writes the content escaped for HTML.
+        ///     Writes the content escaped for HTML.
         /// </summary>
         /// <param name="slice">The slice.</param>
         /// <param name="softEscape">Only escape &lt; and &amp;</param>
@@ -129,7 +130,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the content escaped for HTML.
+        ///     Writes the content escaped for HTML.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="offset">The offset.</param>
@@ -143,7 +144,7 @@ namespace Maddalena.Markdig.Renderers
 
             var end = offset + length;
             int previousOffset = offset;
-            for (;offset < end;  offset++)
+            for (; offset < end; offset++)
             {
                 switch (content[offset])
                 {
@@ -153,6 +154,7 @@ namespace Maddalena.Markdig.Renderers
                         {
                             Write("&lt;");
                         }
+
                         previousOffset = offset + 1;
                         break;
                     case '>':
@@ -163,8 +165,10 @@ namespace Maddalena.Markdig.Renderers
                             {
                                 Write("&gt;");
                             }
+
                             previousOffset = offset + 1;
                         }
+
                         break;
                     case '&':
                         Write(content, previousOffset, offset - previousOffset);
@@ -172,6 +176,7 @@ namespace Maddalena.Markdig.Renderers
                         {
                             Write("&amp;");
                         }
+
                         previousOffset = offset + 1;
                         break;
                     case '"':
@@ -182,8 +187,10 @@ namespace Maddalena.Markdig.Renderers
                             {
                                 Write("&quot;");
                             }
+
                             previousOffset = offset + 1;
                         }
+
                         break;
                 }
             }
@@ -193,7 +200,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the URL escaped for HTML.
+        ///     Writes the URL escaped for HTML.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns>This instance</returns>
@@ -244,15 +251,16 @@ namespace Maddalena.Markdig.Renderers
                         byte[] bytes;
                         if (c >= '\ud800' && c <= '\udfff' && previousPosition < length)
                         {
-                            bytes = Encoding.UTF8.GetBytes(new[] { c, content[previousPosition] });
+                            bytes = Encoding.UTF8.GetBytes(new[] {c, content[previousPosition]});
                             // Skip next char as it is decoded above
                             i++;
                             previousPosition = i + 1;
                         }
                         else
                         {
-                            bytes = Encoding.UTF8.GetBytes(new[] { c });
+                            bytes = Encoding.UTF8.GetBytes(new[] {c});
                         }
+
                         for (var j = 0; j < bytes.Length; j++)
                         {
                             Write($"%{bytes[j]:X2}");
@@ -266,7 +274,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the attached <see cref="HtmlAttributes"/> on the specified <see cref="MarkdownObject"/>.
+        ///     Writes the attached <see cref="HtmlAttributes" /> on the specified <see cref="MarkdownObject" />.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
@@ -277,7 +285,7 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the specified <see cref="HtmlAttributes"/>.
+        ///     Writes the specified <see cref="HtmlAttributes" />.
         /// </summary>
         /// <param name="attributes">The attributes to render.</param>
         /// <param name="classFilter">A class filter used to transform a class into another class at writing time</param>
@@ -304,8 +312,10 @@ namespace Maddalena.Markdig.Renderers
                     {
                         Write(" ");
                     }
+
                     WriteEscape(classFilter != null ? classFilter(cssClass) : cssClass);
                 }
+
                 Write("\"");
             }
 
@@ -327,14 +337,15 @@ namespace Maddalena.Markdig.Renderers
         }
 
         /// <summary>
-        /// Writes the lines of a <see cref="LeafBlock"/>
+        ///     Writes the lines of a <see cref="LeafBlock" />
         /// </summary>
         /// <param name="leafBlock">The leaf block.</param>
         /// <param name="writeEndOfLines">if set to <c>true</c> write end of lines.</param>
         /// <param name="escape">if set to <c>true</c> escape the content for HTML</param>
         /// <param name="softEscape">Only escape &lt; and &amp;</param>
         /// <returns>This instance</returns>
-        public HtmlRenderer WriteLeafRawLines(LeafBlock leafBlock, bool writeEndOfLines, bool escape, bool softEscape = false)
+        public HtmlRenderer WriteLeafRawLines(LeafBlock leafBlock, bool writeEndOfLines, bool escape,
+            bool softEscape = false)
         {
             if (leafBlock == null) throw new ArgumentNullException(nameof(leafBlock));
             if (leafBlock.Lines.Lines != null)
@@ -347,6 +358,7 @@ namespace Maddalena.Markdig.Renderers
                     {
                         WriteLine();
                     }
+
                     if (escape)
                     {
                         WriteEscape(ref slices[i].Slice, softEscape);
@@ -355,13 +367,15 @@ namespace Maddalena.Markdig.Renderers
                     {
                         Write(ref slices[i].Slice);
                     }
+
                     if (writeEndOfLines)
                     {
                         WriteLine();
                     }
                 }
             }
+
             return this;
         }
-   }
+    }
 }

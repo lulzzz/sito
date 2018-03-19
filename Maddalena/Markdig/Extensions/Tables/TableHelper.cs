@@ -7,18 +7,18 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// Helper methods for parsing tables.
+    ///     Helper methods for parsing tables.
     /// </summary>
     public static class TableHelper
     {
         /// <summary>
-        /// Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
+        ///     Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
         /// </summary>
         /// <param name="slice">The text slice.</param>
         /// <param name="delimiterChar">The delimiter character (either `-` or `=`).</param>
         /// <param name="align">The alignment of the column.</param>
         /// <returns>
-        ///   <c>true</c> if parsing was successfull
+        ///     <c>true</c> if parsing was successfull
         /// </returns>
         public static bool ParseColumnHeader(ref StringSlice slice, char delimiterChar, out TableColumnAlign? align)
         {
@@ -26,30 +26,35 @@ namespace Maddalena.Markdig.Extensions.Tables
         }
 
         /// <summary>
-        /// Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
+        ///     Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
         /// </summary>
         /// <param name="slice">The text slice.</param>
         /// <param name="delimiterChar">The delimiter character (either `-` or `=`).</param>
         /// <param name="align">The alignment of the column.</param>
         /// <returns>
-        ///   <c>true</c> if parsing was successfull
+        ///     <c>true</c> if parsing was successfull
         /// </returns>
-        public static bool ParseColumnHeaderAuto(ref StringSlice slice, out char delimiterChar, out TableColumnAlign? align)
+        public static bool ParseColumnHeaderAuto(ref StringSlice slice, out char delimiterChar,
+            out TableColumnAlign? align)
         {
             delimiterChar = '\0';
             return ParseColumnHeaderDetect(ref slice, ref delimiterChar, out align);
         }
 
         /// <summary>
-        /// Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
+        ///     Parses a column header equivalent to the regexp: <code>\s*:\s*[delimiterChar]+\s*:\s*</code>
         /// </summary>
         /// <param name="slice">The text slice.</param>
-        /// <param name="delimiterChar">The delimiter character (either `-` or `=`). If `\0`, it will detect the character (either `-` or `=`)</param>
+        /// <param name="delimiterChar">
+        ///     The delimiter character (either `-` or `=`). If `\0`, it will detect the character (either
+        ///     `-` or `=`)
+        /// </param>
         /// <param name="align">The alignment of the column.</param>
         /// <returns>
-        ///   <c>true</c> if parsing was successfull
+        ///     <c>true</c> if parsing was successfull
         /// </returns>
-        public static bool ParseColumnHeaderDetect(ref StringSlice slice, ref char delimiterChar, out TableColumnAlign? align)
+        public static bool ParseColumnHeaderDetect(ref StringSlice slice, ref char delimiterChar,
+            out TableColumnAlign? align)
         {
             align = null;
 
@@ -100,14 +105,18 @@ namespace Maddalena.Markdig.Extensions.Tables
                 hasRight = true;
                 slice.NextChar();
             }
+
             slice.TrimStart();
 
             align = hasLeft && hasRight
                 ? TableColumnAlign.Center
-                : hasRight ? TableColumnAlign.Right : hasLeft ? TableColumnAlign.Left : (TableColumnAlign?) null;
+                : hasRight
+                    ? TableColumnAlign.Right
+                    : hasLeft
+                        ? TableColumnAlign.Left
+                        : (TableColumnAlign?) null;
 
             return true;
         }
-
     }
 }

@@ -9,17 +9,17 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.DefinitionLists
 {
     /// <summary>
-    /// The block parser for a <see cref="DefinitionList"/>.
+    ///     The block parser for a <see cref="DefinitionList" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class DefinitionListParser : BlockParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefinitionListParser"/> class.
+        ///     Initializes a new instance of the <see cref="DefinitionListParser" /> class.
         /// </summary>
         public DefinitionListParser()
         {
-            OpeningCharacters = new [] {':', '~'};
+            OpeningCharacters = new[] {':', '~'};
         }
 
         public override BlockState TryOpen(BlockProcessor processor)
@@ -85,7 +85,7 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                 var line = paragraphBlock.Lines.Lines[i];
                 var term = new DefinitionTerm(this)
                 {
-                    Column =  paragraphBlock.Column,
+                    Column = paragraphBlock.Column,
                     Line = line.Line,
                     Span = new SourceSpan(paragraphBlock.Span.Start, paragraphBlock.Span.End),
                     IsOpen = false
@@ -93,6 +93,7 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                 term.AppendLine(ref line.Slice, line.Column, line.Line, line.Position);
                 definitionItem.Add(term);
             }
+
             currentDefinitionList.Add(definitionItem);
             processor.Open(definitionItem);
 
@@ -102,7 +103,8 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
             return BlockState.Continue;
         }
 
-        private static DefinitionList GetCurrentDefinitionList(ParagraphBlock paragraphBlock, ContainerBlock previousParent)
+        private static DefinitionList GetCurrentDefinitionList(ParagraphBlock paragraphBlock,
+            ContainerBlock previousParent)
         {
             var index = previousParent.IndexOf(paragraphBlock) - 1;
             if (index < 0) return null;
@@ -112,19 +114,20 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                 lastBlock = previousParent[index - 1];
                 previousParent.RemoveAt(index);
             }
+
             return lastBlock as DefinitionList;
         }
 
         public override BlockState TryContinue(BlockProcessor processor, Block block)
         {
-            var definitionItem = (DefinitionItem)block;
+            var definitionItem = (DefinitionItem) block;
             if (processor.IsCodeIndent)
             {
                 processor.GoToCodeIndent();
                 return BlockState.Continue;
             }
 
-            var list = (DefinitionList)definitionItem.Parent;
+            var list = (DefinitionList) definitionItem.Parent;
             var lastBlankLine = definitionItem.LastChild as BlankLineBlock;
 
             // Check if we have another definition list
@@ -175,6 +178,7 @@ namespace Maddalena.Markdig.Extensions.DefinitionLists
                 {
                     definitionItem.Add(new BlankLineBlock());
                 }
+
                 return isBreakable ? BlockState.ContinueDiscard : BlockState.Continue;
             }
 

@@ -8,12 +8,13 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Renderers.Html
 {
     /// <summary>
-    /// An HTML renderer for a <see cref="HeadingBlock"/>.
+    ///     An HTML renderer for a <see cref="HeadingBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Syntax.HeadingBlock}" />
     public class HeadingRenderer : HtmlObjectRenderer<HeadingBlock>
     {
-        private static readonly string[] HeadingTexts = {
+        private static readonly string[] HeadingTexts =
+        {
             "h1",
             "h2",
             "h3",

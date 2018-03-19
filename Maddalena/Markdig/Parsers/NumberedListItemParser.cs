@@ -7,13 +7,13 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// The default parser for parsing numbered list item (e.g: 1) or 1.)
+    ///     The default parser for parsing numbered list item (e.g: 1) or 1.)
     /// </summary>
     /// <seealso cref="Markdig.Parsers.OrderedListItemParser" />
     public class NumberedListItemParser : OrderedListItemParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NumberedListItemParser"/> class.
+        ///     Initializes a new instance of the <see cref="NumberedListItemParser" /> class.
         /// </summary>
         public NumberedListItemParser()
         {
@@ -40,9 +40,11 @@ namespace Maddalena.Markdig.Parsers
                 {
                     startChar = endChar;
                 }
+
                 c = state.NextChar();
                 countDigit++;
             }
+
             if (startChar < 0)
             {
                 startChar = endChar;

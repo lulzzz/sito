@@ -9,7 +9,7 @@ using Maddalena.Markdig.Renderers.Normalize;
 namespace Maddalena.Markdig.Extensions.TaskLists
 {
     /// <summary>
-    /// Extension to enable TaskList.
+    ///     Extension to enable TaskList.
     /// </summary>
     public class TaskListExtension : IMarkdownExtension
     {

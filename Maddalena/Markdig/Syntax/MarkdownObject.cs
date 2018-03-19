@@ -7,49 +7,41 @@ using System;
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Base implementation for a the Markdown syntax tree.
+    ///     Base implementation for a the Markdown syntax tree.
     /// </summary>
     public abstract class MarkdownObject : IMarkdownObject
     {
+        /// <summary>
+        ///     The attached datas. Use internally a simple array instead of a Dictionary{Object,Object}
+        ///     as we expect less than 5~10 entries, usually typically 1 (HtmlAttributes)
+        ///     so it will gives faster access than a Dictionary, and lower memory occupation
+        /// </summary>
+        private DataEntry[] attachedDatas;
+
+        private int count;
+
+        /// <summary>
+        ///     The source span
+        /// </summary>
+        public SourceSpan Span;
+
         protected MarkdownObject()
         {
             Span = SourceSpan.Empty;
         }
 
         /// <summary>
-        /// The attached datas. Use internally a simple array instead of a Dictionary{Object,Object}
-        /// as we expect less than 5~10 entries, usually typically 1 (HtmlAttributes)
-        /// so it will gives faster access than a Dictionary, and lower memory occupation
-        /// </summary>
-        private DataEntry[] attachedDatas;
-        private int count;
-
-        /// <summary>
-        /// Gets or sets the text column this instance was declared (zero-based).
+        ///     Gets or sets the text column this instance was declared (zero-based).
         /// </summary>
         public int Column { get; set; }
 
         /// <summary>
-        /// Gets or sets the text line this instance was declared (zero-based).
+        ///     Gets or sets the text line this instance was declared (zero-based).
         /// </summary>
         public int Line { get; set; }
 
         /// <summary>
-        /// The source span
-        /// </summary>
-        public SourceSpan Span;
-
-        /// <summary>
-        /// Gets a string of the location in the text.
-        /// </summary>
-        /// <returns></returns>
-        public string ToPositionText()
-        {
-            return $"${Line}, {Column}, {Span.Start}-{Span.End}";
-        }
-
-        /// <summary>
-        /// Stores a key/value pair for this instance.
+        ///     Stores a key/value pair for this instance.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
@@ -71,6 +63,7 @@ namespace Maddalena.Markdig.Syntax
                         return;
                     }
                 }
+
                 if (count == attachedDatas.Length)
                 {
                     var temp = new DataEntry[attachedDatas.Length + 1];
@@ -78,12 +71,13 @@ namespace Maddalena.Markdig.Syntax
                     attachedDatas = temp;
                 }
             }
+
             attachedDatas[count] = new DataEntry(key, value);
             count++;
         }
 
         /// <summary>
-        /// Determines whether this instance contains the specified key data.
+        ///     Determines whether this instance contains the specified key data.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns><c>true</c> if a data with the key is stored</returns>
@@ -103,11 +97,12 @@ namespace Maddalena.Markdig.Syntax
                     return true;
                 }
             }
+
             return false;
         }
 
         /// <summary>
-        /// Gets the associated data for the specified key.
+        ///     Gets the associated data for the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>The associated data or null if none</returns>
@@ -119,6 +114,7 @@ namespace Maddalena.Markdig.Syntax
             {
                 return null;
             }
+
             for (int i = 0; i < count; i++)
             {
                 if (attachedDatas[i].Key == key)
@@ -126,11 +122,12 @@ namespace Maddalena.Markdig.Syntax
                     return attachedDatas[i].Value;
                 }
             }
+
             return null;
         }
 
         /// <summary>
-        /// Removes the associated data for the specified key.
+        ///     Removes the associated data for the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns><c>true</c> if the data was removed; <c>false</c> otherwise</returns>
@@ -151,16 +148,27 @@ namespace Maddalena.Markdig.Syntax
                     {
                         Array.Copy(attachedDatas, i + 1, attachedDatas, i, count - i - 1);
                     }
+
                     count--;
                     attachedDatas[count] = new DataEntry();
                     return true;
                 }
             }
+
             return false;
         }
 
         /// <summary>
-        /// Store a Key/Value pair.
+        ///     Gets a string of the location in the text.
+        /// </summary>
+        /// <returns></returns>
+        public string ToPositionText()
+        {
+            return $"${Line}, {Column}, {Span.Start}-{Span.End}";
+        }
+
+        /// <summary>
+        ///     Store a Key/Value pair.
         /// </summary>
         private struct DataEntry
         {

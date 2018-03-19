@@ -7,7 +7,7 @@ using Maddalena.Markdig.Helpers;
 namespace Maddalena.Markdig.Renderers
 {
     /// <summary>
-    /// A collection of <see cref="IMarkdownObjectRenderer"/>.
+    ///     A collection of <see cref="IMarkdownObjectRenderer" />.
     /// </summary>
     /// <seealso cref="Markdig.Helpers.OrderedList{Markdig.Renderers.IMarkdownObjectRenderer}" />
     public class ObjectRendererCollection : OrderedList<IMarkdownObjectRenderer>

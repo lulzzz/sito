@@ -7,14 +7,14 @@ using System.Diagnostics;
 namespace Maddalena.Markdig.Syntax.Inlines
 {
     /// <summary>
-    /// A Raw HTML (Section 6.8 CommonMark specs).
+    ///     A Raw HTML (Section 6.8 CommonMark specs).
     /// </summary>
     /// <seealso cref="Markdig.Syntax.Inlines.LeafInline" />
     [DebuggerDisplay("{Tag}")]
     public class HtmlInline : LeafInline
     {
         /// <summary>
-        /// Gets or sets the full declaration of this tag.
+        ///     Gets or sets the full declaration of this tag.
         /// </summary>
         public string Tag { get; set; }
     }

@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Yaml
 {
     /// <summary>
-    /// Empty renderer for a <see cref="YamlFrontMatterBlock"/>
+    ///     Empty renderer for a <see cref="YamlFrontMatterBlock" />
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{YamlFrontMatterBlock}" />
     public class YamlFrontMatterRenderer : HtmlObjectRenderer<YamlFrontMatterBlock>

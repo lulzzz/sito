@@ -3,102 +3,107 @@ using Newtonsoft.Json;
 
 namespace Maddalena.Modules.Geocoding
 {
-	public class Location
-	{
-		double latitude;
-		double longitude;
+    public class Location
+    {
+        double latitude;
+        double longitude;
 
-		[JsonProperty("lat")]
-		public virtual double Latitude
-		{
-			get => latitude;
-		    set
-			{
-				if (value < -90 || value > 90)
-					throw new ArgumentOutOfRangeException("Latitude", value, "Value must be between -90 and 90 inclusive.");
+        protected Location()
+            : this(0, 0)
+        {
+        }
 
-				if (double.IsNaN(value))
-					throw new ArgumentException("Latitude must be a valid number.", "Latitude");
+        public Location(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
 
-				latitude = value;
-			}
-		}
+        [JsonProperty("lat")]
+        public virtual double Latitude
+        {
+            get => latitude;
+            set
+            {
+                if (value < -90 || value > 90)
+                    throw new ArgumentOutOfRangeException("Latitude", value,
+                        "Value must be between -90 and 90 inclusive.");
 
-		[JsonProperty("lng")]
-		public virtual double Longitude
-		{
-			get => longitude;
-		    set
-			{
-				if (value < -180 || value > 180)
-					throw new ArgumentOutOfRangeException("Longitude", value, "Value must be between -180 and 180 inclusive.");
+                if (double.IsNaN(value))
+                    throw new ArgumentException("Latitude must be a valid number.", "Latitude");
 
-				if (double.IsNaN(value))
-					throw new ArgumentException("Longitude must be a valid number.", "Longitude");
+                latitude = value;
+            }
+        }
 
-				longitude = value;
-			}
-		}
+        [JsonProperty("lng")]
+        public virtual double Longitude
+        {
+            get => longitude;
+            set
+            {
+                if (value < -180 || value > 180)
+                    throw new ArgumentOutOfRangeException("Longitude", value,
+                        "Value must be between -180 and 180 inclusive.");
 
-		protected Location()
-			: this(0, 0)
-		{
-		}
-		public Location(double latitude, double longitude)
-		{
-			Latitude = latitude;
-			Longitude = longitude;
-		}
+                if (double.IsNaN(value))
+                    throw new ArgumentException("Longitude must be a valid number.", "Longitude");
 
-		protected virtual double ToRadian(double val)
-		{
-			return (Math.PI / 180.0) * val;
-		}
+                longitude = value;
+            }
+        }
 
-		public virtual Distance DistanceBetween(Location location)
-		{
-			return DistanceBetween(location, DistanceUnits.Miles);
-		}
+        protected virtual double ToRadian(double val)
+        {
+            return (Math.PI / 180.0) * val;
+        }
 
-		public virtual Distance DistanceBetween(Location location, DistanceUnits units)
-		{
-			double earthRadius = (units == DistanceUnits.Miles) ? Distance.EarthRadiusInMiles : Distance.EarthRadiusInKilometers;
+        public virtual Distance DistanceBetween(Location location)
+        {
+            return DistanceBetween(location, DistanceUnits.Miles);
+        }
 
-			double latRadian = ToRadian(location.Latitude - Latitude);
-			double longRadian = ToRadian(location.Longitude - Longitude);
+        public virtual Distance DistanceBetween(Location location, DistanceUnits units)
+        {
+            double earthRadius = (units == DistanceUnits.Miles)
+                ? Distance.EarthRadiusInMiles
+                : Distance.EarthRadiusInKilometers;
 
-			double a = Math.Pow(Math.Sin(latRadian / 2.0), 2) +
-				Math.Cos(ToRadian(Latitude)) *
-				Math.Cos(ToRadian(location.Latitude)) *
-				Math.Pow(Math.Sin(longRadian / 2.0), 2);
+            double latRadian = ToRadian(location.Latitude - Latitude);
+            double longRadian = ToRadian(location.Longitude - Longitude);
 
-			double c = 2.0 * Math.Asin(Math.Min(1, Math.Sqrt(a)));
+            double a = Math.Pow(Math.Sin(latRadian / 2.0), 2) +
+                       Math.Cos(ToRadian(Latitude)) *
+                       Math.Cos(ToRadian(location.Latitude)) *
+                       Math.Pow(Math.Sin(longRadian / 2.0), 2);
 
-			double distance = earthRadius * c;
-			return new Distance(distance, units);
-		}
+            double c = 2.0 * Math.Asin(Math.Min(1, Math.Sqrt(a)));
 
-		public override bool Equals(object obj)
-		{
-			return Equals(obj as Location);
-		}
+            double distance = earthRadius * c;
+            return new Distance(distance, units);
+        }
 
-		public bool Equals(Location coor)
-		{
-			if (coor == null)
-				return false;
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Location);
+        }
 
-			return (Latitude == coor.Latitude && Longitude == coor.Longitude);
-		}
+        public bool Equals(Location coor)
+        {
+            if (coor == null)
+                return false;
 
-		public override int GetHashCode()
-		{
-			return Latitude.GetHashCode() ^ Latitude.GetHashCode();
-		}
+            return (Latitude == coor.Latitude && Longitude == coor.Longitude);
+        }
 
-		public override string ToString()
-		{
-			return string.Format("{0}, {1}", latitude, longitude);
-		}
-	}
+        public override int GetHashCode()
+        {
+            return Latitude.GetHashCode() ^ Latitude.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", latitude, longitude);
+        }
+    }
 }

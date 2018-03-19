@@ -9,16 +9,16 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Extensions.Tables
 {
     /// <summary>
-    /// This block parsers for pipe tables is used to by-pass list items that could start by a single '-'
-    /// and would disallow to detect a pipe tables at inline parsing time, so we are basically forcing a line
-    /// that starts by a '-' and have at least a '|' (and have optional spaces) and is a continuation of a
-    /// paragraph.
+    ///     This block parsers for pipe tables is used to by-pass list items that could start by a single '-'
+    ///     and would disallow to detect a pipe tables at inline parsing time, so we are basically forcing a line
+    ///     that starts by a '-' and have at least a '|' (and have optional spaces) and is a continuation of a
+    ///     paragraph.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class PipeTableBlockParser : BlockParser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PipeTableBlockParser"/> class.
+        ///     Initializes a new instance of the <see cref="PipeTableBlockParser" /> class.
         /// </summary>
         public PipeTableBlockParser()
         {
@@ -29,7 +29,7 @@ namespace Maddalena.Markdig.Extensions.Tables
         {
             // Only if we have already a paragraph
             var paragraph = processor.CurrentBlock as ParagraphBlock;
-            if (processor.IsCodeIndent || paragraph  == null)
+            if (processor.IsCodeIndent || paragraph == null)
             {
                 return BlockState.None;
             }
@@ -45,20 +45,22 @@ namespace Maddalena.Markdig.Extensions.Tables
                     if (countPipe > 0)
                     {
                         // Mark the paragraph as open (important, otherwise we would have an infinite loop)
-                        paragraph.AppendLine(ref processor.Line, processor.Column, processor.LineIndex, processor.Line.Start);
+                        paragraph.AppendLine(ref processor.Line, processor.Column, processor.LineIndex,
+                            processor.Line.Start);
                         paragraph.IsOpen = true;
                         return BlockState.BreakDiscard;
                     }
 
                     return BlockState.None;
                 }
-                
+
                 if (c.IsSpace() || c == '-' || c == '|' || c == ':')
                 {
                     if (c == '|')
                     {
                         countPipe++;
                     }
+
                     continue;
                 }
 

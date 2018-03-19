@@ -14,24 +14,28 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig
 {
     /// <summary>
-    /// Provides methods for parsing a Markdown string to a syntax tree and converting it to other formats.
+    ///     Provides methods for parsing a Markdown string to a syntax tree and converting it to other formats.
     /// </summary>
     public static partial class Markdown
     {
 #if NETSTANDARD_11
-        public static readonly string Version = typeof(Markdown).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+        public static readonly string Version =
+ typeof(Markdown).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
 #else
-        public static readonly string Version = ((AssemblyFileVersionAttribute) typeof(Markdown).Assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0]).Version;
+        public static readonly string Version =
+            ((AssemblyFileVersionAttribute) typeof(Markdown).Assembly.GetCustomAttributes(
+                typeof(AssemblyFileVersionAttribute), false)[0]).Version;
 #endif
 
         /// <summary>
-        /// Normalizes the specified markdown to a normalized markdown text.
+        ///     Normalizes the specified markdown to a normalized markdown text.
         /// </summary>
         /// <param name="markdown">The markdown.</param>
         /// <param name="options">The normalize options</param>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>A normalized markdown text.</returns>
-        public static string Normalize(string markdown, NormalizeOptions options = null, MarkdownPipeline pipeline = null)
+        public static string Normalize(string markdown, NormalizeOptions options = null,
+            MarkdownPipeline pipeline = null)
         {
             var writer = new StringWriter();
             Normalize(markdown, writer, options, pipeline);
@@ -39,14 +43,15 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Normalizes the specified markdown to a normalized markdown text.
+        ///     Normalizes the specified markdown to a normalized markdown text.
         /// </summary>
         /// <param name="markdown">The markdown.</param>
-        /// <param name="writer">The destination <see cref="TextWriter"/> that will receive the result of the conversion.</param>
+        /// <param name="writer">The destination <see cref="TextWriter" /> that will receive the result of the conversion.</param>
         /// <param name="options">The normalize options</param>
         /// <param name="pipeline">The pipeline.</param>
         /// <returns>A normalized markdown text.</returns>
-        public static MarkdownDocument Normalize(string markdown, TextWriter writer, NormalizeOptions options = null, MarkdownPipeline pipeline = null)
+        public static MarkdownDocument Normalize(string markdown, TextWriter writer, NormalizeOptions options = null,
+            MarkdownPipeline pipeline = null)
         {
             pipeline = pipeline ?? new MarkdownPipelineBuilder().Build();
             pipeline = CheckForSelfPipeline(pipeline, markdown);
@@ -63,7 +68,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Converts a Markdown string to HTML.
+        ///     Converts a Markdown string to HTML.
         /// </summary>
         /// <param name="markdown">A Markdown text.</param>
         /// <param name="pipeline">The pipeline used for the conversion.</param>
@@ -78,10 +83,10 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Converts a Markdown string to HTML and output to the specified writer.
+        ///     Converts a Markdown string to HTML and output to the specified writer.
         /// </summary>
         /// <param name="markdown">A Markdown text.</param>
-        /// <param name="writer">The destination <see cref="TextWriter"/> that will receive the result of the conversion.</param>
+        /// <param name="writer">The destination <see cref="TextWriter" /> that will receive the result of the conversion.</param>
         /// <param name="pipeline">The pipeline used for the conversion.</param>
         /// <returns>The Markdown document that has been parsed</returns>
         /// <exception cref="System.ArgumentNullException">if reader or writer variable are null</exception>
@@ -104,7 +109,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Converts a Markdown string using a custom <see cref="IMarkdownRenderer"/>.
+        ///     Converts a Markdown string using a custom <see cref="IMarkdownRenderer" />.
         /// </summary>
         /// <param name="markdown">A Markdown text.</param>
         /// <param name="renderer">The renderer to convert Markdown to.</param>
@@ -123,7 +128,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Parses the specified markdown into an AST <see cref="MarkdownDocument"/>
+        ///     Parses the specified markdown into an AST <see cref="MarkdownDocument" />
         /// </summary>
         /// <param name="markdown">The markdown text.</param>
         /// <returns>An AST Markdown document</returns>
@@ -135,7 +140,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Parses the specified markdown into an AST <see cref="MarkdownDocument"/>
+        ///     Parses the specified markdown into an AST <see cref="MarkdownDocument" />
         /// </summary>
         /// <param name="markdown">The markdown text.</param>
         /// <param name="pipeline">The pipeline used for the parsing.</param>
@@ -157,14 +162,15 @@ namespace Maddalena.Markdig
             {
                 return selfPipeline.CreatePipelineFromInput(markdown);
             }
+
             return pipeline;
         }
 
         /// <summary>
-        /// Converts a Markdown string to Plain text and output to the specified writer.
+        ///     Converts a Markdown string to Plain text and output to the specified writer.
         /// </summary>
         /// <param name="markdown">A Markdown text.</param>
-        /// <param name="writer">The destination <see cref="TextWriter"/> that will receive the result of the conversion.</param>
+        /// <param name="writer">The destination <see cref="TextWriter" /> that will receive the result of the conversion.</param>
         /// <param name="pipeline">The pipeline used for the conversion.</param>
         /// <returns>The Markdown document that has been parsed</returns>
         /// <exception cref="System.ArgumentNullException">if reader or writer variable are null</exception>
@@ -191,7 +197,7 @@ namespace Maddalena.Markdig
         }
 
         /// <summary>
-        /// Converts a Markdown string to HTML.
+        ///     Converts a Markdown string to HTML.
         /// </summary>
         /// <param name="markdown">A Markdown text.</param>
         /// <param name="pipeline">The pipeline used for the conversion.</param>

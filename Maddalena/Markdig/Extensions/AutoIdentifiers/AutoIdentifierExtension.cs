@@ -14,18 +14,18 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Extensions.AutoIdentifiers
 {
     /// <summary>
-    /// The auto-identifier extension
+    ///     The auto-identifier extension
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class AutoIdentifierExtension : IMarkdownExtension
     {
         private const string AutoIdentifierKey = "AutoIdentifier";
-        private readonly HtmlRenderer stripRenderer;
         private readonly StringWriter headingWriter;
         private readonly AutoIdentifierOptions options;
+        private readonly HtmlRenderer stripRenderer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoIdentifierExtension"/> class.
+        ///     Initializes a new instance of the <see cref="AutoIdentifierExtension" /> class.
         /// </summary>
         /// <param name="options">The options.</param>
         public AutoIdentifierExtension(AutoIdentifierOptions options)
@@ -50,6 +50,7 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
                 headingBlockParser.Closed -= HeadingBlockParser_Closed;
                 headingBlockParser.Closed += HeadingBlockParser_Closed;
             }
+
             var paragraphBlockParser = pipeline.BlockParsers.FindExact<ParagraphBlockParser>();
             if (paragraphBlockParser != null)
             {
@@ -64,7 +65,7 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
         }
 
         /// <summary>
-        /// Process on a new <see cref="HeadingBlock"/>
+        ///     Process on a new <see cref="HeadingBlock" />
         /// </summary>
         /// <param name="processor">The processor.</param>
         /// <param name="block">The heading block.</param>
@@ -98,6 +99,7 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
                     doc.SetData(this, dictionary);
                     doc.ProcessInlinesBegin += DocumentOnProcessInlinesBegin;
                 }
+
                 dictionary[text] = linkRef;
             }
 
@@ -109,7 +111,7 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
         {
             var doc = processor.Document;
             doc.ProcessInlinesBegin -= DocumentOnProcessInlinesBegin;
-            var dictionary = (Dictionary<string, HeadingLinkReferenceDefinition>)doc.GetData(this);
+            var dictionary = (Dictionary<string, HeadingLinkReferenceDefinition>) doc.GetData(this);
             foreach (var keyPair in dictionary)
             {
                 // Here we make sure that auto-identifiers will not override an existing link definition
@@ -120,15 +122,17 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
                     doc.SetLinkReferenceDefinition(keyPair.Key, keyPair.Value);
                 }
             }
+
             // Once we are done, we don't need to keep the intermediate dictionary arround
             doc.RemoveData(this);
         }
 
         /// <summary>
-        /// Callback when there is a reference to found to a heading. 
-        /// Note that reference are only working if they are declared after.
+        ///     Callback when there is a reference to found to a heading.
+        ///     Note that reference are only working if they are declared after.
         /// </summary>
-        private Inline CreateLinkInlineForHeading(InlineProcessor inlineState, LinkReferenceDefinition linkRef, Inline child)
+        private Inline CreateLinkInlineForHeading(InlineProcessor inlineState, LinkReferenceDefinition linkRef,
+            Inline child)
         {
             var headingRef = (HeadingLinkReferenceDefinition) linkRef;
             return new LinkInline()
@@ -141,7 +145,7 @@ namespace Maddalena.Markdig.Extensions.AutoIdentifiers
         }
 
         /// <summary>
-        /// Process the inlines of the heading to create a unique identifier
+        ///     Process the inlines of the heading to create a unique identifier
         /// </summary>
         /// <param name="processor">The processor.</param>
         /// <param name="inline">The inline.</param>

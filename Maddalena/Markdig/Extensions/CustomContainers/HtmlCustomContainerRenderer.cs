@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.CustomContainers
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="CustomContainer"/>.
+    ///     A HTML renderer for a <see cref="CustomContainer" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{CustomContainer}" />
     public class HtmlCustomContainerRenderer : HtmlObjectRenderer<CustomContainer>

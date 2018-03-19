@@ -8,7 +8,7 @@ using Maddalena.Markdig.Syntax;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// Block parser for a <see cref="ParagraphBlock"/>.
+    ///     Block parser for a <see cref="ParagraphBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Parsers.BlockParser" />
     public class ParagraphBlockParser : BlockParser
@@ -63,6 +63,7 @@ namespace Maddalena.Markdig.Parsers
                 {
                     paragraph.Lines.Lines[i].Slice.TrimStart();
                 }
+
                 if (lineCount > 0)
                 {
                     paragraph.Lines.Lines[lineCount - 1].Slice.TrimEnd();
@@ -75,7 +76,7 @@ namespace Maddalena.Markdig.Parsers
         private BlockState TryParseSetexHeading(BlockProcessor state, Block block)
         {
             var paragraph = (ParagraphBlock) block;
-            var headingChar = (char)0;
+            var headingChar = (char) 0;
             bool checkForSpaces = false;
             var line = state.Line;
             var c = line.CurrentChar;
@@ -88,6 +89,7 @@ namespace Maddalena.Markdig.Parsers
                         headingChar = c;
                         continue;
                     }
+
                     break;
                 }
 
@@ -95,7 +97,7 @@ namespace Maddalena.Markdig.Parsers
                 {
                     if (!c.IsSpaceOrTab())
                     {
-                        headingChar = (char)0;
+                        headingChar = (char) 0;
                         break;
                     }
                 }
@@ -107,10 +109,11 @@ namespace Maddalena.Markdig.Parsers
                     }
                     else
                     {
-                        headingChar = (char)0;
+                        headingChar = (char) 0;
                         break;
                     }
                 }
+
                 c = line.NextChar();
             }
 
@@ -137,6 +140,7 @@ namespace Maddalena.Markdig.Parsers
                     // Remove the paragraph as a pending block
                     state.NewBlocks.Push(heading);
                 }
+
                 return BlockState.BreakDiscard;
             }
 
@@ -158,8 +162,10 @@ namespace Maddalena.Markdig.Parsers
                 {
                     if (!state.Document.ContainsLinkReferenceDefinition(linkReferenceDefinition.Label))
                     {
-                        state.Document.SetLinkReferenceDefinition(linkReferenceDefinition.Label, linkReferenceDefinition);
+                        state.Document.SetLinkReferenceDefinition(linkReferenceDefinition.Label,
+                            linkReferenceDefinition);
                     }
+
                     atLeastOneFound = true;
 
                     // Remove lines that have been matched

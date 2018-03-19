@@ -7,7 +7,7 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Renderers.Normalize.Inlines
 {
     /// <summary>
-    /// A Normalize renderer for a <see cref="LinkInline"/>.
+    ///     A Normalize renderer for a <see cref="LinkInline" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Normalize.NormalizeObjectRenderer{Markdig.Syntax.Inlines.LinkInline}" />
     public class LinkInlineRenderer : NormalizeObjectRenderer<LinkInline>
@@ -18,13 +18,13 @@ namespace Maddalena.Markdig.Renderers.Normalize.Inlines
             {
                 renderer.Write('!');
             }
+
             renderer.Write('[');
             renderer.WriteChildren(link);
             renderer.Write(']');
 
             if (link.Label != null)
             {
-
                 var literal = link.FirstChild as LiteralInline;
                 if (literal != null && literal.Content.Match(link.Label) && literal.Content.Length == link.Label.Length)
                 {

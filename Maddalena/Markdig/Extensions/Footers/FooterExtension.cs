@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.Footers
 {
     /// <summary>
-    /// Extension that provides footer.
+    ///     Extension that provides footer.
     /// </summary>
     /// <seealso cref="Markdig.IMarkdownExtension" />
     public class FooterExtension : IMarkdownExtension

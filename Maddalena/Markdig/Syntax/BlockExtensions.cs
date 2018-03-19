@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Alexandre Mutel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the license.txt file in the project root for more information.
+
 namespace Maddalena.Markdig.Syntax
 {
     /// <summary>
-    /// Extensions for <see cref="Block"/>
+    ///     Extensions for <see cref="Block" />
     /// </summary>
     public static class BlockExtensions
     {
@@ -78,6 +79,7 @@ namespace Maddalena.Markdig.Syntax
                 {
                     return block;
                 }
+
                 if (comparison < 0)
                     lowerIndex = midIndex + 1;
                 else

@@ -8,17 +8,20 @@ using Maddalena.Markdig.Renderers;
 namespace Maddalena.Markdig.Extensions.SelfPipeline
 {
     /// <summary>
-    /// Extension to enable SelfPipeline, to configure a Markdown parsing/convertion to HTML automatically 
-    /// from an embedded special tag in the input text <code>&lt;!--markdig:extensions--&gt;</code> where extensions is a string
-    /// that specifies the extensions to use for the pipeline as exposed by <see cref="MarkdownExtensions.Configure"/> extension method
-    /// on the <see cref="MarkdownPipelineBuilder"/>. This extension will invalidate all other extensions and will override them.
+    ///     Extension to enable SelfPipeline, to configure a Markdown parsing/convertion to HTML automatically
+    ///     from an embedded special tag in the input text <code>&lt;!--markdig:extensions--&gt;</code> where extensions is a
+    ///     string
+    ///     that specifies the extensions to use for the pipeline as exposed by <see cref="MarkdownExtensions.Configure" />
+    ///     extension method
+    ///     on the <see cref="MarkdownPipelineBuilder" />. This extension will invalidate all other extensions and will
+    ///     override them.
     /// </summary>
     public sealed class SelfPipelineExtension : IMarkdownExtension
     {
         public const string DefaultTag = "markdig";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SelfPipelineExtension"/> class.
+        ///     Initializes a new instance of the <see cref="SelfPipelineExtension" /> class.
         /// </summary>
         /// <param name="tag">The matching start tag.</param>
         /// <param name="defaultExtensions">The default extensions.</param>
@@ -27,7 +30,7 @@ namespace Maddalena.Markdig.Extensions.SelfPipeline
         {
             tag = tag?.Trim();
             tag = string.IsNullOrEmpty(tag) ? DefaultTag : tag;
-            if (tag.IndexOfAny(new []{'<', '>'}) >= 0)
+            if (tag.IndexOfAny(new[] {'<', '>'}) >= 0)
             {
                 throw new ArgumentException("Tag cannot contain `<`  or `>` characters", nameof(tag));
             }
@@ -38,17 +41,19 @@ namespace Maddalena.Markdig.Extensions.SelfPipeline
                 // Will throw an ArgumentInvalidException if not
                 new MarkdownPipelineBuilder().Configure(defaultExtensions);
             }
+
             DefaultExtensions = defaultExtensions;
             SelfPipelineHintTagStart = "<!--" + tag + ":";
         }
 
         /// <summary>
-        /// Gets the default pipeline to configure if no tag was found in the input text. Default is <c>null</c> (core pipeline).
+        ///     Gets the default pipeline to configure if no tag was found in the input text. Default is <c>null</c> (core
+        ///     pipeline).
         /// </summary>
         public string DefaultExtensions { get; }
 
         /// <summary>
-        /// Gets the self pipeline hint tag start that will be matched.
+        ///     Gets the self pipeline hint tag start that will be matched.
         /// </summary>
         public string SelfPipelineHintTagStart { get; }
 
@@ -67,7 +72,7 @@ namespace Maddalena.Markdig.Extensions.SelfPipeline
         }
 
         /// <summary>
-        /// Creates a pipeline automatically configured from an input markdown based on the presence of the configuration tag.
+        ///     Creates a pipeline automatically configured from an input markdown based on the presence of the configuration tag.
         /// </summary>
         /// <param name="inputText">The input text.</param>
         /// <returns>The pipeline configured from the input</returns>
@@ -93,6 +98,7 @@ namespace Maddalena.Markdig.Extensions.SelfPipeline
             {
                 builder.Configure(defaultConfig);
             }
+
             return builder.Build();
         }
     }

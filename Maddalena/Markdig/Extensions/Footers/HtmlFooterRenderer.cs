@@ -8,7 +8,7 @@ using Maddalena.Markdig.Renderers.Html;
 namespace Maddalena.Markdig.Extensions.Footers
 {
     /// <summary>
-    /// A HTML renderer for a <see cref="FooterBlock"/>.
+    ///     A HTML renderer for a <see cref="FooterBlock" />.
     /// </summary>
     /// <seealso cref="Markdig.Renderers.Html.HtmlObjectRenderer{Markdig.Extensions.Footers.FooterBlock}" />
     public class HtmlFooterBlockRenderer : HtmlObjectRenderer<FooterBlock>

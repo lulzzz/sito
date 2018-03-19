@@ -3,6 +3,27 @@
     ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
 }
 
+
+@section Links
+{
+    <section>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="/manage/index">My account</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/changePassword">Change password</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/manage/twoFactorAuthentication">Two-factor authentication</a>
+            </li>
+            <li class="list-group-item">
+                <a href="/account/logout">Log out</a>
+            </li>
+        </ul>
+    </section>
+}
+
 <h4>@ViewData["Title"]</h4>
 <div class="alert alert-warning" role="alert">
     <p>

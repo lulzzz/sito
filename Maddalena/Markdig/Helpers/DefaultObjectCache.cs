@@ -5,7 +5,7 @@
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// A default object cache that expect the type {T} to provide a parameter less constructor
+    ///     A default object cache that expect the type {T} to provide a parameter less constructor
     /// </summary>
     /// <typeparam name="T">The type of item to cache</typeparam>
     /// <seealso cref="Markdig.Helpers.ObjectCache{T}" />

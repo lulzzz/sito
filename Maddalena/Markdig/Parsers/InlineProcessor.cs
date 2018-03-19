@@ -13,23 +13,23 @@ using Maddalena.Markdig.Syntax.Inlines;
 namespace Maddalena.Markdig.Parsers
 {
     /// <summary>
-    /// A delegate called at inline processing stage.
+    ///     A delegate called at inline processing stage.
     /// </summary>
     /// <param name="processor">The processor.</param>
     /// <param name="inline">The inline being processed.</param>
     public delegate void ProcessInlineDelegate(InlineProcessor processor, Inline inline);
 
     /// <summary>
-    /// The inline parser state used by all <see cref="InlineParser"/>.
+    ///     The inline parser state used by all <see cref="InlineParser" />.
     /// </summary>
     public class InlineProcessor
     {
         private readonly List<StringLineGroup.LineOffset> lineOffsets;
-        private int previousSliceOffset;
         private int previousLineIndexForSliceOffset;
+        private int previousSliceOffset;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InlineProcessor" /> class.
+        ///     Initializes a new instance of the <see cref="InlineProcessor" /> class.
         /// </summary>
         /// <param name="stringBuilders">The string builders.</param>
         /// <param name="document">The document.</param>
@@ -37,7 +37,8 @@ namespace Maddalena.Markdig.Parsers
         /// <param name="inlineCreated">The inline created event.</param>
         /// <exception cref="System.ArgumentNullException">
         /// </exception>
-        public InlineProcessor(StringBuilderCache stringBuilders, MarkdownDocument document, InlineParserList parsers, bool preciseSourcelocation)
+        public InlineProcessor(StringBuilderCache stringBuilders, MarkdownDocument document, InlineParserList parsers,
+            bool preciseSourcelocation)
         {
             if (stringBuilders == null) throw new ArgumentNullException(nameof(stringBuilders));
             if (document == null) throw new ArgumentNullException(nameof(document));
@@ -52,62 +53,64 @@ namespace Maddalena.Markdig.Parsers
         }
 
         /// <summary>
-        /// Gets the current block being proessed.
+        ///     Gets the current block being proessed.
         /// </summary>
         public LeafBlock Block { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether to provide precise source location.
+        ///     Gets a value indicating whether to provide precise source location.
         /// </summary>
         public bool PreciseSourceLocation { get; }
 
         /// <summary>
-        /// Gets or sets the new block to replace the block being processed.
+        ///     Gets or sets the new block to replace the block being processed.
         /// </summary>
         public Block BlockNew { get; set; }
 
         /// <summary>
-        /// Gets or sets the current inline. Used by <see cref="InlineParser"/> to return a new inline if match was successfull
+        ///     Gets or sets the current inline. Used by <see cref="InlineParser" /> to return a new inline if match was
+        ///     successfull
         /// </summary>
         public Inline Inline { get; set; }
 
         /// <summary>
-        /// Gets the root container of the current <see cref="Block"/>.
+        ///     Gets the root container of the current <see cref="Block" />.
         /// </summary>
         public ContainerInline Root { get; internal set; }
 
         /// <summary>
-        /// Gets the list of inline parsers.
+        ///     Gets the list of inline parsers.
         /// </summary>
         public InlineParserList Parsers { get; }
 
         /// <summary>
-        /// Gets the root document.
+        ///     Gets the root document.
         /// </summary>
         public MarkdownDocument Document { get; }
 
         /// <summary>
-        /// Gets the cache string builders.
+        ///     Gets the cache string builders.
         /// </summary>
-        public StringBuilderCache StringBuilders { get;  }
+        public StringBuilderCache StringBuilders { get; }
 
         /// <summary>
-        /// Gets or sets the index of the line from the begining of the document being processed.
+        ///     Gets or sets the index of the line from the begining of the document being processed.
         /// </summary>
         public int LineIndex { get; private set; }
 
         /// <summary>
-        /// Gets the parser states that can be used by <see cref="InlineParser"/> using their <see cref="InlineParser.Index"/> property.
+        ///     Gets the parser states that can be used by <see cref="InlineParser" /> using their
+        ///     <see cref="InlineParser.Index" /> property.
         /// </summary>
         public object[] ParserStates { get; }
 
         /// <summary>
-        /// Gets or sets the debug log writer. No log if null.
+        ///     Gets or sets the debug log writer. No log if null.
         /// </summary>
         public TextWriter DebugLog { get; set; }
 
         /// <summary>
-        /// Gets the literal inline parser.
+        ///     Gets the literal inline parser.
         /// </summary>
         public LiteralInlineParser LiteralInlineParser { get; }
 
@@ -128,17 +131,18 @@ namespace Maddalena.Markdig.Parsers
 
             int column;
             int lineIndex;
-            return new SourceSpan(GetSourcePosition(span.Start, out lineIndex, out column), GetSourcePosition(span.End, out lineIndex, out column));
+            return new SourceSpan(GetSourcePosition(span.Start, out lineIndex, out column),
+                GetSourcePosition(span.End, out lineIndex, out column));
         }
 
         /// <summary>
-        /// Gets the source position for the specified offset within the current slice.
+        ///     Gets the source position for the specified offset within the current slice.
         /// </summary>
         /// <param name="sliceOffset">The slice offset.</param>
         /// <returns>The source position</returns>
         public int GetSourcePosition(int sliceOffset, out int lineIndex, out int column)
         {
-            column = 0;            
+            column = 0;
             lineIndex = sliceOffset >= previousSliceOffset ? previousLineIndexForSliceOffset : 0;
             int position = 0;
             if (PreciseSourceLocation)
@@ -162,11 +166,12 @@ namespace Maddalena.Markdig.Parsers
                     }
                 }
             }
+
             return position;
         }
 
         /// <summary>
-        /// Processes the inline of the specified <see cref="LeafBlock"/>.
+        ///     Processes the inline of the specified <see cref="LeafBlock" />.
         /// </summary>
         /// <param name="leafBlock">The leaf block.</param>
         public void ProcessInlineLeaf(LeafBlock leafBlock)
@@ -176,7 +181,7 @@ namespace Maddalena.Markdig.Parsers
             // clear parser states
             Array.Clear(ParserStates, 0, ParserStates.Length);
 
-            Root = new ContainerInline() { IsClosed = false };
+            Root = new ContainerInline() {IsClosed = false};
             leafBlock.Inline = Root;
             Inline = null;
             Block = leafBlock;
@@ -196,8 +201,10 @@ namespace Maddalena.Markdig.Parsers
                 // Security check so that the parser can't go into a crazy infinite loop if one extension is messing
                 if (previousStart == text.Start)
                 {
-                    throw new InvalidOperationException($"The parser is in an invalid infinite loop while trying to parse inlines for block [{leafBlock.GetType().Name}] at position ({leafBlock.ToPositionText()}");
+                    throw new InvalidOperationException(
+                        $"The parser is in an invalid infinite loop while trying to parse inlines for block [{leafBlock.GetType().Name}] at position ({leafBlock.ToPositionText()}");
                 }
+
                 previousStart = text.Start;
 
                 var c = text.CurrentChar;
@@ -215,6 +222,7 @@ namespace Maddalena.Markdig.Parsers
                         }
                     }
                 }
+
                 parsers = Parsers.GlobalParsers;
                 if (parsers != null)
                 {
@@ -251,9 +259,9 @@ namespace Maddalena.Markdig.Parsers
                             {
                                 container.Span = nextInline.Span;
                             }
+
                             container.Span.End = nextInline.Span.End;
                         }
-
                     }
                 }
                 else
@@ -322,6 +330,7 @@ namespace Maddalena.Markdig.Parsers
                     break;
                 }
             }
+
             return container;
         }
     }

@@ -10,17 +10,17 @@ using System.Runtime.CompilerServices;
 namespace Maddalena.Markdig.Helpers
 {
     /// <summary>
-    /// Allows to associate characters to a data structures and query efficiently for them.
+    ///     Allows to associate characters to a data structures and query efficiently for them.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class CharacterMap<T> where T : class
     {
         private readonly T[] asciiMap;
-        private readonly Dictionary<char, T> nonAsciiMap;
         private readonly bool[] isOpeningCharacter;
+        private readonly Dictionary<char, T> nonAsciiMap;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CharacterMap{T}"/> class.
+        ///     Initializes a new instance of the <see cref="CharacterMap{T}" /> class.
         /// </summary>
         /// <param name="maps">The states.</param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -38,6 +38,7 @@ namespace Maddalena.Markdig.Helpers
                 {
                     charCounter[openingChar] = 0;
                 }
+
                 charCounter[openingChar]++;
 
                 if (openingChar < 127 && openingChar > maxChar)
@@ -50,6 +51,7 @@ namespace Maddalena.Markdig.Helpers
                     nonAsciiMap = new Dictionary<char, T>();
                 }
             }
+
             OpeningCharacters = charCounter.Keys.ToArray();
             Array.Sort(OpeningCharacters);
 
@@ -68,6 +70,7 @@ namespace Maddalena.Markdig.Helpers
                     {
                         asciiMap[openingChar] = state.Value;
                     }
+
                     isOpeningCharacter[openingChar] = true;
                 }
                 else
@@ -81,12 +84,12 @@ namespace Maddalena.Markdig.Helpers
         }
 
         /// <summary>
-        /// Gets all the opening characters defined.
+        ///     Gets all the opening characters defined.
         /// </summary>
         public char[] OpeningCharacters { get; }
 
         /// <summary>
-        /// Gets the list of parsers valid for the specified opening character.
+        ///     Gets the list of parsers valid for the specified opening character.
         /// </summary>
         /// <param name="openingChar">The opening character.</param>
         /// <returns>A list of parsers valid for the specified opening character or null if no parsers registered.</returns>
@@ -104,17 +107,21 @@ namespace Maddalena.Markdig.Helpers
                 {
                     nonAsciiMap.TryGetValue(openingChar, out map);
                 }
+
                 return map;
             }
         }
 
         /// <summary>
-        /// Searches for an opening character from a registered parser in the specified string.
+        ///     Searches for an opening character from a registered parser in the specified string.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="start">The start.</param>
         /// <param name="end">The end.</param>
-        /// <returns>Index position within the string of the first opening character found in the specified text; if not found, returns -1</returns>
+        /// <returns>
+        ///     Index position within the string of the first opening character found in the specified text; if not found,
+        ///     returns -1
+        /// </returns>
         public int IndexOfOpeningCharacter(string text, int start, int end)
         {
             var maxChar = isOpeningCharacter.Length;
