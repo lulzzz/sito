@@ -22,7 +22,7 @@ namespace Maddalena.Controllers
 UserManager<ApplicationUser> userManager,
 SignInManager<ApplicationUser> SignInManager,
 IEmailSender emailSender,
-ILogger<AccountController> logger) : base(userManager, SignInManager, emailSender, logger)
+ILogger<FileController> logger) : base(userManager, SignInManager, emailSender, logger)
         {
         }
 

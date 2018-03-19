@@ -2,42 +2,45 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Maddalena.Security;
 using MongoDB.Bson.Serialization.Attributes;
 using Mongolino;
+using Mongolino.Attributes;
 using Newtonsoft.Json;
 
 namespace Maddalena.Modules.Blog
 {
     public class BlogArticle : DBObject<BlogArticle>
     {
-        static BlogArticle()
-        {
-            DescendingIndex(x => x.Category);
-            DescendingIndex(x => x.Link);
-            DescendingIndex(x => x.DateTime);
-            DescendingIndex(x => x.Tags);
-        }
-
         [JsonIgnore]
         [BsonIgnore]
+        [AscendingIndex]
         public static IEnumerable<string> Categories
         {
             get { return All.Select(x => x.Category).Distinct(); }
         }
 
+        [AscendingIndex]
         public string Author { get; set; }
 
-        [Required] public string Title { get; set; }
+        [Required]
+        [AscendingIndex]
+        public string Title { get; set; }
 
-        [Required] public string Link { get; set; }
+        [Required]
+        [AscendingIndex]
+        public string Link { get; set; }
 
         public DateTime DateTime { get; set; }
 
-        [Required] public string Category { get; set; }
+        [Required]
+        [AscendingIndex]
+        public string Category { get; set; }
 
-        [Required] public string Body { get; set; }
+        [Required]
+        [FullTextIndex]
+        public string Body { get; set; }
 
+        [AscendingIndex]
         public string[] Tags { get; set; }
 
         public bool Visible { get; set; }

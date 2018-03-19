@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Maddalena.csproj", "{81BEEDFC-6299-48DC-8ABD-7B9706D49045}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Identity.MongoDB", "Microsoft.AspNetCore.Identity.MongoDB\Microsoft.AspNetCore.Identity.MongoDB.csproj", "{A93F585B-75E7-48D3-B187-4EAA2FA03B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maddalena.ML", "Maddalena.ML\Maddalena.ML.csproj", "{E7C6AE16-B508-45E0-9001-CDE90E4306C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML", "Maddalena.ML\Maddalena.ML.csproj", "{E7C6AE16-B508-45E0-9001-CDE90E4306C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{5739E0DF-CB95-40D5-8A11-79AF3BD8D499}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML.Adapters.AdventureWorks", "Maddalena.ML.Adapters.AdventureWorks\Maddalena.ML.Adapters.AdventureWorks.csproj", "{C8A5AF97-6CC3-4388-8F6C-9C091AF24523}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML.Adapters.Prestashop", "Maddalena.ML.Adapters.Prestashop\Maddalena.ML.Adapters.Prestashop.csproj", "{7ACE1269-E35B-45D5-845B-C3F05DFE27B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML.Adapters.WooCommerce", "Maddalena.ML.Adapters.WooCommerce\Maddalena.ML.Adapters.WooCommerce.csproj", "{E21479F3-20A7-4D98-9C37-99493D02E047}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +33,18 @@ Global
 		{E7C6AE16-B508-45E0-9001-CDE90E4306C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7C6AE16-B508-45E0-9001-CDE90E4306C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7C6AE16-B508-45E0-9001-CDE90E4306C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5739E0DF-CB95-40D5-8A11-79AF3BD8D499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5739E0DF-CB95-40D5-8A11-79AF3BD8D499}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5739E0DF-CB95-40D5-8A11-79AF3BD8D499}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5739E0DF-CB95-40D5-8A11-79AF3BD8D499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A5AF97-6CC3-4388-8F6C-9C091AF24523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A5AF97-6CC3-4388-8F6C-9C091AF24523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A5AF97-6CC3-4388-8F6C-9C091AF24523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A5AF97-6CC3-4388-8F6C-9C091AF24523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACE1269-E35B-45D5-845B-C3F05DFE27B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACE1269-E35B-45D5-845B-C3F05DFE27B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACE1269-E35B-45D5-845B-C3F05DFE27B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACE1269-E35B-45D5-845B-C3F05DFE27B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E21479F3-20A7-4D98-9C37-99493D02E047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E21479F3-20A7-4D98-9C37-99493D02E047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E21479F3-20A7-4D98-9C37-99493D02E047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E21479F3-20A7-4D98-9C37-99493D02E047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

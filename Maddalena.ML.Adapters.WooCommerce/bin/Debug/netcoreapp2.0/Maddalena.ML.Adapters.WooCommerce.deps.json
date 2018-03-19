@@ -1,0 +1,38 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0",
+    "signature": "54a77b6d205379438e42ddccd82aa5da9839bc0e"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {
+      "Maddalena.ML.Adapters.WooCommerce/1.0.0": {
+        "dependencies": {
+          "WooCommerceNET": "0.7.4"
+        },
+        "runtime": {
+          "Maddalena.ML.Adapters.WooCommerce.dll": {}
+        }
+      },
+      "WooCommerceNET/0.7.4": {
+        "runtime": {
+          "lib/netstandard2.0/WooCommerce.NET.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Maddalena.ML.Adapters.WooCommerce/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WooCommerceNET/0.7.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZAgzB09CqZdGjWyGetQ5qZpIUUm1s4Vj/gwv/iRIb6A/TAPLkoQFKHha1yCoakmupv308SQ42CrmK7xnp/gT4g==",
+      "path": "woocommercenet/0.7.4",
+      "hashPath": "woocommercenet.0.7.4.nupkg.sha512"
+    }
+  }
+}

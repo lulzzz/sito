@@ -14,14 +14,14 @@ namespace Maddalena.Controllers
     [Authorize(Roles = "admin")]
     public class UserController : BaseController
     {
-        RoleManager<ApplicationRole> _roleManager;
+        readonly RoleManager<ApplicationRole> _roleManager;
 
         public UserController(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> SignInManager,
             IEmailSender emailSender,
-            ILogger logger) : base(userManager, SignInManager, emailSender, logger)
+            ILogger<UserController> logger) : base(userManager, SignInManager, emailSender, logger)
         {
             _roleManager = roleManager;
         }

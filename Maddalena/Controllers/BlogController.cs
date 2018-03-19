@@ -24,7 +24,7 @@ namespace Maddalena.Controllers
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     IEmailSender emailSender,
-    ILogger logger) : base(userManager, signInManager, emailSender, logger)
+    ILogger<BlogController> logger) : base(userManager, signInManager, emailSender, logger)
         {
         }
 
@@ -70,6 +70,7 @@ namespace Maddalena.Controllers
             var articleList = await BlogArticle.FullTextSearchAsync(q);
             if (articleList == null) return NotFound();
 
+            @ViewData["Title"] = $"Search results for {q}";
             return View("List", articleList);
         }
 

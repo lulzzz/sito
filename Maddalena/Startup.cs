@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Maddalena
 {
@@ -26,6 +27,12 @@ namespace Maddalena
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = 32*1024*1024;
+                x.MultipartBodyLengthLimit = 64 * 1024 * 1024; // In case of multipart
+            });
+
             services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser,ApplicationRole>("mongodb://localhost/maddalena", options =>
             {
                 options.Password.RequiredLength = 6;

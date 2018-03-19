@@ -22,7 +22,7 @@ namespace Maddalena.Controllers
           SignInManager<ApplicationUser> signInManager,
           RoleManager<ApplicationRole> roleManager,
           IEmailSender emailSender,
-          ILogger logger) : base(userManager,signInManager,emailSender,logger)
+          ILogger<RoleController> logger) : base(userManager,signInManager,emailSender,logger)
         {
             RoleManager = roleManager;
         }
