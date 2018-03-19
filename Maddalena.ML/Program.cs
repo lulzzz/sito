@@ -1,5 +1,6 @@
 ﻿using System;
-using Maddalena.ML.Geocoding;
+using System.Linq;
+using Maddalena.ML.Model;
 
 namespace Maddalena.ML
 {
@@ -8,6 +9,8 @@ namespace Maddalena.ML
 
         private static void Main(string[] args)
         {
+            var product = Product.All.ToArray();
+
             Console.WriteLine("Hello World!");
         }
     }

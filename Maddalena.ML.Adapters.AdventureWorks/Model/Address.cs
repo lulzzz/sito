@@ -9,76 +9,19 @@ namespace Maddalena.ML.Adapters.AdventureWorks
     [StructLayout(LayoutKind.Auto, CharSet = CharSet.Auto)]
     public class Address
     {
-        private int _addressid;
-
-        private string _addressline1;
-
-        private string _addressline2;
-
-        private string _city;
-
-        private DateTime _modifieddate;
-
-        private string _postalcode;
-
-        private Guid _rowguid;
-
-        private int _stateprovinceid;
+        [DataMember]
+        public string AddressLine1 { get; set; }
 
         [DataMember]
-        public int AddressID
-        {
-            get => _addressid;
-            set => _addressid = value;
-        }
+        public string AddressLine2 { get; set; }
 
         [DataMember]
-        public string AddressLine1
-        {
-            get => _addressline1;
-            set => _addressline1 = value;
-        }
+        public string City { get; set; }
 
         [DataMember]
-        public string AddressLine2
-        {
-            get => _addressline2;
-            set => _addressline2 = value;
-        }
+        public string StateProvince { get; set; }
 
         [DataMember]
-        public string City
-        {
-            get => _city;
-            set => _city = value;
-        }
-
-        [DataMember]
-        public int StateProvinceID
-        {
-            get => _stateprovinceid;
-            set => _stateprovinceid = value;
-        }
-
-        [DataMember]
-        public string PostalCode
-        {
-            get => _postalcode;
-            set => _postalcode = value;
-        }
-
-        [DataMember]
-        public Guid rowguid
-        {
-            get => _rowguid;
-            set => _rowguid = value;
-        }
-
-        [DataMember]
-        public DateTime ModifiedDate
-        {
-            get => _modifieddate;
-            set => _modifieddate = value;
-        }
+        public string PostalCode { get; set; }
     }
 }

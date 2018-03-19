@@ -4,7 +4,7 @@ using Mongolino;
 namespace Maddalena.ML.Model
 {
     public class Customer : DBObject<Customer>
-    {   
+    {
         public string ExternalId { get; set; }
 
         public string Username { get; set; }

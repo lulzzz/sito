@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Mongolino;
+﻿using Mongolino;
 
 namespace Maddalena.ML.Model
 {

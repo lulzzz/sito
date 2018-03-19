@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Elasticsearch.Net;
+using AutoMapper;
 using Maddalena.ML.Adapters.AdventureWorks;
-using Maddalena.ML.Geocoding;
-using Nest;
 using Newtonsoft.Json;
 using Address = Maddalena.ML.Adapters.AdventureWorks.Address;
 
@@ -17,54 +15,34 @@ namespace Maddalena.Ai
             return JsonConvert.DeserializeObject<T[]>(File.ReadAllText($"./json/{typeof(T).Name}"));
         }
 
-        public static Geocoder Geocoder = new Geocoder("AIzaSyDQ1tMYT-uoxCHDqN_sSdU95Ldk51naLFA");
-
-        public class Geo
+        public static T[] Shuffle<T>(T[] array)
         {
-            [Number(NumberType.Double, Name = "lat")]
-            public double Latitude { get; set; }
+            var r = new Random();
 
-            [Number(NumberType.Double, Name = "lng")]
-            public double Longitude { get; set; }
+            for (int i = 0; i < array.Length; i++)
+            {
+                var pos = r.Next(array.Length);
+
+                var k = array[i];
+                array[i] = array[pos];
+                array[pos] = k;
+            }
+
+            return array;
         }
-
-        class Test
-        {
-            public int Id { get; set; }
-
-            [Nest.GeoPoint]
-            public Geo Geo { get; set; }
-
-            [Nest.Ip]
-            public string Ip { get; set; }
-
-            [Nest.Date]
-            public DateTime Date { get; set; }
-        }
-
 
         private static void Main(string[] args)
         {
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Address, Maddalena.ML.Model.Address>();
+
+            });
+
             var states = Load<StateProvince>();
-            var address = Load<Address>();
+            var address = Shuffle(Load<Address>());
             var addressTypes = Load<AddressType>();
 
-            foreach (var s in address)
-            {
-                var state = states.First(x => x.StateProvinceID == s.StateProvinceID);
-                var str = $"{s.AddressLine1} {s.AddressLine2} {s.City} - {s.PostalCode} - {state.Name}";
-
-                var addrTask = Geocoder.GeocodeAsync(str);
-                addrTask.Wait();
-                var add = addrTask.Result.FirstOrDefault();
-
-                if(add == null) continue;
-
-                add.Type = Enum.Parse<ML.Model.AddressType>(addressTypes
-                    .First(x => x.AddressTypeID == s.AddressID).Name.Replace(" ", ""));
-
-                add.Id = Guid.NewGuid().ToString();
-            }
 
 
             var emails = Load<EmailAddress>();

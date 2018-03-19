@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Maddalena.Security;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.StaticFiles;
 using Mongolino;
 
 namespace Maddalena.Mongo
 {
     public class UploadFile : DBObject<UploadFile>
     {
-        static readonly FileExtensionContentTypeProvider MimeProvider =  new FileExtensionContentTypeProvider();
-
         public UploadFile()
         {
             

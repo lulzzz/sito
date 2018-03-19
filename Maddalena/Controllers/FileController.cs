@@ -44,7 +44,7 @@ ILogger<FileController> logger) : base(userManager, SignInManager, emailSender, 
                 time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 data = new
                 {
-                    baseurl = @"http://mercati.news/file/download/",
+                    baseurl = @"https://matteofabbri.org/file/download/",
                     messages = list.Select(x => $"File {x.FileName} was uploaded"),
                     files = list.Select(x => x.GridName),
                     code = 220
