@@ -712,7 +712,7 @@
       ]
     },
     "System.ValueTuple/4.4.0": {
-      "sha512": "BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
+      "sha512": "/pMCq0bzJ9rT7rHCpUVw6NmkEWpMqIL0t9XkiPfsP++UK/GKc3sO0vWQLqnChQjEyRJW4l1jT8KmpjCujkx93Q==",
       "type": "package",
       "path": "system.valuetuple/4.4.0",
       "files": [
@@ -762,7 +762,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mf185129\\.nuget\\packages\\": {},
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
@@ -772,18 +772,18 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\Maddalena\\Sito\\Maddalena.ML.Adapters.Prestashop\\Maddalena.ML.Adapters.Prestashop.csproj",
+      "projectUniqueName": "D:\\PROGETTI\\SITO\\Maddalena.ML.Adapters.Prestashop\\Maddalena.ML.Adapters.Prestashop.csproj",
       "projectName": "Maddalena.ML.Adapters.Prestashop",
-      "projectPath": "D:\\Maddalena\\Sito\\Maddalena.ML.Adapters.Prestashop\\Maddalena.ML.Adapters.Prestashop.csproj",
-      "packagesPath": "C:\\Users\\mf185129\\.nuget\\packages\\",
-      "outputPath": "D:\\Maddalena\\Sito\\Maddalena.ML.Adapters.Prestashop\\obj\\",
+      "projectPath": "D:\\PROGETTI\\SITO\\Maddalena.ML.Adapters.Prestashop\\Maddalena.ML.Adapters.Prestashop.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "D:\\PROGETTI\\SITO\\Maddalena.ML.Adapters.Prestashop\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\mf185129\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
@@ -792,10 +792,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Users\\mf185129\\.dotnet\\NuGetFallbackFolder": {},
-        "http://prg-nuget/nuget": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.0": {
