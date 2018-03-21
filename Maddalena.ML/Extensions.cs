@@ -20,9 +20,13 @@ namespace Maddalena.ML
 
         public static int Safe(this int? str) => str ?? 0;
 
+        public static long Safe(this long? str) => str ?? 0;
+
         public static List<T> Safe<T>(this List<T> str) => str ?? new List<T>();
 
         public static List<T> Safe<K, T>(this List<K> str, Func<K, T> select) =>
             str?.Select(select)?.ToList() ?? new List<T>();
+
+        public static DateTime SafeDate(this string str) => DateTime.TryParse(str, out DateTime dateTime) ? dateTime : DateTime.MinValue;
     }
 }

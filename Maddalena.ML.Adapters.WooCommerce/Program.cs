@@ -27,7 +27,7 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     LastName = p.last_name.Safe(),
                     MiddleName = "",
                     Organization = "",
-                    UpdateAt = p.date_modified_gmt.Safe()
+                    UpdatedAt = p.date_modified_gmt.Safe()
                 });
 
                 if (!string.IsNullOrEmpty(p.email))
