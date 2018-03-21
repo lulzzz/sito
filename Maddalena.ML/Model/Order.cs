@@ -7,17 +7,17 @@ namespace Maddalena.ML.Model
     {
         public string ExternalId { get; set; }
 
-        public ObjectRef<Customer> Customer { get; set; }
-
-        //public List<OrderTaxLine> TaxLines { get; set; }
-
-        public string CustomerIpAddress { get; set; }
-
-        public string CustomerUserAgent { get; set; }
+        public ObjectRef<Person> Person { get; set; }
 
         public string CustomerNote { get; set; }
 
         public bool HasCoupon { get; set; }
+
+        public bool HasShipping { get; set; }
+
+        public bool HasFee { get; set; }
+
+        public bool HasTax { get; set; }
 
         public string PaymentMethod { get; set; }
 
@@ -73,10 +73,6 @@ namespace Maddalena.ML.Model
 
         public int ItemCount { get; set; }
 
-        public bool HasShipping { get; set; }
-
-        public bool HasFee { get; set; }
-
-        public bool HasTax { get; set; }
+        public bool Modified { get; set; }
     }
 }

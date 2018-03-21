@@ -49,6 +49,18 @@ namespace Maddalena
                 googleOptions.ClientSecret = "QGrQnAvHGazDN-hM2Aaa2v5f";
             });
 
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = "SoLYId2A3LZDmTqoGPshlJZk5";
+                twitterOptions.ConsumerSecret = "GDdGYUx9f3i6OPGGvlgSu9Mxk8hgnT98jcK21kqO7J33mvO3tj";
+            });
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "1827676490625133";
+                facebookOptions.AppSecret = "0736a7614f803e696b2dbf7fb6dc9f27";
+            });
+
             /*services.AddMongoIdentityProvider<ApplicationUser>(options =>
             {
                 options.Password.RequiredLength = 6;

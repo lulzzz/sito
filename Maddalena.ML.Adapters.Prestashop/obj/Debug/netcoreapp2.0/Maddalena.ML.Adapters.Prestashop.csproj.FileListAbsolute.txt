@@ -20,3 +20,6 @@ D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\obj\Debug\netcoreapp2.0\Madda
 D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\obj\Debug\netcoreapp2.0\Maddalena.ML.Adapters.Prestashop.AssemblyInfo.cs
 D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\obj\Debug\netcoreapp2.0\Maddalena.ML.Adapters.Prestashop.dll
 D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\obj\Debug\netcoreapp2.0\Maddalena.ML.Adapters.Prestashop.pdb
+D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\bin\Debug\netcoreapp2.0\Accord.dll.config
+D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\bin\Debug\netcoreapp2.0\Maddalena.ML.dll
+D:\Maddalena\Sito\Maddalena.ML.Adapters.Prestashop\bin\Debug\netcoreapp2.0\Maddalena.ML.pdb

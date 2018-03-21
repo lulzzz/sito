@@ -6,7 +6,7 @@ namespace Maddalena.ML.Model
     {
         public string ExternalId { get; set; }
 
-        public ObjectRef<Customer> Customer { get; set; }
+        public ObjectRef<Person> Customer { get; set; }
 
         public ObjectRef<Order> Order { get; set; }
 

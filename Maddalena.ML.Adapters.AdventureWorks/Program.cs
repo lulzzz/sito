@@ -38,26 +38,6 @@ namespace Maddalena.Ai
                 config.CreateMap<Address, Maddalena.ML.Model.Address>();
 
             });
-
-            var states = Load<StateProvince>();
-            var address = Shuffle(Load<Address>());
-            var addressTypes = Load<AddressType>();
-
-
-
-            var emails = Load<EmailAddress>();
-            var customers = Load<Customer>();
-            var people = Load<Person>();
-
-            foreach (var x in customers)
-            {
-                var person = people.First(p => p.BusinessEntityID == x.PersonID);
-
-                var customer = new Maddalena.ML.Model.Customer()
-                {
-                    CreatedAt = x.ModifiedDate,
-                };
-            }
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Maddalena.ML.Model
 {
     public class Refund : DBObject<Refund>
     {
-        public ObjectRef<Customer> Customer { get; set; }
+        public ObjectRef<Person> Customer { get; set; }
 
         public ObjectRef<Order> Order { get; set; }
 
