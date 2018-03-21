@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Maddalena.Security;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;

@@ -30,8 +30,6 @@ namespace Maddalena.ML.Model
 
         public int StockQuantity { get; set; }
 
-        public bool ManageStock { get; set; }
-
         public string TaxClass { get; set; }
 
         public string TaxStatus { get; set; }
@@ -42,8 +40,6 @@ namespace Maddalena.ML.Model
 
         public bool ReviewsAllowed { get; set; }
 
-        public List<string> GroupedProducts { get; set; }
-
         public List<string> Attributes { get; set; }
 
         public List<string> Tags { get; set; }
@@ -52,17 +48,9 @@ namespace Maddalena.ML.Model
 
         public List<string> Categories { get; set; }
 
-        public List<string> CrossSellIds { get; set; }
-
-        public List<string> UpsellIds { get; set; }
-
-        public List<string> RelatedIds { get; set; }
-
         public int RatingCount { get; set; }
 
         public string AverageRating { get; set; }
-
-        public string ShortDescription { get; set; }
 
         public string Description { get; set; }
 
@@ -103,5 +91,10 @@ namespace Maddalena.ML.Model
         public bool Purchasable { get; set; }
 
         public int TotalSales { get; set; }
+
+        public bool HasRelated { get; set; }
+
+        public bool HasCrossSell { get; set; }
+        public bool HasUpSell { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Maddalena.ML.Model
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
+
         public string Username { get; set; }
     }
 }

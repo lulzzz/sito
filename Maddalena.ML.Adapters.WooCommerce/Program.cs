@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.ML.Model;
@@ -10,9 +9,9 @@ namespace Maddalena.ML.Adapters.WooCommerce
 {
     class Program
     {
-        public async Task LoadCustomers()
+        public async Task LoadCustomers(WooCommerceCredential credential)
         {
-            var rest = new RestAPI("http://www.yourstore.co.nz/wp-json/wc/v2/", "<WooCommerce Key>", "<WooCommerce Secret");
+            var rest = new RestAPI(credential.Url, credential.Key, credential.Secret);
             var wc = new WCObject(rest);
 
             var customers = await wc.Customer.GetAll();
@@ -89,9 +88,9 @@ namespace Maddalena.ML.Adapters.WooCommerce
             }
         }
 
-        public async Task LoadProducts()
+        public async Task LoadProducts(WooCommerceCredential credential)
         {
-            var rest = new RestAPI("http://www.yourstore.co.nz/wp-json/wc/v2/", "<WooCommerce Key>", "<WooCommerce Secret");
+            var rest = new RestAPI(credential.Url, credential.Key, credential.Secret);
             var wc = new WCObject(rest);
 
             var products = await wc.Product.GetAll();
@@ -108,7 +107,9 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     Backorders = p.backorders.Safe(),
                     BackordersAllowed = p.backorders_allowed.Safe(),
                     CatalogVisibility = p.catalog_visibility.Safe(),
-                    CrossSellIds = p.cross_sell_ids.Safe(),
+                    HasRelated = p.related_ids.Safe().Any(),
+                    HasCrossSell = p.cross_sell_ids.Safe().Any(),
+                    HasUpSell = p.upsell_ids.Safe().Any(),
                     DateCreated = p.date_created_gmt.Safe(),
                     DateModified = p.date_modified_gmt.Safe(),
                     DateOnSaleFrom = p.date_on_sale_from.Safe(),
@@ -118,10 +119,8 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     Downloadable = p.downloadable.Safe(),
                     ExternalUrl = p.external_url.Safe(),
                     Featured = p.featured.Safe(),
-                    GroupedProducts = p.grouped_products.Safe(),
                     Height = p.dimensions?.height.Safe(),
                     InStock = p.in_stock.Safe(),
-                    ManageStock = p.manage_stock.Safe(),
                     Name = p.name.Safe(),
                     OnSale = p.on_sale.Safe(),
                     Permalink = p.permalink.Safe(),
@@ -134,12 +133,10 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     SalePrice = p.sale_price.Safe(),
                     Width = p.dimensions?.width.Safe(),
                     StockQuantity = p.stock_quantity.Safe(),
-                    RelatedIds = p.related_ids.Safe(),
                     ShippingClass = p.shipping_class.Safe(),
                     Virtual = p._virtual.Safe(),
                     ShippingRequired = p.shipping_required.Safe(),
                     ShippingTaxable = p.shipping_taxable.Safe(),
-                    ShortDescription = p.short_description.Safe(),
                     SoldIndividually = p.sold_individually.Safe(),
                     Tags = p.tags.Safe(x=>x.name),
                     Attributes = p.attributes.Safe(x=>x.name).Concat(p.default_attributes.Safe(x=>x.name)).ToList(),
@@ -148,14 +145,13 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     TaxClass = p.tax_class.Safe(),
                     TaxStatus = p.tax_status.Safe(),
                     TotalSales = p.total_sales.Safe(),
-                    UpsellIds = p.upsell_ids.Safe(x=>x.ToString())
                 });
             }
         }
 
-        public async Task LoadOrders()
+        public async Task LoadOrders(WooCommerceCredential credential)
         {
-            var rest = new RestAPI("http://www.yourstore.co.nz/wp-json/wc/v2/", "<WooCommerce Key>", "<WooCommerce Secret");
+            var rest = new RestAPI(credential.Url, credential.Key, credential.Secret);
             var wc = new WCObject(rest);
 
             var orders = await wc.Order.GetAll();
@@ -165,25 +161,68 @@ namespace Maddalena.ML.Adapters.WooCommerce
                 var customerId = o.customer_id.Safe().ToString();
                 var person = customerId != "0" ? Person.FirstOrDefault(x=>x.ExternalId == customerId) : null;
 
-                await Model.Order.CreateAsync(new Model.Order()
+                var order = await Model.Order.CreateAsync(new Model.Order()
                 {
                     Person = person,
-                    CartHash = o.cart_hash.Safe(),
                     ExternalId = o.id.Safe().ToString(),
-                    CartTax = o.cart_tax.Safe(),
                     Completed = o.date_completed_gmt != null,
                     CreatedVia = o.created_via.Safe(),
                     Currency = o.currency.Safe(),
-                    CustomerNote = o.customer_note,
                     DateCompleted = o.date_completed_gmt.Safe(),
                     DateCreated = o.date_created_gmt.Safe(),
                     DatePaid = o.date_paid_gmt.Safe(),
+                    DiscountTotal = o.discount_total.Safe(),
                     Paid = o.date_paid != null,
                     DiscountTax = o.discount_tax.Safe(),
                     DateModified = o.date_modified_gmt.Safe(),
+                    HasCoupon = o.coupon_lines?.Count != 0,
+                    HasFee = o.fee_lines?.Count != 0,
+                    HasRefund = o.refunds?.Count != 0,
+                    HasShipping = o.shipping_lines?.Count != 0,
+                    HasTax = o.tax_lines?.Count != 0,
+                    ItemCount = o.line_items?.Count ?? 0,
                     Modified = o.date_modified_gmt != null,
-                    
+                    Note = o.customer_note.Safe(),
+                    PaymentMethod = o.payment_method.Safe(),
+                    PaymentMethodTitle = o.payment_method_title.Safe(),
+                    PricesIncludeTax = o.prices_include_tax.Safe(),
+                    ShippingTax = o.shipping_tax.Safe(),
+                    ShippingTotal = o.shipping_total.Safe(),
+                    Status = o.status.Safe(),
+                    Total = o.total.Safe(),
+                    TotalTax = o.total_tax.Safe(),
+                    TotalCoupon = o.coupon_lines.Safe(x=>x.discount.Safe()).Sum(),
+                    TotalFee = o.fee_lines.Safe(x=>x.total.Safe()).Sum(),
+                    TotalRefund = o.refunds.Safe(x=>x.total.Safe()).Sum()
                 });
+
+                foreach (var item in o.line_items.Safe())
+                {
+                    await SoldItem.CreateAsync(new SoldItem
+                    {
+                        Person = person,
+                        Order = order,
+                        Name = item.name.Safe(),
+                        Price = item.price.Safe(),
+                        Quantity = item.quantity.Safe(),
+                        Subtotal = item.subtotal.Safe(),
+                        SubtotalTax = item.subtotal_tax.Safe(),
+                        TaxClass = item.tax_class.Safe(),
+                        Total = item.total.Safe(),
+                        TotalTax = item.total_tax.Safe()
+                    });
+                }
+
+                var complains = o.refunds.Safe(x => new Complaint
+                {
+                    ExternalId = x.id.Safe().ToString(),
+                    Customer = person,
+                    Order = order,
+                    Reason = x.reason.Safe(),
+                    Total = x.total.Safe()
+                });
+
+                foreach (var comp in complains) await Complaint.CreateAsync(comp);
 
                 if (!string.IsNullOrWhiteSpace(o.customer_ip_address))
                 {
@@ -194,11 +233,6 @@ namespace Maddalena.ML.Adapters.WooCommerce
                     });
                 }
             }
-        }
-
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
         }
     }
 }

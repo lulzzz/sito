@@ -20,7 +20,7 @@ namespace Maddalena.ML
 
         public static int Safe(this int? str) => str ?? 0;
 
-        public static List<string> Safe(this List<int> str) => str?.Select(x=>x.ToString())?.ToList() ?? new List<string>();
+        public static List<T> Safe<T>(this List<T> str) => str ?? new List<T>();
 
         public static List<T> Safe<K, T>(this List<K> str, Func<K, T> select) =>
             str?.Select(select)?.ToList() ?? new List<T>();
