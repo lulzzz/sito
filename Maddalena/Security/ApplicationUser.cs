@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Maddalena.Modules.Geocoding;
-using Microsoft.AspNetCore.Identity;
-using Mongolino;
+﻿using Maddalena.Modules.Geocoding;
 
 namespace Maddalena.Security
 {

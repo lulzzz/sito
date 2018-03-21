@@ -2028,7 +2028,8 @@
           "Accord.Neuro": "3.8.0",
           "Microsoft.NETCore.App": "2.0.0",
           "Mongolino": "1.2.4",
-          "NEST": "6.0.2"
+          "NEST": "6.0.2",
+          "Newtonsoft.Json": "11.0.1"
         },
         "compile": {
           "bin/placeholder/Maddalena.ML.dll": {}

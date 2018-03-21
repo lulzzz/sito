@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mongolino;
 
 namespace Maddalena.ML.Model
@@ -7,39 +8,29 @@ namespace Maddalena.ML.Model
     {
         public string ExternalId { get; set; }
 
-        public ObjectRef<Customer> Customer { get; set; }
+        public ObjectRef<Person> Person { get; set; }
 
-        //public List<OrderTaxLine> TaxLines { get; set; }
-
-        public string CustomerIpAddress { get; set; }
-
-        public string CustomerUserAgent { get; set; }
-
-        public string CustomerNote { get; set; }
+        public string Note { get; set; }
 
         public bool HasCoupon { get; set; }
+
+        public bool HasShipping { get; set; }
+
+        public bool HasFee { get; set; }
+
+        public bool HasTax { get; set; }
 
         public string PaymentMethod { get; set; }
 
         public string PaymentMethodTitle { get; set; }
 
-        public string TransactionId { get; set; }
-
         public DateTime DatePaid { get; set; }
 
         public DateTime DateCompleted { get; set; }
 
-        public string CartHash { get; set; }
-
-        public string MetaData { get; set; }
-
         public bool PricesIncludeTax { get; set; }
 
         public decimal TotalTax { get; set; }
-
-        public string Number { get; set; }
-
-        public string OrderKey { get; set; }
 
         public string CreatedVia { get; set; }
 
@@ -48,8 +39,6 @@ namespace Maddalena.ML.Model
         public string Currency { get; set; }
 
         public DateTime DateCreated { get; set; }
-
-        public bool SetPaid { get; set; }
 
         public DateTime DateModified { get; set; }
 
@@ -61,8 +50,6 @@ namespace Maddalena.ML.Model
 
         public decimal ShippingTax { get; set; }
 
-        public decimal CartTax { get; set; }
-
         public decimal Total { get; set; }
 
         public bool Completed { get; set; }
@@ -73,10 +60,12 @@ namespace Maddalena.ML.Model
 
         public int ItemCount { get; set; }
 
-        public bool HasShipping { get; set; }
+        public bool Modified { get; set; }
 
-        public bool HasFee { get; set; }
+        public decimal TotalFee { get; set; }
 
-        public bool HasTax { get; set; }
+        public decimal TotalCoupon { get; set; }
+
+        public decimal TotalRefund { get; set; }
     }
 }

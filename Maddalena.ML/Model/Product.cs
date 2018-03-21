@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mongolino;
 
 namespace Maddalena.ML.Model
@@ -29,8 +30,6 @@ namespace Maddalena.ML.Model
 
         public int StockQuantity { get; set; }
 
-        public bool ManageStock { get; set; }
-
         public string TaxClass { get; set; }
 
         public string TaxStatus { get; set; }
@@ -39,43 +38,19 @@ namespace Maddalena.ML.Model
 
         public string ShippingClass { get; set; }
 
-        public string ShippingClassId { get; set; }
-
         public bool ReviewsAllowed { get; set; }
 
-        public string GroupedProducts { get; set; }
+        public List<string> Attributes { get; set; }
 
-        public string Variations { get; set; }
-
-        //public List<ProductDefaultAttribute> DefaultAttributes { get; set; }
-
-        //public List<ProductAttributeLine> Attributes { get; set; }
-
-        public string Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         public string ExternalUrl { get; set; }
 
-        //public List<ProductCategoryLine> Categories { get; set; }
-
-        public int ParentId { get; set; }
-
-        public string CrossSellIds { get; set; }
-
-        public string UpsellIds { get; set; }
-
-        public string RelatedIds { get; set; }
+        public List<string> Categories { get; set; }
 
         public int RatingCount { get; set; }
 
         public string AverageRating { get; set; }
-
-        public string PurchaseNote { get; set; }
-
-        public int MenuOrder { get; set; }
-
-        public int DownloadExpiry { get; set; }
-
-        public string ShortDescription { get; set; }
 
         public string Description { get; set; }
 
@@ -87,21 +62,15 @@ namespace Maddalena.ML.Model
 
         public string Type { get; set; }
 
-        public string Sku { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public string Permalink { get; set; }
-
-        public string Slug { get; set; }
 
         public string Name { get; set; }
 
         public DateTime DateModified { get; set; }
 
         public int DownloadLimit { get; set; }
-
-        public string MetaData { get; set; }
 
         public decimal RegularPrice { get; set; }
 
@@ -122,5 +91,10 @@ namespace Maddalena.ML.Model
         public bool Purchasable { get; set; }
 
         public int TotalSales { get; set; }
+
+        public bool HasRelated { get; set; }
+
+        public bool HasCrossSell { get; set; }
+        public bool HasUpSell { get; set; }
     }
 }

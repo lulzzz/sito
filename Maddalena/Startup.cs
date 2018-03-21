@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 
 namespace Maddalena
@@ -47,6 +45,18 @@ namespace Maddalena
             {
                 googleOptions.ClientId = "127806004786-jsnf1cr38s8aps1higamtjivectofv21.apps.googleusercontent.com";
                 googleOptions.ClientSecret = "QGrQnAvHGazDN-hM2Aaa2v5f";
+            });
+
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = "SoLYId2A3LZDmTqoGPshlJZk5";
+                twitterOptions.ConsumerSecret = "GDdGYUx9f3i6OPGGvlgSu9Mxk8hgnT98jcK21kqO7J33mvO3tj";
+            });
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "1827676490625133";
+                facebookOptions.AppSecret = "0736a7614f803e696b2dbf7fb6dc9f27";
             });
 
             /*services.AddMongoIdentityProvider<ApplicationUser>(options =>

@@ -4,3 +4,14 @@
 /.vs
 /Microsoft.AspNetCore.Identity.MongoDB/obj
 /Microsoft.AspNetCore.Identity.MongoDB/bin/Release/netstandard2.0
+/Maddalena.ML/obj
+/Maddalena.ML/bin
+/Maddalena.ML.Adapters.AdventureWorks/obj
+/Maddalena.ML.Adapters.AdventureWorks/bin
+/Maddalena.ML.Adapters.Magento/bin
+/Maddalena.ML.Adapters.Magento/obj
+/Maddalena.ML.Adapters.Prestashop/bin
+/Maddalena.ML.Adapters.Prestashop/obj
+/Maddalena.ML.Adapters.WooCommerce/obj
+/Maddalena.ML.Adapters.WooCommerce/bin
+/Microsoft.AspNetCore.Identity.MongoDB/bin
