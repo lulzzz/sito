@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize("blog")]
     public class BlogController : BaseController
     {
         static BlogController()
@@ -28,14 +28,11 @@ namespace Maddalena.Controllers
         {
         }
 
-
-        // GET: Blog
         public ActionResult Index()
         {
             return View(BlogArticle.Queryable().OrderByDescending(x => x.DateTime).Take(20));
         }
 
-        // GET: Blog/Create
         public ActionResult Create()
         {
             return View();
@@ -95,7 +92,6 @@ namespace Maddalena.Controllers
             }
         }
 
-        // GET: Blog/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
@@ -107,7 +103,6 @@ namespace Maddalena.Controllers
         }
 
 
-        // POST: Blog/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(BlogArticle article)
@@ -123,8 +118,6 @@ namespace Maddalena.Controllers
             }
         }
 
-
-        // GET: Blog/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
             var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);

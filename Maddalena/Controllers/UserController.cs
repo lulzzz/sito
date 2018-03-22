@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize("manage")]
     public class UserController : BaseController
     {
         readonly RoleManager<ApplicationRole> _roleManager;
@@ -26,10 +26,7 @@ namespace Maddalena.Controllers
 
 
         // GET: User
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View(UserManager.Users);
 
         public async Task<ActionResult> AddToRole(string role, string user)
         {
