@@ -9,28 +9,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    //[Authorize(Roles = "admin")]
-    public class UserController : BaseController
+    [Authorize("manage")]    public class UserController : BaseController
     {
         readonly RoleManager<ApplicationRole> _roleManager;
 
         public UserController(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> SignInManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<UserController> logger) : base(userManager, SignInManager, emailSender, logger)
+            ILogger<UserController> logger) : base(userManager, signInManager, emailSender, logger)
         {
             _roleManager = roleManager;
         }
 
 
         // GET: User
-        public ActionResult Index()
-        {
-            return View();
         }
-
         public async Task<ActionResult> AddToRole(string role, string user)
         {
             var u = await UserManager.FindByNameAsync(user);

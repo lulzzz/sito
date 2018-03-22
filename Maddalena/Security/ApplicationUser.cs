@@ -7,9 +7,15 @@ namespace Maddalena.Security
         public string DisplayName { get; set; }
 
         public string Name { get; set; }
+
         public string MiddleName { get; set; }
+
         public string FamilyName { get; set; }
 
         public Address Address { get; set; }
+
+        public bool CanBlog { get; set; }
+
+        public bool CanManage { get; set; }
     }
 }

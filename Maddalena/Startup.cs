@@ -1,5 +1,5 @@
 ﻿using Maddalena.Security;
-using Maddalena.Security.DynamicPolicy;
+using Maddalena.Security.Scope;
 using Mongolino;
 using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -53,12 +53,6 @@ namespace Maddalena
                 twitterOptions.ConsumerSecret = "GDdGYUx9f3i6OPGGvlgSu9Mxk8hgnT98jcK21kqO7J33mvO3tj";
             });
 
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = "1827676490625133";
-                facebookOptions.AppSecret = "0736a7614f803e696b2dbf7fb6dc9f27";
-            });
-
             /*services.AddMongoIdentityProvider<ApplicationUser>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -73,10 +67,11 @@ namespace Maddalena
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Dynamic",
-                    policy => policy.Requirements.Add(new DynamicPolicy()));
+                options.AddPolicy("blog", policy => policy.Requirements.Add(new HasScopeRequirement(x=>x.CanBlog)));
+                options.AddPolicy("manage", policy => policy.Requirements.Add(new HasScopeRequirement(x=>x.CanManage)));
             });
-            services.AddSingleton<IAuthorizationHandler, DynamicPolicyHandler<DynamicAccessStore>>();
+
+            services.AddScoped<IAuthorizationHandler, HasScopeHandler>();
             
             services.AddMvc();
         }
