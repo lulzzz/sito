@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class UserController : BaseController
     {
         readonly RoleManager<ApplicationRole> _roleManager;
