@@ -17,9 +17,9 @@ namespace Maddalena.Controllers
         public UserController(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> SignInManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<UserController> logger) : base(userManager, SignInManager, emailSender, logger)
+            ILogger<UserController> logger) : base(userManager, signInManager, emailSender, logger)
         {
             _roleManager = roleManager;
         }

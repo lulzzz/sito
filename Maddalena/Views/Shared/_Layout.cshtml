@@ -10,7 +10,7 @@
     <meta name="description" content="An italian nerd in Prague" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Il Blog di Matteo Fabbri" />
+    <meta property="og:title" content="An italian nerd in Prague" />
     <meta property="og:description" content="An italian nerd in Prague" />
     <meta property="og:url" content="https://matteofabbri.org/" />
     <meta property="og:site_name" content="An italian nerd in Prague" />
@@ -136,6 +136,17 @@
                                     </li>
                                 </ul>
                             </section>
+                            
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <section>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a href="/account/login"><i class="fab fa-user"></i> Log in</a>
+                                        </li>
+                                    </ul>
+                                </section>
+                            }
                         </div>
                     </div>
                     <div class="row" style="margin-top:32px">
