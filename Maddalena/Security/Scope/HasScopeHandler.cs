@@ -18,6 +18,12 @@ namespace Maddalena.Security.Scope
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
         {
+            if (context?.User?.Identity?.Name == null)
+            {
+                context.Fail();
+                return;
+            }
+
             var user = await _userManager.FindByNameAsync(context.User.Identity.Name);
 
             if (user == null)
