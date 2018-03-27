@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Maddalena.Extensions;
@@ -23,6 +24,19 @@ namespace Maddalena.Controllers
             IEmailSender emailSender,
             ILogger<AccountController> logger) :base(userManager,SignInManager,emailSender,logger)
         {
+            if (!userManager.Users.Any())
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "matteo",
+                    Email = "matteo@phascode.org"
+
+                };
+
+                userManager.CreateAsync(user, "labello").Wait();
+                userManager.AddToRoleAsync(user, "blog").Wait();
+                userManager.AddToRoleAsync(user, "manage").Wait();
+            }
         }
 
         [TempData]
@@ -218,6 +232,9 @@ namespace Maddalena.Controllers
 
             await SignInManager.SignInAsync(user, isPersistent: false);
             Logger.LogInformation("User created a new account with password.");
+
+            await UserManager.AddToRoleAsync(user,"users");
+
             return RedirectToLocal(returnUrl);
         }
 
@@ -267,7 +284,7 @@ namespace Maddalena.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["LoginProvider"] = info.LoginProvider;
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+            return View("ExternalLogin", new ExternalLoginViewModel { Username = email });
         }
 
         [HttpPost]
@@ -283,7 +300,7 @@ namespace Maddalena.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Username };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

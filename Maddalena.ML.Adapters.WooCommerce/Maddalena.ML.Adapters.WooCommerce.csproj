@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mongolino" Version="1.2.4" />
+    <PackageReference Include="Mongolino" Version="1.4.5" />
     <PackageReference Include="WooCommerceNET" Version="0.7.4" />
   </ItemGroup>
 

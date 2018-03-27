@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Maddalena.Security.Scope
 {
-    public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
+    public class DynamicScopeHandler : AuthorizationHandler<DymanicScopeRequirement>
     {
         readonly UserManager<ApplicationUser> _userManager;
 
-        public HasScopeHandler(UserManager<ApplicationUser>
+        public DynamicScopeHandler(UserManager<ApplicationUser>
             userManager)
         {
             _userManager = userManager;
         }
 
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, DymanicScopeRequirement requirement)
         {
             var user = await _userManager.FindByNameAsync(context.User.Identity.Name);
 

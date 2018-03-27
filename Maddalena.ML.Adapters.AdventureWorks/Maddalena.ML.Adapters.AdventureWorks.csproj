@@ -10,7 +10,7 @@
     <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="DatabaseSchemaReader" Version="2.5.0" />
     <PackageReference Include="NEST" Version="6.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>

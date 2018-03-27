@@ -4,12 +4,16 @@ using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize("manage")]    public class UserController : BaseController
+    [Authorize(Roles = "MANAGE")]
+    public class UserController : BaseController
     {
         readonly RoleManager<ApplicationRole> _roleManager;
 
@@ -23,9 +27,8 @@ namespace Maddalena.Controllers
             _roleManager = roleManager;
         }
 
+        public ActionResult Index(string id) => View(UserManager.Users);
 
-        // GET: User
-        }
         public async Task<ActionResult> AddToRole(string role, string user)
         {
             var u = await UserManager.FindByNameAsync(user);
