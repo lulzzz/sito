@@ -28,7 +28,7 @@ ILogger<FileController> logger) : base(userManager, SignInManager, emailSender, 
         #region ANON ZONE
 
         [AllowAnonymous]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Upload(string returnUrl)
         {
             var files = Request.Form.Files.ToArray();
 
@@ -37,18 +37,7 @@ ILogger<FileController> logger) : base(userManager, SignInManager, emailSender, 
             {
                 list.Add(await UploadFile.Create(x, User));
             }
-            return Json(new
-            {
-                success = true,
-                time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                data = new
-                {
-                    baseurl = @"https://matteofabbri.org/file/download/",
-                    messages = list.Select(x => $"File {x.FileName} was uploaded"),
-                    files = list.Select(x => x.GridName),
-                    code = 220
-                }
-            });
+            return Redirect(returnUrl);
         }
 
         [AllowAnonymous]
