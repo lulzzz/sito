@@ -1,4 +1,5 @@
-﻿@model Maddalena.Modules.Blog.BlogArticle
+﻿@using Maddalena.Modules.Blog
+@model Maddalena.Modules.Blog.BlogArticle
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,6 +21,32 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="row">
+                    <div class="col-6">
+                        <label asp-for="Category" class="control-label"></label>
+                        <select name="category" id="category" class="form-control">
+                            <option value="@Model.Category">@Model.Category</option>
+                            @foreach (var cat in BlogArticle.Categories)
+                            {
+                                <option value="@cat">@cat</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Add new category</label>
+                            <div class="input-group">
+                                <input type="text" id="txtNewCategory" class="form-control" placeholder="search..."/>
+                                <span class="input-group-addon input-group-addon-btn bg-white">
+                                    <a href="javascript:addValue()" id="addOptionToCategory">Add</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="Link" class="control-label"></label>
                 <input asp-for="Link" class="form-control" />
                 <span asp-validation-for="Link" class="text-danger"></span>
@@ -34,11 +61,6 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>

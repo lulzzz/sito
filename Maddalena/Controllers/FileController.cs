@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Mongo;
@@ -7,24 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Microsoft.AspNetCore.Identity;
-using Maddalena.Security;
-using Maddalena.Services;
-using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class FileController : BaseController
+    public class FileController : Controller
     {
-        public FileController(
-UserManager<ApplicationUser> userManager,
-SignInManager<ApplicationUser> SignInManager,
-IEmailSender emailSender,
-ILogger<FileController> logger) : base(userManager, SignInManager, emailSender, logger)
-        {
-        }
-
         #region ANON ZONE
 
         [AllowAnonymous]

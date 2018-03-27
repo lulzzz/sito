@@ -1,41 +1,39 @@
 ﻿using System.Threading.Tasks;
 using Maddalena.Security;
-using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "manage")]
-    public class UserController : BaseController
+    public class UserController : Controller
     {
+        readonly UserManager<ApplicationUser> _userManager;
         readonly RoleManager<ApplicationRole> _roleManager;
 
         public UserController(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
-            ILogger<UserController> logger) : base(userManager, signInManager, emailSender, logger)
+            SignInManager<ApplicationUser> signInManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
-        public ActionResult Index(string id) => View(UserManager.Users);
+        public ActionResult Index(string id) => View(_userManager.Users);
 
         public async Task<ActionResult> AddToRole(string role, string user)
         {
-            var u = await UserManager.FindByNameAsync(user);
+            var u = await _userManager.FindByNameAsync(user);
 
             if (!await _roleManager.RoleExistsAsync(role))
                 await _roleManager.CreateAsync(new ApplicationRole(role));
 
             if (u == null) return NotFound();
 
-            await UserManager.AddToRoleAsync(u, role);
+            await _userManager.AddToRoleAsync(u, role);
 
             return RedirectToAction(nameof(Index));
         }
@@ -43,7 +41,7 @@ namespace Maddalena.Controllers
         // GET: User/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            var user = await UserManager.FindByNameAsync(id);
+            var user = await _userManager.FindByNameAsync(id);
 
             if (user == null) return NotFound();
 
@@ -70,7 +68,7 @@ namespace Maddalena.Controllers
         // GET: User/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
-            var user = await UserManager.FindByNameAsync(id);
+            var user = await _userManager.FindByNameAsync(id);
 
             if (user == null) return NotFound();
 

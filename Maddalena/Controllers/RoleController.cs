@@ -10,31 +10,26 @@ using Microsoft.Extensions.Logging;
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "manage")]
-    public class RoleController : BaseController
+    public class RoleController : Controller
     {
-        private readonly RoleManager<ApplicationRole> RoleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public RoleController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          RoleManager<ApplicationRole> roleManager,
-          IEmailSender emailSender,
-          ILogger<RoleController> logger) : base(userManager,signInManager,emailSender,logger)
+        public RoleController(RoleManager<ApplicationRole> roleManager)
         {
-            RoleManager = roleManager;
+            _roleManager = roleManager;
         }
 
 
         // GET: Role
         public ActionResult Index()
         {
-            return View(RoleManager.Roles);
+            return View(_roleManager.Roles);
         }
 
         // GET: Role/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var role = await RoleManager.FindByNameAsync(id);
+            var role = await _roleManager.FindByNameAsync(id);
             return View(role);
         }
 
@@ -51,7 +46,7 @@ namespace Maddalena.Controllers
         {
             try
             {
-                await RoleManager.CreateAsync(role);
+                await _roleManager.CreateAsync(role);
                 return RedirectToAction(nameof(Index));
             }
             catch

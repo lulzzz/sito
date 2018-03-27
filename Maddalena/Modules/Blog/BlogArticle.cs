@@ -37,14 +37,20 @@ namespace Maddalena.Modules.Blog
         public string Category { get; set; }
 
         [Required]
-        [FullTextIndex]
         public string Body { get; set; }
 
-        [AscendingIndex]
-        public string[] Tags { get; set; }
-
+        [Required]
         public bool Visible { get; set; }
 
         public double Views { get; set; }
+        
+        [FullTextIndex]
+        public string FullText
+        {
+            get { return $"{Author} {Title} {Body} {Category}"; }
+            set { }
+        }
+
+        public string TextPreview { get; internal set; }
     }
 }

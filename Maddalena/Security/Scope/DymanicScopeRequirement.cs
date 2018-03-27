@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Maddalena.Security.Scope

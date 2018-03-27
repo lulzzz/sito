@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNetCore.Identity.Mongo;
 using Maddalena.Extensions;
 using Maddalena.Models.AccountViewModels;
 using Maddalena.Security;
@@ -17,15 +16,26 @@ namespace Maddalena.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
+        readonly UserManager<ApplicationUser> _userManager;
+        readonly SignInManager<ApplicationUser> _signInManager;
+        readonly IEmailSender _emailSender;
+        readonly ILogger _logger;
+
         public AccountController(
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager, 
-            SignInManager<ApplicationUser> SignInManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger) :base(userManager,SignInManager,emailSender,logger)
+            ILogger<AccountController> logger) 
         {
+
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _emailSender = emailSender;
+            _logger = logger;
+
             if (!userManager.Users.Any())
             {
                 var user = new ApplicationUser
@@ -68,19 +78,19 @@ namespace Maddalena.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    Logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                    return RedirectToAction(nameof(LoginWith2Fa), new { returnUrl, model.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
-                    Logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("User account locked out.");
                     return RedirectToAction(nameof(Lockout));
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -93,10 +103,10 @@ namespace Maddalena.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> LoginWith2Fa(bool rememberMe, string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await SignInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
             if (user == null)
             {
@@ -112,34 +122,34 @@ namespace Maddalena.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> LoginWith2Fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = await SignInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{UserManager.GetUserId(User)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
+            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
 
             if (result.Succeeded)
             {
-                Logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+                _logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
-                Logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
-            Logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
+            _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
             ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
             return View();
         }
@@ -149,7 +159,7 @@ namespace Maddalena.Controllers
         public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
-            var user = await SignInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -170,7 +180,7 @@ namespace Maddalena.Controllers
                 return View(model);
             }
 
-            var user = await SignInManager.GetTwoFactorAuthenticationUserAsync();
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -178,19 +188,19 @@ namespace Maddalena.Controllers
 
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
 
-            var result = await SignInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+            var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
 
             if (result.Succeeded)
             {
-                Logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
+                _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
-                Logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
-            Logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
+            _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
             ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
             return View();
         }
@@ -220,7 +230,7 @@ namespace Maddalena.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
@@ -229,24 +239,24 @@ namespace Maddalena.Controllers
                 return View(model);
             }
 
-            Logger.LogInformation("User created a new account with password.");
+            _logger.LogInformation("User created a new account with password.");
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-            await EmailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+            await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-            await SignInManager.SignInAsync(user, isPersistent: false);
-            Logger.LogInformation("User created a new account with password.");
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            _logger.LogInformation("User created a new account with password.");
 
-            await UserManager.AddToRoleAsync(user,"users");
+            await _userManager.AddToRoleAsync(user,"users");
 
             return RedirectToLocal(returnUrl);
         }
 
         public async Task<IActionResult> Logout()
         {
-            await SignInManager.SignOutAsync();
-            Logger.LogInformation("User logged out.");
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -255,7 +265,7 @@ namespace Maddalena.Controllers
         {
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
-            var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
 
@@ -268,17 +278,17 @@ namespace Maddalena.Controllers
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
-            var info = await SignInManager.GetExternalLoginInfoAsync();
+            var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 return RedirectToAction(nameof(Login));
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
-                Logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
+                _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
@@ -300,20 +310,20 @@ namespace Maddalena.Controllers
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await SignInManager.GetExternalLoginInfoAsync();
+                var info = await _signInManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Username };
-                var result = await UserManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddLoginAsync(user, info);
+                    result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false);
-                        Logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -332,12 +342,12 @@ namespace Maddalena.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var user = await UserManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
-            var result = await UserManager.ConfirmEmailAsync(user, code);
+            var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -355,8 +365,8 @@ namespace Maddalena.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user)))
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -364,9 +374,9 @@ namespace Maddalena.Controllers
 
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                await EmailSender.SendEmailAsync(model.Email, "Reset Password",
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
@@ -403,13 +413,13 @@ namespace Maddalena.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
-            var result = await UserManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));

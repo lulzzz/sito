@@ -1,20 +1,29 @@
-﻿@model IEnumerable<Maddalena.Modules.Blog.BlogArticle>
+﻿@using Microsoft.Data.Edm
+@model IEnumerable<Maddalena.Modules.Blog.BlogArticle>
 
 <h2>@ViewData["Title"]</h2>
 
 @foreach (var item in Model)
 {
     <div class="row">
-        <div class="col-md-10">
-            <h1>
-                <a href="/read/@item.Link">@item.Title</a>
-            </h1>
-            <p>
-                @Html.Raw(item.Body.Substring(0, Math.Min(item.Body.Length, 300)))
-            </p>
-        </div>
-        <div class="col-md-2">
-            @item.DateTime.ToShortDateString()
+        <div class="col-md-12" style="margin-top: 32px">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-10">
+                            <h5>
+                                <a href="/read/@item.Link">@item.Title</a>
+                            </h5>
+                        </div>
+                        <div class="col-2">
+                            @item.DateTime.ToShortDateString()
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @Html.Raw(item.TextPreview?.Substring(0, Math.Min(item.Body.Length, 300)))...
+                </div>
+            </div>
         </div>
     </div>
 }

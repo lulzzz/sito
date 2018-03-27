@@ -1,31 +1,20 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 using Maddalena.Modules.Blog;
-using Maddalena.Security;
-using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
     [Authorize(Roles = "blog")]
-    public class BlogController : BaseController
+    public class BlogController : Controller
     {
         static BlogController()
         {
             BlogArticle.DescendingIndex(x => x.Link);
             BlogArticle.DescendingIndex(x => x.DateTime);
-        }
-
-        public BlogController(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
-    IEmailSender emailSender,
-    ILogger<BlogController> logger) : base(userManager, signInManager, emailSender, logger)
-        {
         }
 
         public ActionResult Index()
@@ -56,7 +45,7 @@ namespace Maddalena.Controllers
             var article = await BlogArticle.WhereAsync(x => x.Category == id);
             if (article == null) return NotFound();
 
-            ViewData["Title"] = id;
+            ViewData["Title"] = $"Articles in {id}";
 
             return View("List", article);
         }
@@ -81,6 +70,12 @@ namespace Maddalena.Controllers
                 article.Id = string.Empty;
                 article.DateTime = DateTime.Now;
                 article.Author = User.Identity.Name;
+
+                // From String
+                var doc = new HtmlDocument();
+                doc.LoadHtml(article.Body);
+
+                article.TextPreview = doc.DocumentNode.InnerText;
 
                 await BlogArticle.CreateAsync(article);
 
