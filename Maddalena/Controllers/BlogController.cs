@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize("blog")]
+    [Authorize(Roles = "blog")]
     public class BlogController : BaseController
     {
         static BlogController()

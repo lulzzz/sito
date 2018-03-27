@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http.Features;
+using AspNetCore.Identity.Mongo;
 
 namespace Maddalena
 {
@@ -31,15 +32,14 @@ namespace Maddalena
                 x.MultipartBodyLengthLimit = 64 * 1024 * 1024; // In case of multipart
             });
 
-            services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser,ApplicationRole>("mongodb://localhost/maddalena", options =>
-            {
-                options.Password.RequiredLength = 6;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-
-            }).AddDefaultTokenProviders();
+            services.AddMongoIdentityProvider<ApplicationUser,MongoIdentityRole>("mongodb://localhost/maddalena", options =>
+             {
+                 options.Password.RequiredLength = 6;
+                 options.Password.RequireLowercase = false;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireDigit = false;
+             });
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
@@ -53,25 +53,17 @@ namespace Maddalena
                 twitterOptions.ConsumerSecret = "GDdGYUx9f3i6OPGGvlgSu9Mxk8hgnT98jcK21kqO7J33mvO3tj";
             });
 
-            /*services.AddMongoIdentityProvider<ApplicationUser>(options =>
-            {
-                options.Password.RequiredLength = 6;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-            });*/
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddAuthorization(options =>
+            /*services.AddAuthorization(options =>
             {
-                options.AddPolicy("blog", policy => policy.Requirements.Add(new HasScopeRequirement(x=>x.CanBlog)));
-                options.AddPolicy("manage", policy => policy.Requirements.Add(new HasScopeRequirement(x=>x.CanManage)));
-            });
+                options.AddPolicy("blog", policy => policy.Requirements.Add(new DymanicScopeRequirement("blog")));
+                options.AddPolicy("manage", policy => policy.Requirements.Add(new DymanicScopeRequirement("blog")));
+            });*/
 
-            services.AddScoped<IAuthorizationHandler, HasScopeHandler>();
+            services.AddScoped<IAuthorizationHandler, DynamicScopeHandler>();
             
             services.AddMvc();
         }
@@ -106,12 +98,6 @@ namespace Maddalena
                     name: "read",
                     template: "read",
                     defaults: new { controller = "Blog", action = "Read", id = "" });
-
-
-                routes.MapRoute(
-                    name: "dropbox",
-                    template: "dropbox",
-                    defaults: new { controller = "File", action = "Dropbox", id = "" });
 
                 routes.MapRoute(
                     name: "default",

@@ -1,8 +1,9 @@
-﻿using Maddalena.Modules.Geocoding;
+﻿using AspNetCore.Identity.Mongo;
+using Maddalena.Modules.Geocoding;
 
 namespace Maddalena.Security
 {
-    public class ApplicationUser : Microsoft.AspNetCore.Identity.MongoDB.IdentityUser
+    public class ApplicationUser : MongoIdentityUser
     {
         public string DisplayName { get; set; }
 
@@ -13,9 +14,5 @@ namespace Maddalena.Security
         public string FamilyName { get; set; }
 
         public Address Address { get; set; }
-
-        public bool CanBlog { get; set; }
-
-        public bool CanManage { get; set; }
     }
 }
