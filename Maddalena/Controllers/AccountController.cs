@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCore.Identity.Mongo;
 using Maddalena.Extensions;
 using Maddalena.Models.AccountViewModels;
 using Maddalena.Security;
@@ -20,6 +21,7 @@ namespace Maddalena.Controllers
     {
         public AccountController(
             UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager, 
             SignInManager<ApplicationUser> SignInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger) :base(userManager,SignInManager,emailSender,logger)
@@ -32,8 +34,11 @@ namespace Maddalena.Controllers
                     Email = "matteo@phascode.org"
 
                 };
-
                 userManager.CreateAsync(user, "labello").Wait();
+
+                roleManager.CreateAsync(new ApplicationRole("blog")).Wait();
+                roleManager.CreateAsync(new ApplicationRole("manage")).Wait();
+
                 userManager.AddToRoleAsync(user, "blog").Wait();
                 userManager.AddToRoleAsync(user, "manage").Wait();
             }

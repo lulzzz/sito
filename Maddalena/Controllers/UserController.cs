@@ -4,15 +4,12 @@ using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-
-using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {
-    [Authorize(Roles = "MANAGE")]
+    [Authorize(Roles = "manage")]
     public class UserController : BaseController
     {
         readonly RoleManager<ApplicationRole> _roleManager;

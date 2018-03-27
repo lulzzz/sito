@@ -32,7 +32,7 @@ namespace Maddalena
                 x.MultipartBodyLengthLimit = 64 * 1024 * 1024; // In case of multipart
             });
 
-            services.AddMongoIdentityProvider<ApplicationUser,MongoIdentityRole>("mongodb://localhost/maddalena", options =>
+            services.AddMongoIdentityProvider<ApplicationUser,ApplicationRole>("mongodb://localhost/maddalena", options =>
              {
                  options.Password.RequiredLength = 6;
                  options.Password.RequireLowercase = false;
