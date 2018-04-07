@@ -28,6 +28,8 @@
 
     <link rel="canonical" href="http://matteofabbri.org/" />
 
+    <meta name="hubtraffic-domain-validation" content="3303c188e3db38e5" />
+
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/popper.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
@@ -61,8 +63,8 @@
                     }
                 </ul>
                 <form action="/search" class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Cerca" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerca</button>
+                    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </nav>
@@ -130,33 +132,6 @@
 
                             @RenderSection("Side", required: false)
 
-
-                            <section style="position: relative; display: block; padding: 0.75rem 1.25rem; margin-bottom: -1px; background-color: #fff; border: 1px solid rgba(0, 0, 0, 0.125);">
-                                <div class="row">
-                                    <div class="col-12 text-center">
-                                        Want to send me a file ?
-                                        <br />
-                                        Upload it here
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 32px">
-                                    <div class="col-12 text-center">
-                                        <form method="post" action="/file/upload" enctype="multipart/form-data">
-                                            <div class="form-group text-center">
-                                                <input type="file" id="ctrlFileDropbox" style="display:none" name="files" multiple>
-                                                <a href="javascript:$('#ctrlFileDropbox').click()" class="btn btn-outline-primary">
-                                                    Choose files
-                                                </a>
-                                            </div>
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                                            </div>
-                                            <input type="hidden" name="returnUrl" value="@Context.Request.Host@Context.Request.Path" />
-                                        </form>
-                                    </div>
-                                </div>
-                            </section>
-
                             <section>
                                 <ul class="list-group">
                                     <li class="list-group-item">
@@ -212,5 +187,24 @@
             enable_page_level_ads: true
         });
     </script>
+
+    <!-- Start Open Web Analytics Tracker -->
+    <script type="text/javascript">
+        //<![CDATA[
+        var owa_baseUrl = 'https://owa.matteofabbri.org/';
+        var owa_cmds = owa_cmds || [];
+        owa_cmds.push(['setSiteId', '1a7fc817e2f610472e4296c84e913315']);
+        owa_cmds.push(['trackPageView']);
+        owa_cmds.push(['trackClicks']);
+
+        (function () {
+            var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
+            owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl);
+            _owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
+            var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
+        }());
+        //]]>
+    </script>
+    <!-- End Open Web Analytics Code -->
 </body>
 </html>

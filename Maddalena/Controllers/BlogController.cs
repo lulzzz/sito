@@ -29,9 +29,9 @@ namespace Maddalena.Controllers
 
         // GET: Blog/Details/5
         [AllowAnonymous]
-        public async Task<ActionResult> Read(string id)
+        public async Task<ActionResult> Read(string link)
         {
-            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
+            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == link);
             if (article == null) return NotFound();
 
             //await BlogArticle.IncreaseAsync(article, x => x.Views, 1);
@@ -65,26 +65,19 @@ namespace Maddalena.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BlogArticle article)
         {
-            try
-            {
-                article.Id = string.Empty;
-                article.DateTime = DateTime.Now;
-                article.Author = User.Identity.Name;
+            article.Id = string.Empty;
+            article.DateTime = DateTime.Now;
+            article.Author = User.Identity.Name;
 
-                // From String
-                var doc = new HtmlDocument();
-                doc.LoadHtml(article.Body);
+            // From String
+            var doc = new HtmlDocument();
+            doc.LoadHtml(article.Body);
 
-                article.TextPreview = doc.DocumentNode.InnerText;
+            article.TextPreview = doc.DocumentNode.InnerText;
 
-                await BlogArticle.CreateAsync(article);
+            await BlogArticle.CreateAsync(article);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<ActionResult> Edit(string id)
@@ -102,20 +95,23 @@ namespace Maddalena.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(BlogArticle article)
         {
-            try
-            {
-                await BlogArticle.ReplaceAsync(article);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            article.DateTime = DateTime.Now;
+            article.Author = User.Identity.Name;
+
+            // From String
+            var doc = new HtmlDocument();
+            doc.LoadHtml(article.Body);
+
+            article.TextPreview = doc.DocumentNode.InnerText;
+
+            await BlogArticle.ReplaceAsync(article);
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<ActionResult> Delete(string id)
         {
-            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Link == id);
+            var article = await BlogArticle.FirstOrDefaultAsync(x => x.Id == id);
             if (article == null) return NotFound();
 
             return View(article);
@@ -128,7 +124,7 @@ namespace Maddalena.Controllers
         {
             try
             {
-                await BlogArticle.DeleteAsync(x => x.Link == id);
+                await BlogArticle.DeleteAsync(x => x.Id == id);
                 return RedirectToAction(nameof(Index));
             }
             catch

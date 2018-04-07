@@ -91,12 +91,12 @@ namespace Maddalena
                 routes.MapRoute(
                     name: "search",
                     template: "search",
-                    defaults: new { controller = "Blog", action = "Search", id = "" });
+                    defaults: new { controller = "Blog", action = "Search" });
 
                 routes.MapRoute(
                     name: "read",
-                    template: "read",
-                    defaults: new { controller = "Blog", action = "Read", id = "" });
+                    template: "read/{link}",
+                    defaults: new { controller = "Blog", action = "Read" });
 
                 routes.MapRoute(
                     name: "default",
