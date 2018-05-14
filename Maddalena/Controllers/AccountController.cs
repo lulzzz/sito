@@ -37,6 +37,7 @@ namespace Maddalena.Controllers
             _logger = logger;
 
             if (!userManager.Users.Any())
+
             {
                 var user = new ApplicationUser
                 {
