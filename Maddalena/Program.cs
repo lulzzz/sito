@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System.Linq;
+using WindowsMonitor.CIM.Hardware;
+using WindowsMonitor.Win32.Hardware.Cooling;
+using WindowsMonitor.Win32.Hardware.Probes;
 
 namespace Maddalena
 {

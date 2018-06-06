@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +10,7 @@
     <PackageReference Include="Accord.MachineLearning.GPL" Version="3.8.0" />
     <PackageReference Include="Accord.Neuro" Version="3.8.0" />
     <PackageReference Include="Mongolino" Version="1.4.5" />
-    <PackageReference Include="NEST" Version="6.1.0" />
+    <PackageReference Include="NEST" Version="6.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
