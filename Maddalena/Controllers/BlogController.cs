@@ -13,8 +13,8 @@ namespace Maddalena.Controllers
     {
         static BlogController()
         {
-            BlogArticle.DescendingIndex(x => x.Link);
-            BlogArticle.DescendingIndex(x => x.DateTime);
+           BlogArticle.DescendingIndex(x => x.Link);
+           BlogArticle.DescendingIndex(x => x.DateTime);
         }
 
         public ActionResult Index()

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
+using ServerSideAnalytics;
 
 namespace Maddalena
 {
@@ -81,6 +82,8 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
+            app.UseServerSideAnalytics();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
 
