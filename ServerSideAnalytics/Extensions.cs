@@ -6,7 +6,7 @@ namespace ServerSideAnalytics
 {
     public static class Extensions
     {
-        static List<WebRequest> requests = new List<WebRequest>();
+        static readonly List<WebRequest> Requests = new List<WebRequest>();
 
         public static IApplicationBuilder UseServerSideAnalytics(this IApplicationBuilder app)
         {
@@ -22,7 +22,7 @@ namespace ServerSideAnalytics
                     UserAgent = new UserAgent(context.Request.Headers["User-Agent"]),
                     Path = context.Request.Path.Value,
                 };
-                requests.Add(req);
+                Requests.Add(req);
 
                 await next.Invoke();
             });

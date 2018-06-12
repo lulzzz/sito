@@ -4,10 +4,10 @@ using System.Text.RegularExpressions;
 
 namespace ServerSideAnalytics
 {
-    public class MatchExpression
+    public class MatchExpression<T>
     {
         public List<Regex> Regexes { get; set; }
 
-        public Action<System.Text.RegularExpressions.Match, object> Action { get; set; }
+        public Action<Match, T> Action { get; set; }
     }
 }
