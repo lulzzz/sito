@@ -1,0 +1,12 @@
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.csprojAssemblyReference.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.csproj.CoreCompileInputs.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.AssemblyInfoInputs.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.AssemblyInfo.cs
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\bin\Debug\netstandard2.0\ServerSideAnalytics.Mongo.deps.json
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\bin\Debug\netstandard2.0\ServerSideAnalytics.Mongo.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\bin\Debug\netstandard2.0\ServerSideAnalytics.Mongo.pdb
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\bin\Debug\netstandard2.0\ServerSideAnalytics.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\bin\Debug\netstandard2.0\ServerSideAnalytics.pdb
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.csproj.CopyComplete
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Mongo\obj\Debug\netstandard2.0\ServerSideAnalytics.Mongo.pdb

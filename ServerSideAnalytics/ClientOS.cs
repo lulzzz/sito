@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace ServerSideAnalytics
 {
-    public class ClientOS
+    public class ClientOs
     {
-        private static readonly Dictionary<string, string> _versionMap = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> VersionMap = new Dictionary<string, string>
         {
             {"4.90", "ME"},
             {"NT3.51", "NT 3.11"},
@@ -24,9 +24,9 @@ namespace ServerSideAnalytics
             {"ARM", "RT"}
         };
 
-        private static readonly List<MatchExpression<ClientOS>> _matchs = new List<MatchExpression<ClientOS>>
+        private static readonly List<MatchExpression<ClientOs>> Matchs = new List<MatchExpression<ClientOs>>
         {
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -34,7 +34,7 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -51,11 +51,11 @@ namespace ServerSideAnalytics
                     {
                         var version = match.Value.Substring(current.Name.Length + 1);
 
-                        current.Version = _versionMap.Keys.Any(m => m == version) ? _versionMap[version] : version;
+                        current.Version = VersionMap.Keys.Any(m => m == version) ? VersionMap[version] : version;
                     }
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -69,11 +69,11 @@ namespace ServerSideAnalytics
                     {
                         var version = match.Value.Substring(current.Name.Length + 1);
 
-                        current.Version = _versionMap.Keys.Any(m => m == version) ? _versionMap[version] : version;
+                        current.Version = VersionMap.Keys.Any(m => m == version) ? VersionMap[version] : version;
                     }
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -91,10 +91,10 @@ namespace ServerSideAnalytics
 
                     var version = nameAndVersion[1];
 
-                    current.Version = _versionMap.Keys.Any(m => m == version) ? _versionMap[version] : version;
+                    current.Version = VersionMap.Keys.Any(m => m == version) ? VersionMap[version] : version;
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -106,7 +106,7 @@ namespace ServerSideAnalytics
                     current.Version = "BB10";
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -118,7 +118,7 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -137,7 +137,7 @@ namespace ServerSideAnalytics
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -148,7 +148,7 @@ namespace ServerSideAnalytics
                     current.Name = match.Value;
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -167,7 +167,7 @@ namespace ServerSideAnalytics
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -189,7 +189,7 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -208,7 +208,7 @@ namespace ServerSideAnalytics
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -227,7 +227,7 @@ namespace ServerSideAnalytics
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -237,7 +237,7 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -256,7 +256,7 @@ namespace ServerSideAnalytics
                     current.Version = new Regex(@"\d+(?:\.\d+)*").Match(nameAndVersion[1].Replace("_", ".")).Value;
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -275,7 +275,7 @@ namespace ServerSideAnalytics
                     current.Version = nameAndVersion[1].Replace('_', '.');
                 }
             },
-            new MatchExpression<ClientOS>
+            new MatchExpression<ClientOs>
             {
                 Regexes = new List<Regex>
                 {
@@ -289,14 +289,14 @@ namespace ServerSideAnalytics
             }
         };
 
-        public ClientOS()
+        public ClientOs()
         {
         }
 
 
-        public ClientOS(string userAgent)
+        public ClientOs(string userAgent)
         {
-            foreach (var matchItem in _matchs)
+            foreach (var matchItem in Matchs)
             foreach (var regexItem in matchItem.Regexes)
                 if (regexItem.IsMatch(userAgent))
                 {
@@ -312,7 +312,7 @@ namespace ServerSideAnalytics
 
         public string Version { get; set; }
 
-        private static void NameVersionAction(Match match, ClientOS current)
+        private static void NameVersionAction(Match match, ClientOs current)
         {
             current.Name = new Regex(@"^[a-zA-Z]+", RegexOptions.IgnoreCase).Match(match.Value).Value;
             if (match.Value.Length > current.Name.Length)

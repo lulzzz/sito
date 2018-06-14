@@ -3,7 +3,7 @@
     public class UserAgent
     {
         public ClientBrowser Browser { get; set; }
-        public ClientOS OS { get; set; }
+        public ClientOs Os { get; set; }
 
         public UserAgent()
         {
@@ -12,7 +12,7 @@
         public UserAgent(string rawAgent)
         {
             Browser = new ClientBrowser(rawAgent);
-            OS = new ClientOS(rawAgent);
+            Os = new ClientOs(rawAgent);
         }
     }
 }

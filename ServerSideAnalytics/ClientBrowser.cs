@@ -6,7 +6,7 @@ namespace ServerSideAnalytics
 {
     public class ClientBrowser
     {
-        private static readonly Dictionary<string, string> _versionMap = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> VersionMap = new Dictionary<string, string>
         {
             {"/8", "1.0"},
             {"/1", "1.2"},
@@ -18,9 +18,9 @@ namespace ServerSideAnalytics
             {"?", "/"}
         };
 
-        private static readonly List<MatchExpression> _matchs = new List<MatchExpression>
+        private static readonly List<MatchExpression<ClientBrowser>> Matchs = new List<MatchExpression<ClientBrowser>>
         {
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -32,39 +32,35 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(opios)[\/\s]+([\w\.]+)", RegexOptions.IgnoreCase) // Opera mini on iphone >= 8.0
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Opera Mini";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"\s(opr)\/([\w\.]+)", RegexOptions.IgnoreCase) // Opera Webkit
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Opera";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -84,21 +80,19 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(trident).+rv[:\s]([\w\.]+).+like\sgecko", RegexOptions.IgnoreCase) // IE11
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     current.Name = "IE";
                     current.Version = "11";
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -106,87 +100,77 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(yabrowser)\/([\w\.]+)", RegexOptions.IgnoreCase) // Yandex
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Yandex";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(comodo_dragon)\/([\w\.]+)", RegexOptions.IgnoreCase) // Comodo Dragon
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = nameAndVersion[0].Replace('_', ' ');
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(micromessenger)\/([\w\.]+)", RegexOptions.IgnoreCase) // WeChat
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "WeChat";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"xiaomi\/miuibrowser\/([\w\.]+)", RegexOptions.IgnoreCase) // MIUI Browser
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "MIUI Browser";
                     current.Version = nameAndVersion[0];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"\swv\).+(chrome)\/([\w\.]+)", RegexOptions.IgnoreCase) // Chrome WebView
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = new Regex("(.+)").Replace(nameAndVersion[0], "$1 WebView");
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -194,17 +178,15 @@ namespace ServerSideAnalytics
                     new Regex(@"android.+version\/([\w\.]+)\s+(?:mobile\s?safari|safari)*",
                         RegexOptions.IgnoreCase) // Android Browser
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Android Browser";
                     current.Version = nameAndVersion[0];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -214,7 +196,7 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -222,134 +204,118 @@ namespace ServerSideAnalytics
                     new Regex(@"ucweb.+(ucbrowser)[\/\s]?([\w\.]+)", RegexOptions.IgnoreCase),
                     new Regex(@"juc.+(ucweb)[\/\s]?([\w\.]+)", RegexOptions.IgnoreCase) // UCBrowser
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Android Browser";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(dolfin)\/([\w\.]+)", RegexOptions.IgnoreCase) // Dolphin
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Dolphin";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"((?:android.+)crmo|crios)\/([\w\.]+)",
                         RegexOptions.IgnoreCase) // Chrome for Android/iOS
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Chrome";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@";fbav\/([\w\.]+);", RegexOptions.IgnoreCase) // Facebook App for iOS
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Facebook";
                     current.Version = nameAndVersion[0];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"fxios\/([\w\.-]+)", RegexOptions.IgnoreCase) // Firefox for iOS
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Firefox";
                     current.Version = nameAndVersion[0];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"version\/([\w\.]+).+?mobile\/\w+\s(safari)", RegexOptions.IgnoreCase) // Mobile Safari
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Mobile Safari";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"version\/([\w\.]+).+?(mobile\s?safari|safari)",
                         RegexOptions.IgnoreCase) // Safari & Safari Mobile
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = nameAndVersion[1];
                     current.Version = nameAndVersion[0];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"webkit.+?(mobile\s?safari|safari)(\/[\w\.]+)", RegexOptions.IgnoreCase) // Safari < 3.0
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = nameAndVersion[0];
 
                     var version = nameAndVersion[1];
 
-                    current.Version = _versionMap.Keys.Any(m => m == version) ? _versionMap[version] : version;
+                    current.Version = VersionMap.Keys.Any(m => m == version) ? VersionMap[version] : version;
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -358,23 +324,21 @@ namespace ServerSideAnalytics
                 },
                 Action = NameVersionAction
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
                     new Regex(@"(navigator|netscape)\/([\w\.-]+)", RegexOptions.IgnoreCase) // Netscape
                 },
-                Action = (match, obj) =>
+                Action = (match, current) =>
                 {
-                    var current = obj as ClientBrowser;
-
                     var nameAndVersion = match.Value.Split('/');
 
                     current.Name = "Netscape";
                     current.Version = nameAndVersion[1];
                 }
             },
-            new MatchExpression
+            new MatchExpression<ClientBrowser>
             {
                 Regexes = new List<Regex>
                 {
@@ -402,7 +366,7 @@ namespace ServerSideAnalytics
 
         public ClientBrowser(string userAgent)
         {
-            foreach (var matchItem in _matchs)
+            foreach (var matchItem in Matchs)
             foreach (var regexItem in matchItem.Regexes)
                 if (regexItem.IsMatch(userAgent))
                 {
