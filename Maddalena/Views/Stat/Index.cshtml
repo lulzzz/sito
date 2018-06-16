@@ -5,18 +5,22 @@
     ViewData["Title"] = "My";
 }
 
-<h2>My requests</h2>
+<h2>Latest visitors</h2>
 <p>
-    Those are the requests associate with your identity @Model.MyId
+    Total unique visitors in the last 24 hours: @Model.UniqueVisitors.
     <br />
-    <a href="/stat">
-        &lt; Go back to the main list of all users
-    </a>
+    Those are the request recieved by my server in this week, you can discover more on how does it works in the related article 
+    and relative source code
+    <br />
+
+    Your identity @Model.MyId <a href="/stat/my"> &gt; See your history </a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th></th>
+            <th> Identity </th>
             <th> Ip Address </th>
             <th> Path </th>
             <th> Referer </th>
@@ -28,6 +32,16 @@
             <tr>
                 <td>
                     @item.Timestamp.RelativeDate()
+                </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.User))
+                    {
+                        @Html.DisplayFor(modelItem => item.User)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Identity)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RemoteIpAddress)

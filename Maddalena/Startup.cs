@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
-using ServerSideAnalytics.IpInfo;
 
 namespace Maddalena
 {
@@ -84,6 +83,8 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseServerSideAnalytics(new MongoRequestRepository());
+
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
 
@@ -105,8 +106,6 @@ namespace Maddalena
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseServerSideAnalytics(new MongoRequestRepository());
         }
     }
 }

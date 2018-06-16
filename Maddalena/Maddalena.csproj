@@ -122,9 +122,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServerSideAnalytics.IpInfo\ServerSideAnalytics.IpInfo.csproj" />
+    <ProjectReference Include="..\Countries\Countries.csproj" />
     <ProjectReference Include="..\ServerSideAnalytics.Mongo\ServerSideAnalytics.Mongo.csproj" />
     <ProjectReference Include="..\ServerSideAnalytics\ServerSideAnalytics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Stat\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

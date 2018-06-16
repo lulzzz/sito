@@ -1,4 +1,6 @@
 ﻿@using Maddalena.Models.Blog
+@using Maddalena.Extensions
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,50 +162,22 @@
                             }
                         </div>
                     </div>
-                    <div class="row" style="margin-top:32px">
-                        <div class="col-12 text-center" style="padding-right:0px">
-                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                            <!-- Display -->
-                            <ins class="adsbygoogle"
-                                 style="display:block"
-                                 data-ad-client="ca-pub-1242825224942421"
-                                 data-ad-slot="4007495569"
-                                 data-ad-format="auto"></ins>
-                            <script>
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            </script>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     @RenderSection("Scripts", required: false)
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-1242825224942421",
-            enable_page_level_ads: true
-        });
-    </script>
 
-    <!-- Start Open Web Analytics Tracker -->
-    <script type="text/javascript">
-        //<![CDATA[
-        var owa_baseUrl = 'https://owa.matteofabbri.org/';
-        var owa_cmds = owa_cmds || [];
-        owa_cmds.push(['setSiteId', '1a7fc817e2f610472e4296c84e913315']);
-        owa_cmds.push(['trackPageView']);
-        owa_cmds.push(['trackClicks']);
-
-        (function () {
-            var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
-            owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl);
-            _owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
-            var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
-        }());
-        //]]>
-    </script>
-    <!-- End Open Web Analytics Code -->
+    @if (!this.Context.IsEEuropean())
+    {
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-1242825224942421",
+                enable_page_level_ads: true
+            });
+        </script>
+    }
 </body>
 </html>

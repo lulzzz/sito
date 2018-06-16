@@ -19,9 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSideAnalytics", "Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSideAnalytics.Mongo", "ServerSideAnalytics.Mongo\ServerSideAnalytics.Mongo.csproj", "{59339F3A-6FAD-4820-8AB2-410FB425AAF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Countries", "Countries\Countries.csproj", "{697EA92C-E841-4A21-A398-DB560FCA7ECB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSideAnalytics.IpInfo", "ServerSideAnalytics.IpInfo\ServerSideAnalytics.IpInfo.csproj", "{0FD0BA2A-B2DA-45EA-9458-42E4FD5CEBBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Countries", "Countries\Countries.csproj", "{697EA92C-E841-4A21-A398-DB560FCA7ECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +63,6 @@ Global
 		{697EA92C-E841-4A21-A398-DB560FCA7ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{697EA92C-E841-4A21-A398-DB560FCA7ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{697EA92C-E841-4A21-A398-DB560FCA7ECB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FD0BA2A-B2DA-45EA-9458-42E4FD5CEBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FD0BA2A-B2DA-45EA-9458-42E4FD5CEBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FD0BA2A-B2DA-45EA-9458-42E4FD5CEBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FD0BA2A-B2DA-45EA-9458-42E4FD5CEBBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
