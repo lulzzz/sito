@@ -1,0 +1,9 @@
+D:\Maddalena\Sito\Countries\bin\Debug\netstandard2.0\Countries.deps.json
+D:\Maddalena\Sito\Countries\bin\Debug\netstandard2.0\Countries.dll
+D:\Maddalena\Sito\Countries\bin\Debug\netstandard2.0\Countries.pdb
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.csprojAssemblyReference.cache
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.csproj.CoreCompileInputs.cache
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.AssemblyInfoInputs.cache
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.AssemblyInfo.cs
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.dll
+D:\Maddalena\Sito\Countries\obj\Debug\netstandard2.0\Countries.pdb

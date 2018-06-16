@@ -1,0 +1,48 @@
+﻿@model Maddalena.Models.Stat.WebStat
+
+@{
+    ViewData["Title"] = "My";
+}
+
+<h2>My</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th> Timestamp </th>
+            <th> Identity </th>
+            <th> RemoteIpAddress </th>
+            <th> User </th>
+            <th> Method </th>
+            <th> Path </th>
+            <th> Referer </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Requests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Timestamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Identity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RemoteIpAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Method)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Path)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Referer)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
