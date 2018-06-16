@@ -83,7 +83,21 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseServerSideAnalytics(new MongoRequestRepository());
+            app.UseServerSideAnalytics(new MongoRequestRepository(), new InMemoryContextFilter
+            {
+                FilterLoopback = true,
+                FilterLocalNetwork = true,
+                ExcludedExtensions = new[] 
+                    {
+                        ".pg", ".png", ".ico", ".css", ".js"
+                    },
+                ExcludedFolders = new[] 
+                    {
+                        "/lib",
+                        "/images",
+                        "/content"
+                    }
+            });
 
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();

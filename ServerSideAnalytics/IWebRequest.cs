@@ -10,7 +10,7 @@ namespace ServerSideAnalytics
         string User { get; set; }
         string Method { get; set; }
         string Path { get; set; }
-        UserAgent UserAgent { get; set; }
+        string UserAgent { get; set; }
         string Referer { get; set; }
     }
 }
