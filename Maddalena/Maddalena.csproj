@@ -11,13 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Modules\File\**" />
     <Compile Remove="Pages\**" />
-    <Content Remove="Modules\File\**" />
     <Content Remove="Pages\**" />
-    <EmbeddedResource Remove="Modules\File\**" />
     <EmbeddedResource Remove="Pages\**" />
-    <None Remove="Modules\File\**" />
     <None Remove="Pages\**" />
   </ItemGroup>
 
@@ -126,6 +122,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServerSideAnalytics.IpInfo\ServerSideAnalytics.IpInfo.csproj" />
     <ProjectReference Include="..\ServerSideAnalytics.Mongo\ServerSideAnalytics.Mongo.csproj" />
     <ProjectReference Include="..\ServerSideAnalytics\ServerSideAnalytics.csproj" />
   </ItemGroup>

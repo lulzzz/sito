@@ -1,0 +1,4 @@
+D:\Maddalena\Sito\Countries.IpInfo\bin\Debug\netstandard2.0\Countries.dll
+D:\Maddalena\Sito\Countries.IpInfo\obj\Debug\netstandard2.0\Countries.IpInfo.csproj.CoreCompileInputs.cache
+D:\Maddalena\Sito\Countries.IpInfo\obj\Debug\netstandard2.0\Countries.IpInfo.AssemblyInfoInputs.cache
+D:\Maddalena\Sito\Countries.IpInfo\obj\Debug\netstandard2.0\Countries.IpInfo.AssemblyInfo.cs

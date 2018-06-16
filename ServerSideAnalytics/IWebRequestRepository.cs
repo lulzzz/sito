@@ -10,6 +10,7 @@ namespace ServerSideAnalytics
         T GetNew();
         Task AddAsync(T request);
         Task<long> CountAsync(DateTime from, DateTime to);
+        Task<long> CountUniqueVisitorsAsync(DateTime from, DateTime to);
         Task<IEnumerable<IWebRequest>> QueryAsync(Expression<Func<T, bool>> where);
     }
 }

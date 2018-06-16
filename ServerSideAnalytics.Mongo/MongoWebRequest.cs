@@ -10,7 +10,7 @@ namespace ServerSideAnalytics.Mongo
         public string Id { get; set; }
 
         public DateTime Timestamp { get; set; }
-        public string SessionId { get; set; }
+        public string Identity { get; set; }
         public string RemoteIpAddress { get; set; }
         public string User { get; set; }
         public string Method { get; set; }

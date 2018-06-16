@@ -1,11 +1,11 @@
-﻿using Maddalena.Porn;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using Mongolino;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Maddalena.Models.Porn;
 
 namespace Maddalena.Controllers
 {

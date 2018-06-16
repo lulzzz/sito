@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-using Maddalena.Modules.Blog;
+using Maddalena.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Identity.Mongo;
-using Maddalena.Modules.Geocoding;
+using Maddalena.Models.Geocoding;
 
 namespace Maddalena.Security
 {
