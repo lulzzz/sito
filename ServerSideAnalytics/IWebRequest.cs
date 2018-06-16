@@ -5,7 +5,7 @@ namespace ServerSideAnalytics
     public interface IWebRequest
     {
         DateTime Timestamp { get; set; }
-        string SessionId { get; set; }
+        string Identity { get; set; }
         string RemoteIpAddress { get; set; }
         string User { get; set; }
         string Method { get; set; }

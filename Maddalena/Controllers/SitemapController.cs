@@ -1,10 +1,10 @@
-﻿using Maddalena.Modules.Blog;
-using Maddalena.Modules.Sitemap;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Maddalena.Models.Blog;
+using Maddalena.Models.Sitemap;
 
 namespace Maddalena.Controllers
 {
