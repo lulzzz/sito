@@ -15,3 +15,12 @@
 /Maddalena.ML.Adapters.WooCommerce/obj
 /Maddalena.ML.Adapters.WooCommerce/bin
 /Microsoft.AspNetCore.Identity.MongoDB/bin
+/ServerSideAnalytics.Mongo/bin
+/ServerSideAnalytics.Mongo/obj
+/ServerSideAnalytics.IpInfo/obj
+/ServerSideAnalytics.IpInfo/bin
+/ServerSideAnalytics/obj
+/ServerSideAnalytics/bin
+/Countries/obj
+/Countries/bin
+/Countries.IpInfo/obj

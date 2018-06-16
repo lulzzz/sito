@@ -1,9 +1,0 @@
-D:\Maddalena\Sito\ServerSideAnalytics\bin\Debug\netstandard2.0\ServerSideAnalytics.deps.json
-D:\Maddalena\Sito\ServerSideAnalytics\bin\Debug\netstandard2.0\ServerSideAnalytics.dll
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.csproj.CoreCompileInputs.cache
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.AssemblyInfoInputs.cache
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.AssemblyInfo.cs
-D:\Maddalena\Sito\ServerSideAnalytics\bin\Debug\netstandard2.0\ServerSideAnalytics.pdb
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.dll
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.pdb
-D:\Maddalena\Sito\ServerSideAnalytics\obj\Debug\netstandard2.0\ServerSideAnalytics.csprojAssemblyReference.cache
