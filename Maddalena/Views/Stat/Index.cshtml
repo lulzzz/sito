@@ -23,7 +23,7 @@
             <th> Identity </th>
             <th> Ip Address </th>
             <th> Path </th>
-            <th> Referer </th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
@@ -50,7 +50,10 @@
                     @Html.DisplayFor(modelItem => item.Path)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Referer)
+                    @if(!string.IsNullOrWhiteSpace(item.Referer))
+                    {
+                        <a href="@item.Referer">&gt; refer</a>
+                    }
                 </td>
             </tr>
         }

@@ -19,7 +19,7 @@ namespace ServerSideAnalytics
 
                     var user = context.User?.Identity?.Name;
 
-                    if (!string.IsNullOrWhiteSpace(user))
+                    if (string.IsNullOrWhiteSpace(user))
                     {
                         req.Identity = context.Request.Cookies.ContainsKey("ai_user")
                                                 ? context.Request.Cookies["ai_user"]
