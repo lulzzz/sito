@@ -117,6 +117,11 @@ namespace Maddalena
                     defaults: new { controller = "Blog", action = "Read" });
 
                 routes.MapRoute(
+                    name: "privacy",
+                    template: "privacy",
+                    defaults: new { controller = "Home", action = "Privacy" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

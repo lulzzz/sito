@@ -128,6 +128,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Home\Collaborators.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Home\Privacy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Stat\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
