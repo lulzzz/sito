@@ -69,7 +69,7 @@ namespace Maddalena.Extensions
         {
             try
             {
-                var ipAddress = context.Connection.RemoteIpAddress;
+                var ipAddress = context.Connection.RemoteIpAddress.ToString();
                 var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
                 return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
             }
