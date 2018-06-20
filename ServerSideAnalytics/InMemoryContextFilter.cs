@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
 using Microsoft.AspNetCore.Http;
 
 namespace ServerSideAnalytics
@@ -20,21 +16,8 @@ namespace ServerSideAnalytics
 
         public bool IsRelevant(HttpContext context)
         {
-            if (ExcludedFolders != null)
-            {
-                if(ExcludedFolders.Any(x=>context.Request.Path.Value.StartsWith(x)))
-                {
-                    return false;
-                }
-            }
-
-            if (ExcludedExtensions != null)
-            {
-                if (ExcludedExtensions.Any(x => context.Request.Path.Value.EndsWith(x)))
-                {
-                    return false;
-                }
-            }
+            if ((ExcludedFolders?.Any(x => context.Request.Path.Value.StartsWith(x)) ?? false) ||
+                (ExcludedExtensions?.Any(x => context.Request.Path.Value.EndsWith(x)) ?? false)) return false;
 
             var ipAddress = context.Connection.RemoteIpAddress;
 
