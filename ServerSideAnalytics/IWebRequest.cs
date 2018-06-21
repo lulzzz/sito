@@ -1,4 +1,5 @@
 ﻿using System;
+using Maddalena;
 
 namespace ServerSideAnalytics
 {
@@ -12,5 +13,6 @@ namespace ServerSideAnalytics
         string Path { get; set; }
         string UserAgent { get; set; }
         string Referer { get; set; }
+        CountryCode Country { get; set; }
     }
 }

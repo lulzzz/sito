@@ -33,7 +33,8 @@
                 <td>
                     @foreach (var sensor in item.CorePowers)
                     {
-                        @sensor?.ToString()
+                        <span>@sensor?.Name</span>
+                        <b style="float:right">@sensor?.ToString()</b>
                         <br />
                     }
                 </td>
@@ -45,7 +46,8 @@
                 <td>
                     @foreach (var sensor in item.CoreTemperatures)
                     {
-                        @sensor.ToString()
+                        <span>@sensor?.Name</span>
+                        <b style="float:right">@sensor?.ToString()</b>
                         <br />
                     }
                 </td>
@@ -57,7 +59,8 @@
                 <td>
                     @foreach (var sensor in item.CoreClocks)
                     {
-                        @sensor.ToString()
+                        <span>@sensor?.Name</span>
+                        <b style="float:right">@sensor?.ToString()</b>
                         <br />
                     }
                 </td>
@@ -67,7 +70,8 @@
                     @Html.LabelFor(modelItem => item.BusClock)
                 </td>
                 <td>
-                    @item.BusClock.ToString()
+                    <b style="float:right"> @item.BusClock.ToString()</b>
+                   
                 </td>
             </tr>
             <tr>
@@ -75,7 +79,7 @@
                     @Html.LabelFor(modelItem => item.PackageTemperature)
                 </td>
                 <td>
-                    @item.PackageTemperature.ToString()
+                    <b style="float:right">@item.PackageTemperature.ToString()</b>
                 </td>
             </tr>
             <tr>
@@ -85,7 +89,8 @@
                 <td>
                     @foreach (var sensor in item.CoreLoads)
                     {
-                        @sensor.ToString()
+                        <span>@sensor?.Name</span>
+                        <b style="float:right">@sensor?.ToString()</b>
                         <br />
                     }
                 </td>
@@ -95,7 +100,7 @@
                     @Html.LabelFor(modelItem => item.TotalLoad)
                 </td>
                 <td>
-                    @item.TotalLoad.ToString()
+                    <b style="float:right">@item.TotalLoad.ToString()</b>
                 </td>
             </tr>
         }

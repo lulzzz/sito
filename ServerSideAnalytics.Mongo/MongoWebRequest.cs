@@ -1,4 +1,5 @@
 ﻿using System;
+using Maddalena;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -17,5 +18,6 @@ namespace ServerSideAnalytics.Mongo
         public string Path { get; set; }
         public string UserAgent { get; set; }
         public string Referer { get; set; }
+        public CountryCode Country { get; set; }
     }
 }
