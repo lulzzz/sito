@@ -38,9 +38,7 @@ namespace Maddalena.Controllers
 
         public async Task<ActionResult> Identities()
         {
-            var res = (await repository.QueryAsync(x => true)).Select(x => x.Identity)
-                .Distinct();
-
+            var res = await repository.DistinctAsync(x => x.Identity, x => true);
             return Json(res);
         }
 

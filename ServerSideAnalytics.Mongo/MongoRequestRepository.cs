@@ -44,5 +44,11 @@ namespace ServerSideAnalytics.Mongo
         {
             return (await _mongoCollection.FindAsync(where)).ToEnumerable();
         }
+
+        public async Task<IEnumerable<TField>> DistinctAsync<TField>(Expression<Func<MongoWebRequest, TField>> field, Expression<Func<MongoWebRequest, bool>> filter)
+        {
+            var found = await _mongoCollection.DistinctAsync(field,filter);
+            return found.ToEnumerable();
+        }
     }
 }

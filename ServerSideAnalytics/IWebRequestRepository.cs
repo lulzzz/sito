@@ -12,5 +12,6 @@ namespace ServerSideAnalytics
         Task<long> CountAsync(DateTime from, DateTime to);
         Task<long> CountUniqueVisitorsAsync(DateTime from, DateTime to);
         Task<IEnumerable<IWebRequest>> QueryAsync(Expression<Func<T, bool>> where);
+        Task<IEnumerable<TField>> DistinctAsync<TField>(Expression<Func<T, TField>> field, Expression<Func<T, bool>> filter);
     }
 }

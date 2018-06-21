@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
+using Maddalena.ServerSideAnalytics;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
 
@@ -97,7 +98,7 @@ namespace Maddalena
                         "/images",
                         "/content"
                     }
-            });
+            }, new IpInfoGeoResolver());
 
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
