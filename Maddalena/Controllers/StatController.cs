@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Models.Stat;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,6 @@ namespace Maddalena.Controllers
 
         public async Task<ActionResult> My()
         {
-            var thisWeek = DateTime.Now - TimeSpan.FromDays(7);
             var myId = HttpContext.UserIdentity();
 
             return View(new WebStat
@@ -34,6 +34,20 @@ namespace Maddalena.Controllers
                 Requests = await repository.QueryAsync(x => x.Identity == myId),
                 UniqueVisitors = await repository.CountUniqueVisitorsAsync(DateTime.MinValue, DateTime.MaxValue)
             });
+        }
+
+        public async Task<ActionResult> Identities()
+        {
+            var res = (await repository.QueryAsync(x => true)).Select(x => x.Identity)
+                .Distinct();
+
+            return Json(res);
+        }
+
+        public async Task<ActionResult> Countries()
+        {
+            var res = (await repository.QueryAsync(x => true));
+            return Json(res);
         }
     }
 }
