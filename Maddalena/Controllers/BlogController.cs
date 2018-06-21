@@ -53,7 +53,7 @@ namespace Maddalena.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Search(string q)
         {
-            var articleList = await BlogArticle.FullTextSearchAsync(q);
+            var articleList = await BlogArticle.FullTextSearchAsync(q ?? "");
             if (articleList == null) return NotFound();
 
             @ViewData["Title"] = $"Search results for {q}";
