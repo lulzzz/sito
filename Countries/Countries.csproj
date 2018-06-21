@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Countries.Standard</PackageId>
+    <Authors>Matteo Fabbri</Authors>
+    <Description>ISO 3166 countries library, including: common Name, official Name, TLD,two and three letter country code, ISO numeric code, CIOC, currencies, callingCodes, capital, alternative spellings, region, subRegion, borders, is landlocked and area in square kilometers</Description>
+    <Copyright>Matteo Fabbri 2015</Copyright>
+    <PackageLicenseUrl>http://matteofabbri.org/countries</PackageLicenseUrl>
+    <PackageProjectUrl>http://matteofabbri.org/countries</PackageProjectUrl>
+    <PackageTags>country countries iso code region continent currency currencies calling code spelling border landlocked</PackageTags>
   </PropertyGroup>
 
 </Project>

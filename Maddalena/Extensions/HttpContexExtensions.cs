@@ -65,6 +65,33 @@ namespace Maddalena.Extensions
             public string org;
         }
 
+        public static CountryCode GetCountry(string ipAddress)
+        {
+            try
+            {
+                var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
+                return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
+            }
+            catch (Exception e)
+            {
+                return CountryCode.World;
+            }
+        }
+
+        public static CountryCode GetCountry(IPAddress address)
+        {
+            try
+            {
+                var ipAddress = address.ToString();
+                var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
+                return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
+            }
+            catch (Exception e)
+            {
+                return CountryCode.World;
+            }
+        }
+
         public static CountryCode GetCountry(this HttpContext context)
         {
             try

@@ -1,0 +1,12 @@
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.csprojAssemblyReference.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.csproj.CoreCompileInputs.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.AssemblyInfoInputs.cache
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.AssemblyInfo.cs
+D:\Maddalena\Sito\ServerSideAnalytics.Common\bin\Debug\netstandard2.0\ServerSideAnalytics.Common.deps.json
+D:\Maddalena\Sito\ServerSideAnalytics.Common\bin\Debug\netstandard2.0\ServerSideAnalytics.Common.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Common\bin\Debug\netstandard2.0\ServerSideAnalytics.Common.pdb
+D:\Maddalena\Sito\ServerSideAnalytics.Common\bin\Debug\netstandard2.0\ServerSideAnalytics.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Common\bin\Debug\netstandard2.0\ServerSideAnalytics.pdb
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.csproj.CopyComplete
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.dll
+D:\Maddalena\Sito\ServerSideAnalytics.Common\obj\Debug\netstandard2.0\ServerSideAnalytics.Common.pdb
