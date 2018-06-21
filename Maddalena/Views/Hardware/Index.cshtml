@@ -33,7 +33,7 @@
                 <td>
                     @foreach (var sensor in item.CorePowers)
                     {
-                        @sensor?.ToString()
+                        @sensor?.Name @sensor?.ToString()
                         <br />
                     }
                 </td>
@@ -45,7 +45,7 @@
                 <td>
                     @foreach (var sensor in item.CoreTemperatures)
                     {
-                        @sensor.ToString()
+                        @sensor?.Name @sensor?.ToString()
                         <br />
                     }
                 </td>
@@ -57,7 +57,7 @@
                 <td>
                     @foreach (var sensor in item.CoreClocks)
                     {
-                        @sensor.ToString()
+                        @sensor?.Name @sensor?.ToString()
                         <br />
                     }
                 </td>
