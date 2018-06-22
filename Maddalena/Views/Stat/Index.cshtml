@@ -5,7 +5,10 @@
     ViewData["Title"] = "My";
 }
 
-<h1>Server Side Analytics ?</h1>
+<section>
+
+</section>
+<h1>Server side analytics ?</h1>
 <p>
     From many points of view this is a meta-website: a web site about the how the website itself is implemented.
     <br />
@@ -16,31 +19,30 @@
     <br/>
     And they all sucks.
     <ul>
-        <li>
+        <li style="margin-top: 32px">
             If you use some external service you got to annoy the people with those huge banner about cookie consent.
         </li>
-        <li>
+        <li style="margin-top: 32px">
             I generally don't like to work for free. Every 'free' analytics service is not free, is selling the data of <b>your</b> visitors.
         </li>
-        <li>
-            Rule number one of server side programming: <b>Never Trust the Client</b> 
+        <li style="margin-top: 32px">
+            Rule number one of server side programming: <b>Never Trust the Client</b>
         </li>
-        <li>
-            They are amazingly SLOW. Even <a href="https://matomo.org/" target="_blank">Matomo</a> (formely know as Piwik), a wonderful that permit to run your own 
+        <li style="margin-top: 32px">
+            They are amazingly SLOW. Even <a href="https://matomo.org/" target="_blank">Matomo</a> (formely know as Piwik), a wonderful that permit to run your own
             analytics service (so no "third part" problems) was taking seconds to load on the same server.
-            <br/>
-            Even more ridicolous Google that with his speed test was telling me that something was tearing down the general perfomances of my pages.
+            <br />
+            Even more ridicolous Google that with his speed test was telling me that something was tearing down the general perfomances of my pages:
             Their own analytics.
         </li>
-        <li>
+        <li style="margin-top: 32px">
             Javascript: if the page isn't too heavy yet, analytics will give the perfect boost to kill any performance.
             <br />
-            If the user is not using one of the million of possible browser plugin, in that case the result of the analysis is just <b>random()</b>
+            If the user is using one of the million of possible browser plugin: result of the analysis is just <b>random()</b>
         </li>
-        <li>
-            Scope: because client-side analytics have to run on the client, every response that doesn't contains the js is not marked.
-            <br />
-            No API calls, no 404, no RSS feed no uncompleted requests.
+        <li style="margin-top: 32px">
+            Scope: because client-side analytics have to run on the client, every response that doesn't contains the js is not marked, so:
+            no API calls, no error pages, no RSS feed, no uncompleted requests..
             <br />
             Without this tool I would never have found the funny ucranian guy that keep trying to find a vulnerability here.
         </li>
@@ -49,7 +51,13 @@
 
 <h2>Hands on code</h2>
 <p>
-
+    So to accomplish this task I wrote a very simple Asp Net Core Middleware.
+    <br/>
+    It's for Core because Core is new stuff and this site runs on it, maybe one day I will write an MVC version.
+    <br/>
+    The purpose of the middleware is dead simple: every time a request come to the site it extract some information and stores them into an event sourcing repository.
+    <br/>
+    That's it.
 </p>
 
 <h2>Latest visitors</h2>
