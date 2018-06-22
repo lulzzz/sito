@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
+using HardwareProviders;
 
 namespace Maddalena
 {
@@ -70,8 +71,14 @@ namespace Maddalena
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStopping.Register(()=> 
+            {
+                Ring0.Close();
+                Opcode.Close();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
