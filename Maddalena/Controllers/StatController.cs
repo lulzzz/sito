@@ -44,7 +44,7 @@ namespace Maddalena.Controllers
 
         public async Task<ActionResult> Countries()
         {
-            var res = (await repository.QueryAsync(x => true));
+            var res = await repository.QueryAsync(x => true);
             return Json(res);
         }
     }
