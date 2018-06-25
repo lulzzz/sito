@@ -5,53 +5,6 @@
     ViewData["Title"] = "My";
 }
 
-<h1>Server Side Analytics ?</h1>
-<p>
-    From many points of view this is a meta-website: a web site about the how the website itself is implemented.
-    <br />
-    I wanted to keep trace of visitors and know the usual stuff of web analytics: visitors, source, nationality, behaviour and so on.
-    <br />
-    I tried lot of analytics tools in my life, from <a href="https://www.shinystat.com" target="_blank">Shiny Stat</a> ( so '90s ) to the most recents found on 
-    <a href="https://www.producthunt.com/topics/analytics">Product Hunt</a>.
-    <br/>
-    And they all sucks.
-    <ul>
-        <li>
-            If you use some external service you got to annoy the people with those huge banner about cookie consent.
-        </li>
-        <li>
-            I generally don't like to work for free. Every 'free' analytics service is not free, is selling the data of <b>your</b> visitors.
-        </li>
-        <li>
-            Rule number one of server side programming: <b>Never Trust the Client</b> 
-        </li>
-        <li>
-            They are amazingly SLOW. Even <a href="https://matomo.org/" target="_blank">Matomo</a> (formely know as Piwik), a wonderful that permit to run your own 
-            analytics service (so no "third part" problems) was taking seconds to load on the same server.
-            <br/>
-            Even more ridicolous Google that with his speed test was telling me that something was tearing down the general perfomances of my pages.
-            Their own analytics.
-        </li>
-        <li>
-            Javascript: if the page isn't too heavy yet, analytics will give the perfect boost to kill any performance.
-            <br />
-            If the user is not using one of the million of possible browser plugin, in that case the result of the analysis is just <b>random()</b>
-        </li>
-        <li>
-            Scope: because client-side analytics have to run on the client, every response that doesn't contains the js is not marked.
-            <br />
-            No API calls, no 404, no RSS feed no uncompleted requests.
-            <br />
-            Without this tool I would never have found the funny ucranian guy that keep trying to find a vulnerability here.
-        </li>
-    </ul>
-</p>
-
-<h2>Hands on code</h2>
-<p>
-
-</p>
-
 <h2>Latest visitors</h2>
 <p>
     Total unique visitors in the last 24 hours: @Model.UniqueVisitors.
