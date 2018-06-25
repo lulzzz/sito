@@ -17,7 +17,7 @@ namespace Maddalena.Controllers
         [Route("sitemap")]
         public async Task<ActionResult> SitemapAsync()
         {
-            string baseUrl = "https://matteofabbri.org/read/";
+            string baseUrl = "https://matteofabbri.org/";
 
             // get a list of published articles
             var posts = BlogArticle.Queryable();
@@ -31,8 +31,11 @@ namespace Maddalena.Controllers
             // add the blog posts to the sitemap
             foreach (var post in posts)
             {
-                siteMapBuilder.AddUrl(baseUrl + post.Link, modified: post.DateTime, changeFrequency: null, priority: 0.9);
+                siteMapBuilder.AddUrl($"{baseUrl}read/{post.Link}", modified: post.DateTime, changeFrequency: null, priority: 0.9);
             }
+
+            siteMapBuilder.AddUrl($"{baseUrl}/privacy", modified: DateTime.UtcNow, changeFrequency: ChangeFrequency.Weekly, priority: 1.0);
+            siteMapBuilder.AddUrl($"{baseUrl}/stat", modified: DateTime.UtcNow, changeFrequency: ChangeFrequency.Weekly, priority: 1.0);
 
             // generate the sitemap xml
             string xml = siteMapBuilder.ToString();
