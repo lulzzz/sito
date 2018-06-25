@@ -2,27 +2,49 @@
 @using Maddalena.Extensions;
 
 @{
-    ViewData["Title"] = "My";
+    ViewData["Title"] = "Request associated with "+Model.Identity;
 }
 
-<h2>My requests</h2>
 <p>
-    Those are the requests associate with your identity @Model.MyId
+    Those are the requests associate with your identity @Model.Identity
     <br />
     <a href="/stat">
         &lt; Go back to the main list of all users
     </a>
 </p>
-<table class="table">
-    <thead>
+
+<section>
+    <h2>Ip Addresses</h2>
+    <ul>
+        @foreach (var ip in Model.Requests.Select(x => x.RemoteIpAddress).Distinct())
+        {
+            <li>@ip</li>
+        }
+    </ul>
+</section>
+
+<section>
+    <h2>User agents</h2>
+    <ul>
+        @foreach (var user in Model.Requests.Select(x => x.UserAgent).Distinct())
+        {
+            <li>@user</li>
+        }
+    </ul>
+</section>
+
+<section>
+    <h2>Requests</h2>
+    <table class="table">
+        <thead>
         <tr>
             <th></th>
             <th> Ip Address </th>
             <th> Path </th>
             <th> </th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var item in Model.Requests)
         {
             <tr>
@@ -43,5 +65,7 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+</section>

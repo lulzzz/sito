@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="2.5.1" />
-    <PackageReference Include="HardwareProviders.CPU.Standard" Version="1.2.0" />
+    <PackageReference Include="HardwareProviders.CPU.Standard" Version="1.3.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.4" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
@@ -30,8 +30,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
     <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.6.1" />
-    <PackageReference Include="Mongolino" Version="1.4.5" />
-    <PackageReference Include="Stripe.net" Version="16.5.0" />
+    <PackageReference Include="Mongolino" Version="1.6.0" />
+    <PackageReference Include="ServerSideAnalytics" Version="1.1.0" />
+    <PackageReference Include="Stripe.net" Version="16.12.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,7 +125,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Countries\Countries.csproj" />
     <ProjectReference Include="..\ServerSideAnalytics.Mongo\ServerSideAnalytics.Mongo.csproj" />
-    <ProjectReference Include="..\ServerSideAnalytics\ServerSideAnalytics.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,25 +14,22 @@ namespace Maddalena.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var thisWeek = DateTime.Now - TimeSpan.FromDays(7);
-
-            return View(new WebStat
+            var stat = new WebStat
             {
-                MyId = HttpContext.UserIdentity(),
-                Requests = await repository.QueryAsync(x => x.Timestamp >= thisWeek && x.Timestamp <= DateTime.Now),
-                UniqueVisitors = await repository.CountUniqueVisitorsAsync(DateTime.MinValue, DateTime.MaxValue)
-            });
+                Identity = HttpContext.UserIdentity(),
+                UniqueVisitors = await repository.CountUniqueAsync(DateTime.MinValue, DateTime.MaxValue),
+                TotalCount = await repository.CountAsync(DateTime.MinValue, DateTime.MaxValue),
+                Requests = (await repository.QueryAsync(x=>true)).Take(100)
+            };
+            return View(stat);
         }
 
-        public async Task<ActionResult> My()
+        public async Task<ActionResult> Identity(string id)
         {
-            var myId = HttpContext.UserIdentity();
-
             return View(new WebStat
             {
-                MyId = myId,
-                Requests = await repository.QueryAsync(x => x.Identity == myId),
-                UniqueVisitors = await repository.CountUniqueVisitorsAsync(DateTime.MinValue, DateTime.MaxValue)
+                Identity = id,
+                Requests = await repository.QueryAsync(x => x.Identity == id),
             });
         }
 
