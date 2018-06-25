@@ -91,7 +91,7 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseServerSideAnalytics(new MongoRequestRepository(), new InMemoryContextFilter
+            app.UseServerSideAnalytics(new MongoRequestStore(), new InMemoryContextFilter
             {
                 FilterLoopback = true,
                 FilterLocalNetwork = true,

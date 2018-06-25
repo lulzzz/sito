@@ -21,7 +21,7 @@ namespace ServerSideAnalytics
             return user;
         }
 
-        public static IApplicationBuilder UseServerSideAnalytics<T>(this IApplicationBuilder app, IWebRequestRepository<T> repository, IContextFilter filter=null, IGeoIpResolver geoIp = null) where T : IWebRequest
+        public static IApplicationBuilder UseServerSideAnalytics<T>(this IApplicationBuilder app, IWebRequestStore<T> repository, IContextFilter filter=null, IGeoIpResolver geoIp = null) where T : IWebRequest
         {
             app.Use(async (context, next) =>
             {
