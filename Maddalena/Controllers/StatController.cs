@@ -10,7 +10,7 @@ namespace Maddalena.Controllers
 {
     public class StatController : Controller
     {
-        static readonly MongoRequestRepository repository = new MongoRequestRepository();
+        static readonly MongoRequestStore repository = new MongoRequestStore();
 
         public async Task<ActionResult> Index()
         {
