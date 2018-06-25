@@ -29,7 +29,7 @@ namespace Maddalena.Controllers
             return View(new WebStat
             {
                 Identity = id,
-                Requests = await repository.QueryAsync(x => x.Identity == id),
+                Requests = (await repository.QueryAsync(x => x.Identity == id)).ToArray(),
             });
         }
 

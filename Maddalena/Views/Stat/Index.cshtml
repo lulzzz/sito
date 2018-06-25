@@ -1,5 +1,6 @@
 ﻿@model Maddalena.Models.Stat.WebStat
 @using Maddalena.Extensions;
+@using ServerSideAnalytics
 
 @{
     ViewData["Title"] = "Identity";
@@ -16,7 +17,7 @@
     The system assign automatically an identity to every not registered user based on AspNet Core cookie system and connection id.
 </p>
 <p>
-    <a href="/stat/my" class="btn btn-outline-primary">See the history of your identity</a>
+    <a href="/stat/identity/@Context.UserIdentity()" class="btn btn-outline-primary">See the history of your identity</a>
 </p>
 
 <!--
@@ -85,7 +86,7 @@
                     @item.Timestamp.RelativeDate()
                 </td>
                 <td>
-                    <a href="/identity/@item.Identity">@item.Identity</a>
+                    <a href="/stat/identity/@item.Identity">@item.Identity</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RemoteIpAddress)
