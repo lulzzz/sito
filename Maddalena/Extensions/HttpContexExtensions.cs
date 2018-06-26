@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using Maddalena;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
@@ -100,7 +97,7 @@ namespace Maddalena.Extensions
                 var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
                 return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return CountryCode.World;
             }

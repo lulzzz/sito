@@ -26,9 +26,7 @@ namespace Maddalena
 
             if (DenyRoles.Any(x => claim.IsInRole(x))) return false;
 
-            if (AllowRoles.Any(x => claim.IsInRole(x))) return true;
-
-            return false;
+            return AllowRoles.Any(x => claim.IsInRole(x));
         }
     }
 }
