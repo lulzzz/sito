@@ -1,5 +1,0 @@
-D:\Maddalena\Sito\ServerSideAnalytics.EntityFramework\bin\Release\netstandard2.0\ServerSideAnalytics.EntityFramework.deps.json
-D:\Maddalena\Sito\ServerSideAnalytics.EntityFramework\bin\Release\netstandard2.0\ServerSideAnalytics.EntityFramework.dll
-D:\Maddalena\Sito\ServerSideAnalytics.EntityFramework\obj\Release\netstandard2.0\ServerSideAnalytics.EntityFramework.csproj.CoreCompileInputs.cache
-D:\Maddalena\Sito\ServerSideAnalytics.EntityFramework\obj\Release\netstandard2.0\ServerSideAnalytics.EntityFramework.AssemblyInfoInputs.cache
-D:\Maddalena\Sito\ServerSideAnalytics.EntityFramework\obj\Release\netstandard2.0\ServerSideAnalytics.EntityFramework.AssemblyInfo.cs

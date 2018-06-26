@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSideAnalytics.Mongo",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Countries", "Countries\Countries.csproj", "{697EA92C-E841-4A21-A398-DB560FCA7ECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSideAnalytics.EntityFramework", "ServerSideAnalytics.EntityFramework\ServerSideAnalytics.EntityFramework.csproj", "{0CF348C3-5CF4-459E-98BD-EED423CF2A0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSideAnalytics.SqlServer", "ServerSideAnalytics.EntityFramework\ServerSideAnalytics.SqlServer.csproj", "{0CF348C3-5CF4-459E-98BD-EED423CF2A0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
