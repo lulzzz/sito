@@ -28,10 +28,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
-    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
-    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.6.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
     <PackageReference Include="Mongolino" Version="1.6.0" />
-    <PackageReference Include="ServerSideAnalytics" Version="1.1.0" />
+    <PackageReference Include="ServerSideAnalytics" Version="1.1.1" />
+    <PackageReference Include="ServerSideAnalytics.Mongo" Version="1.0.0" />
     <PackageReference Include="Stripe.net" Version="16.12.0" />
   </ItemGroup>
 
@@ -120,11 +121,6 @@
     <None Include="wwwroot\lib\tinymce\themes\mobile\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\themes\modern\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\tinymce.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Countries\Countries.csproj" />
-    <ProjectReference Include="..\ServerSideAnalytics.Mongo\ServerSideAnalytics.Mongo.csproj" />
   </ItemGroup>
 
   <ItemGroup>
