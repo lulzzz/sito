@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using Jint;
+using Jurassic;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
@@ -12,43 +14,17 @@ namespace Maddalena
 {
     public class Program
     {
-        static void Load()
-        {
-            var collection = (new MongoClient("mongodb://localhost/"))
-                 .GetDatabase("maddalena")
-                 .GetCollection<MailMessage>("salvini");
-
-            var directory = @"C:\Users\Administrator\Downloads\New folder\";
-
-            foreach (var item in Directory.GetFiles(directory, "*.eml", SearchOption.AllDirectories))
-            {
-                try
-                {
-                    var msg = MimeKit.MimeMessage.Load(item);
-                    var body = string.Join("\r\n", msg.BodyParts.OfType<TextPart>().Select(x => x.Text).ToArray());
-                    var from = string.Join(";", msg.From.Select(x => x.ToString()));
-                    var to = msg.From.Select(x => x.ToString()).ToArray();
-
-                    collection.InsertOne(new MailMessage
-                    {
-                        Body = body,
-                        From = from,
-                        To = to,
-                        Subject = msg.Subject,
-                        FilePath = item
-                    });
-
-                    Console.WriteLine(item);
-                }
-                catch (Exception)
-                {
-                }
-            }
-
-        }
-
         public static void Main(string[] args)
         {
+            var @delegate = new Action<JSValue>(text =>
+            {
+                Console.WriteLine(text.ToString());
+            });
+            var context = new Context();
+
+            context.DefineVariable("alert").Assign(JSValue.Marshal(@delegate));
+            context.Eval(@"alert({type:'Fiat', model: new Date(), color:'white'})"); // Message box: Hello, World!
+
             BuildWebHost(args).Run();
         }
 

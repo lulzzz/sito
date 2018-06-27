@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using ServerSideAnalytics;
 
-namespace ServerSideAnalytics
+namespace Maddalena.ServerSideAnalytics
 {
     public class InMemoryContextFilter : IContextFilter
     {

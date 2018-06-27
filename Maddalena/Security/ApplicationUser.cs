@@ -1,5 +1,4 @@
 ﻿using AspNetCore.Identity.Mongo;
-using Maddalena.Models.Geocoding;
 
 namespace Maddalena.Security
 {
@@ -12,7 +11,5 @@ namespace Maddalena.Security
         public string MiddleName { get; set; }
 
         public string FamilyName { get; set; }
-
-        public Address Address { get; set; }
     }
 }
