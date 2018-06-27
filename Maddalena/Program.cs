@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using Jint;
+using Jurassic;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
+using NiL.JS.Core;
 
 namespace Maddalena
 {
@@ -10,6 +11,15 @@ namespace Maddalena
     {
         public static void Main(string[] args)
         {
+            var @delegate = new Action<JSValue>(text =>
+            {
+                Console.WriteLine(text.ToString());
+            });
+            var context = new Context();
+
+            context.DefineVariable("alert").Assign(JSValue.Marshal(@delegate));
+            context.Eval(@"alert({type:'Fiat', model: new Date(), color:'white'})"); // Message box: Hello, World!
+
             BuildWebHost(args).Run();
         }
 

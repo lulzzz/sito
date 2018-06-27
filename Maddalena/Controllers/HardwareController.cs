@@ -7,7 +7,7 @@ namespace Maddalena.Controllers
 {
     public class HardwareController : Controller
     {
-        static readonly CpuCollection cpus = new CpuCollection();
+        private static readonly CpuCollection cpus = new CpuCollection();
 
         public IActionResult Index()
         {

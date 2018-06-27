@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Maddalena.Security;
-using Maddalena.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Maddalena.Controllers
 {

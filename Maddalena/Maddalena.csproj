@@ -22,6 +22,8 @@
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="2.5.1" />
     <PackageReference Include="HardwareProviders.CPU.Standard" Version="1.3.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.4" />
+    <PackageReference Include="Jint" Version="2.11.58" />
+    <PackageReference Include="Jurassic" Version="2.2.2" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0" PrivateAssets="all">
@@ -31,9 +33,11 @@
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
     <PackageReference Include="Mongolino" Version="1.6.0" />
+    <PackageReference Include="NiL.JS.NetCore" Version="2.5.1275" />
     <PackageReference Include="ServerSideAnalytics" Version="1.1.1" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="1.0.0" />
     <PackageReference Include="Stripe.net" Version="16.12.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,9 +128,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Home\Collaborators.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Home\Privacy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
