@@ -16,7 +16,6 @@ namespace Maddalena.Controllers
         {
             var stat = new WebStat
             {
-                Identity = HttpContext.UserIdentity(),
                 UniqueVisitors = await repository.CountUniqueAsync(DateTime.MinValue, DateTime.MaxValue),
                 TotalCount = await repository.CountAsync(DateTime.MinValue, DateTime.MaxValue),
                 Requests = (await repository.QueryAsync(x=>true)).Take(100)

@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
-using Maddalena.ServerSideAnalytics;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
 using HardwareProviders;
@@ -91,21 +90,7 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseServerSideAnalytics(new MongoRequestStore(), new InMemoryContextFilter
-            {
-                FilterLoopback = true,
-                FilterLocalNetwork = true,
-                ExcludedExtensions = new[] 
-                    {
-                        ".pg", ".png", ".ico", ".css", ".js"
-                    },
-                ExcludedFolders = new[] 
-                    {
-                        "/lib",
-                        "/images",
-                        "/content"
-                    }
-            }, new IpInfoGeoResolver());
+            app.UseServerSideAnalytics(new MongoRequestStore());
 
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
