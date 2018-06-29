@@ -16,44 +16,6 @@ namespace Maddalena
     {
         public static void Main(string[] args)
         {
-            var @delegate = new Action<JSValue>(text =>
-            {
-                switch (text.ValueType)
-                {
-                    case JSValueType.NotExists:
-                        break;
-                    case JSValueType.NotExistsInObject:
-                        break;
-                    case JSValueType.Undefined:
-                        break;
-                    case JSValueType.Boolean:
-                        break;
-                    case JSValueType.Integer:
-                        break;
-                    case JSValueType.Double:
-                        break;
-                    case JSValueType.String:
-                        break;
-                    case JSValueType.Symbol:
-                        break;
-                    case JSValueType.Object:
-                        break;
-                    case JSValueType.Function:
-                        break;
-                    case JSValueType.Date:
-                        break;
-                    case JSValueType.Property:
-                        break;
-                    case JSValueType.SpreadOperatorResult:
-                        break;
-                }
-                Console.WriteLine(text.ToString());
-            });
-            var context = new Context();
-
-            context.DefineVariable("alert").Assign(JSValue.Marshal(@delegate));
-            context.Eval(@"alert({type:'Fiat', model: new Date(), color:'white'})"); // Message box: Hello, World!
-
             BuildWebHost(args).Run();
         }
 
