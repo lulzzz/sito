@@ -37,7 +37,7 @@
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
     <PackageReference Include="Mongolino" Version="1.6.0" />
     <PackageReference Include="NiL.JS.NetCore" Version="2.5.1275" />
-    <PackageReference Include="ServerSideAnalytics" Version="2.0.0" />
+    <PackageReference Include="ServerSideAnalytics" Version="2.1.1" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="2.0.0" />
     <PackageReference Include="Stripe.net" Version="16.13.0" />
     <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
