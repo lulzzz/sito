@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Maddalena.Models.Shyopedia.VideoText>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+<ul class="list-unstyled">
+    @foreach (var item in Model)
+    {
+        <li class="media">
+            <a href="/shyopedia/watch/@item.Id">
+                <img class="mr-3" src="@item.Thumbnail" style="max-width: 84px">
+            </a>
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">@item.Title</h5>
+                @item.Text
+            </div>
+        </li>
+    }
+</ul>
