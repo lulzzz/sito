@@ -90,7 +90,10 @@ namespace Maddalena
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseServerSideAnalytics(new MongoRequestStore());
+            app.UseServerSideAnalytics(new MongoRequestStore())
+                .ExcludePath("/content")
+                .ExcludeExtension(".jpg")
+                .ExcludeLoopBack();
 
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
