@@ -12,6 +12,8 @@ namespace Maddalena.Controllers
 {
     public class ShyopediaController : Controller
     {
+        public static Queue<string> LastSearchs;
+
         static readonly IMongoCollection<SubVideo> videoCollection;
         static readonly IMongoCollection<VideoText> textCollection;
 
@@ -24,6 +26,8 @@ namespace Maddalena.Controllers
             Task.Run(async () => await Load());
 
             textCollection.Indexes.CreateOne(new CreateIndexModel<VideoText>(Builders<VideoText>.IndexKeys.Text(x => x.Text)));
+
+            LastSearchs = new Queue<string>();
         }
 
         static async Task Load()
@@ -87,6 +91,16 @@ namespace Maddalena.Controllers
             if (string.IsNullOrWhiteSpace(q))
             {
                 q = "freschezza";
+            }
+            else
+            {
+                lock (LastSearchs)
+                {
+                    if (!LastSearchs.Contains(q) && q.Length < 25) LastSearchs.Enqueue(q);
+
+                    if (LastSearchs.Count > 10)
+                        LastSearchs.Dequeue();
+                }
             }
 
             var res = await textCollection.FindAsync(Builders<VideoText>.Filter.Text(q), new FindOptions<VideoText, VideoText>()
