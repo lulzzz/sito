@@ -118,6 +118,20 @@
                                 </ul>
                             </section>
 
+                            <section>
+                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                <!-- rettangolo -->
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-1242825224942421"
+                                     data-ad-slot="2140925298"
+                                     data-ad-format="auto"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </section>
+
+
                             @if (BlogArticle.Categories.Any())
                             {
                                 <section>
@@ -210,8 +224,6 @@
 
     @RenderSection("Scripts", required: false)
 
-    @if (!this.Context.IsEEuropean())
-    {
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({
@@ -219,6 +231,5 @@
                 enable_page_level_ads: true
             });
         </script>
-    }
 </body>
 </html>
