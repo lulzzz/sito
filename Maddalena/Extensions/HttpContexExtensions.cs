@@ -3,6 +3,9 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Maddalena.Extensions
 {
@@ -50,62 +53,35 @@ namespace Maddalena.Extensions
             .ToArray();
         }
 
-        class record
-        {
-            public string ip;
-            public string city;
-            public string region;
-            public string country;
-            public string loc;
-            public string postal;
-            public string phone;
-            public string org;
-        }
-
-        public static CountryCode GetCountry(string ipAddress)
+        public static async Task<CountryCode> ResolveCountryCodeAsync(IPAddress address)
         {
             try
             {
-                var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
-                return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
-            }
-            catch (Exception e)
-            {
-                return CountryCode.World;
-            }
-        }
+                var accessKey = "8627be1fa0273d3f9422440a803803c6";
+                var ipstr = address.ToString();
+                var response = await (new HttpClient()).GetStringAsync($"http://api.ipstack.com/{ipstr}?access_key={accessKey}&format=1");
 
-        public static CountryCode GetCountry(IPAddress address)
-        {
-            try
-            {
-                var ipAddress = address.ToString();
-                var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
-                return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
-            }
-            catch (Exception e)
-            {
-                return CountryCode.World;
-            }
-        }
-
-        public static CountryCode GetCountry(this HttpContext context)
-        {
-            try
-            {
-                var ipAddress = context.Connection.RemoteIpAddress.ToString();
-                var obj = JsonConvert.DeserializeObject<record>((new WebClient()).DownloadString($"https://ipinfo.io/{ipAddress}/json"));
-                return (CountryCode)Enum.Parse(typeof(CountryCode), obj.country);
+                var obj = JsonConvert.DeserializeObject(response) as JObject;
+                return (CountryCode)Enum.Parse(typeof(CountryCode), obj["country_code"].ToString());
             }
             catch (Exception)
             {
-                return CountryCode.World;
             }
+            return CountryCode.World;
+        }
+
+        public static string GetCountry(this HttpContext context)
+        {
+            var task = ResolveCountryCodeAsync(context.Connection.RemoteIpAddress);
+            task.Wait();
+            return Country.FromCode(task.Result).CommonName;
         }
 
         public static bool IsEEuropean(this HttpContext context)
         {
-            return Europe.Contains(GetCountry(context));
+            var task = ResolveCountryCodeAsync(context.Connection.RemoteIpAddress);
+            task.Wait();
+            return Europe.Contains(task.Result);
         }
     }
 }

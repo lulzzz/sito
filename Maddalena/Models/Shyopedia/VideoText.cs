@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Maddalena.Models.Shyopedia
 {
@@ -10,19 +11,8 @@ namespace Maddalena.Models.Shyopedia
 
         public string VideoId { get; set; }
 
-        [BsonIgnore]
-        public string Title { get; set; }
-
-        [BsonIgnore]
-        public string Url { get; set; }
-
-        [BsonIgnore]
-        public string Thumbnail { get; set; }
-
-        public double OffSet { get; set; }
+        public TimeSpan OffSet { get; set; }
 
         public string Text { get; set; }
-
-        public double Duration { get; set; }
     }
 }

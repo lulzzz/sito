@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
-    <PackageReference Include="Accord.MachineLearning.GPL" Version="3.8.0" />
-    <PackageReference Include="Accord.Neuro" Version="3.8.0" />
-    <PackageReference Include="Mongolino" Version="1.4.5" />
-    <PackageReference Include="NEST" Version="6.1.0" />
+    <PackageReference Include="Accord.MachineLearning" Version="3.8.2-alpha" />
+    <PackageReference Include="Accord.MachineLearning.GPL" Version="3.8.2-alpha" />
+    <PackageReference Include="Accord.Neuro" Version="3.8.2-alpha" />
+    <PackageReference Include="Mongolino" Version="1.6.0" />
+    <PackageReference Include="NEST" Version="6.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

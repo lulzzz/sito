@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using YoutubeExplode;
 using YoutubeExplode.Models;
+using YoutubeExplode.Models.ClosedCaptions;
 
 namespace Maddalena.Controllers
 {
@@ -43,7 +44,8 @@ namespace Maddalena.Controllers
                 {
                     Title = video.Title,
                     Thumbnail = video.Thumbnails.MediumResUrl,
-                    Url = video.GetEmbedUrl()
+                    Url = video.GetEmbedUrl(),
+                    Published = video.UploadDate.DateTime
                 };
 
                 await videoCollection.InsertOneAsync(subVideo);
@@ -51,34 +53,20 @@ namespace Maddalena.Controllers
                 var captions = await client.GetClosedCaptionTrackAsync(info.First());
                 var mergedCaptions = new List<VideoText>();
 
-                foreach (var cap in captions.Captions)
-                {
-                    if (mergedCaptions.Count == 0)
-                    {
-                        mergedCaptions.Add(new VideoText
-                        {
-                            VideoId = video.Id,
-                            OffSet = cap.Offset.TotalSeconds,
-                            Text = cap.Text,
-                            Duration = cap.Duration.TotalSeconds
-                        });
-                        continue;
-                    }
 
-                    if (mergedCaptions[mergedCaptions.Count - 1].Duration < 60)
+
+                for (int i = 0; i < captions.Captions.Count; i++)
+                {
+                    for (int size = 1; size < 4; size++)
                     {
-                        mergedCaptions[mergedCaptions.Count - 1].OffSet += cap.Offset.TotalSeconds;
-                        mergedCaptions[mergedCaptions.Count - 1].Text += $" {cap.Text}";
-                        mergedCaptions[mergedCaptions.Count - 1].Duration += cap.Duration.TotalSeconds;
-                    }
-                    else
-                    {
+                        var cap = captions.Captions.Skip(i).Take(size).Aggregate((f, s) =>
+                            new ClosedCaption($"{f.Text} {s.Text}", f.Offset, f.Duration + s.Duration));
+
                         mergedCaptions.Add(new VideoText
                         {
-                            VideoId = video.Id,
-                            OffSet = cap.Offset.TotalSeconds,
+                            VideoId = subVideo.Id,
+                            OffSet = cap.Offset,
                             Text = cap.Text,
-                            Duration = cap.Duration.TotalSeconds
                         });
                     }
                 }
@@ -89,14 +77,20 @@ namespace Maddalena.Controllers
 
         public async Task<IActionResult> Index(string q)
         {
-            if (string.IsNullOrWhiteSpace(q)) q = "freschezza";
+            if (string.IsNullOrWhiteSpace(q))
+            {
+                q = "freschezza";
+            }
 
             var res = await textCollection.FindAsync(Builders<VideoText>.Filter.Text(q), new FindOptions<VideoText, VideoText>()
             {
                 Limit = 25
             });
 
-            return View(await res.ToListAsync());
+            ViewBag["SubTitle"] = $"Risultati della ricerca per {q}";
+
+            var list = await res.ToListAsync();
+            return View(list);
         }
     }
-}   
+} 

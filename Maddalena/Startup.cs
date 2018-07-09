@@ -9,9 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
 using AspNetCore.Identity.Mongo;
+
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
+using ServerSideAnalytics.Extensions;
 using HardwareProviders;
+using System.Net;
 
 namespace Maddalena
 {
@@ -66,9 +69,24 @@ namespace Maddalena
             });*/
 
             services.AddScoped<IAuthorizationHandler, DynamicScopeHandler>();
-            
+
+
+            //Add the transieent to expose the store inside a controller
+            //We will use this to show collected data
+            services.AddTransient<IAnalyticStore>(x=> GetAnalyticStore());
+
             services.AddMvc();
         }
+
+        public IAnalyticStore GetAnalyticStore()
+        {
+            var store = (new MongoAnalyticStore("mongodb://localhost"))
+                           .UseIpStackFailOver("8627be1fa0273d3f9422440a803803c6")
+                           .UseIpApiFailOver()
+                           .UseIpInfoFailOver();
+            return store;
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
@@ -81,24 +99,36 @@ namespace Maddalena
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-                app.UseDatabaseErrorPage();
+
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseServerSideAnalytics(new MongoRequestStore())
-                .ExcludePath("/content")
-                .ExcludeExtension(".jpg")
-                .ExcludeLoopBack();
-
             app.UseDeveloperExceptionPage();
-            app.UseStaticFiles();
+            app.UseBrowserLink();
+            app.UseDatabaseErrorPage();
 
             app.UseAuthentication();
+
+            app.UseServerSideAnalytics(GetAnalyticStore())
+               .ExcludePath("/js", // Request into those url space will be not recorded
+                            "/lib",
+                            "/css")     
+               .ExcludeExtension(".jpg", // Request ending with this extension will be not recorded
+                                 ".ico",
+                                 "robots.txt",
+                                 "sitemap.xml")
+            
+                .Exclude(x => x.UserIdentity() == "matteo")
+                .ExcludeIp(IPAddress.Parse("192.168.0.1"))
+                .ExcludeLoopBack();          // Request coming from local host will be not recorded
+
+              
+            
+
+            app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
@@ -106,6 +136,11 @@ namespace Maddalena
                     name: "search",
                     template: "search",
                     defaults: new { controller = "Blog", action = "Search" });
+
+                routes.MapRoute(
+                    name: "mynuget",
+                    template: "mynuget",
+                    defaults: new { controller = "Home", action = "MyNuget" });
 
                 routes.MapRoute(
                     name: "read",

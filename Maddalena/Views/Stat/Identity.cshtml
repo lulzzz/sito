@@ -11,6 +11,8 @@
     <a href="/stat">
         &lt; Go back to the main list of all users
     </a>
+    <br />
+    The system detected your country as: @Context.GetCountry()
 </p>
 
 <section>
@@ -52,7 +54,7 @@
                     @item.Timestamp.RelativeDate()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RemoteIpAddress)
+                    @item.RemoteIpAddress.ToString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Path)

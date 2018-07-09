@@ -5,20 +5,34 @@ using Maddalena.Models.Stat;
 using Microsoft.AspNetCore.Mvc;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
+using ServerSideAnalytics.Extensions;
 
 namespace Maddalena.Controllers
 {
     public class StatController : Controller
     {
-        static readonly MongoRequestStore repository = new MongoRequestStore();
+        readonly IAnalyticStore _store;
+
+        public StatController(IAnalyticStore store)
+        {
+            _store = store;
+        }
 
         public async Task<ActionResult> Index()
         {
+            var from = DateTime.MinValue;
+            var to = DateTime.MaxValue;
+
             var stat = new WebStat
             {
-                UniqueVisitors = await repository.CountUniqueAsync(DateTime.MinValue, DateTime.MaxValue),
-                TotalCount = await repository.CountAsync(DateTime.MinValue, DateTime.MaxValue),
-                Requests = (await repository.QueryAsync(x=>true)).Take(100)
+                TotalServed = await _store.CountAsync(from, to),
+                UniqueVisitors = await _store.CountUniqueIndentitiesAsync(from, to),
+                DailyAverage = await _store.DailyAverage(from, to),
+                DailyServed = await _store.DailyServed(from, to),
+                HourlyServed = await _store.HourlyServed(from, to),
+                ServedByCountry = await _store.ServedByCountry(from, to),
+                UrlServed = await _store.UrlServed(from, to),
+                Requests = await _store.InTimeRange(DateTime.Now-TimeSpan.FromDays(1), DateTime.Now)
             };
             return View(stat);
         }
@@ -28,20 +42,8 @@ namespace Maddalena.Controllers
             return View(new WebStat
             {
                 Identity = id,
-                Requests = (await repository.QueryAsync(x => x.Identity == id)).ToArray(),
+                Requests = (await _store.RequestByIdentityAsync(id)).ToArray(),
             });
-        }
-
-        public async Task<ActionResult> Identities()
-        {
-            var res = await repository.DistinctAsync(x => x.Identity, x => true);
-            return Json(res);
-        }
-
-        public async Task<ActionResult> Countries()
-        {
-            var res = await repository.QueryAsync(x => true);
-            return Json(res);
         }
     }
 }

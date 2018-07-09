@@ -3,6 +3,11 @@ using System;
 using System.Threading.Tasks;
 using Maddalena.Models.Blog;
 using Maddalena.Models.Sitemap;
+using System.IO;
+using System.Xml;
+using Microsoft.SyndicationFeed.Rss;
+using Microsoft.SyndicationFeed;
+using System.Linq;
 
 namespace Maddalena.Controllers
 {
@@ -10,6 +15,43 @@ namespace Maddalena.Controllers
     {
         public SitemapController()
         {
+        }
+
+        [Route("rss.xml")]
+        public async Task<ActionResult> Rss()
+        {
+            var sw = new StringWriter();
+            using (XmlWriter xmlWriter = XmlWriter.Create(sw, new XmlWriterSettings() { Async = true, Indent = true }))
+            {
+                var writer = new RssFeedWriter(xmlWriter);
+
+                foreach(var art in BlogArticle.Queryable())
+                {
+                    // Create item
+                    var item = new SyndicationItem()
+                    {
+                        Title = art.Title,
+                        Description = art.TextPreview,
+                        Id = $"https://matteofabbri.org/read/{art.Link}",
+                        Published = new DateTimeOffset(art.DateTime)
+                    };
+
+                    item.AddCategory(new SyndicationCategory(art.Category));
+                    item.AddContributor(new SyndicationPerson("Matteo Fabbri", "matteo@phascode.org"));
+
+                    await writer.Write(item);
+                    xmlWriter.Flush();
+                }
+
+            }
+            return Content(sw.ToString(), "application/rss+xml");
+        }
+
+
+        [Route("robots.txt")]
+        public async Task<ActionResult> Robots()
+        {
+            return this.Content("#First useless line to get rid of BOM\r\nUser-Agent: *\r\nDisallow:");
         }
 
         [Route("sitemap")]

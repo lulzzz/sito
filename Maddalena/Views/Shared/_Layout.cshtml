@@ -1,25 +1,29 @@
 ﻿@using Maddalena.Models.Blog
 @using Maddalena.Extensions
 
+@{
+    ViewData["Title"] = "Matteo Fabbri - An italian nerd in Prague";
+ }
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matteo Fabbri</title>
+    <title>@ViewData["Title"]</title>
 
     <meta name="description" content="An italian nerd in Prague" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="An italian nerd in Prague" />
-    <meta property="og:description" content="An italian nerd in Prague" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Title"]" />
     <meta property="og:url" content="https://matteofabbri.org/" />
-    <meta property="og:site_name" content="An italian nerd in Prague" />
+    <meta property="og:site_name" content="@ViewData["Title"]" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:description" content="An italian nerd in Prague" />
-    <meta name="twitter:title" content="An italian nerd in Prague" />
-    <meta name="twitter:site" content="" />
+    <meta name="twitter:description" content="@ViewData["Title"]" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:site" content="https://matteofabbri.org/" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/jodit/jodit.min.css" />
@@ -30,6 +34,8 @@
     <link rel="canonical" href="http://matteofabbri.org/" />
 
     <meta name="hubtraffic-domain-validation" content="3303c188e3db38e5" />
+
+    <link rel="alternate" type="application/rss+xml" href="http://matteofabbri.org/rss.xml" />
 
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/popper.js"></script>
@@ -57,6 +63,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mynuget">My Nuget</a>
+                    </li>
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
@@ -164,7 +174,7 @@
                                     </ul>
                                 </section>
                             }
-                            
+
                             <section>
                                 <ul class="list-group">
                                     <li class="list-group-item">
@@ -173,6 +183,13 @@
                                 </ul>
                             </section>
 
+                            <section>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="/hardware"> Hardware information</a>
+                                    </li>
+                                </ul>
+                            </section>
                         </div>
                     </div>
                 </div>
