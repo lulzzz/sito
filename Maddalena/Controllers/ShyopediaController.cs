@@ -21,10 +21,7 @@ namespace Maddalena.Controllers
             videoCollection = client.GetDatabase("default").GetCollection<SubVideo>("shyopediaVideo");
             textCollection = client.GetDatabase("default").GetCollection<VideoText>("shyopediaText");
 
-            if (textCollection.EstimatedDocumentCount() == 0)
-            {
-                Task.Run(async () => await Load());
-            }
+            Task.Run(async () => await Load());
 
             textCollection.Indexes.CreateOne(new CreateIndexModel<VideoText>(Builders<VideoText>.IndexKeys.Text(x => x.Text)));
         }
@@ -36,15 +33,24 @@ namespace Maddalena.Controllers
 
             foreach (var video in list)
             {
+                var tubeUrl = video.GetUrl();
+                if (await (await videoCollection.FindAsync(x => x.YoutubeUrl == tubeUrl)).AnyAsync())
+                {
+                    continue;
+                }
+
                 var info = await client.GetVideoClosedCaptionTrackInfosAsync(video.Id);
 
                 if (info.Count <= 0) continue;
 
+                var minfo = await client.GetVideoMediaStreamInfosAsync(video.Id);
+
                 var subVideo = new SubVideo
                 {
                     Title = video.Title,
+                    YoutubeUrl = tubeUrl, 
                     Thumbnail = video.Thumbnails.MediumResUrl,
-                    Url = video.GetEmbedUrl(),
+                    SourceUrl = minfo.Muxed[0].Url,
                     Published = video.UploadDate.DateTime
                 };
 
@@ -67,6 +73,7 @@ namespace Maddalena.Controllers
                             VideoId = subVideo.Id,
                             OffSet = cap.Offset,
                             Text = cap.Text,
+                            Duration = cap.Duration
                         });
                     }
                 }
@@ -87,10 +94,33 @@ namespace Maddalena.Controllers
                 Limit = 25
             });
 
-            ViewBag["SubTitle"] = $"Risultati della ricerca per {q}";
+            ViewData["SubTitle"] = $"Risultati della ricerca per {q}";
 
+            var results = new List<SearchResult>();
             var list = await res.ToListAsync();
-            return View(list);
+
+            foreach (var item in list)
+            {
+                var found = results.FirstOrDefault(x => x.Video.Id == item.VideoId);
+
+                if (found != null)
+                {
+                    if (!found.Texts.Any(x => x.OffSet <= item.OffSet && item.OffSet <= (x.OffSet+x.Duration)))
+                    {
+                        found.Texts.Add(item);
+                    }
+                }
+                else
+                {
+                    results.Add(new SearchResult
+                    {
+                        Video = videoCollection.Find(x=>x.Id == item.VideoId).First(),
+                        Texts = new List<VideoText>(new[] { item })
+                    });
+                }
+            }
+
+            return View(results);
         }
     }
 } 

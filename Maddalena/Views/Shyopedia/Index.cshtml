@@ -1,21 +1,78 @@
-﻿@model IEnumerable<Maddalena.Models.Shyopedia.VideoText>
+﻿@using YoutubeExplode.Models
+@model IEnumerable<Maddalena.Models.Shyopedia.SearchResult>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Shyopedia";
 }
 
-<h2>View</h2>
-<ul class="list-unstyled">
-    @foreach (var item in Model)
-    {
-        <li class="media">
-            <a href="/shyopedia/watch/@item.Id">
-                <img class="mr-3" src="@item.Thumbnail" style="max-width: 84px">
-            </a>
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">@item.Title</h5>
-                @item.Text
+<h1>Shyopedia</h1>
+<p style="margin-bottom: 50px">
+    Prototipo 0.1
+    <br/>
+    Shyopedia e' un esperimento di interfaccia con le API di Youtube.
+    <br/>
+    Shyopedia ti permette di cercare in che video e in che punto del video Shy ha detto una determinata cosa.
+    <br />
+    Shyopedia e' utile per trovare tutte le volte che un determinato argomento e' stato citato (chesso' la <a href="/shyopedia?q=Siria">Siria</a>)
+    <br/>
+    o per fare i <b>memini</b> con tutte le volte che Shy ha detto <a href="/shyopedia?q=whysky">whysky</a> :D
+    <br />
+    Ma soprattuto Shyopedia non e' un prgetto serio.
+    <br/>
+    Per cercare una frase intera mettila tra virgolette <b>""</b>
+</p>
+
+<form method="get" class="form-inline" style="margin-bottom: 50px">
+    <input type="text" class="col-9" name="q" />
+    <input type="submit" class="col-3" value="Cerca" />
+</form>
+
+<h4>@ViewData["SubTitle"]</h4>
+
+@foreach (var item in Model)
+{
+    <row class="row media" style="margin-bottom: 32px">
+        <div class="col-4 mr-4">
+            <div class="embed-responsive embed-responsive-16by9">
+                <video id="video-@item.Video.Id" class="embed-responsive-item" poster="@item.Video.Thumbnail" controls>
+                    <source src="@item.Video.SourceUrl" type="video/mp4">
+                </video>
             </div>
-        </li>
+        </div>
+        <div class="col-8 media-body">
+            <h5 class="mt-0 mb-1">
+                @item.Video.Title 
+                <a href="@item.Video.YoutubeUrl" style="color:red" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </h5>
+            <ul>
+                @foreach (var text in item.Texts)
+                {
+                    <li>
+                        <a href="javascript:Seek('video-@item.Video.Id',@Math.Round(text.OffSet.TotalSeconds))">
+                            @text.OffSet.ToString(@"dd\.hh\:mm\:ss")
+                        </a>
+                        <i>"...@text.Text.."</i>
+                    </li>
+                }
+            </ul>
+        </div>
+    </row>
+}
+
+<script>
+    function Seek(videoId, offset)
+    {
+        $('video').each(function() {
+            this.pause();
+        });
+
+        var video = document.getElementById(videoId);
+        video.currentTime = offset;
+        video.play();
     }
-</ul>
+</script>
+
+
+

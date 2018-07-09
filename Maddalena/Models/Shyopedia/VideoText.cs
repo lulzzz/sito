@@ -14,5 +14,7 @@ namespace Maddalena.Models.Shyopedia
         public TimeSpan OffSet { get; set; }
 
         public string Text { get; set; }
+
+        public TimeSpan Duration { get; set; }
     }
 }
