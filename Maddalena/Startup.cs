@@ -48,14 +48,14 @@ namespace Maddalena
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = "127806004786-jsnf1cr38s8aps1higamtjivectofv21.apps.googleusercontent.com";
-                googleOptions.ClientSecret = "QGrQnAvHGazDN-hM2Aaa2v5f";
+                googleOptions.ClientId = Program.Configuration["GoogleClientId"];
+                googleOptions.ClientSecret = Program.Configuration["GoogleClientSecret"];
             });
 
             services.AddAuthentication().AddTwitter(twitterOptions =>
             {
-                twitterOptions.ConsumerKey = "SoLYId2A3LZDmTqoGPshlJZk5";
-                twitterOptions.ConsumerSecret = "GDdGYUx9f3i6OPGGvlgSu9Mxk8hgnT98jcK21kqO7J33mvO3tj";
+                twitterOptions.ConsumerKey = Program.Configuration["TwitterConsumerKey"];
+                twitterOptions.ConsumerSecret =  Program.Configuration["TwitterConsumerSecret"];
             });
 
 
@@ -81,7 +81,7 @@ namespace Maddalena
         public IAnalyticStore GetAnalyticStore()
         {
             var store = (new MongoAnalyticStore("mongodb://localhost"))
-                           .UseIpStackFailOver("8627be1fa0273d3f9422440a803803c6")
+                           .UseIpStackFailOver("IpStackAPIKey")
                            .UseIpApiFailOver()
                            .UseIpInfoFailOver();
             return store;

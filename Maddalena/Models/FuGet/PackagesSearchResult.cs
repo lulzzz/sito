@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Maddalena.Models.FuGet
@@ -26,6 +27,8 @@ namespace Maddalena.Models.FuGet
             // System.Console.WriteLine($"DOWNLOADING {package.DownloadUrl}");
             var queryUrl = $"https://api-v2v3search-0.nuget.org/query?prerelease=true&q={Uri.EscapeDataString(q)}";
             var json = await (new HttpClient()).GetStringAsync(queryUrl).ConfigureAwait(false);
+
+            var t = JsonConvert.DeserializeObject<Maddalena.Models.Nuget.PackageSearch>(json);
 
             var j = JObject.Parse(json);
             var d = (JArray)j["data"];

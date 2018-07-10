@@ -35,24 +35,6 @@ namespace Maddalena.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
-
-            if (!userManager.Users.Any())
-
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "matteo",
-                    Email = "matteo@phascode.org"
-
-                };
-                userManager.CreateAsync(user, "labello").Wait();
-
-                roleManager.CreateAsync(new ApplicationRole("blog")).Wait();
-                roleManager.CreateAsync(new ApplicationRole("manage")).Wait();
-
-                userManager.AddToRoleAsync(user, "blog").Wait();
-                userManager.AddToRoleAsync(user, "manage").Wait();
-            }
         }
 
         [TempData]
