@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Maddalena.Models.FuGet.PackagesSearchResult>
+﻿@model IEnumerable<Maddalena.Models.Nuget.Package>
 
     @{
     ViewData["Title"] = "MyNuget";
@@ -14,8 +14,8 @@
                     <li class="media">
                         <div class="media-body" style="margin-bottom:32px">
                             <h5 class="mt-0 mb-1">
-                                <a href="https://www.nuget.org/packages/@item.PackageId" target="_blank">
-                                    @item.PackageId @item.Version
+                                <a href="https://www.nuget.org/packages/@item.Id" target="_blank">
+                                    @item.Id @item.Version
                                 </a>
                             </h5>
                             Downloads: @item.TotalDownloads
