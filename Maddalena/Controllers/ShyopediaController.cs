@@ -86,6 +86,11 @@ namespace Maddalena.Controllers
             }
         }
 
+        public static void Composite()
+        {
+           
+        }
+
         public async Task<IActionResult> Index(string q)
         {
             if (string.IsNullOrWhiteSpace(q))

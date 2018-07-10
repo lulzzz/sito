@@ -32,7 +32,8 @@ namespace Maddalena.Controllers
                 HourlyServed = await _store.HourlyServed(from, to),
                 ServedByCountry = await _store.ServedByCountry(from, to),
                 UrlServed = await _store.UrlServed(from, to),
-                Requests = await _store.InTimeRange(DateTime.Now-TimeSpan.FromDays(1), DateTime.Now)
+                Requests = (await _store.InTimeRange(DateTime.Now-TimeSpan.FromMinutes(30), DateTime.Now))
+                            .OrderByDescending(x=>x.Timestamp)
             };
             return View(stat);
         }
