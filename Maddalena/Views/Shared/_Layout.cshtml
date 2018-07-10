@@ -35,6 +35,17 @@
     <meta name="hubtraffic-domain-validation" content="3303c188e3db38e5" />
 
     <link rel="alternate" type="application/rss+xml" href="http://matteofabbri.org/rss.xml" />
+    
+    <script async custom-element="amp-auto-ads"
+            src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1242825224942421",
+            enable_page_level_ads: true
+        });
+    </script>
 
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/popper.js"></script>
@@ -227,12 +238,8 @@
 
     @RenderSection("Scripts", required: false)
 
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-1242825224942421",
-                enable_page_level_ads: true
-            });
-        </script>
+    <amp-auto-ads type="adsense"
+                  data-ad-client="ca-pub-1242825224942421">
+    </amp-auto-ads>
 </body>
 </html>
