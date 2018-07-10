@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/jodit/jodit.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome-all.min.css" />
 
     <link rel="canonical" href="http://matteofabbri.org/" />
@@ -108,15 +107,41 @@
                     <div class="row">
                         <div class="col-12" style="padding-right: 0px">
                             <section>
-                                <ul class="list-group-item">
-                                    <h5>Caffe' italiano</h5>
+                                <ul class="list-group-item text-center">
+                                    Caffe' italiano
                                 </ul>
                                 <ul class="list-group">
                                     <li class="list-group-item">
-                                        <a href="/shyopedia" target="_blank">Shyopedia</a>
+                                        <a href="/shyopedia">Shyopedia</a>
                                     </li>
                                 </ul>
                             </section>
+
+                            @foreach (var cat in BlogArticle.All.GroupBy(x=>x.Category))
+                            {
+                                <section>
+                                    <ul class="list-group">
+                                        <li class="list-group-item text-center">
+                                            @cat.Key
+                                        </li>
+                                        @foreach (var art in cat)
+                                        {
+                                            <li class="list-group-item">
+                                                <a href="/read/@art.Link">@art.Title</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </section>
+                            }
+                            
+                            <section>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="/hardware"> Hardware information</a>
+                                    </li>
+                                </ul>
+                            </section>
+
 
                             <section>
                                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -130,21 +155,6 @@
                                     (adsbygoogle = window.adsbygoogle || []).push({});
                                 </script>
                             </section>
-
-
-                            @if (BlogArticle.Categories.Any())
-                            {
-                                <section>
-                                    <ul class="list-group">
-                                        @foreach (var cat in BlogArticle.Categories)
-                                        {
-                                            <li class="list-group-item">
-                                                <a href="/blog/category/@cat">@cat</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </section>
-                            }
 
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -208,13 +218,6 @@
                                 </ul>
                             </section>
 
-                            <section>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <a href="/hardware"> Hardware information</a>
-                                    </li>
-                                </ul>
-                            </section>
                         </div>
                     </div>
                 </div>

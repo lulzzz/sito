@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using MongoDB.Bson.Serialization.Attributes;
 using Mongolino;
 using Mongolino.Attributes;
-using Newtonsoft.Json;
 
 namespace Maddalena.Models.Blog
 {
     public class BlogArticle : DBObject<BlogArticle>
     {
-        [JsonIgnore]
-        [BsonIgnore]
-        [AscendingIndex]
-        public static IEnumerable<string> Categories
-        {
-            get { return All.Select(x => x.Category).Distinct(); }
-        }
-
         [AscendingIndex]
         public string Author { get; set; }
 

@@ -1,11 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Models;
-using Maddalena.Models.FuGet;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System;
-using System.Collections.Generic;
 
 namespace Maddalena.Controllers
 {
@@ -17,8 +14,9 @@ namespace Maddalena.Controllers
 
         public async Task<IActionResult> MyNuget()
         {
-            var es = (await PackagesSearchResult.GetAsync("Matteo Fabbri"))
-                .Where(x => x.Authors == "Matteo Fabbri")
+            var es = (await Maddalena.Models.Nuget.PackageSearch.GetAsync("Matteo Fabbri"))
+                .Data
+                .Where(x => x.Authors.Length == 1 && x.Authors[0] == "Matteo Fabbri")
                 .ToArray();
 
             return View(es);
