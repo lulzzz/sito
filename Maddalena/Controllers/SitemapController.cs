@@ -49,13 +49,13 @@ namespace Maddalena.Controllers
 
 
         [Route("robots.txt")]
-        public async Task<ActionResult> Robots()
+        public ActionResult Robots()
         {
             return this.Content("#First useless line to get rid of BOM\r\nUser-Agent: *\r\nDisallow:");
         }
 
         [Route("sitemap")]
-        public async Task<ActionResult> SitemapAsync()
+        public ActionResult Sitemap()
         {
             string baseUrl = "https://matteofabbri.org/";
 
