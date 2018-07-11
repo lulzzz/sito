@@ -91,6 +91,36 @@ namespace Maddalena.Controllers
            
         }
 
+        public async Task<IActionResult> Json(string q)
+        {
+            var res = await textCollection.FindAsync(Builders<VideoText>.Filter.Text(q), new FindOptions<VideoText, VideoText>());
+
+            var results = new List<SearchResult>();
+            var list = await res.ToListAsync();
+
+            foreach (var item in list)
+            {
+                var found = results.FirstOrDefault(x => x.Video.Id == item.VideoId);
+
+                if (found != null)
+                {
+                    if (!found.Texts.Any(x => x.OffSet <= item.OffSet && item.OffSet <= (x.OffSet + x.Duration)))
+                    {
+                        found.Texts.Add(item);
+                    }
+                }
+                else
+                {
+                    results.Add(new SearchResult
+                    {
+                        Video = videoCollection.Find(x => x.Id == item.VideoId).First(),
+                        Texts = new List<VideoText>(new[] { item })
+                    });
+                }
+            }
+            return Json(results);
+        }
+
         public async Task<IActionResult> Index(string q)
         {
             if (string.IsNullOrWhiteSpace(q))
@@ -107,6 +137,8 @@ namespace Maddalena.Controllers
                         LastSearchs.Dequeue();
                 }
             }
+
+            ViewData["q"] = q;
 
             var res = await textCollection.FindAsync(Builders<VideoText>.Filter.Text(q), new FindOptions<VideoText, VideoText>()
             {
