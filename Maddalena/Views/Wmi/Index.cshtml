@@ -1,0 +1,45 @@
+﻿@model WmiModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>WMI wrapping and exploring</h2>
+    
+<div class="row">
+    <div class="col-3">
+        <section>
+            @foreach (var name in Model.Names)
+            {
+                <a href="/wmi/index/@name">
+                    @name
+                </a>
+            }
+        </section>
+    </div>
+    <div class="col-9">
+        @if (Model.Instances == null)
+        {
+
+        }
+        else
+        {
+            foreach (var item in Model.Instances)
+             {
+                 <div class="row">
+                     <table class="table table-responsive table-striped">
+                         @foreach (var prop in Model.Properties)
+                         {
+                             <tr>
+                                 <td>@prop.Name</td>
+                                 <td>@prop.GetValue(item)?.ToString()</td>
+                             </tr>
+                         }
+                     </table>
+                 </div>
+             }
+        }
+
+    </div>
+</div>
+
