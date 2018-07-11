@@ -37,11 +37,12 @@
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
     <PackageReference Include="Mongolino" Version="1.6.0" />
     <PackageReference Include="NiL.JS.NetCore" Version="2.5.1275" />
-    <PackageReference Include="ServerSideAnalytics" Version="4.3.2" />
-    <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.1" />
-    <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.2.4" />
+    <PackageReference Include="ServerSideAnalytics" Version="4.5.2" />
+    <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
+    <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
     <PackageReference Include="Stripe.net" Version="16.16.0" />
     <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
+    <PackageReference Include="WindowsMonitor.Standard" Version="4.2.0" />
     <PackageReference Include="YoutubeExplode" Version="4.2.8" />
   </ItemGroup>
 
@@ -52,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Wmi\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>

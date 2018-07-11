@@ -122,6 +122,12 @@
                                     Caffe' italiano
                                 </ul>
                                 <ul class="list-group">
+                                    @foreach (var art in BlogArticle.Where(x => x.Category.Contains("italiano")))
+                                    {
+                                        <li class="list-group-item">
+                                            <a href="/read/@art.Link">@art.Title</a>
+                                        </li>
+                                    }
                                     <li class="list-group-item">
                                         <a href="/shyopedia">Shyopedia</a>
                                     </li>
@@ -130,6 +136,10 @@
 
                             @foreach (var cat in BlogArticle.All.GroupBy(x=>x.Category))
                             {
+                                @if(cat.Key.Contains("italiano"))
+                                {
+                                    continue;
+                                }
                                 <section>
                                     <ul class="list-group">
                                         <li class="list-group-item text-center">
@@ -147,24 +157,41 @@
                             
                             <section>
                                 <ul class="list-group">
+                                    <li class="list-group-item text-center">
+                                        Demo
+                                    </li>
                                     <li class="list-group-item">
-                                        <a href="/hardware"> Hardware information</a>
+                                        <a href="/hardware">CPU live data</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="/stat">Web analytics</a>
                                     </li>
                                 </ul>
                             </section>
 
 
                             <section>
-                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <!-- rettangolo -->
-                                <ins class="adsbygoogle"
-                                     style="display:block"
-                                     data-ad-client="ca-pub-1242825224942421"
-                                     data-ad-slot="2140925298"
-                                     data-ad-format="auto"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
+                                @if (DateTime.Now.Minute % 2 == 0)
+                                {
+                                    <amp-auto-ads type="adsense"
+                                                  data-ad-client="ca-pub-1242825224942421">
+                                    </amp-auto-ads>
+
+                                }
+                                else
+                                {
+
+                                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <!-- rettangolo -->
+                                    <ins class="adsbygoogle"
+                                         style="display:block"
+                                         data-ad-client="ca-pub-1242825224942421"
+                                         data-ad-slot="2140925298"
+                                         data-ad-format="auto"></ins>
+                                    <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
+                                }
                             </section>
 
                             @if (User.Identity.IsAuthenticated)
@@ -237,9 +264,5 @@
     </div>
 
     @RenderSection("Scripts", required: false)
-
-    <amp-auto-ads type="adsense"
-                  data-ad-client="ca-pub-1242825224942421">
-    </amp-auto-ads>
 </body>
 </html>

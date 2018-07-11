@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using ServerSideAnalytics;
 
 namespace Maddalena.Extensions
 {

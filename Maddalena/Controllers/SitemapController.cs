@@ -40,9 +40,9 @@ namespace Maddalena.Controllers
                     item.AddContributor(new SyndicationPerson("Matteo Fabbri", "matteo@phascode.org"));
 
                     await writer.Write(item);
-                    xmlWriter.Flush();
                 }
 
+                xmlWriter.Flush();
             }
             return Content(sw.ToString(), "application/rss+xml");
         }

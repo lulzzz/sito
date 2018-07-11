@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Dapper" Version="1.50.5" />
-    <PackageReference Include="DatabaseSchemaReader" Version="2.5.1" />
+    <PackageReference Include="DatabaseSchemaReader" Version="2.6.1" />
     <PackageReference Include="NEST" Version="6.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
