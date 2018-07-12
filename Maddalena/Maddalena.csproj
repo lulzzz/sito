@@ -37,7 +37,6 @@
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
     <PackageReference Include="Mongolino" Version="1.6.0" />
     <PackageReference Include="NiL.JS.NetCore" Version="2.5.1275" />
-    <PackageReference Include="ServerSideAnalytics" Version="4.5.3" />
     <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
     <PackageReference Include="Stripe.net" Version="17.0.0" />
@@ -132,6 +131,10 @@
     <None Include="wwwroot\lib\tinymce\themes\mobile\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\themes\modern\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\tinymce.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ServerSideAnalytics\ServerSideAnalytics\ServerSideAnalytics.csproj" />
   </ItemGroup>
 
   <ItemGroup>
