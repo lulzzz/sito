@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -25,6 +26,21 @@ namespace Maddalena.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Upload(string returnUrl)
+        {
+            var files = Request.Form.Files.ToArray();
+
+            //FIXME
+            var dir = @"D:\SITI\Maddalena\wwwroot";
+
+            foreach (var x in files)
+            {
+                await x.CopyToAsync(System.IO.File.OpenWrite(Path.Combine(dir,x.FileName)));
+            }
+
+            return Redirect(returnUrl);
         }
 
         // GET: Blog/Details/5
