@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Maddalena.Models.Stat;
 using Microsoft.AspNetCore.Mvc;
 using ServerSideAnalytics;
-using ServerSideAnalytics.Mongo;
 using ServerSideAnalytics.Extensions;
 
 namespace Maddalena.Controllers
