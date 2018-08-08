@@ -1,0 +1,12 @@
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.deps.json
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.runtimeconfig.json
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.runtimeconfig.dev.json
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.dll
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.csprojAssemblyReference.cache
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.csproj.CoreCompileInputs.cache
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfoInputs.cache
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfo.cs
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.pdb
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.dll
+D:\Maddalena\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.pdb
+D:\Maddalena\JsCore\JsCore\bin\Debug\netcoreapp2.1\test.js

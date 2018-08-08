@@ -22,9 +22,10 @@ namespace Maddalena.Controllers
             return View(es);
         }
 
-        public IActionResult Error()
+        public IActionResult Error(int code)
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            Response.StatusCode = 404;
+            return View();
         }
     }
 }

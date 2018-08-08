@@ -26,7 +26,7 @@
     <PackageReference Include="ICSharpCode.Decompiler" Version="3.2.0.3856" />
     <PackageReference Include="ListDiff" Version="1.0.7" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="MailKit" Version="2.0.5" />
+    <PackageReference Include="MailKit" Version="2.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -40,7 +40,7 @@
     <PackageReference Include="ServerSideAnalytics" Version="4.6.4" />
     <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
-    <PackageReference Include="Stripe.net" Version="17.4.0" />
+    <PackageReference Include="Stripe.net" Version="17.8.0" />
     <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
     <PackageReference Include="WindowsMonitor.Standard" Version="4.2.0" />
     <PackageReference Include="YoutubeExplode" Version="4.3.0" />

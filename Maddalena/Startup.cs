@@ -125,10 +125,9 @@ namespace Maddalena
                 .ExcludeIp(IPAddress.Parse("192.168.0.1"))
                 .ExcludeLoopBack();          // Request coming from local host will be not recorded
 
-              
-            
-
             app.UseStaticFiles();
+
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
 
             app.UseMvc(routes =>
             {
