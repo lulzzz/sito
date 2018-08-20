@@ -88,7 +88,7 @@ namespace Maddalena
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDeveloperExceptionPage();
             app.UseBrowserLink();
@@ -100,18 +100,13 @@ namespace Maddalena
                .ExcludePath("/js", // Request into those url space will be not recorded
                             "/lib",
                             "/css")     
-               .ExcludeExtension(".jpg", // Request ending with this extension will be not recorded
-                                 ".ico",
-                                 "robots.txt",
-                                 "sitemap.xml")
+               .ExcludeExtension(".jpg", ".ico", "robots.txt", "sitemap.xml")
             
                 .Exclude(x => x.UserIdentity() == "matteo")
                 .ExcludeIp(IPAddress.Parse("192.168.0.1"))
-                .ExcludeLoopBack();          // Request coming from local host will be not recorded
+                .ExcludeLoopBack(); 
 
             app.UseStaticFiles();
-
-            app.UseStatusCodePagesWithRedirects("/error/{0}");
 
             app.UseMvc(routes =>
             {

@@ -70,7 +70,7 @@
                         @foreach (var sensor in item.CoreTemperatures)
                         {
                             <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor?.ToString()</b>
+                            <b style="float:right">@sensor.Value</b>
                             <br />
                         }
                     </td>
@@ -83,7 +83,7 @@
                         @foreach (var sensor in item.CoreClocks)
                         {
                             <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor?.ToString()</b>
+                            <b style="float:right">@sensor.Value</b>
                             <br />
                         }
                     </td>
@@ -93,7 +93,7 @@
                         @Html.LabelFor(modelItem => item.BusClock)
                     </td>
                     <td>
-                        <b style="float:right"> @item.BusClock.ToString()</b>
+                        <b style="float:right"> @item.BusClock.Value</b>
 
                     </td>
                 </tr>
@@ -102,7 +102,7 @@
                         @Html.LabelFor(modelItem => item.PackageTemperature)
                     </td>
                     <td>
-                        <b style="float:right">@item.PackageTemperature.ToString()</b>
+                        <b style="float:right">@item.PackageTemperature.Value</b>
                     </td>
                 </tr>
                 <tr>
@@ -113,7 +113,7 @@
                         @foreach (var sensor in item.CoreLoads)
                         {
                             <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor?.ToString()</b>
+                            <b style="float:right">@sensor.Value</b>
                             <br />
                         }
                     </td>
@@ -123,7 +123,7 @@
                         @Html.LabelFor(modelItem => item.TotalLoad)
                     </td>
                     <td>
-                        <b style="float:right">@item.TotalLoad.ToString()</b>
+                        <b style="float:right">@item.TotalLoad.Value</b>
                     </td>
                 </tr>
             }

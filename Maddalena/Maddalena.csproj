@@ -21,10 +21,10 @@
   <ItemGroup>
     <PackageReference Include="Accord.Video" Version="3.8.0" />
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="2.5.1" />
-    <PackageReference Include="HardwareProviders.CPU.Standard" Version="2.0.0" />
+    <PackageReference Include="HardwareProviders.CPU.Standard" Version="2.0.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.7" />
     <PackageReference Include="ICSharpCode.Decompiler" Version="3.2.0.3856" />
-    <PackageReference Include="ListDiff" Version="1.0.7" />
+    <PackageReference Include="ListDiff" Version="1.1.28" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="MailKit" Version="2.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
