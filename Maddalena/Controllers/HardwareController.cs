@@ -7,11 +7,14 @@ namespace Maddalena.Controllers
 {
     public class HardwareController : Controller
     {
-        private static readonly CpuCollection cpus = new CpuCollection();
+        private static readonly Cpu[] cpus = Cpu.Discover();
 
         public IActionResult Index()
         {
-            cpus.Update();
+            foreach (var item in cpus)
+            {
+                item.Update();
+            }
 
             var data = cpus.Select(cpu => new CpuModel
             {

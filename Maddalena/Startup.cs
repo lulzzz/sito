@@ -13,7 +13,6 @@ using AspNetCore.Identity.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Mongo;
 using ServerSideAnalytics.Extensions;
-using HardwareProviders;
 using System.Net;
 
 namespace Maddalena
@@ -73,14 +72,14 @@ namespace Maddalena
 
             //Add the transieent to expose the store inside a controller
             //We will use this to show collected data
-            services.AddTransient<IAnalyticStore>(x=> GetAnalyticStore());
+            services.AddTransient(x=> GetAnalyticStore());
 
             services.AddMvc();
         }
 
         public IAnalyticStore GetAnalyticStore()
         {
-            var store = (new MongoAnalyticStore("mongodb://localhost"))
+            var store = (new MongoAnalyticStore("mongodb://localhost/"))
                            .UseIpStackFailOver("IpStackAPIKey")
                            .UseIpApiFailOver()
                            .UseIpInfoFailOver();
@@ -91,21 +90,6 @@ namespace Maddalena
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
-            applicationLifetime.ApplicationStopping.Register(()=> 
-            {
-                Ring0.Close();
-                Opcode.Close();
-            });
-
-            if (env.IsDevelopment())
-            {
-
-            }
-            else
-            {
-                //app.UseExceptionHandler("/Home/Error");
-            }
-
             app.UseDeveloperExceptionPage();
             app.UseBrowserLink();
             app.UseDatabaseErrorPage();

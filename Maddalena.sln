@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Maddalena.csproj", "{81BEEDFC-6299-48DC-8ABD-7B9706D49045}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsCore", "JsCore\JsCore\JsCore.csproj", "{191E0B59-B935-4838-9F96-347970C10703}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191E0B59-B935-4838-9F96-347970C10703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191E0B59-B935-4838-9F96-347970C10703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
