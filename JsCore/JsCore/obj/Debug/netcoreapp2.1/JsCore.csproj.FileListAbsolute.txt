@@ -21,3 +21,15 @@ D:\Maddalena\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfoInput
 D:\Maddalena\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfo.cs
 D:\Maddalena\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.dll
 D:\Maddalena\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.pdb
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\test.js
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.deps.json
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.runtimeconfig.json
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.runtimeconfig.dev.json
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.dll
+D:\PROGETTI\sito\JsCore\JsCore\bin\Debug\netcoreapp2.1\JsCore.pdb
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.csprojAssemblyReference.cache
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfoInputs.cache
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.AssemblyInfo.cs
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.dll
+D:\PROGETTI\sito\JsCore\JsCore\obj\Debug\netcoreapp2.1\JsCore.pdb
