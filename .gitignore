@@ -29,3 +29,6 @@
 /JsCore/JsCore/bin/Release/netcoreapp2.1
 /JsCore/JsCore/obj/Release/netcoreapp2.1
 /JsCore/JsCore/obj/Debug/netcoreapp2.1
+/JsCore/.vs
+/JsCore/JsCore/obj
+/JsCore/JsCore/bin
