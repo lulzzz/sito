@@ -1,21 +1,42 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "ab5ff52be1a69821d44fdac253a9280c2be0bac3"
+    "signature": "e663db03cc81bf3d5227cf538f5640a9419b8f4b"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
       "JsCore/1.0.0": {
         "dependencies": {
-          "NiL.JS.NetCore": "2.5.1275",
+          "MathNet.Numerics": "4.5.1",
+          "MathNet.Numerics.Data.Matlab": "4.0.0",
+          "NiL.JS.NetCore": "2.5.1278",
           "Npm": "3.5.2"
         },
         "runtime": {
           "JsCore.dll": {}
         }
       },
-      "NiL.JS.NetCore/2.5.1275": {
+      "MathNet.Numerics/4.5.1": {
+        "runtime": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {
+            "assemblyVersion": "4.5.1.0",
+            "fileVersion": "4.5.1.0"
+          }
+        }
+      },
+      "MathNet.Numerics.Data.Matlab/4.0.0": {
+        "dependencies": {
+          "MathNet.Numerics": "4.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MathNet.Numerics.Data.Matlab.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "NiL.JS.NetCore/2.5.1278": {
         "dependencies": {
           "System.Dynamic.Runtime": "4.0.11",
           "System.Reflection.TypeExtensions": "4.1.0",
@@ -24,8 +45,8 @@
         },
         "runtime": {
           "lib/netstandard1.3/NiL.JS.dll": {
-            "assemblyVersion": "2.5.1275.0",
-            "fileVersion": "2.5.1275.0"
+            "assemblyVersion": "2.5.1278.0",
+            "fileVersion": "2.5.1278.0"
           }
         }
       },
@@ -206,12 +227,26 @@
       "serviceable": false,
       "sha512": ""
     },
-    "NiL.JS.NetCore/2.5.1275": {
+    "MathNet.Numerics/4.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-oJz8psSKkcIDfLYDZsuwCIYohJYMDPONnXPpffA9GqCGeyDDzhuDaXARGU1uM5tNh7lkhwvKPUp9LVcSDVT9lQ==",
-      "path": "nil.js.netcore/2.5.1275",
-      "hashPath": "nil.js.netcore.2.5.1275.nupkg.sha512"
+      "sha512": "sha512-GOjrYhkAbzrObW8SG5X42ET0nbAAsJmJ3edBLk58dbHbiXeA0hZReqVYfRZTsqB/yYZhK8lgDliZjGKnk/gGhg==",
+      "path": "mathnet.numerics/4.5.1",
+      "hashPath": "mathnet.numerics.4.5.1.nupkg.sha512"
+    },
+    "MathNet.Numerics.Data.Matlab/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ee5qwMIv8VKVHyiytLKHFNG0lDH7IhDruYOFyY0vG0KZcS19kOB5Y0F5gDEPvJHrXjJLGf24quFZq/UuUDHFVQ==",
+      "path": "mathnet.numerics.data.matlab/4.0.0",
+      "hashPath": "mathnet.numerics.data.matlab.4.0.0.nupkg.sha512"
+    },
+    "NiL.JS.NetCore/2.5.1278": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0utOliYwSFNB0Fcwd2n7DxAGUMnsrmYmr0S1Eb3xb0tKod2RLmFkJPtX4Wmcmk0gK7oRy+w3DOU4lPNNKrKy/Q==",
+      "path": "nil.js.netcore/2.5.1278",
+      "hashPath": "nil.js.netcore.2.5.1278.nupkg.sha512"
     },
     "Node.js/0.12.7": {
       "type": "package",

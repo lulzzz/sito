@@ -1,7 +1,7 @@
 ﻿
 function fibonacci(n)
 {
-    if (n == 0 || n == 1) return 1;
+    if (n === 0 || n === 1) return 1;
 
     var array = [1, 1];
 
@@ -14,6 +14,8 @@ function fibonacci(n)
     return array[0] + array[1];
 }
 
-for (var i = 0; i < 1000; i++) {
+/*for (var i = 0; i < 1000; i++) {
     alert(fibonacci(i));
 }
+*/
+alert(fibonacci);

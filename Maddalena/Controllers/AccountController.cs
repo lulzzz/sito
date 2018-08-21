@@ -281,8 +281,8 @@ namespace Maddalena.Controllers
             // If the user does not have an account, then ask the user to create an account.
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["LoginProvider"] = info.LoginProvider;
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            return View("ExternalLogin", new ExternalLoginViewModel { Username = email });
+            var username = info.Principal.FindFirstValue(ClaimTypes.Name);
+            return View("ExternalLogin", new ExternalLoginViewModel { Username = username });
         }
 
         [HttpPost]

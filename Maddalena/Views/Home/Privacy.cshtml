@@ -187,8 +187,8 @@
         "Revolutionary People's Liberation Party–Front",
         "Revolutionary Struggle",
         "Saor Éire",
-        "Shining Path[118]",
-        "Shura Council of Benghazi Revolutionaries[119]",
+        "Shining Path",
+        "Shura Council of Benghazi Revolutionaries",
         "Sipah-e-Sahaba Pakistan",
         "Society of the Revival of Islamic Heritage",
         "Stichting Al Aqsa",
@@ -211,7 +211,6 @@
         "United Liberation Front of Assam",
         "United National Liberation Front",
         "United Self-Defense Forces of Colombia",
-        "United Self-Defense Forces of Colombia",
         "Vanguards of Conquest",
         "Workers' Party of Korea",
         "World Tamil Movement",
@@ -223,52 +222,53 @@
 
 
 <div class="row">
-    <div class="jumbotron">
-        <h1 class="display-4">Privacy policy</h1>
-        <p class="lead">I don't give a fuck about who you are, even less about your preferences</p>
-        <hr class="my-4">
-        <p>
-            I save couple of data for every request that comes to my server like: IP address, requested page, referer and so on.
-            <br />
-            Just to know if someone is actually reading this website without using strange third party services like Google Analytics.
-            <br/> 
-            If you don't like to be in that list, send a mail and I will, very slowly, taking care of your request.
-        </p>
-        <a class="btn btn-primary btn-lg" href="/stat" role="button">Anyone can read those data here</a>
+    <div class="col-12">
+        <div class="jumbotron">
+            <h1 class="display-4">Privacy policy</h1>
+            <p class="lead">I don't give a fuck about who you are, even less about your preferences</p>
+            <hr class="my-4">
+            <p>
+                I save couple of data for every request that comes to my server like: IP address, requested page, referer and so on.
+                <br/>
+                Just to know if someone is actually reading this website without using strange third party services like Google Analytics.
+                <br/>
+                If you don't like to be in that list, send a mail and I will, very slowly, taking care of your request.
+            </p>
+            <a class="btn btn-primary btn-lg" href="/stat" role="button">Anyone can read those data here</a>
+        </div>
     </div>
 </div>
 <div class="row">
-    <div class="jumbotron">
-        <h1 class="display-4">Cookie policy</h1>
-        <p class="lead">
-            This website use two different policy depending from where visitors comes from:
-            <ul>
-                <li>
-                    From Europe: no third party cookie, just the default system one that makes anything works.
-                </li>
-                <li>
-                    Outside Europe: you got the full privacy invasion pack
-                    <ul>
-                        <li>advertising</li>
-                        <li>third-part cookies</li>
-                        <li>tracking codes</li>
-                        <li>
-                            your personal data sold to our precious collaborators:
-                            <ul>
-                                @foreach(var col in EnumerableExtensions.Random(lista,5))
-                                { 
-                                    <li>
-                                        @col
-                                    </li>
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </p>
-        <hr class="my-4">
-        <p>Discover more about how this system works</p>
-        <a class="btn btn-primary btn-lg" href="/read/play-with-gdpr" role="button">Here</a>
+    <div class="col-12">
+        <div class="jumbotron" id="cookie">
+            <h1 class="display-4">Cookie policy</h1>
+            <p class="lead">
+                This website use two different policy depending from where visitors comes from:
+                <ul>
+                    <li>
+                        From Europe: no third party cookie, just the default system one that makes anything works.
+                    </li>
+                    <li>
+                        Outside Europe: you got the full privacy invasion pack
+                        <ul>
+                            <li>advertising</li>
+                            <li>third-part cookies</li>
+                            <li>tracking codes</li>
+                            <li>
+                                your personal data sold to our precious collaborators:
+                                <ul>
+                                    @foreach (var col in EnumerableExtensions.Random(lista, 5))
+                                    {
+                                        <li>
+                                            @col
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+        </div>
     </div>
 </div>
