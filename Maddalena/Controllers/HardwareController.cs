@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using HardwareProviders.Board;
 using HardwareProviders.CPU;
+using HardwareProviders.HDD;
 using Maddalena.Models.Hardware;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,9 @@ namespace Maddalena.Controllers
 {
     public class HardwareController : Controller
     {
+        private static readonly Mainboard mainboard = new Mainboard();
         private static readonly Cpu[] cpus = Cpu.Discover();
+        private static readonly HardDrive[] hdd = HardDrive.Discover();
 
         public IActionResult Index()
         {
@@ -16,22 +20,13 @@ namespace Maddalena.Controllers
                 item.Update();
             }
 
-            var data = cpus.Select(cpu => new CpuModel
+
+            return View(new HardwareModel
             {
-                Name = cpu.Name,
-                Vendor = cpu.Vendor,
-                BusClock = cpu.BusClock,
-                CoreTemperatures = cpu.CoreTemperatures,
-                CorePowers = cpu.CorePowers,
-                CoreClocks = cpu.CoreClocks,
-                CoreLoads = cpu.CoreLoads,
-                CoreCount = cpu.CoreCount,
-                TotalLoad = cpu.TotalLoad,
-                HasTimeStampCounter = cpu.HasTimeStampCounter,
-                PackageTemperature = cpu.PackageTemperature,
-                TimeStampCounterFrequency = cpu.TimeStampCounterFrequency
+                Mainboard = mainboard,
+                Cpu = cpus,
+                Hdd = hdd
             });
-            return View(data);
         }
     }
 }

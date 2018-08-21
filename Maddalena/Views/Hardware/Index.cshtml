@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Maddalena.Models.Hardware.CpuModel>
+﻿
+@using System;
+@using System.Linq;
+@model Maddalena.Models.Hardware.HardwareModel
 
 @{
     ViewData["Title"] = "Cpu live data";
@@ -7,127 +10,276 @@
 
 
 <div class="row">
-    <h2>CPU live data</h2>
     <div class="col-12">
         <p>
             Those are live data from the CPU of this server extracted by my software
             <b>HardwereProviders.CPU</b>.
             <br />
-            This library is a renovation of 
-            <a href="https://github.com/openhardwaremonitor" target="_blank">Open
-            Hardware Monitor
-            </a>, a great project 
+            This library is a renovation of
+            <a href="https://github.com/openhardwaremonitor" target="_blank">
+                Open
+                Hardware Monitor
+            </a>, a great project
             that doesn't have any update since 2016.
             <br />
             I merged and integrated all pending pull request and divided the project into single
             portable projects.
             <br />
-            You can browser the whole repository on 
+            You can browser the whole repository on
             <a href="https://github.com/matteofabbri/HardwareProviders">GitHub</a>.
         </p>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <table class="table">
-            @foreach (var item in Model)
-            {
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h2>Motherboard</h2>
+            <table class="table table-striped table-bordered">
                 <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+                    <td>Name</td>
+                    <td>@Model.Mainboard.Name</td>
                 </tr>
                 <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.Vendor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vendor)
-                    </td>
+                    <td>Manufacturer</td>
+                    <td>@Model.Mainboard.Manufacturer</td>
                 </tr>
                 <tr>
+                    <td>Model</td>
+                    <td>@Model.Mainboard.Model</td>
+                </tr>
+                <tr>
+                    <td>LM Sensors</td>
                     <td>
-                        @Html.LabelFor(modelItem => item.CorePowers)
-                    </td>
-                    <td>
-                        @foreach (var sensor in item.CorePowers)
+                        @if (Model.Mainboard.LmSensors?.SuperIO?.Any() == true)
                         {
-                            <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor?.ToString()</b>
-                            <br />
+                            <ul>
+                                @foreach (var item in Model.Mainboard.LmSensors.SuperIO)
+                                {
+                                    @item
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>no available sensors</span>
                         }
                     </td>
                 </tr>
                 <tr>
+                    <td>LPC-IO Sensors</td>
                     <td>
-                        @Html.LabelFor(modelItem => item.CoreTemperatures)
-                    </td>
-                    <td>
-                        @foreach (var sensor in item.CoreTemperatures)
+                        @if (Model.Mainboard.Lpcio?.SuperIo?.Any() == true)
                         {
-                            <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor.Value</b>
-                            <br />
+                            <span></span>
+                            <ul>
+                                @foreach (var item in Model.Mainboard.Lpcio.SuperIo)
+                                {
+                                    @item
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>no available sensors</span>
                         }
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.CoreClocks)
-                    </td>
-                    <td>
-                        @foreach (var sensor in item.CoreClocks)
-                        {
-                            <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor.Value</b>
-                            <br />
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.BusClock)
-                    </td>
-                    <td>
-                        <b style="float:right"> @item.BusClock.Value</b>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.PackageTemperature)
-                    </td>
-                    <td>
-                        <b style="float:right">@item.PackageTemperature.Value</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.CoreLoads)
-                    </td>
-                    <td>
-                        @foreach (var sensor in item.CoreLoads)
-                        {
-                            <span>@sensor?.Name</span>
-                            <b style="float:right">@sensor.Value</b>
-                            <br />
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(modelItem => item.TotalLoad)
-                    </td>
-                    <td>
-                        <b style="float:right">@item.TotalLoad.Value</b>
-                    </td>
-                </tr>
-            }
-        </table>
+            </table>
+        </div>
     </div>
-</div>
+</section>
 
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h2>CPU</h2>
+            <table class="table table-striped table-bordered">
+                @foreach (var item in Model.Cpu)
+                {
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.Vendor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vendor)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.CorePowers)
+                        </td>
+                        <td>
+                            @foreach (var sensor in item.CorePowers)
+                            {
+                                <span>@sensor?.Name</span>
+                                <span style="float:right">
+                                    @sensor?.Value.Value.ToString("0.0") W
+                                </span>
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.CoreTemperatures)
+                        </td>
+                        <td>
+                            @foreach (var sensor in item.CoreTemperatures)
+                            {
+                                <span>@sensor?.Name</span>
+                                <span style="float:right">
+                                    @sensor.Value.Value.ToString("0.0") °
+                                </span>
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.CoreClocks)
+                        </td>
+                        <td>
+                            @foreach (var sensor in item.CoreClocks)
+                            {
+                                <span>@sensor?.Name</span>
+                                <span style="float:right">
+                                    @sensor.Value.Value.ToString("0.0") MHz
+                                </span>
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.BusClock)
+                        </td>
+                        <td>
+                            <span style="float:right">
+                                @item.BusClock.Value.Value.ToString("0.0") MHz
+                            </span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.PackageTemperature)
+                        </td>
+                        <td>
+                            <span style="float:right">
+                                @item.PackageTemperature.Value.Value.ToString("0.0") °
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.CoreLoads)
+                        </td>
+                        <td>
+                            @foreach (var sensor in item.CoreLoads)
+                            {
+                                <span>@sensor?.Name</span>
+                                <span style="float:right">@sensor.Value.Value.ToString("0.0") %</span>
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(modelItem => item.TotalLoad)
+                        </td>
+                        <td>
+                            <span style="float:right">
+                                @item.TotalLoad.Value.Value.ToString("0.0") %
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h2>Hard drives</h2>
+            @foreach (var item in Model.Hdd)
+            {
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <td>FirmwareRevision</td>
+                        <td>@item.FirmwareRevision</td>
+                    </tr>
+                    <tr>
+                        <td>FirmwareRevision</td>
+                        <td>@item.Name</td>
+                    </tr>
+                    <tr>
+                        <td>SmartSensors</td>
+                        <td>
+                            @if (item.SmartSensors?.Any() == true)
+                            {
+                                <ul class="list-unstyled">
+                                    @foreach (var sensor in item.SmartSensors)
+                                    {
+                                        <li>@sensor.Value</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>no smart sensors detected</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Drive infos</td>
+                        <td>
+                            @foreach (var di in item.DriveInfos)
+                            {
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Name:  @di.Name
+                                    </li>
+                                    <li>
+                                        AvailableFreeSpace: @di.AvailableFreeSpace
+                                    </li>
+                                    <li>
+                                        DriveFormat:  @di.DriveFormat
+                                    </li>
+                                    <li>
+                                        DriveType:  @di.DriveType
+                                    </li>
+                                    <li>
+                                        IsReady:  @di.IsReady
+                                    </li>
+                                    <li>
+                                        RootDirectory : @di.RootDirectory
+                                    </li>
+                                    <li>
+                                        TotalFreeSpace :    @di.TotalFreeSpace
+                                    </li>
+                                    <li>
+                                        TotalSize:   @di.TotalSize
+                                    </li>
+                                    <li>
+                                        VolumeLabel:    @di.VolumeLabel
+                                    </li>
+                                </ul>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </div>
+</section>

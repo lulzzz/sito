@@ -7,9 +7,8 @@
 }
 
 <style>
-    section
-    {
-        margin-top:25px;
+    section {
+        margin-top: 25px;
     }
 </style>
 
@@ -39,12 +38,56 @@
                 </tr>
                 <tr>
                     <td> Daily average</td>
-                    <td> @Model.DailyAverage</td>
+                    <td> @Model.DailyAverage.ToString("0.0")</td>
                 </tr>
                 <tr>
                     <td> Unique visitors served</td>
                     <td> @Model.UniqueVisitors</td>
                 </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h3>Request in last 30 minutes</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th> Identity </th>
+                        <th> Ip Address </th>
+                        <th> Path </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Requests)
+                    {
+                        <tr>
+                            <td>
+                                @item.Timestamp.RelativeDate()
+                            </td>
+                            <td>
+                                <a href="/stat/identity/@item.Identity">@item.Identity</a>
+                            </td>
+                            <td>
+                                @item.RemoteIpAddress.ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Path)
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.Referer))
+                                {
+                                    <a href="@item.Referer">&gt; refer</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
@@ -137,7 +180,7 @@
             <h3>Request served by country</h3>
 
             <table class="table table-striped">
-                @foreach (var country in Model.ServedByCountry.OrderByDescending(x => x.Served))
+                @foreach (var country in Model.ServedByCountry.OrderByDescending(x => x.Served).Take(20))
                 {
                     <tr>
                         <td> @country.Country </td>
@@ -156,7 +199,7 @@
             <h3>Request served by url</h3>
 
             <table class="table table-striped">
-                @foreach (var url in Model.UrlServed.Where(x => x.Served > 3).OrderByDescending(x => x.Served))
+                @foreach (var url in Model.UrlServed.Where(x => x.Served > 30).OrderByDescending(x => x.Served))
                 {
                     <tr>
                         <td> @url.Url </td>
@@ -167,48 +210,3 @@
         </div>
     </div>
 </section>
-
-<section>
-    <div class="row">
-        <div class="col-12">
-            <h3>Request in last 30 minutes</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th> Identity </th>
-                        <th> Ip Address </th>
-                        <th> Path </th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Requests)
-                    {
-                        <tr>
-                            <td>
-                                @item.Timestamp.RelativeDate()
-                            </td>
-                            <td>
-                                <a href="/stat/identity/@item.Identity">@item.Identity</a>
-                            </td>
-                            <td>
-                                @item.RemoteIpAddress.ToString()
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Path)
-                            </td>
-                            <td>
-                                @if (!string.IsNullOrWhiteSpace(item.Referer))
-                                {
-                                    <a href="@item.Referer">&gt; refer</a>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
