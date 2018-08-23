@@ -32,3 +32,6 @@
 /JsCore/.vs
 /JsCore/JsCore/obj
 /JsCore/JsCore/bin
+/AccountTransfer.NetCore/.vs
+/AccountTransfer.NetCore/src/AccountTransfer.Grains/obj
+/AccountTransfer.NetCore/src/AccountTransfer.Grains/bin

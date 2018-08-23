@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Microsoft.ML" Version="0.4.0" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="$(OrleansPackageVersion)" />
+    <PackageReference Include="Microsoft.Orleans.OrleansCodeGenerator.Build" Version="2.0.4" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Orleans.Transactions" Version="2.0.4" />
+    <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AccountTransfer.Interfaces\AccountTransfer.Interfaces.csproj" />
+  </ItemGroup>
+</Project>
