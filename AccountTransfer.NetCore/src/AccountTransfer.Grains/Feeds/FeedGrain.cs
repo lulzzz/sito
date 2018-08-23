@@ -23,10 +23,7 @@ namespace AccountTransfer.Grains
         {
             await base.OnActivateAsync();
 
-            var url = new MongoUrl("mongodb://localhost/ml");
-            var client = new MongoClient(url);
-
-            _collection = client.GetDatabase(url.DatabaseName).GetCollection<MongoFeed>("news");
+            _collection = Mongo.Database.GetCollection<MongoFeed>("feed");
 
             if(_collection.AsQueryable().Count()==0)
             {
@@ -90,7 +87,7 @@ namespace AccountTransfer.Grains
                                 Title = item.Title,
                                 Description = item.Description,
                                 Link = item.Links.First().Uri.AbsoluteUri,
-                                Timestamp = item.Published.DateTime,
+                                //Timestamp = item.Published.DateTime,
                                 Categories = item.Categories.Select(x => x.Name).ToArray(),
                             });
 

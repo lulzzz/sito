@@ -8,7 +8,7 @@
 #pragma warning disable 693
 #pragma warning disable 1591
 #pragma warning disable 1998
-[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGen9fd6067d35FeaturePopulator))]
+[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGenc7a8cbe073FeaturePopulator))]
 [assembly: global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
 [assembly: global::Orleans.CodeGeneration.OrleansCodeGenerationTargetAttribute(@"AccountTransfer.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
 namespace AccountTransfer.Interfaces
@@ -220,6 +220,8 @@ namespace AccountTransfer.Interfaces
                     {
                         case 917989621:
                             return @"AnalizeAsync";
+                        case -2079297134:
+                            return @"UpdateModelAsync";
                         default:
                             throw new global::System.NotImplementedException(@"interfaceId=" + 1424151175 + @",methodId=" + methodId);
                     }
@@ -232,6 +234,11 @@ namespace AccountTransfer.Interfaces
         public global::System.Threading.Tasks.Task AnalizeAsync(global::AccountTransfer.Interfaces.News news)
         {
             return base.InvokeMethodAsync<global::System.Object>(917989621, new global::System.Object[]{news});
+        }
+
+        public global::System.Threading.Tasks.Task UpdateModelAsync()
+        {
+            return base.InvokeMethodAsync<global::System.Object>(-2079297134, null);
         }
     }
 
@@ -252,6 +259,9 @@ namespace AccountTransfer.Interfaces
                     {
                         case 917989621:
                             await ((global::AccountTransfer.Interfaces.INewsGrain)grain).AnalizeAsync((global::AccountTransfer.Interfaces.News)arguments[0]);
+                            return null;
+                        case -2079297134:
+                            await ((global::AccountTransfer.Interfaces.INewsGrain)grain).UpdateModelAsync();
                             return null;
                         default:
                             throw new global::System.NotImplementedException(@"interfaceId=" + 1424151175 + @",methodId=" + methodId);
@@ -280,7 +290,7 @@ namespace AccountTransfer.Interfaces
     }
 }
 
-namespace OrleansGeneratedCodeCE9B3EC9
+namespace OrleansGeneratedCode315B5B65
 {
     using global::Orleans;
     using global::System.Reflection;
@@ -375,7 +385,7 @@ namespace OrleansGeneratedCodeCE9B3EC9
 namespace OrleansGeneratedCode
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
-    internal sealed class OrleansCodeGen9fd6067d35FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
+    internal sealed class OrleansCodeGenc7a8cbe073FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
@@ -389,8 +399,8 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.Feed), typeof (OrleansGeneratedCodeCE9B3EC9.OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer));
-            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.News), typeof (OrleansGeneratedCodeCE9B3EC9.OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer));
+            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.Feed), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer));
+            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.News), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer));
             feature.AddKnownType(@"AccountTransfer.Interfaces.ClusterClient,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.ClusterClient");
             feature.AddKnownType(@"AccountTransfer.Interfaces.Feed,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.Feed");
             feature.AddKnownType(@"AccountTransfer.Interfaces.IFeedGrain,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.IFeedGrain");
