@@ -1,0 +1,6 @@
+D:\Maddalena\Mongolino\Mongolino\bin\Release\netstandard2.0\Mongolino.deps.json
+D:\Maddalena\Mongolino\Mongolino\bin\Release\netstandard2.0\Mongolino.dll
+D:\Maddalena\Mongolino\Mongolino\obj\Release\netstandard2.0\Mongolino.csprojAssemblyReference.cache
+D:\Maddalena\Mongolino\Mongolino\obj\Release\netstandard2.0\Mongolino.csproj.CoreCompileInputs.cache
+D:\Maddalena\Mongolino\Mongolino\obj\Release\netstandard2.0\Mongolino.AssemblyInfoInputs.cache
+D:\Maddalena\Mongolino\Mongolino\obj\Release\netstandard2.0\Mongolino.AssemblyInfo.cs
