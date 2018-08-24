@@ -5,10 +5,10 @@ namespace Maddalena.Datastore.Data
 {
     class MongoFeed : CollectionItem
     {
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
-        public string Url { get; set; }
+        internal string Url { get; set; }
 
-        public DateTime LastCheck { get; set; }
+        internal DateTime LastCheck { get; set; }
     }
 }

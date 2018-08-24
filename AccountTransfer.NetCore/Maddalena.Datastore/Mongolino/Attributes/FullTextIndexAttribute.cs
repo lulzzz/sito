@@ -2,7 +2,7 @@
 
 namespace Maddalena.Datastore.Mongolino.Attributes
 {
-    public class FullTextIndexAttribute : Attribute
+    internal class FullTextIndexAttribute : Attribute
     {
     }
 }

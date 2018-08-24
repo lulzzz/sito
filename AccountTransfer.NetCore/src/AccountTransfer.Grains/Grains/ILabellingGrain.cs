@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Maddalena.Client;
 using Orleans;
 
-namespace Maddalena.News.Grains.Grains
+namespace Maddalena.Grains.Grains
 {
     internal interface ILabellingGrain : IGrainWithStringKey
     {
-        Task LabelAsync(MongoNews news);
+        Task LabelAsync(News news);
         Task UpdateModelAsync();
     }
 }

@@ -6,14 +6,14 @@ namespace Maddalena.Datastore.Data
     [Serializable]
     class MongoNews : CollectionItem
     {
-        public string Title { get; set; }
+        internal string Title { get; set; }
 
-        public string Description { get; set; }
+        internal string Description { get; set; }
 
-        public DateTime Timestamp { get; set; }
+        internal DateTime Timestamp { get; set; }
 
-        public string[] Categories { get; set; }
+        internal string[] Categories { get; set; }
 
-        public string Link { get; set; }
+        internal string Link { get; set; }
     }
 }

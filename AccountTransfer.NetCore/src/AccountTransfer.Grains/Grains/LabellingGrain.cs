@@ -1,46 +1,41 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AccountTransfer.Grains;
-using Maddalena.News.Client;
-using Maddalena.News.Grains.Data;
-using Maddalena.News.Grains.Learning;
-using Maddalena.News.Grains.Libraries.Mongolino;
-using Maddalena.News.Grains.NewsProcessing;
-using numl.Model;
-using numl.Supervised;
-using numl.Supervised.DecisionTree;
+﻿using System.Threading.Tasks;
+using Maddalena.Client;
+using Maddalena.Grains.Learning;
+using Maddalena.Numl.Model;
+using Maddalena.Numl.Supervised;
 using Orleans;
 
-namespace Maddalena.News.Grains.Grains
+namespace Maddalena.Grains.Grains
 {
     class LabellingGrain : Grain, ILabellingGrain
     {
         private IModel _model;
         private Descriptor descriptor = Descriptor.Create<LabeledNews>();
-        private Collection<NewsLabel> _collection = Settings.GetCollection<NewsLabel>();
 
         public override async Task OnActivateAsync()
         {
             await base.OnActivateAsync();
-            _model = await ModelRepository.LoadModelAsync(IdentityString);
+
+            _model = await Datastore.Datastore.LoadModelAsync(IdentityString);
         }
 
-        public async Task LabelAsync(MongoNews news)
+        public async Task LabelAsync(News news)
         {
             await UpdateModelAsync();
 
-            var res = _model.Predict(news);
+            var res = _model.Predict(new LabeledNews
+            {
+                Categories = string.Join(" ", news.Categories),
+                Description = news.Description,
+                Link = news.Link,
+                Timestamp = news.Timestamp,
+                Title = news.Title
+            });
         }
 
-        private async Task<LabeledNews[]> LoadLabeledAsync()
+        public Task UpdateModelAsync()
         {
-            var  (await _collection.WhereAsync(x => x.Label == IdentityString)).ToArray();
-        }
-
-        public async Task UpdateModelAsync()
-        {
-            var generator = new DecisionTreeGenerator();
+            /*var generator = new DecisionTreeGenerator();
 
             var data = new List<MongoNews>();
             foreach (var item in _collection.All)
@@ -50,7 +45,9 @@ namespace Maddalena.News.Grains.Grains
 
             _model = generator.Generate(descriptor, data);
 
-            await ModelRepository.SaveModelAsync(IdentityString, _model);
+            await ModelRepository.SaveModelAsync(IdentityString, _model);*/
+
+            return Task.CompletedTask;
         }
     }   
 }

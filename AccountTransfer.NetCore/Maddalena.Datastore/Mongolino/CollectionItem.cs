@@ -3,9 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Maddalena.Datastore.Mongolino
 {
-    public class CollectionItem
+    internal class CollectionItem
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        internal string Id { get; set; }
     }
 }

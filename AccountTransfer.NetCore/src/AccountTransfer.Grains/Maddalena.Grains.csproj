@@ -14,6 +14,10 @@
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Maddalena.Datastore\Maddalena.Datastore.csproj" />
     <ProjectReference Include="..\AccountTransfer.Interfaces\Maddalena.Client.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Learning\" />
   </ItemGroup>
 </Project>

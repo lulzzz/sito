@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using AccountTransfer.Grains;
 using Maddalena.Client;
 using Maddalena.Client.Interfaces;
-using Maddalena.News.Client;
-using Maddalena.News.Grains.Feeds;
-using Maddalena.News.Grains.Grains;
+using Maddalena.Grains.Grains;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Hosting.Development;
 
 namespace SiloHost
 {

@@ -5,8 +5,10 @@ namespace Maddalena.Datastore.Data
 {
     class MongoLabel : CollectionItem
     {
-        public string Name { get; set; }
+        internal string Label { get; set; }
 
-        public LabelValue Value { get; set; }
+        internal Label LabelValue { get; set; }
+
+        internal string NewsId { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Maddalena.Datastore.Mongolino.Attributes
 {
-    public class DescendingIndexAttribute : Attribute
+    internal class DescendingIndexAttribute : Attribute
     {
     }
 }

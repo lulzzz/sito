@@ -9,9 +9,9 @@ using MongoDB.Driver;
 
 namespace Maddalena.Datastore.Mongolino
 {
-    public class Collection<T> where T: CollectionItem
+    internal class Collection<T> where T: CollectionItem
     {
-        public Collection(string connectionString, string collectionName)
+        internal Collection(string connectionString, string collectionName)
         {
             var type = typeof(T);
 
@@ -47,33 +47,33 @@ namespace Maddalena.Datastore.Mongolino
             }
         }
 
-        public Task InsertOneAsync(T save) => MongoCollection.InsertOneAsync(save);
+        internal Task InsertOneAsync(T save) => MongoCollection.InsertOneAsync(save);
 
         private IMongoCollection<T> MongoCollection { get; }
 
-        public void FullTextindex(Expression<Func<T, object>> func)
+        internal void FullTextindex(Expression<Func<T, object>> func)
         {
             MongoCollection.Indexes.CreateOne(Builders<T>.IndexKeys.Text(func));
         }
 
-        public void AscendingIndex(Expression<Func<T, object>> func)
+        internal void AscendingIndex(Expression<Func<T, object>> func)
         {
             MongoCollection.Indexes.CreateOne(Builders<T>.IndexKeys.Ascending(func));
         }
 
-        public void DescendingIndex(Expression<Func<T, object>> func)
+        internal void DescendingIndex(Expression<Func<T, object>> func)
         {
             MongoCollection.Indexes.CreateOne(Builders<T>.IndexKeys.Descending(func));
         }
 
-        public IEnumerable<T> FullTextSearch(string text)
+        internal IEnumerable<T> FullTextSearch(string text)
         {
             var filter = Builders<T>.Filter.Text(text);
             var res = MongoCollection.Find(filter);
             return res.ToEnumerable();
         }
 
-        public async Task<IEnumerable<T>> FullTextSearchAsync(string text)
+        internal async Task<IEnumerable<T>> FullTextSearchAsync(string text)
         {
             var filter = Builders<T>.Filter.Text(text);
             var res = await MongoCollection.FindAsync(filter);
@@ -81,7 +81,7 @@ namespace Maddalena.Datastore.Mongolino
             return res.ToEnumerable();
         }
 
-        public T Random
+        internal T Random
         {
             get
             {
@@ -95,73 +95,73 @@ namespace Maddalena.Datastore.Mongolino
             }
         }
 
-        public IEnumerable<T> TakeRandom(int v)
+        internal IEnumerable<T> TakeRandom(int v)
         {
             for (int i = 0; i < v; i++) yield return Random;
         }
 
-        public IEnumerable<T> All => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable();
+        internal IEnumerable<T> All => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable();
 
-        public bool Empty => Count() == 0;
+        internal bool Empty => Count() == 0;
 
-        public IQueryable<T> Queryable() => MongoCollection.AsQueryable();
+        internal IQueryable<T> Queryable() => MongoCollection.AsQueryable();
 
-        public IEnumerable<K> Select<K>(Func<T, K> sel)
+        internal IEnumerable<K> Select<K>(Func<T, K> sel)
         {
             var filter = Builders<T>.Filter.Empty;
             return MongoCollection.Find(filter).ToEnumerable().Select(sel);
         }
 
-        public IEnumerable<T> SortBy(Expression<Func<T, object>> sel)
+        internal IEnumerable<T> SortBy(Expression<Func<T, object>> sel)
         {
             var filter = Builders<T>.Filter.Empty;
             var res = MongoCollection.Find(filter).SortBy(sel);
             return res.ToEnumerable();
         }
 
-        public IEnumerable<T> SortByDescending(Expression<Func<T, object>> sel)
+        internal IEnumerable<T> SortByDescending(Expression<Func<T, object>> sel)
         {
             var filter = Builders<T>.Filter.Empty;
             var res = MongoCollection.Find(filter).SortByDescending(sel);
             return res.ToEnumerable();
         }
 
-        public bool Any(Expression<Func<T, bool>> p) => MongoCollection.Find(p).Any();
+        internal bool Any(Expression<Func<T, bool>> p) => MongoCollection.Find(p).Any();
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> p)
+        internal async Task<bool> AnyAsync(Expression<Func<T, bool>> p)
         {
             var res = await MongoCollection.FindAsync(p);
             return await res.AnyAsync();
         }
 
-        public long Count() => MongoCollection.Count(Builders<T>.Filter.Empty);
+        internal long Count() => MongoCollection.Count(Builders<T>.Filter.Empty);
 
-        public long Count(Expression<Func<T, bool>> sel) => MongoCollection.Count(sel);
+        internal long Count(Expression<Func<T, bool>> sel) => MongoCollection.Count(sel);
 
-        public Task<long> CountAsync(Expression<Func<T, bool>> sel) => MongoCollection.CountAsync(sel);
+        internal Task<long> CountAsync(Expression<Func<T, bool>> sel) => MongoCollection.CountAsync(sel);
 
-        public Task<long> CountAsync() => MongoCollection.CountAsync(Builders<T>.Filter.Empty);
+        internal Task<long> CountAsync() => MongoCollection.CountAsync(Builders<T>.Filter.Empty);
 
-        public void Add(T obj)
+        internal void Add(T obj)
         {
             MongoCollection.InsertOneAsync(obj);
         }
 
-        public async Task<IEnumerable<T>> AnyEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<IEnumerable<T>> AnyEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyEq(sel, value);
             var res = await MongoCollection.FindAsync(filter);
             return res.ToEnumerable();
         }
 
-        public async Task<IEnumerable<T>> AnyGreaterAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<IEnumerable<T>> AnyGreaterAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyGt(sel, value);
             var res = await MongoCollection.FindAsync(filter);
             return res.ToEnumerable();
         }
 
-        public async Task<IEnumerable<T>> AnyGreaterOrEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<IEnumerable<T>> AnyGreaterOrEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyGte(sel, value);
             var res = await MongoCollection.FindAsync(filter);
@@ -169,35 +169,35 @@ namespace Maddalena.Datastore.Mongolino
         }
 
 
-        public async Task<IEnumerable<T>> AnyLowerAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<IEnumerable<T>> AnyLowerAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyLt(sel, value);
             var res = await MongoCollection.FindAsync(filter);
             return res.ToEnumerable();
         }
 
-        public async Task<IEnumerable<T>> AnyLowerOrEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<IEnumerable<T>> AnyLowerOrEqualAsync<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyLte(sel, value);
             var res = await MongoCollection.FindAsync(filter);
             return res.ToEnumerable();
         }
 
-        public IEnumerable<T> AnyEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal IEnumerable<T> AnyEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyEq(sel, value);
             var res = MongoCollection.Find(filter);
             return res.ToEnumerable();
         }
 
-        public IEnumerable<T> AnyGreater<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal IEnumerable<T> AnyGreater<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyGt(sel, value);
             var res = MongoCollection.Find(filter);
             return res.ToEnumerable();
         }
 
-        public IEnumerable<T> AnyGreaterOrEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal IEnumerable<T> AnyGreaterOrEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyGte(sel, value);
             var res = MongoCollection.Find(filter);
@@ -205,14 +205,14 @@ namespace Maddalena.Datastore.Mongolino
         }
 
 
-        public IEnumerable<T> AnyLower<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal IEnumerable<T> AnyLower<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyLt(sel, value);
             var res = MongoCollection.Find(filter);
             return res.ToEnumerable();
         }
 
-        public IEnumerable<T> AnyLowerOrEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal IEnumerable<T> AnyLowerOrEqual<K>(Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.AnyLte(sel, value);
             var res = MongoCollection.Find(filter);
@@ -220,33 +220,33 @@ namespace Maddalena.Datastore.Mongolino
         }
 
 
-        public T Create(T obj)
+        internal T Create(T obj)
         {
             MongoCollection.InsertOne(obj);
             return obj;
         }
 
-        public async Task<T> CreateAsync(T obj)
+        internal async Task<T> CreateAsync(T obj)
         {
             await MongoCollection.InsertOneAsync(obj);
             return obj;
         }
 
-        public void Replace(T obj)
+        internal void Replace(T obj)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             MongoCollection.ReplaceOne(filter, obj);
         }
 
 
-        public async Task ReplaceAsync(T obj)
+        internal async Task ReplaceAsync(T obj)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             await MongoCollection.ReplaceOneAsync(filter, obj);
         }
 
 
-        public async Task<T> AddToAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task<T> AddToAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.AddToSet(sel, value);
@@ -254,7 +254,7 @@ namespace Maddalena.Datastore.Mongolino
             return obj;
         }
 
-        public async Task<T> AddToAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, IEnumerable<K> value)
+        internal async Task<T> AddToAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, IEnumerable<K> value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.AddToSetEach(sel, value);
@@ -262,7 +262,7 @@ namespace Maddalena.Datastore.Mongolino
             return obj;
         }
 
-        public T AddTo<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal T AddTo<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.AddToSet(sel, value);
@@ -270,105 +270,105 @@ namespace Maddalena.Datastore.Mongolino
             return obj;
         }
 
-        public async Task UpdateAsync(T obj)
+        internal async Task UpdateAsync(T obj)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             await MongoCollection.ReplaceOneAsync(filter, obj);
         }
 
-        public void Update<K>(T obj, Expression<Func<T, K>> sel, K value)
+        internal void Update<K>(T obj, Expression<Func<T, K>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.Set(sel, value);
             MongoCollection.UpdateOne(filter, update);
         }
 
-        public async Task UpdateAsync<K>(T obj, Expression<Func<T, K>> sel, K value)
+        internal async Task UpdateAsync<K>(T obj, Expression<Func<T, K>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.Set(sel, value);
             await MongoCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AppendAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
+        internal async Task AppendAsync<K>(T obj, Expression<Func<T, IEnumerable<K>>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.AddToSet(sel, value);
             await MongoCollection.UpdateOneAsync(filter, update);
         }
 
-        public void Increase<K>(T obj, Expression<Func<T, K>> sel, K value)
+        internal void Increase<K>(T obj, Expression<Func<T, K>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.Inc(sel, value);
             MongoCollection.UpdateOne(filter, update);
         }
 
-        public async Task IncreaseAsync<K>(T obj, Expression<Func<T, K>> sel, K value)
+        internal async Task IncreaseAsync<K>(T obj, Expression<Func<T, K>> sel, K value)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, obj.Id);
             var update = Builders<T>.Update.Inc(sel, value);
             await MongoCollection.UpdateOneAsync(filter, update);
         }
 
-        public void Delete(T obj)
+        internal void Delete(T obj)
         {
             MongoCollection.DeleteOne(Builders<T>.Filter.Eq(x => x.Id, obj.Id));
         }
 
-        public void Delete(IEnumerable<T> obj)
+        internal void Delete(IEnumerable<T> obj)
         {
             MongoCollection.DeleteMany(Builders<T>.Filter.In(x => x.Id, obj.Select(x => x.Id)));
         }
 
-        public async Task DeleteAsync(Expression<Func<T, bool>> p)
+        internal async Task DeleteAsync(Expression<Func<T, bool>> p)
         {
             await MongoCollection.DeleteManyAsync(p);
         }
 
-        public async Task DeleteAsync(T obj)
+        internal async Task DeleteAsync(T obj)
         {
             await MongoCollection.DeleteOneAsync(Builders<T>.Filter.Eq(x => x.Id, obj.Id));
         }
 
-        public async Task DeleteAsync(IEnumerable<T> obj)
+        internal async Task DeleteAsync(IEnumerable<T> obj)
         {
             await MongoCollection.DeleteManyAsync(Builders<T>.Filter.In(x => x.Id, obj.Select(x => x.Id)));
         }
 
-        public T GetOrCreate(Expression<Func<T, bool>> p, T obj) => FirstOrDefault(p) ?? Create(obj);
+        internal T GetOrCreate(Expression<Func<T, bool>> p, T obj) => FirstOrDefault(p) ?? Create(obj);
 
-        public async Task<T> GetOrCreateAsync(Expression<Func<T, bool>> p, T obj)
+        internal async Task<T> GetOrCreateAsync(Expression<Func<T, bool>> p, T obj)
         {
             return (await FirstOrDefaultAsync(p)) ?? await CreateAsync(obj);
         }
 
-        public T FirstOrDefault() => MongoCollection.Find(Builders<T>.Filter.Empty).FirstOrDefault();
+        internal T FirstOrDefault() => MongoCollection.Find(Builders<T>.Filter.Empty).FirstOrDefault();
 
-        public T FirstOrDefault(Expression<Func<T, bool>> p) => MongoCollection.Find(p).FirstOrDefault();
+        internal T FirstOrDefault(Expression<Func<T, bool>> p) => MongoCollection.Find(p).FirstOrDefault();
 
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> p) => await (await MongoCollection.FindAsync(p)).FirstOrDefaultAsync();
+        internal async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> p) => await (await MongoCollection.FindAsync(p)).FirstOrDefaultAsync();
 
-        public T First(Expression<Func<T, bool>> p) => MongoCollection.Find(p).FirstOrDefault();
+        internal T First(Expression<Func<T, bool>> p) => MongoCollection.Find(p).FirstOrDefault();
 
-        public IEnumerable<T> Where(Expression<Func<T, bool>> p)
+        internal IEnumerable<T> Where(Expression<Func<T, bool>> p)
         {
             return (MongoCollection.Find(p)).ToEnumerable();
         }
 
-        public async Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> p)
+        internal async Task<IEnumerable<T>> WhereAsync(Expression<Func<T, bool>> p)
         {
             return (await MongoCollection.FindAsync(p)).ToEnumerable();
         }
 
-        public IEnumerable<T> Search(string search) => MongoCollection.Find(Builders<T>.Filter.Text(search)).ToEnumerable();
+        internal IEnumerable<T> Search(string search) => MongoCollection.Find(Builders<T>.Filter.Text(search)).ToEnumerable();
 
-        public int Sum(Func<T, int> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
+        internal int Sum(Func<T, int> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
 
-        public double Sum(Func<T, double> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
+        internal double Sum(Func<T, double> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
 
-        public decimal Sum(Func<T, decimal> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
+        internal decimal Sum(Func<T, decimal> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
 
-        public float Sum(Func<T, float> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
+        internal float Sum(Func<T, float> sum) => MongoCollection.Find(Builders<T>.Filter.Empty).ToEnumerable().Sum(sum);
     }
 }
