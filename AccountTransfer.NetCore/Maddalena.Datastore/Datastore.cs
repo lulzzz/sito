@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Maddalena.Client;
@@ -39,6 +41,11 @@ namespace Maddalena.Datastore
             });
 
             _mapper = config.CreateMapper();
+        }
+
+        public static IEnumerable<News> NewsForLabel(string identityString, Label bad, int v)
+        {
+            throw new NotImplementedException();
         }
 
         public static Task Create(Feed feed) => _feedCollection.InsertOneAsync(_mapper.Map<MongoFeed>(feed));

@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Maddalena.Client;
 using Maddalena.Grains.Learning;
 using Maddalena.Numl.Model;
 using Maddalena.Numl.Supervised;
+using Maddalena.Numl.Supervised.DecisionTree;
 using Orleans;
 
 namespace Maddalena.Grains.Grains
@@ -35,13 +37,10 @@ namespace Maddalena.Grains.Grains
 
         public Task UpdateModelAsync()
         {
-            /*var generator = new DecisionTreeGenerator();
+            var generator = new DecisionTreeGenerator();
+            var data = new List<LabeledNews>();
 
-            var data = new List<MongoNews>();
-            foreach (var item in _collection.All)
-            {
-                data.Add(item);
-            }
+            data.AddRange(Datastore.Datastore.NewsForLabel(IdentityString, Label.Bad, 108);
 
             _model = generator.Generate(descriptor, data);
 
