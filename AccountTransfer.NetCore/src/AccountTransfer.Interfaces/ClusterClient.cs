@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Maddalena.Client.Interfaces;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Runtime;
 
-namespace AccountTransfer.Interfaces
+namespace Maddalena.Client
 {
     /// <summary>
     /// Orleans test silo client
@@ -54,7 +55,9 @@ namespace AccountTransfer.Interfaces
             }
         }
 
-        public IFeedGrain FeedGrain => _client.GetGrain<IFeedGrain>(Guid.Empty);
+        public IFeedGrain FeedGrain => _client.GetGrain<IFeedGrain>(Guid.NewGuid());
+
+        public INewsGrain NewsGrain => _client.GetGrain<INewsGrain>(Guid.NewGuid());
 
         public Task DoClientWork()
         {

@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.Orleans.Transactions" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AccountTransfer.Grains\AccountTransfer.Grains.csproj" />
-    <ProjectReference Include="..\AccountTransfer.Interfaces\AccountTransfer.Interfaces.csproj" />
+    <ProjectReference Include="..\AccountTransfer.Grains\Maddalena.Grains.csproj" />
+    <ProjectReference Include="..\AccountTransfer.Interfaces\Maddalena.Client.csproj" />
   </ItemGroup>
 </Project>

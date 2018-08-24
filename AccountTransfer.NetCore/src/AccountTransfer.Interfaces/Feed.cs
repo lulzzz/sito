@@ -1,10 +1,12 @@
 ﻿using System;
 
-namespace AccountTransfer.Interfaces
+namespace Maddalena.Client
 {
     [Serializable]
-    public class Feed
+    public sealed class Feed
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Url { get; set; }

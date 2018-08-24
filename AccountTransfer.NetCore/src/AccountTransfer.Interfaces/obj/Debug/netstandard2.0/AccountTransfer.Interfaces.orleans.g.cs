@@ -16,8 +16,8 @@ namespace AccountTransfer.Interfaces
     using global::Orleans;
     using global::System.Reflection;
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.SerializableAttribute, global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.GrainReferenceAttribute(typeof (global::AccountTransfer.Interfaces.IFeedGrain))]
-    internal class OrleansCodeGenFeedGrainReference : global::Orleans.Runtime.GrainReference, global::AccountTransfer.Interfaces.IFeedGrain
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.SerializableAttribute, global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.GrainReferenceAttribute(typeof (global::Maddalena.Client.Interfaces.IFeedGrain))]
+    internal class OrleansCodeGenFeedGrainReference : global::Orleans.Runtime.GrainReference, global::Maddalena.Client.Interfaces.IFeedGrain
     {
         protected OrleansCodeGenFeedGrainReference(global::Orleans.Runtime.GrainReference other): base (other)
         {
@@ -91,28 +91,28 @@ namespace AccountTransfer.Interfaces
             return base.InvokeMethodAsync<global::System.Object>(2003862074, null);
         }
 
-        public global::System.Threading.Tasks.Task Create(global::AccountTransfer.Interfaces.Feed feed)
+        public global::System.Threading.Tasks.Task Create(global::Maddalena.Client.Feed feed)
         {
             return base.InvokeMethodAsync<global::System.Object>(-568145289, new global::System.Object[]{feed});
         }
 
-        public global::System.Threading.Tasks.Task<global::AccountTransfer.Interfaces.Feed[]> GetFeeds()
+        public global::System.Threading.Tasks.Task<global::Maddalena.Client.Feed[]> GetFeeds()
         {
-            return base.InvokeMethodAsync<global::AccountTransfer.Interfaces.Feed[]>(1691531964, null);
+            return base.InvokeMethodAsync<global::Maddalena.Client.Feed[]>(1691531964, null);
         }
 
-        public global::System.Threading.Tasks.Task Update(global::AccountTransfer.Interfaces.Feed feed)
+        public global::System.Threading.Tasks.Task Update(global::Maddalena.Client.Feed feed)
         {
             return base.InvokeMethodAsync<global::System.Object>(-165937946, new global::System.Object[]{feed});
         }
 
-        public global::System.Threading.Tasks.Task Delete(global::AccountTransfer.Interfaces.Feed feed)
+        public global::System.Threading.Tasks.Task Delete(global::Maddalena.Client.Feed feed)
         {
             return base.InvokeMethodAsync<global::System.Object>(1233790183, new global::System.Object[]{feed});
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::Orleans.CodeGeneration.MethodInvokerAttribute(typeof (global::AccountTransfer.Interfaces.IFeedGrain), -769198927), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::Orleans.CodeGeneration.MethodInvokerAttribute(typeof (global::Maddalena.Client.Interfaces.IFeedGrain), -769198927), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     internal class OrleansCodeGenFeedGrainMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
     {
         public async global::System.Threading.Tasks.Task<global::System.Object> Invoke(global::Orleans.Runtime.IAddressable grain, global::Orleans.CodeGeneration.InvokeMethodRequest request)
@@ -128,18 +128,18 @@ namespace AccountTransfer.Interfaces
                     switch (methodId)
                     {
                         case 2003862074:
-                            await ((global::AccountTransfer.Interfaces.IFeedGrain)grain).SetupReminderAsync();
+                            await ((global::Maddalena.Client.Interfaces.IFeedGrain)grain).SetupReminderAsync();
                             return null;
                         case -568145289:
-                            await ((global::AccountTransfer.Interfaces.IFeedGrain)grain).Create((global::AccountTransfer.Interfaces.Feed)arguments[0]);
+                            await ((global::Maddalena.Client.Interfaces.IFeedGrain)grain).Create((global::Maddalena.Client.Feed)arguments[0]);
                             return null;
                         case 1691531964:
-                            return await ((global::AccountTransfer.Interfaces.IFeedGrain)grain).GetFeeds();
+                            return await ((global::Maddalena.Client.Interfaces.IFeedGrain)grain).GetFeeds();
                         case -165937946:
-                            await ((global::AccountTransfer.Interfaces.IFeedGrain)grain).Update((global::AccountTransfer.Interfaces.Feed)arguments[0]);
+                            await ((global::Maddalena.Client.Interfaces.IFeedGrain)grain).Update((global::Maddalena.Client.Feed)arguments[0]);
                             return null;
                         case 1233790183:
-                            await ((global::AccountTransfer.Interfaces.IFeedGrain)grain).Delete((global::AccountTransfer.Interfaces.Feed)arguments[0]);
+                            await ((global::Maddalena.Client.Interfaces.IFeedGrain)grain).Delete((global::Maddalena.Client.Feed)arguments[0]);
                             return null;
                         default:
                             throw new global::System.NotImplementedException(@"interfaceId=" + -769198927 + @",methodId=" + methodId);
@@ -167,8 +167,8 @@ namespace AccountTransfer.Interfaces
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.SerializableAttribute, global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.GrainReferenceAttribute(typeof (global::AccountTransfer.Interfaces.INewsGrain))]
-    internal class OrleansCodeGenNewsGrainReference : global::Orleans.Runtime.GrainReference, global::AccountTransfer.Interfaces.INewsGrain
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.SerializableAttribute, global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.GrainReferenceAttribute(typeof (global::Maddalena.Client.Interfaces.INewsGrain))]
+    internal class OrleansCodeGenNewsGrainReference : global::Orleans.Runtime.GrainReference, global::Maddalena.Client.Interfaces.INewsGrain
     {
         protected OrleansCodeGenNewsGrainReference(global::Orleans.Runtime.GrainReference other): base (other)
         {
@@ -231,7 +231,7 @@ namespace AccountTransfer.Interfaces
             }
         }
 
-        public global::System.Threading.Tasks.Task AnalizeAsync(global::AccountTransfer.Interfaces.News news)
+        public global::System.Threading.Tasks.Task AnalizeAsync(global::Maddalena.Client.News news)
         {
             return base.InvokeMethodAsync<global::System.Object>(917989621, new global::System.Object[]{news});
         }
@@ -242,7 +242,7 @@ namespace AccountTransfer.Interfaces
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::Orleans.CodeGeneration.MethodInvokerAttribute(typeof (global::AccountTransfer.Interfaces.INewsGrain), 1424151175), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::Orleans.CodeGeneration.MethodInvokerAttribute(typeof (global::Maddalena.Client.Interfaces.INewsGrain), 1424151175), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     internal class OrleansCodeGenNewsGrainMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
     {
         public async global::System.Threading.Tasks.Task<global::System.Object> Invoke(global::Orleans.Runtime.IAddressable grain, global::Orleans.CodeGeneration.InvokeMethodRequest request)
@@ -258,10 +258,10 @@ namespace AccountTransfer.Interfaces
                     switch (methodId)
                     {
                         case 917989621:
-                            await ((global::AccountTransfer.Interfaces.INewsGrain)grain).AnalizeAsync((global::AccountTransfer.Interfaces.News)arguments[0]);
+                            await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).AnalizeAsync((global::Maddalena.Client.News)arguments[0]);
                             return null;
                         case -2079297134:
-                            await ((global::AccountTransfer.Interfaces.INewsGrain)grain).UpdateModelAsync();
+                            await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).UpdateModelAsync();
                             return null;
                         default:
                             throw new global::System.NotImplementedException(@"interfaceId=" + 1424151175 + @",methodId=" + methodId);
@@ -295,7 +295,7 @@ namespace OrleansGeneratedCode315B5B65
     using global::Orleans;
     using global::System.Reflection;
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.SerializerAttribute(typeof (global::AccountTransfer.Interfaces.Feed))]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.SerializerAttribute(typeof (global::Maddalena.Client.Feed))]
     internal sealed class OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer
     {
         public OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer(global::Orleans.Serialization.IFieldUtils fieldUtils)
@@ -305,8 +305,8 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.CopierMethodAttribute]
         public global::System.Object DeepCopier(global::System.Object original, global::Orleans.Serialization.ICopyContext context)
         {
-            global::AccountTransfer.Interfaces.Feed input = ((global::AccountTransfer.Interfaces.Feed)original);
-            global::AccountTransfer.Interfaces.Feed result = new global::AccountTransfer.Interfaces.Feed();
+            global::Maddalena.Client.Feed input = ((global::Maddalena.Client.Feed)original);
+            global::Maddalena.Client.Feed result = new global::Maddalena.Client.Feed();
             context.RecordCopy(original, result);
             result.LastCheck = input.LastCheck;
             result.Name = input.Name;
@@ -317,7 +317,7 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.SerializerMethodAttribute]
         public void Serializer(global::System.Object untypedInput, global::Orleans.Serialization.ISerializationContext context, global::System.Type expected)
         {
-            global::AccountTransfer.Interfaces.Feed input = (global::AccountTransfer.Interfaces.Feed)untypedInput;
+            global::Maddalena.Client.Feed input = (global::Maddalena.Client.Feed)untypedInput;
             context.SerializeInner(input.LastCheck, typeof (global::System.DateTime));
             context.SerializeInner(input.Name, typeof (global::System.String));
             context.SerializeInner(input.Url, typeof (global::System.String));
@@ -326,16 +326,16 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.DeserializerMethodAttribute]
         public global::System.Object Deserializer(global::System.Type expected, global::Orleans.Serialization.IDeserializationContext context)
         {
-            global::AccountTransfer.Interfaces.Feed result = new global::AccountTransfer.Interfaces.Feed();
+            global::Maddalena.Client.Feed result = new global::Maddalena.Client.Feed();
             context.RecordObject(result);
             result.LastCheck = (global::System.DateTime)context.DeserializeInner(typeof (global::System.DateTime));
             result.Name = (global::System.String)context.DeserializeInner(typeof (global::System.String));
             result.Url = (global::System.String)context.DeserializeInner(typeof (global::System.String));
-            return (global::AccountTransfer.Interfaces.Feed)result;
+            return (global::Maddalena.Client.Feed)result;
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.SerializerAttribute(typeof (global::AccountTransfer.Interfaces.News))]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.SerializerAttribute(typeof (global::Maddalena.Client.News))]
     internal sealed class OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer
     {
         public OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer(global::Orleans.Serialization.IFieldUtils fieldUtils)
@@ -345,8 +345,8 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.CopierMethodAttribute]
         public global::System.Object DeepCopier(global::System.Object original, global::Orleans.Serialization.ICopyContext context)
         {
-            global::AccountTransfer.Interfaces.News input = ((global::AccountTransfer.Interfaces.News)original);
-            global::AccountTransfer.Interfaces.News result = new global::AccountTransfer.Interfaces.News();
+            global::Maddalena.Client.News input = ((global::Maddalena.Client.News)original);
+            global::Maddalena.Client.News result = new global::Maddalena.Client.News();
             context.RecordCopy(original, result);
             result.Categories = (global::System.String[])context.DeepCopyInner(input.Categories);
             result.Description = input.Description;
@@ -359,7 +359,7 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.SerializerMethodAttribute]
         public void Serializer(global::System.Object untypedInput, global::Orleans.Serialization.ISerializationContext context, global::System.Type expected)
         {
-            global::AccountTransfer.Interfaces.News input = (global::AccountTransfer.Interfaces.News)untypedInput;
+            global::Maddalena.Client.News input = (global::Maddalena.Client.News)untypedInput;
             context.SerializeInner(input.Categories, typeof (global::System.String[]));
             context.SerializeInner(input.Description, typeof (global::System.String));
             context.SerializeInner(input.Link, typeof (global::System.String));
@@ -370,14 +370,14 @@ namespace OrleansGeneratedCode315B5B65
         [global::Orleans.CodeGeneration.DeserializerMethodAttribute]
         public global::System.Object Deserializer(global::System.Type expected, global::Orleans.Serialization.IDeserializationContext context)
         {
-            global::AccountTransfer.Interfaces.News result = new global::AccountTransfer.Interfaces.News();
+            global::Maddalena.Client.News result = new global::Maddalena.Client.News();
             context.RecordObject(result);
             result.Categories = (global::System.String[])context.DeserializeInner(typeof (global::System.String[]));
             result.Description = (global::System.String)context.DeserializeInner(typeof (global::System.String));
             result.Link = (global::System.String)context.DeserializeInner(typeof (global::System.String));
             result.Timestamp = (global::System.DateTime)context.DeserializeInner(typeof (global::System.DateTime));
             result.Title = (global::System.String)context.DeserializeInner(typeof (global::System.String));
-            return (global::AccountTransfer.Interfaces.News)result;
+            return (global::Maddalena.Client.News)result;
         }
     }
 }
@@ -389,8 +389,8 @@ namespace OrleansGeneratedCode
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
-            feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::AccountTransfer.Interfaces.IFeedGrain), typeof (AccountTransfer.Interfaces.OrleansCodeGenFeedGrainReference), typeof (AccountTransfer.Interfaces.OrleansCodeGenFeedGrainMethodInvoker), -769198927));
-            feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::AccountTransfer.Interfaces.INewsGrain), typeof (AccountTransfer.Interfaces.OrleansCodeGenNewsGrainReference), typeof (AccountTransfer.Interfaces.OrleansCodeGenNewsGrainMethodInvoker), 1424151175));
+            feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::Maddalena.Client.Interfaces.IFeedGrain), typeof (AccountTransfer.Interfaces.OrleansCodeGenFeedGrainReference), typeof (AccountTransfer.Interfaces.OrleansCodeGenFeedGrainMethodInvoker), -769198927));
+            feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::Maddalena.Client.Interfaces.INewsGrain), typeof (AccountTransfer.Interfaces.OrleansCodeGenNewsGrainReference), typeof (AccountTransfer.Interfaces.OrleansCodeGenNewsGrainMethodInvoker), 1424151175));
         }
 
         public void Populate(global::Orleans.Metadata.GrainClassFeature feature)
@@ -399,8 +399,8 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.Feed), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer));
-            feature.AddSerializerType(typeof (global::AccountTransfer.Interfaces.News), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.Feed), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_FeedSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.News), typeof (OrleansGeneratedCode315B5B65.OrleansCodeGenAccountTransfer_Interfaces_NewsSerializer));
             feature.AddKnownType(@"AccountTransfer.Interfaces.ClusterClient,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.ClusterClient");
             feature.AddKnownType(@"AccountTransfer.Interfaces.Feed,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.Feed");
             feature.AddKnownType(@"AccountTransfer.Interfaces.IFeedGrain,AccountTransfer.Interfaces", @"AccountTransfer.Interfaces.IFeedGrain");

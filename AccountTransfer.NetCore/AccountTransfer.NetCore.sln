@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost", "src\SiloHost\SiloHost.csproj", "{8833CADE-80B5-4AA1-835E-594E907C58DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountTransfer.Interfaces", "src\AccountTransfer.Interfaces\AccountTransfer.Interfaces.csproj", "{1977C291-BE23-415A-8305-9E6F7B23203D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Client", "src\AccountTransfer.Interfaces\Maddalena.Client.csproj", "{1977C291-BE23-415A-8305-9E6F7B23203D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountTransfer.Grains", "src\AccountTransfer.Grains\AccountTransfer.Grains.csproj", "{C8097F83-2D0E-4FFD-AEAE-AA075141289C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Grains", "src\AccountTransfer.Grains\Maddalena.Grains.csproj", "{C8097F83-2D0E-4FFD-AEAE-AA075141289C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maddalena.Datastore", "Maddalena.Datastore\Maddalena.Datastore.csproj", "{1A437AF4-9421-471F-A465-76EBFA6F7B8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C8097F83-2D0E-4FFD-AEAE-AA075141289C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8097F83-2D0E-4FFD-AEAE-AA075141289C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8097F83-2D0E-4FFD-AEAE-AA075141289C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A437AF4-9421-471F-A465-76EBFA6F7B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A437AF4-9421-471F-A465-76EBFA6F7B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A437AF4-9421-471F-A465-76EBFA6F7B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A437AF4-9421-471F-A465-76EBFA6F7B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

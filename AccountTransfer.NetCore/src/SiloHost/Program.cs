@@ -2,7 +2,11 @@
 using System.Net;
 using System.Threading.Tasks;
 using AccountTransfer.Grains;
-using AccountTransfer.Interfaces;
+using Maddalena.Client;
+using Maddalena.Client.Interfaces;
+using Maddalena.News.Client;
+using Maddalena.News.Grains.Feeds;
+using Maddalena.News.Grains.Grains;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Orleans;

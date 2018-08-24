@@ -1,11 +1,12 @@
 ﻿using System;
-using Microsoft.ML.Runtime.Api;
 
-namespace AccountTransfer.Interfaces
+namespace Maddalena.Client
 {
     [Serializable]
-    public class News
+    public sealed class News
     {
+        public string Id { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }
