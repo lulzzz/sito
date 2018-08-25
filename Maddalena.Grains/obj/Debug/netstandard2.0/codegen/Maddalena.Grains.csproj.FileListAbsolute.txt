@@ -1,0 +1,9 @@
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Grains.deps.json
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Grains.dll
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Grains.pdb
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Client.dll
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Datastorage.dll
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Client.pdb
+D:\PROGETTI\sito\Maddalena.Grains\bin\Debug\netstandard2.0\Maddalena.Datastorage.pdb
+D:\PROGETTI\sito\Maddalena.Grains\obj\Debug\netstandard2.0\codegen\Maddalena.Grains.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\Maddalena.Grains\obj\Debug\netstandard2.0\codegen\Maddalena.Grains.AssemblyInfoInputs.cache

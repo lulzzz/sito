@@ -1,4 +1,0 @@
-D:\PROGETTI\sito\AccountTransfer.NetCore\numl\obj\Debug\netstandard2.0\numl.csprojAssemblyReference.cache
-D:\PROGETTI\sito\AccountTransfer.NetCore\numl\obj\Debug\netstandard2.0\numl.csproj.CoreCompileInputs.cache
-D:\PROGETTI\sito\AccountTransfer.NetCore\numl\obj\Debug\netstandard2.0\numl.AssemblyInfoInputs.cache
-D:\PROGETTI\sito\AccountTransfer.NetCore\numl\obj\Debug\netstandard2.0\numl.AssemblyInfo.cs
