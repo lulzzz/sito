@@ -1,26 +1,59 @@
 ﻿@model IEnumerable<Maddalena.Client.News>
+@using System;
+@using System.Net;
+@using  Maddalena.Datastorage;
+
 
 @{
     ViewData["Title"] = "Index";
+
+    var labels = await Datastore.Settings.Labels();
 }
 
-<ul class="list-unstyled"></ul>
+<ul class="list-unstyled">
 
-@foreach (var item in Model)
-{
-
-    <li class="media">
-        <div class="media-body">
-            <h5 class="mt-0 mb-1">
-                <a href="@item.Link">
-                    @item.Title
-                </a>
-            </h5>
-            @if (item.Description.Length <=500)
+    @foreach (var item in Model)
+    {
+    <li style="margin-bottom:43px">
+        @foreach (var label in labels)
+        {
+            @switch (await Datastore.News.GetLabel(item, label))
             {
-                @Html.Raw(item.Description)
+                case Maddalena.Client.LabelValue.Bad:
+                    <span class="badge badge-danger">@label</span>
+                    break;
+                case Maddalena.Client.LabelValue.Good:
+                    <span class="badge badge-success">@label</span>
+                    break;
+                case Maddalena.Client.LabelValue.Irrelevant:
+                    <span class="badge badge-warning">@label</span>
+                    break;
             }
-        </div>
+        }
+        <br />
+        <a href="@item.Link">
+            @item.Title
+        </a>
+
+        @if (User.IsInRole("blog"))
+        {
+        <form method="post" class="form-inline">
+            <select name="label" class="form-control">
+                @foreach (var lbl in labels)
+                {
+                    <option value="@lbl">@lbl</option>
+                }
+            </select>
+            <select name="value" class="form-control">
+                @foreach (var lbl in labels)
+                {
+                    <option value="@lbl">@lbl</option>
+                }
+            </select>
+        </form>
+        }
+
     </li>
 
-}
+    }
+</ul>

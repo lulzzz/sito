@@ -24,7 +24,6 @@ namespace Maddalena.Grains.DataProvider
                         // Read Item
                         case SyndicationElementType.Item:
                             var item = await feedReader.ReadItem();
-
                             news = new News
                             {
                                 Title = item.Title,

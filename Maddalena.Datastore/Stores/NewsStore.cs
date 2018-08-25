@@ -76,9 +76,9 @@ namespace Maddalena.Datastorage
 
             if (f == null) return LabelValue.Irrelevant;
 
-            if (f.Bad.Contains(label)) return LabelValue.Bad;
+            if (f.Bad?.Contains(label) == true) return LabelValue.Bad;
 
-            return f.Good.Contains(label) ? LabelValue.Good : LabelValue.Irrelevant;
+            return f.Good?.Contains(label) == true ? LabelValue.Good : LabelValue.Irrelevant;
         }
 
         public async Task<News[]> GetNews(string label, LabelValue value, int n)
