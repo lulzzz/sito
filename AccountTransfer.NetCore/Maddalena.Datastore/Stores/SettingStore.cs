@@ -28,12 +28,15 @@ namespace Maddalena.Datastorage.Stores
                         "Brexit"
                     })
                 });
-
-                mongoSettings = _settingCollection.Find(x => true).First();
             }
+            mongoSettings = _settingCollection.Find(x => true).First();
         }
 
-        public Task<string[]> Labels() => Task.FromResult(mongoSettings.Labels.ToArray());
+        public Task<string[]> Labels()
+        {
+            var lbl = mongoSettings.Labels.ToArray();
+            return Task.FromResult(lbl);
+        }
 
         public Task AddLabel(string label)
         {

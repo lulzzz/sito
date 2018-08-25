@@ -10,13 +10,26 @@ namespace Maddalena.Datastorage
     {
         private static readonly IMongoCollection<MongoFeed> _feedCollection;
 
-
         public Task Create(Feed feed) => _feedCollection
                               .InsertOneAsync(Datastore.Map<MongoFeed>(feed));
 
-        public Feed[] Feeds => _feedCollection.AsQueryable()
-                                        .Select(x => Datastore.Map<Feed>(x))
+        public Task Update(Feed feed)
+        {
+            return _feedCollection.ReplaceOneAsync(x => x.Id == feed.Id, Datastore.Map<MongoFeed>(feed));
+        }
+
+        public Feed[] Feeds
+        {
+            get
+            {
+                var array = _feedCollection.AsQueryable().ToArray();
+
+                return  array.Select(x => Datastore.Map<Feed>(x))
                                         .ToArray();
+
+            }
+        }
+
         static FeedStore()
         {
             _feedCollection = Datastore.GetCollection<MongoFeed>();

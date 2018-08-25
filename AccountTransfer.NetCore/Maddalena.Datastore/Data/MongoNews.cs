@@ -16,6 +16,8 @@ namespace Maddalena.Datastorage.Data
 
         public string Link { get; set; }
 
-        public List<MongoLabel> Labels { get; set; }
+        public List<string> Good { get; set; }
+
+        public List<string> Bad { get; set; }
     }
 }

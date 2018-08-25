@@ -1,8 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using Maddalena.Client;
 using Maddalena.Client.Interfaces;
 using Maddalena.Datastorage;
 using Maddalena.Grains.DataProvider;
+using Maddalena.Grains.Learning;
+using Maddalena.Numl.Utils;
 using Orleans;
 using Orleans.MultiCluster;
 using Orleans.Runtime;
@@ -14,6 +17,11 @@ namespace Maddalena.Grains.Grains
     {
         public override async Task OnActivateAsync()
         {
+
+            Ject.AddAssembly(typeof(Datastore).Assembly);
+            Ject.AddAssembly(typeof(LabelValue).Assembly);
+            Ject.AddAssembly(typeof(LabeledNews).Assembly);
+
             await base.OnActivateAsync();
         }
 

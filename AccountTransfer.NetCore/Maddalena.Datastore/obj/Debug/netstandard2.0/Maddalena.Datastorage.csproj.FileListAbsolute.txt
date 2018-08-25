@@ -9,3 +9,4 @@ D:\PROGETTI\sito\AccountTransfer.NetCore\Maddalena.Datastore\bin\Debug\netstanda
 D:\PROGETTI\sito\AccountTransfer.NetCore\Maddalena.Datastore\obj\Debug\netstandard2.0\Maddalena.Datastorage.csproj.CopyComplete
 D:\PROGETTI\sito\AccountTransfer.NetCore\Maddalena.Datastore\obj\Debug\netstandard2.0\Maddalena.Datastorage.dll
 D:\PROGETTI\sito\AccountTransfer.NetCore\Maddalena.Datastore\obj\Debug\netstandard2.0\Maddalena.Datastorage.pdb
+D:\PROGETTI\sito\AccountTransfer.NetCore\Maddalena.Datastore\obj\Debug\netstandard2.0\Maddalena.Datastorage.csprojAssemblyReference.cache

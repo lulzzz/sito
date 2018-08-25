@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Client;
@@ -9,9 +10,6 @@ namespace Maddalena.Datastorage
 {
     public class NewsStore
     {
-        private static readonly IMongoCollection<MongoLabel> _labelCollection =
-                                        Datastore.GetCollection<MongoLabel>();
-
         private static readonly IMongoCollection<MongoNews> _newsCollection = 
                                         Datastore.GetCollection<MongoNews>();
 
@@ -29,39 +27,86 @@ namespace Maddalena.Datastorage
 
             if (await f.AnyAsync()) return;
 
-            await _newsCollection.InsertOneAsync(Datastore.Map<MongoNews>(news));
+            var mnews = Datastore.Map<MongoNews>(news);
+
+            await _newsCollection.InsertOneAsync(mnews);
+
+            news.Id = mnews.Id;
         }
 
-        public Task Label(News news, string label, LabelValue labelValue)
+        public async Task LabelAsync(News news, string label, LabelValue labelValue)
         {
-            return _labelCollection.InsertOneAsync(new MongoLabel
+            var mongoNews = await (await _newsCollection.FindAsync(x => x.Id == news.Id))
+                    .FirstOrDefaultAsync();
+
+            if (mongoNews.Bad == null) mongoNews.Bad = new List<string>();
+            if (mongoNews.Good == null) mongoNews.Good = new List<string>();
+
+            switch (labelValue)
             {
-                Label = label,
-                LabelValue = labelValue,
-                NewsId = news.Id
-            });
+                case LabelValue.Bad:
+                    if (!mongoNews.Bad.Contains(label))
+                    {
+                        mongoNews.Bad.Add(label);
+                    }
+                    await _newsCollection.ReplaceOneAsync(x => x.Id == mongoNews.Id, mongoNews);
+                    break;
+                case LabelValue.Good:
+                    if (!mongoNews.Good.Contains(label))
+                    {
+                        mongoNews.Good.Add(label);
+                    }
+
+                    await _newsCollection.ReplaceOneAsync(x => x.Id == mongoNews.Id, mongoNews);
+                    break;
+            }
+
         }
 
         public async Task<LabelValue> GetLabel(News news, string label)
         {
-            var f = await (await _labelCollection.FindAsync(x => x.NewsId == news.Id))
+            var f = await (await _newsCollection.FindAsync(x => x.Id == news.Id))
                     .FirstOrDefaultAsync();
 
-            return f?.LabelValue ?? LabelValue.Irrelevant;
+            if (f == null) return LabelValue.Irrelevant;
+
+            if (f.Bad.Contains(label)) return LabelValue.Bad;
+
+            return f.Good.Contains(label) ? LabelValue.Good : LabelValue.Irrelevant;
         }
 
         public async Task<News[]> GetNews(string label, LabelValue value, int n)
         {
-            var options = new FindOptions<MongoLabel, MongoLabel>
+            var options = new FindOptions<MongoNews, MongoNews>
             {
                 Limit = n
             };
 
-            var labels = await (await _labelCollection
-                        .FindAsync(x => x.Label == label && x.LabelValue == value,options))
-                        .ToListAsync();
+            FilterDefinition<MongoNews> filter = null;
 
-            return labels.Select(async x => await Get(x.NewsId)).Wait().ToArray();
+            switch (value)
+            {
+                case LabelValue.Irrelevant:
+                    var fbad = Builders<MongoNews>.Filter.AnyEq(x => x.Bad, label);
+                    var fgood = Builders<MongoNews>.Filter.AnyEq(x => x.Good, label);
+
+                    filter = Builders<MongoNews>.Filter.Not(fbad & fgood);
+                    break;
+                case LabelValue.Bad:
+                    filter = Builders<MongoNews>.Filter.AnyEq(x => x.Bad, label);
+                    break;
+                case LabelValue.Good:
+                    filter = Builders<MongoNews>.Filter.AnyEq(x => x.Good, label);
+                    break;
+            
+            }
+
+            if (filter == null) throw new Exception("Something really bad happened here");
+
+            var find = await _newsCollection.FindAsync(filter, options);
+            return (await find.ToListAsync())
+                    .Select(x=>Datastore.Map<News>(x))
+                    .ToArray();
         }
     }
 }

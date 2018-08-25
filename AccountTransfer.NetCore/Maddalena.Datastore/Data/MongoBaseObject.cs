@@ -6,6 +6,6 @@ namespace Maddalena.Datastorage.Data
     class MongoBaseObject
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        internal string Id { get; set; }
+        public string Id { get; set; }
     }
 }

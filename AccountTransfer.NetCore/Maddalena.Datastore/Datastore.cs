@@ -42,16 +42,11 @@ namespace Maddalena.Datastorage
                 cfg.CreateMap<Feed, MongoFeed>();
                 cfg.CreateMap<MongoFeed, Feed>();
 
-                cfg.CreateMap<LabelValue, MongoLabel>();
-                cfg.CreateMap<MongoLabel, LabelValue>();
-
                 cfg.CreateMap<Client.News, MongoNews>();
                 cfg.CreateMap<MongoNews, Client.News>();
             });
 
             _mapper = config.CreateMapper();
-
-            Ject.AddAssembly(typeof(Datastore).Assembly);
         }
     }
 }

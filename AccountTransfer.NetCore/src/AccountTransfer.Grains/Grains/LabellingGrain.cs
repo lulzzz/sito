@@ -15,7 +15,6 @@ namespace Maddalena.Grains.Grains
     class LabellingGrain : Grain, ILabellingGrain
     {
         private IModel _model;
-        private Descriptor descriptor = Descriptor.Create<LabeledNews>();
 
         public override async Task OnActivateAsync()
         {
@@ -28,6 +27,12 @@ namespace Maddalena.Grains.Grains
         {
             await UpdateModelAsync();
 
+            if(_model == null)
+            {
+                await Datastore.News.LabelAsync(news, IdentityString, LabelValue.Irrelevant);
+                return;
+            }
+
             var res = _model.Predict(new LabeledNews
             {
                 Categories = string.Join(" ", news.Categories),
@@ -36,7 +41,7 @@ namespace Maddalena.Grains.Grains
                 Title = news.Title
             });
 
-            Datastore.News.Label(news,IdentityString, res.LabelValue);
+            await Datastore.News.LabelAsync(news,IdentityString, res.LabelValue);
         }
 
         public async Task UpdateModelAsync()
@@ -46,7 +51,7 @@ namespace Maddalena.Grains.Grains
             var labeled = new Func<News, LabelValue, LabeledNews>((news, label) =>
              new LabeledNews
              {
-                 Categories = string.Concat(" ", news.Categories),
+                 Categories = string.Join(" ", news.Categories),
                  Description = news.Description,
                  LabelValue = label,
                  Link = news.Link,
@@ -62,11 +67,16 @@ namespace Maddalena.Grains.Grains
             var neutral = (await Datastore.News.GetNews(IdentityString, LabelValue.Irrelevant, 700))
                             .Select(x => labeled(x, LabelValue.Irrelevant));
 
-            var data = bad.Concat(good.Concat(neutral));
-             
-            _model = generator.Generate(descriptor, data);
+            var data = bad.Concat(good.Concat(neutral)).ToArray();
 
-            await Datastore.Model.SaveModelAsync(IdentityString, _model);
+            if(data.Length >0 )
+            {
+                Descriptor descriptor = Descriptor.Create<LabeledNews>();
+
+                _model = generator.Generate(descriptor, data);
+
+                await Datastore.Model.SaveModelAsync(IdentityString, _model);
+            }
         }
     }   
 }
