@@ -1,0 +1,9 @@
+D:\PROGETTI\sito\Maddalena.Extensions\bin\Debug\netcoreapp2.1\Maddalena.Extensions.deps.json
+D:\PROGETTI\sito\Maddalena.Extensions\bin\Debug\netcoreapp2.1\Maddalena.Extensions.dll
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.AssemblyInfoInputs.cache
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.AssemblyInfo.cs
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.csprojAssemblyReference.cache
+D:\PROGETTI\sito\Maddalena.Extensions\bin\Debug\netcoreapp2.1\Maddalena.Extensions.pdb
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.dll
+D:\PROGETTI\sito\Maddalena.Extensions\obj\Debug\netcoreapp2.1\Maddalena.Extensions.pdb

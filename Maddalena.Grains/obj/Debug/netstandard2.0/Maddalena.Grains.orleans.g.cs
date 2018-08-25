@@ -8,7 +8,7 @@
 #pragma warning disable 693
 #pragma warning disable 1591
 #pragma warning disable 1998
-[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGenfb48dad166FeaturePopulator))]
+[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGen8c5e2ba7b8FeaturePopulator))]
 [assembly: global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
 [assembly: global::Orleans.CodeGeneration.OrleansCodeGenerationTargetAttribute(@"Maddalena.Grains, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
 namespace Maddalena.Grains.Grains
@@ -153,7 +153,7 @@ namespace Maddalena.Grains.Grains
     }
 }
 
-namespace OrleansGeneratedCode14CF3C51
+namespace OrleansGeneratedCodeDCCC9BB2
 {
     using global::Orleans;
     using global::System.Reflection;
@@ -208,7 +208,7 @@ namespace OrleansGeneratedCode14CF3C51
 namespace OrleansGeneratedCode
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
-    internal sealed class OrleansCodeGenfb48dad166FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
+    internal sealed class OrleansCodeGen8c5e2ba7b8FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
@@ -223,7 +223,7 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::Maddalena.Grains.Learning.LabeledNews), typeof (OrleansGeneratedCode14CF3C51.OrleansCodeGenMaddalena_Grains_Learning_LabeledNewsSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Grains.Learning.LabeledNews), typeof (OrleansGeneratedCodeDCCC9BB2.OrleansCodeGenMaddalena_Grains_Learning_LabeledNewsSerializer));
             feature.AddKnownType(@"Maddalena.Grains.Learning.LabeledNews,Maddalena.Grains", @"Maddalena.Grains.Learning.LabeledNews");
             feature.AddKnownType(@"Maddalena.Grains.Grains.FeedGrain,Maddalena.Grains", @"Maddalena.Grains.Grains.FeedGrain");
             feature.AddKnownType(@"Maddalena.Grains.Grains.ILabellingGrain,Maddalena.Grains", @"Maddalena.Grains.Grains.ILabellingGrain");
