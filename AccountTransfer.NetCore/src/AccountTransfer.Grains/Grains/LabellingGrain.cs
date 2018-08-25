@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Client;
+using Maddalena.Datastorage;
 using Maddalena.Grains.Learning;
 using Maddalena.Numl.Model;
 using Maddalena.Numl.Supervised;
@@ -18,7 +21,7 @@ namespace Maddalena.Grains.Grains
         {
             await base.OnActivateAsync();
 
-            _model = await Datastore.Datastore.LoadModelAsync(IdentityString);
+            _model = await Datastore.Model.LoadModelAsync(IdentityString);
         }
 
         public async Task LabelAsync(News news)
@@ -30,23 +33,40 @@ namespace Maddalena.Grains.Grains
                 Categories = string.Join(" ", news.Categories),
                 Description = news.Description,
                 Link = news.Link,
-                Timestamp = news.Timestamp,
                 Title = news.Title
             });
+
+            Datastore.News.Label(news,IdentityString, res.LabelValue);
         }
 
-        public Task UpdateModelAsync()
+        public async Task UpdateModelAsync()
         {
             var generator = new DecisionTreeGenerator();
-            var data = new List<LabeledNews>();
 
-            data.AddRange(Datastore.Datastore.NewsForLabel(IdentityString, Label.Bad, 108);
+            var labeled = new Func<News, LabelValue, LabeledNews>((news, label) =>
+             new LabeledNews
+             {
+                 Categories = string.Concat(" ", news.Categories),
+                 Description = news.Description,
+                 LabelValue = label,
+                 Link = news.Link,
+                 Title = news.Title
+             });
 
+            var bad = (await Datastore.News.GetNews(IdentityString, LabelValue.Bad, 200))
+                      .Select(x => labeled(x, LabelValue.Bad));
+
+            var good = (await Datastore.News.GetNews(IdentityString, LabelValue.Good, 208))
+                       .Select(x => labeled(x, LabelValue.Good));
+
+            var neutral = (await Datastore.News.GetNews(IdentityString, LabelValue.Irrelevant, 700))
+                            .Select(x => labeled(x, LabelValue.Irrelevant));
+
+            var data = bad.Concat(good.Concat(neutral));
+             
             _model = generator.Generate(descriptor, data);
 
-            await ModelRepository.SaveModelAsync(IdentityString, _model);*/
-
-            return Task.CompletedTask;
+            await Datastore.Model.SaveModelAsync(IdentityString, _model);
         }
     }   
 }

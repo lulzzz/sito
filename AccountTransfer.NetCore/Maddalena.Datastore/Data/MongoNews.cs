@@ -1,19 +1,21 @@
 ﻿using System;
-using Maddalena.Datastore.Mongolino;
+using System.Collections.Generic;
 
-namespace Maddalena.Datastore.Data
+namespace Maddalena.Datastorage.Data
 {
     [Serializable]
-    class MongoNews : CollectionItem
+    class MongoNews : MongoBaseObject
     {
-        internal string Title { get; set; }
+        public string Title { get; set; }
 
-        internal string Description { get; set; }
+        public string Description { get; set; }
 
-        internal DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
-        internal string[] Categories { get; set; }
+        public string[] Categories { get; set; }
 
-        internal string Link { get; set; }
+        public string Link { get; set; }
+
+        public List<MongoLabel> Labels { get; set; }
     }
 }

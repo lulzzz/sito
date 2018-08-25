@@ -7,7 +7,7 @@ namespace Maddalena.Client.Interfaces
     {
         Task Create(News news);
         Task<News[]> GetNews();
-        Task<News[]> NewsInLabel(string label, Label value);
+        Task<News[]> NewsInLabel(string label, LabelValue value);
         Task Update(News news);
         Task Delete(News news);
     }

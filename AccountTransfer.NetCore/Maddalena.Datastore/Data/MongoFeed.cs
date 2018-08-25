@@ -1,9 +1,7 @@
 ﻿using System;
-using Maddalena.Datastore.Mongolino;
-
-namespace Maddalena.Datastore.Data
+namespace Maddalena.Datastorage.Data
 {
-    class MongoFeed : CollectionItem
+    class MongoFeed : MongoBaseObject
     {
         internal string Name { get; set; }
 

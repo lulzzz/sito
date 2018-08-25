@@ -2415,7 +2415,7 @@
           "bin/placeholder/Maddalena.Client.dll": {}
         }
       },
-      "Maddalena.Datastore/1.0.0": {
+      "Maddalena.Datastorage/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -2424,10 +2424,10 @@
           "MongoDB.Driver": "2.7.0"
         },
         "compile": {
-          "bin/placeholder/Maddalena.Datastore.dll": {}
+          "bin/placeholder/Maddalena.Datastorage.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Maddalena.Datastore.dll": {}
+          "bin/placeholder/Maddalena.Datastorage.dll": {}
         }
       },
       "Maddalena.Grains/1.0.0": {
@@ -2436,7 +2436,7 @@
         "dependencies": {
           "AutoMapper": "7.0.1",
           "Maddalena.Client": "1.0.0",
-          "Maddalena.Datastore": "1.0.0",
+          "Maddalena.Datastorage": "1.0.0",
           "Microsoft.ML": "0.4.0",
           "Microsoft.Orleans.Core.Abstractions": "2.0.0",
           "Microsoft.Orleans.Transactions": "2.0.4",
@@ -4891,7 +4891,7 @@
           "bin/placeholder/Maddalena.Client.dll": {}
         }
       },
-      "Maddalena.Datastore/1.0.0": {
+      "Maddalena.Datastorage/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -4900,10 +4900,10 @@
           "MongoDB.Driver": "2.7.0"
         },
         "compile": {
-          "bin/placeholder/Maddalena.Datastore.dll": {}
+          "bin/placeholder/Maddalena.Datastorage.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Maddalena.Datastore.dll": {}
+          "bin/placeholder/Maddalena.Datastorage.dll": {}
         }
       },
       "Maddalena.Grains/1.0.0": {
@@ -4912,7 +4912,7 @@
         "dependencies": {
           "AutoMapper": "7.0.1",
           "Maddalena.Client": "1.0.0",
-          "Maddalena.Datastore": "1.0.0",
+          "Maddalena.Datastorage": "1.0.0",
           "Microsoft.ML": "0.4.0",
           "Microsoft.Orleans.Core.Abstractions": "2.0.0",
           "Microsoft.Orleans.Transactions": "2.0.4",
@@ -10377,10 +10377,10 @@
       "path": "../AccountTransfer.Interfaces/Maddalena.Client.csproj",
       "msbuildProject": "../AccountTransfer.Interfaces/Maddalena.Client.csproj"
     },
-    "Maddalena.Datastore/1.0.0": {
+    "Maddalena.Datastorage/1.0.0": {
       "type": "project",
-      "path": "../../Maddalena.Datastore/Maddalena.Datastore.csproj",
-      "msbuildProject": "../../Maddalena.Datastore/Maddalena.Datastore.csproj"
+      "path": "../../Maddalena.Datastore/Maddalena.Datastorage.csproj",
+      "msbuildProject": "../../Maddalena.Datastore/Maddalena.Datastorage.csproj"
     },
     "Maddalena.Grains/1.0.0": {
       "type": "project",

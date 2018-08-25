@@ -37,14 +37,14 @@ D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Si
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\SiloHost.dll
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\SiloHost.pdb
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Client.dll
-D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Datastore.dll
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Grains.dll
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Grains.pdb
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Client.pdb
-D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Datastore.pdb
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.csprojAssemblyReference.cache
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.dll.config
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.csproj.CoreCompileInputs.cache
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.csproj.CopyComplete
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.dll
 D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\obj\Debug\netcoreapp2.0\SiloHost.pdb
+D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Datastorage.dll
+D:\PROGETTI\sito\AccountTransfer.NetCore\src\SiloHost\bin\Debug\netcoreapp2.0\Maddalena.Datastorage.pdb

@@ -13,9 +13,6 @@ namespace Maddalena.Grains.Learning
         [StringFeature]
         public string Description { get; set; }
 
-        [Feature]
-        public DateTime Timestamp { get; set; }
-
         [StringFeature]
         public string Categories { get; set; }
 
@@ -23,6 +20,6 @@ namespace Maddalena.Grains.Learning
         public string Link { get; set; }
 
         [Label]
-        public Label LabelValue { get; set; }
+        public LabelValue LabelValue { get; set; }
     }
 }

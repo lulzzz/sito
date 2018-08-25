@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Maddalena.Datastore.Mongolino
+namespace Maddalena.Datastorage.Data
 {
-    internal class CollectionItem
+    class MongoBaseObject
     {
         [BsonRepresentation(BsonType.ObjectId)]
         internal string Id { get; set; }

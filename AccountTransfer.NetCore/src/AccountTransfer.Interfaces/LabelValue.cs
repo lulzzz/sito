@@ -1,10 +1,10 @@
 ﻿
 namespace Maddalena.Client
 {
-    public enum Label
+    public enum LabelValue
     {
-        Bad,
         Irrelevant,
+        Bad,
         Good
     }
 }

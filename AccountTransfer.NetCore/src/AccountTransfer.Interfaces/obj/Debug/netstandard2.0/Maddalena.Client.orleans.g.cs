@@ -8,7 +8,7 @@
 #pragma warning disable 693
 #pragma warning disable 1591
 #pragma warning disable 1998
-[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGen8075b78e5eFeaturePopulator))]
+[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGenf819cada42FeaturePopulator))]
 [assembly: global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
 [assembly: global::Orleans.CodeGeneration.OrleansCodeGenerationTargetAttribute(@"Maddalena.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
 namespace Maddalena.Client.Interfaces
@@ -183,7 +183,7 @@ namespace Maddalena.Client.Interfaces
                             return @"Create";
                         case 2070916615:
                             return @"GetNews";
-                        case -699537959:
+                        case 1078770888:
                             return @"NewsInLabel";
                         case 1336951808:
                             return @"Update";
@@ -208,9 +208,9 @@ namespace Maddalena.Client.Interfaces
             return base.InvokeMethodAsync<global::Maddalena.Client.News[]>(2070916615, null);
         }
 
-        public global::System.Threading.Tasks.Task<global::Maddalena.Client.News[]> NewsInLabel(global::System.String label, global::Maddalena.Client.Label @value)
+        public global::System.Threading.Tasks.Task<global::Maddalena.Client.News[]> NewsInLabel(global::System.String label, global::Maddalena.Client.LabelValue @value)
         {
-            return base.InvokeMethodAsync<global::Maddalena.Client.News[]>(-699537959, new global::System.Object[]{label, @value});
+            return base.InvokeMethodAsync<global::Maddalena.Client.News[]>(1078770888, new global::System.Object[]{label, @value});
         }
 
         public global::System.Threading.Tasks.Task Update(global::Maddalena.Client.News news)
@@ -244,8 +244,8 @@ namespace Maddalena.Client.Interfaces
                             return null;
                         case 2070916615:
                             return await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).GetNews();
-                        case -699537959:
-                            return await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).NewsInLabel((global::System.String)arguments[0], (global::Maddalena.Client.Label)arguments[1]);
+                        case 1078770888:
+                            return await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).NewsInLabel((global::System.String)arguments[0], (global::Maddalena.Client.LabelValue)arguments[1]);
                         case 1336951808:
                             await ((global::Maddalena.Client.Interfaces.INewsGrain)grain).Update((global::Maddalena.Client.News)arguments[0]);
                             return null;
@@ -279,7 +279,7 @@ namespace Maddalena.Client.Interfaces
     }
 }
 
-namespace OrleansGeneratedCode44769647
+namespace OrleansGeneratedCodeD67B1861
 {
     using global::Orleans;
     using global::System.Reflection;
@@ -380,7 +380,7 @@ namespace OrleansGeneratedCode44769647
 namespace OrleansGeneratedCode
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
-    internal sealed class OrleansCodeGen8075b78e5eFeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
+    internal sealed class OrleansCodeGenf819cada42FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
@@ -394,11 +394,11 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::Maddalena.Client.Feed), typeof (OrleansGeneratedCode44769647.OrleansCodeGenMaddalena_Client_FeedSerializer));
-            feature.AddSerializerType(typeof (global::Maddalena.Client.News), typeof (OrleansGeneratedCode44769647.OrleansCodeGenMaddalena_Client_NewsSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.Feed), typeof (OrleansGeneratedCodeD67B1861.OrleansCodeGenMaddalena_Client_FeedSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.News), typeof (OrleansGeneratedCodeD67B1861.OrleansCodeGenMaddalena_Client_NewsSerializer));
             feature.AddKnownType(@"Maddalena.Client.ClusterClient,Maddalena.Client", @"Maddalena.Client.ClusterClient");
             feature.AddKnownType(@"Maddalena.Client.Feed,Maddalena.Client", @"Maddalena.Client.Feed");
-            feature.AddKnownType(@"Maddalena.Client.Label,Maddalena.Client", @"Maddalena.Client.Label");
+            feature.AddKnownType(@"Maddalena.Client.LabelValue,Maddalena.Client", @"Maddalena.Client.LabelValue");
             feature.AddKnownType(@"Maddalena.Client.News,Maddalena.Client", @"Maddalena.Client.News");
             feature.AddKnownType(@"Maddalena.Client.Interfaces.IFeedGrain,Maddalena.Client", @"Maddalena.Client.Interfaces.IFeedGrain");
             feature.AddKnownType(@"Maddalena.Client.Interfaces.INewsGrain,Maddalena.Client", @"Maddalena.Client.Interfaces.INewsGrain");

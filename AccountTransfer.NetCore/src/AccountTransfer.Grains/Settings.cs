@@ -6,7 +6,7 @@ namespace AccountTransfer.Grains
     {
         static Settings()
         {
-            Ject.AddAssembly(typeof(Settings).Assembly);
+            
         }
     }
 }

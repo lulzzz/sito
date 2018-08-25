@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Maddalena.Client.Interfaces;
+using Maddalena.Datastorage;
 using Maddalena.Grains.DataProvider;
 using Orleans;
 using Orleans.MultiCluster;
@@ -18,13 +19,13 @@ namespace Maddalena.Grains.Grains
 
         public async Task ReceiveReminder(string reminderName, TickStatus status)
         {
-            foreach (var feed in Datastore.Datastore.Feeds)
+            foreach (var feed in Datastore.Feed.Feeds)
             {
                 await FeedProvider.ReadFeedAsync(feed, async news => 
                 {
-                    await Datastore.Datastore.Create(news);
+                    await Datastore.News.Create(news);
 
-                    foreach (var label in await Datastore.Datastore.Labels())
+                    foreach (var label in await Datastore.Settings.Labels())
                     {
                         await GrainFactory.GetGrain<ILabellingGrain>(label).LabelAsync(news);
                     }

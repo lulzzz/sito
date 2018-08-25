@@ -1,14 +1,13 @@
 ﻿using Maddalena.Client;
-using Maddalena.Datastore.Mongolino;
 
-namespace Maddalena.Datastore.Data
+namespace Maddalena.Datastorage.Data
 {
-    class MongoLabel : CollectionItem
+    class MongoLabel : MongoBaseObject
     {
-        internal string Label { get; set; }
+        public string Label { get; set; }
 
-        internal Label LabelValue { get; set; }
+        public LabelValue LabelValue { get; set; }
 
-        internal string NewsId { get; set; }
+        public string NewsId { get; set; }
     }
 }

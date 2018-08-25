@@ -6638,9 +6638,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PROGETTI\\sito\\AccountTransfer.NetCore\\Maddalena.Datastore\\Maddalena.Datastore.csproj",
-      "projectName": "Maddalena.Datastore",
-      "projectPath": "D:\\PROGETTI\\sito\\AccountTransfer.NetCore\\Maddalena.Datastore\\Maddalena.Datastore.csproj",
+      "projectUniqueName": "D:\\PROGETTI\\sito\\AccountTransfer.NetCore\\Maddalena.Datastore\\Maddalena.Datastorage.csproj",
+      "projectName": "Maddalena.Datastorage",
+      "projectPath": "D:\\PROGETTI\\sito\\AccountTransfer.NetCore\\Maddalena.Datastore\\Maddalena.Datastorage.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
       "outputPath": "D:\\PROGETTI\\sito\\AccountTransfer.NetCore\\Maddalena.Datastore\\obj\\",
       "projectStyle": "PackageReference",
