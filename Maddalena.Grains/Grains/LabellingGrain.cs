@@ -20,7 +20,7 @@ namespace Maddalena.Grains.Grains
         {
             await base.OnActivateAsync();
 
-            _model = await Datastore.Model.LoadModelAsync(IdentityString);
+            _model = await Datastore.Model.LoadModelAsync(this.GetPrimaryKeyString());
         }
 
         public async Task LabelAsync(News news)
@@ -29,7 +29,7 @@ namespace Maddalena.Grains.Grains
 
             if(_model == null)
             {
-                await Datastore.News.LabelAsync(news, IdentityString, LabelValue.Irrelevant);
+                await Datastore.News.LabelAsync(news, this.GetPrimaryKeyString(), LabelValue.Irrelevant);
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Maddalena.Grains.Grains
 
         public async Task UpdateModelAsync()
         {
-            var generator = new DecisionTreeGenerator();
+            var generator = new DecisionTreeGenerator(25,4);
 
             var labeled = new Func<News, LabelValue, LabeledNews>((news, label) =>
              new LabeledNews

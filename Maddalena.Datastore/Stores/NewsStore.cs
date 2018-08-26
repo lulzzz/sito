@@ -19,6 +19,11 @@ namespace Maddalena.Datastorage
             return ns.Select(x => Datastore.Map<News>(x)).ToArray();
         }
 
+        public Task DeleteAsync(string id)
+        {
+            return _newsCollection.FindOneAndDeleteAsync(x => x.Id == id);
+        }
+
         public async Task<News> Get(string id)
         {
             var mongoNews = await (await _newsCollection.FindAsync(x => x.Id == id))

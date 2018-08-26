@@ -5,6 +5,7 @@ using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using Maddalena.Client;
 using System;
+using Maddalena.Grains.Extensions;
 
 namespace Maddalena.Grains.DataProvider
 {
@@ -27,7 +28,9 @@ namespace Maddalena.Grains.DataProvider
                             news = new News
                             {
                                 Title = item.Title,
-                                Description = item.Description,
+                                Source = feed.Name,
+                                SourceType = SourceType.Feed,
+                                Description = item.Description.PurgeHtml(),
                                 Link = item.Links.First().Uri.AbsoluteUri,
                                 Timestamp = item.Published.DateTime,
                                 Categories = item.Categories.Select(x => x.Name).ToArray()

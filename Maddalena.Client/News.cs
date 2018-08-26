@@ -16,5 +16,9 @@ namespace Maddalena.Client
         public string[] Categories { get; set; }
 
         public string Link { get; set; }
+
+        public string Source { get; set; }
+
+        public SourceType SourceType { get; set; }
     }
 }

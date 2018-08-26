@@ -8,7 +8,7 @@
 #pragma warning disable 693
 #pragma warning disable 1591
 #pragma warning disable 1998
-[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGen8c5e2ba7b8FeaturePopulator))]
+[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGenc70b3b1b6dFeaturePopulator))]
 [assembly: global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
 [assembly: global::Orleans.CodeGeneration.OrleansCodeGenerationTargetAttribute(@"Maddalena.Grains, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
 namespace Maddalena.Grains.Grains
@@ -153,7 +153,7 @@ namespace Maddalena.Grains.Grains
     }
 }
 
-namespace OrleansGeneratedCodeDCCC9BB2
+namespace OrleansGeneratedCode57F4B191
 {
     using global::Orleans;
     using global::System.Reflection;
@@ -208,7 +208,7 @@ namespace OrleansGeneratedCodeDCCC9BB2
 namespace OrleansGeneratedCode
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
-    internal sealed class OrleansCodeGen8c5e2ba7b8FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
+    internal sealed class OrleansCodeGenc70b3b1b6dFeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
@@ -223,11 +223,12 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::Maddalena.Grains.Learning.LabeledNews), typeof (OrleansGeneratedCodeDCCC9BB2.OrleansCodeGenMaddalena_Grains_Learning_LabeledNewsSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Grains.Learning.LabeledNews), typeof (OrleansGeneratedCode57F4B191.OrleansCodeGenMaddalena_Grains_Learning_LabeledNewsSerializer));
             feature.AddKnownType(@"Maddalena.Grains.Learning.LabeledNews,Maddalena.Grains", @"Maddalena.Grains.Learning.LabeledNews");
             feature.AddKnownType(@"Maddalena.Grains.Grains.FeedGrain,Maddalena.Grains", @"Maddalena.Grains.Grains.FeedGrain");
             feature.AddKnownType(@"Maddalena.Grains.Grains.ILabellingGrain,Maddalena.Grains", @"Maddalena.Grains.Grains.ILabellingGrain");
             feature.AddKnownType(@"Maddalena.Grains.Grains.LabellingGrain,Maddalena.Grains", @"Maddalena.Grains.Grains.LabellingGrain");
+            feature.AddKnownType(@"Maddalena.Grains.Extensions.StringExtensions,Maddalena.Grains", @"Maddalena.Grains.Extensions.StringExtensions");
             feature.AddKnownType(@"Maddalena.Grains.DataProvider.FeedProvider,Maddalena.Grains", @"Maddalena.Grains.DataProvider.FeedProvider");
             feature.AddKnownType(@"Maddalena.Numl.IModelBase,Maddalena.Datastorage", @"Maddalena.Numl.IModelBase");
             feature.AddKnownType(@"Maddalena.Numl.Learner,Maddalena.Datastorage", @"Maddalena.Numl.Learner");
@@ -520,6 +521,50 @@ namespace OrleansGeneratedCode
             feature.AddKnownType(@"Maddalena.Datastorage.Data.MongoModel,Maddalena.Datastorage", @"Maddalena.Datastorage.Data.MongoModel");
             feature.AddKnownType(@"Maddalena.Datastorage.Data.MongoNews,Maddalena.Datastorage", @"Maddalena.Datastorage.Data.MongoNews");
             feature.AddKnownType(@"Maddalena.Datastorage.Data.MongoSettings,Maddalena.Datastorage", @"Maddalena.Datastorage.Data.MongoSettings");
+            feature.AddKnownType(@"HtmlAgilityPack.Crc32,HtmlAgilityPack", @"HtmlAgilityPack.Crc32");
+            feature.AddKnownType(@"HtmlAgilityPack.EncodingFoundException,HtmlAgilityPack", @"HtmlAgilityPack.EncodingFoundException");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlAttribute,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAttribute");
+            feature.AddKnownType(@"HtmlAgilityPack.AttributeValueQuote,HtmlAgilityPack", @"HtmlAgilityPack.AttributeValueQuote");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlAttributeCollection,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAttributeCollection");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlCmdLine,HtmlAgilityPack", @"HtmlAgilityPack.HtmlCmdLine");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlCommentNode,HtmlAgilityPack", @"HtmlAgilityPack.HtmlCommentNode");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlNode,HtmlAgilityPack", @"HtmlAgilityPack.HtmlNode");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlConsoleListener,HtmlAgilityPack", @"HtmlAgilityPack.HtmlConsoleListener");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlDocument,HtmlAgilityPack", @"HtmlAgilityPack.HtmlDocument");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlElementFlag,HtmlAgilityPack", @"HtmlAgilityPack.HtmlElementFlag");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlEntity,HtmlAgilityPack", @"HtmlAgilityPack.HtmlEntity");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlNameTable,HtmlAgilityPack", @"HtmlAgilityPack.HtmlNameTable");
+            feature.AddKnownType(@"HtmlAgilityPack.Tools,HtmlAgilityPack", @"HtmlAgilityPack.Tools");
+            feature.AddKnownType(@"HtmlAgilityPack.ReturnType,HtmlAgilityPack", @"HtmlAgilityPack.ReturnType");
+            feature.AddKnownType(@"HtmlAgilityPack.HasXPathAttribute,HtmlAgilityPack", @"HtmlAgilityPack.HasXPathAttribute");
+            feature.AddKnownType(@"HtmlAgilityPack.XPathAttribute,HtmlAgilityPack", @"HtmlAgilityPack.XPathAttribute");
+            feature.AddKnownType(@"HtmlAgilityPack.NodeNotFoundException,HtmlAgilityPack", @"HtmlAgilityPack.NodeNotFoundException");
+            feature.AddKnownType(@"HtmlAgilityPack.NodeAttributeNotFoundException,HtmlAgilityPack", @"HtmlAgilityPack.NodeAttributeNotFoundException");
+            feature.AddKnownType(@"HtmlAgilityPack.MissingXPathException,HtmlAgilityPack", @"HtmlAgilityPack.MissingXPathException");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlNodeCollection,HtmlAgilityPack", @"HtmlAgilityPack.HtmlNodeCollection");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlNodeNavigator,HtmlAgilityPack", @"HtmlAgilityPack.HtmlNodeNavigator");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlNodeType,HtmlAgilityPack", @"HtmlAgilityPack.HtmlNodeType");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlParseError,HtmlAgilityPack", @"HtmlAgilityPack.HtmlParseError");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlParseErrorCode,HtmlAgilityPack", @"HtmlAgilityPack.HtmlParseErrorCode");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlTextNode,HtmlAgilityPack", @"HtmlAgilityPack.HtmlTextNode");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlWeb,HtmlAgilityPack", @"HtmlAgilityPack.HtmlWeb");
+            feature.AddKnownType(@"HtmlAgilityPack.IPermissionHelper,HtmlAgilityPack", @"HtmlAgilityPack.IPermissionHelper");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlWebException,HtmlAgilityPack", @"HtmlAgilityPack.HtmlWebException");
+            feature.AddKnownType(@"HtmlAgilityPack.IOLibrary,HtmlAgilityPack", @"HtmlAgilityPack.IOLibrary");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocument,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocument");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentCodeFragment,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocumentCodeFragment");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentFragment,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocumentFragment");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentFragmentList,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocumentFragmentList");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentFragmentType,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocumentFragmentType");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentTextFragment,HtmlAgilityPack", @"HtmlAgilityPack.MixedCodeDocumentTextFragment");
+            feature.AddKnownType(@"HtmlAgilityPack.NameValuePairList,HtmlAgilityPack", @"HtmlAgilityPack.NameValuePairList");
+            feature.AddKnownType(@"HtmlAgilityPack.Trace,HtmlAgilityPack", @"HtmlAgilityPack.Trace");
+            feature.AddKnownType(@"HtmlAgilityPack.Utilities,HtmlAgilityPack", @"HtmlAgilityPack.Utilities");
+            feature.AddKnownType(@"HtmlAgilityPack.Tools+HAPFunc`2,HtmlAgilityPack", @"HtmlAgilityPack.HAPFunc`2'2");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlWeb+PostResponseHandler,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAgilityPack.HtmlWeb.PostResponseHandler");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlWeb+PreHandleDocumentHandler,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAgilityPack.HtmlWeb.PreHandleDocumentHandler");
+            feature.AddKnownType(@"HtmlAgilityPack.HtmlWeb+PreRequestHandler,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAgilityPack.HtmlWeb.PreRequestHandler");
+            feature.AddKnownType(@"HtmlAgilityPack.MixedCodeDocumentFragmentList+MixedCodeDocumentFragmentEnumerator,HtmlAgilityPack", @"HtmlAgilityPack.HtmlAgilityPack.MixedCodeDocumentFragmentList.MixedCodeDocumentFragmentEnumerator");
             feature.AddKnownType(@"Microsoft.SyndicationFeed.IAtomEntry,Microsoft.SyndicationFeed.ReaderWriter", @"Microsoft.SyndicationFeed.IAtomEntry");
             feature.AddKnownType(@"Microsoft.SyndicationFeed.ISyndicationItem,Microsoft.SyndicationFeed.ReaderWriter", @"Microsoft.SyndicationFeed.ISyndicationItem");
             feature.AddKnownType(@"Microsoft.SyndicationFeed.ISyndicationAttribute,Microsoft.SyndicationFeed.ReaderWriter", @"Microsoft.SyndicationFeed.ISyndicationAttribute");

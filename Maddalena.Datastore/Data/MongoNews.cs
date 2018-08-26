@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maddalena.Client;
+using System;
 using System.Collections.Generic;
 
 namespace Maddalena.Datastorage.Data
@@ -16,10 +17,12 @@ namespace Maddalena.Datastorage.Data
 
         public string Link { get; set; }
 
+        public string Source { get; set; }
+
+        public SourceType SourceType { get; set; }
+
         public List<string> Good { get; set; }
 
         public List<string> Bad { get; set; }
-
-        public string Image { get; set; }
     }
 }

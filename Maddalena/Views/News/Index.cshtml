@@ -2,6 +2,7 @@
 @using System;
 @using System.Net;
 @using  Maddalena.Datastorage;
+@using  Maddalena.Extensions;
 
 
 @{
@@ -10,50 +11,93 @@
     var labels = await Datastore.Settings.Labels();
 }
 
-<ul class="list-unstyled">
+@if (User.IsInRole("blog"))
+{
+    <div class="row" style="margin-top:25px">
+        <div class="col-12">
+            <a href="/news/feed">Feeds</a>
+        </div>
+    </div>
+}
 
-    @foreach (var item in Model)
-    {
-    <li style="margin-bottom:43px">
-        @foreach (var label in labels)
-        {
-            @switch (await Datastore.News.GetLabel(item, label))
+
+@foreach (var item in Model)
+{
+    <div class="card" style="margin-top:32px">
+        <div class="card-header">
+            @foreach (var label in labels)
             {
-                case Maddalena.Client.LabelValue.Bad:
-                    <span class="badge badge-danger">@label</span>
-                    break;
-                case Maddalena.Client.LabelValue.Good:
-                    <span class="badge badge-success">@label</span>
-                    break;
-                case Maddalena.Client.LabelValue.Irrelevant:
-                    <span class="badge badge-warning">@label</span>
-                    break;
+                @switch (await Datastore.News.GetLabel(item, label))
+                {
+                    case Maddalena.Client.LabelValue.Bad:
+                        <span class="badge badge-danger float-left">@label</span>
+                        break;
+                    case Maddalena.Client.LabelValue.Good:
+                        <span class="badge badge-success">@label</span>
+                        break;
+                    case Maddalena.Client.LabelValue.Irrelevant:
+                        <span class="badge badge-warning">@label</span>
+                        break;
+                }
             }
-        }
-        <br />
-        <a href="@item.Link">
-            @item.Title
-        </a>
-
-        @if (User.IsInRole("blog"))
-        {
-        <form method="post" class="form-inline">
-            <select name="label" class="form-control">
-                @foreach (var lbl in labels)
+            <span class="float-right">@item.Timestamp.RelativeDate()</span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a target="_blank" href="@item.Link">
+                    @item.Title
+                </a>
+            </h5>
+            <p>
+                <small>@item.Source</small>
+            </p>
+            <p class="card-text">
+                @if (item.Description.Length <= 300)
                 {
-                    <option value="@lbl">@lbl</option>
+                    @item.Description
                 }
-            </select>
-            <select name="value" class="form-control">
-                @foreach (var lbl in labels)
+                else
                 {
-                    <option value="@lbl">@lbl</option>
+                    @item.Description.Substring(0, 300)<span>..</span>
                 }
-            </select>
-        </form>
-        }
+            </p>
+        </div>
+        <div class="card-footer">
+            @foreach (var cat in item.Categories)
+            {
+                <small>
+                    <a href="/news/cat/@cat">@cat</a>
+                </small>
+            }
 
-    </li>
-
-    }
-</ul>
+            @if (User.IsInRole("blog"))
+            {
+                <div class="row" style="margin-top:25px">
+                    <div class="col-6">
+                        <form action="/news/label" method="post" class="form-inline">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <select name="label" class="form-control">
+                                @foreach (var lbl in labels)
+                                {
+                                    <option value="@lbl">@lbl</option>
+                                }
+                            </select>
+                            <select name="value" class="form-control">
+                                <option value="Irrelevant">Irrelevant</option>
+                                <option value="Good">Good</option>
+                                <option value="Bad">Bad</option>
+                            </select>
+                            <input type="submit" class="btn btn-primary" value="Label" />
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <form action="/news/delete" method="post" class="form-inline">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

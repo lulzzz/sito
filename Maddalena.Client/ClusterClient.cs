@@ -57,8 +57,6 @@ namespace Maddalena.Client
 
         public IFeedGrain FeedGrain => _client.GetGrain<IFeedGrain>(Guid.NewGuid());
 
-        public INewsGrain NewsGrain => _client.GetGrain<INewsGrain>(Guid.NewGuid());
-
         public Task DoClientWork()
         {
             return Task.CompletedTask;

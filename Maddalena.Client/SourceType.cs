@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Maddalena.Extensions
+namespace Maddalena.Client
 {
-    public class StringExtensions
+    public enum SourceType
     {
+        Feed,
+        Mail
     }
 }
