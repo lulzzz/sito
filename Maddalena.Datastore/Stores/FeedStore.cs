@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Client;
 using Maddalena.Datastorage.Data;
@@ -13,9 +14,24 @@ namespace Maddalena.Datastorage
         public Task Create(Feed feed) => _feedCollection
                               .InsertOneAsync(Datastore.Map<MongoFeed>(feed));
 
+        public async Task<Feed> Get(string id)
+        {
+            var f = await (await _feedCollection.FindAsync(x => x.Id == id))
+                    .FirstOrDefaultAsync();
+
+            return (f != null) ? Datastore.Map<Feed>(f) : null;
+        }
+
+
         public Task Update(Feed feed)
         {
             return _feedCollection.ReplaceOneAsync(x => x.Id == feed.Id, Datastore.Map<MongoFeed>(feed));
+        }
+
+
+        public Task Delete(Feed feed)
+        {
+            return _feedCollection.DeleteOneAsync(x => x.Id == feed.Id);
         }
 
         public Feed[] Feeds

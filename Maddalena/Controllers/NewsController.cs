@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Maddalena.Client;
 using Maddalena.Datastorage;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +7,8 @@ namespace Maddalena.Controllers
 {
     public class NewsController : Controller
     {
+        static ClusterClient client = new ClusterClient();
+
         public async Task<IActionResult> Index()
         {
             return View(await Datastore.News.AllAsync());
@@ -25,6 +24,7 @@ namespace Maddalena.Controllers
         {
             var news = await Datastore.News.Get(id);
             await Datastore.News.LabelAsync(news,label,value);
+
             return Redirect("/news");
         }
 

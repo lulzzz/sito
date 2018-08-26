@@ -14,6 +14,7 @@ namespace Maddalena.Client
     /// </summary>
     public class ClusterClient
     {
+        private bool started = false;
         private IClusterClient _client;
 
         public async Task StartClientWithRetries(int initializeAttemptsBeforeFailing = 5)
@@ -39,6 +40,7 @@ namespace Maddalena.Client
                         .Build();
 
                     await _client.Connect();
+                    started = true;
                     Console.WriteLine("Client successfully connect to silo host");
                     break;
                 }
@@ -56,10 +58,5 @@ namespace Maddalena.Client
         }
 
         public IFeedGrain FeedGrain => _client.GetGrain<IFeedGrain>(Guid.NewGuid());
-
-        public Task DoClientWork()
-        {
-            return Task.CompletedTask;
-        }
     }
 }

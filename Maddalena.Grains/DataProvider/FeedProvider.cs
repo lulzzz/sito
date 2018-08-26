@@ -29,8 +29,8 @@ namespace Maddalena.Grains.DataProvider
                             {
                                 Title = item.Title,
                                 Source = feed.Name,
-                                SourceType = SourceType.Feed,
-                                Description = item.Description.PurgeHtml(),
+                                SourceType = SourceType.Feed,                                Description = item.Description.PurgeHtml(),
+
                                 Link = item.Links.First().Uri.AbsoluteUri,
                                 Timestamp = item.Published.DateTime,
                                 Categories = item.Categories.Select(x => x.Name).ToArray()

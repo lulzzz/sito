@@ -32,17 +32,22 @@ namespace Maddalena.Datastorage
             return mongoNews != null ? Datastore.Map<News>(mongoNews) : null;
         }
 
-        public async Task Create(News news)
+        public async Task<bool> Create(News news)
         {
             var f = await _newsCollection.FindAsync(x => x.Link == news.Link);
 
-            if (await f.AnyAsync()) return;
+            if (await f.AnyAsync())
+            {
+                return false;
+            }
 
             var mnews = Datastore.Map<MongoNews>(news);
 
             await _newsCollection.InsertOneAsync(mnews);
 
             news.Id = mnews.Id;
+
+            return true;
         }
 
         public async Task LabelAsync(News news, string label, LabelValue labelValue)
@@ -55,22 +60,22 @@ namespace Maddalena.Datastorage
 
             switch (labelValue)
             {
+                case LabelValue.Irrelevant:
+                    if (mongoNews.Bad.Contains(label)) mongoNews.Bad.Remove(label);
+                    if (mongoNews.Good.Contains(label)) mongoNews.Good.Remove(label);
+
+                    break;
+
                 case LabelValue.Bad:
-                    if (!mongoNews.Bad.Contains(label))
-                    {
-                        mongoNews.Bad.Add(label);
-                    }
-                    await _newsCollection.ReplaceOneAsync(x => x.Id == mongoNews.Id, mongoNews);
+                    if (!mongoNews.Bad.Contains(label)) mongoNews.Bad.Add(label);
+                    if (mongoNews.Good.Contains(label)) mongoNews.Good.Remove(label);
                     break;
                 case LabelValue.Good:
-                    if (!mongoNews.Good.Contains(label))
-                    {
-                        mongoNews.Good.Add(label);
-                    }
-
-                    await _newsCollection.ReplaceOneAsync(x => x.Id == mongoNews.Id, mongoNews);
+                    if (!mongoNews.Good.Contains(label)) mongoNews.Good.Add(label);
+                    if (mongoNews.Bad.Contains(label)) mongoNews.Bad.Remove(label);
                     break;
             }
+            await _newsCollection.ReplaceOneAsync(x => x.Id == mongoNews.Id, mongoNews);
 
         }
 

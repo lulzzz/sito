@@ -8,7 +8,7 @@
 #pragma warning disable 693
 #pragma warning disable 1591
 #pragma warning disable 1998
-[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGen1d910961d1FeaturePopulator))]
+[assembly: global::Orleans.Metadata.FeaturePopulatorAttribute(typeof (OrleansGeneratedCode.OrleansCodeGena748cc9906FeaturePopulator))]
 [assembly: global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
 [assembly: global::Orleans.CodeGeneration.OrleansCodeGenerationTargetAttribute(@"Maddalena.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")]
 namespace Maddalena.Client.Interfaces
@@ -127,9 +127,145 @@ namespace Maddalena.Client.Interfaces
             }
         }
     }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::System.SerializableAttribute, global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute, global::Orleans.CodeGeneration.GrainReferenceAttribute(typeof (global::Maddalena.Client.Interfaces.ILabellingGrain))]
+    internal class OrleansCodeGenLabellingGrainReference : global::Orleans.Runtime.GrainReference, global::Maddalena.Client.Interfaces.ILabellingGrain
+    {
+        protected OrleansCodeGenLabellingGrainReference(global::Orleans.Runtime.GrainReference other): base (other)
+        {
+        }
+
+        OrleansCodeGenLabellingGrainReference(global::Orleans.Runtime.GrainReference other, global::Orleans.CodeGeneration.InvokeMethodOptions invokeMethodOptions): base (other, invokeMethodOptions)
+        {
+        }
+
+        protected OrleansCodeGenLabellingGrainReference(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context): base (info, context)
+        {
+        }
+
+        public override global::System.Int32 InterfaceId
+        {
+            get
+            {
+                return -1623955373;
+            }
+        }
+
+        public override global::System.UInt16 InterfaceVersion
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override global::System.String InterfaceName
+        {
+            get
+            {
+                return @"global::Maddalena.Client.Interfaces.ILabellingGrain";
+            }
+        }
+
+        public override global::System.Boolean IsCompatible(global::System.Int32 interfaceId)
+        {
+            return interfaceId == -1623955373 || interfaceId == -1277021679;
+        }
+
+        public override global::System.String GetMethodName(global::System.Int32 interfaceId, global::System.Int32 methodId)
+        {
+            switch (interfaceId)
+            {
+                case -1623955373:
+                    switch (methodId)
+                    {
+                        case -289322178:
+                            return @"LabelAsync";
+                        case 2003862074:
+                            return @"SetupReminderAsync";
+                        default:
+                            throw new global::System.NotImplementedException(@"interfaceId=" + -1623955373 + @",methodId=" + methodId);
+                    }
+
+                case -1277021679:
+                    switch (methodId)
+                    {
+                        default:
+                            throw new global::System.NotImplementedException(@"interfaceId=" + -1277021679 + @",methodId=" + methodId);
+                    }
+
+                default:
+                    throw new global::System.NotImplementedException(@"interfaceId=" + interfaceId);
+            }
+        }
+
+        public global::System.Threading.Tasks.Task LabelAsync(global::Maddalena.Client.News news)
+        {
+            return base.InvokeMethodAsync<global::System.Object>(-289322178, new global::System.Object[]{news});
+        }
+
+        public global::System.Threading.Tasks.Task SetupReminderAsync()
+        {
+            return base.InvokeMethodAsync<global::System.Object>(2003862074, null);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0"), global::Orleans.CodeGeneration.MethodInvokerAttribute(typeof (global::Maddalena.Client.Interfaces.ILabellingGrain), -1623955373), global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
+    internal class OrleansCodeGenLabellingGrainMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        public async global::System.Threading.Tasks.Task<global::System.Object> Invoke(global::Orleans.Runtime.IAddressable grain, global::Orleans.CodeGeneration.InvokeMethodRequest request)
+        {
+            global::System.Int32 interfaceId = request.InterfaceId;
+            global::System.Int32 methodId = request.MethodId;
+            global::System.Object[] arguments = request.Arguments;
+            if (grain == null)
+                throw new global::System.ArgumentNullException(@"grain");
+            switch (interfaceId)
+            {
+                case -1623955373:
+                    switch (methodId)
+                    {
+                        case -289322178:
+                            await ((global::Maddalena.Client.Interfaces.ILabellingGrain)grain).LabelAsync((global::Maddalena.Client.News)arguments[0]);
+                            return null;
+                        case 2003862074:
+                            await ((global::Maddalena.Client.Interfaces.ILabellingGrain)grain).SetupReminderAsync();
+                            return null;
+                        default:
+                            throw new global::System.NotImplementedException(@"interfaceId=" + -1623955373 + @",methodId=" + methodId);
+                    }
+
+                case -1277021679:
+                    switch (methodId)
+                    {
+                        default:
+                            throw new global::System.NotImplementedException(@"interfaceId=" + -1277021679 + @",methodId=" + methodId);
+                    }
+
+                default:
+                    throw new global::System.NotImplementedException(@"interfaceId=" + interfaceId);
+            }
+        }
+
+        public global::System.Int32 InterfaceId
+        {
+            get
+            {
+                return -1623955373;
+            }
+        }
+
+        public global::System.UInt16 InterfaceVersion
+        {
+            get
+            {
+                return 1;
+            }
+        }
+    }
 }
 
-namespace OrleansGeneratedCodeA5A73F46
+namespace OrleansGeneratedCode31568082
 {
     using global::Orleans;
     using global::System.Reflection;
@@ -236,11 +372,12 @@ namespace OrleansGeneratedCodeA5A73F46
 namespace OrleansGeneratedCode
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute(@"Orleans-CodeGenerator", @"2.0.0.0")]
-    internal sealed class OrleansCodeGen1d910961d1FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
+    internal sealed class OrleansCodeGena748cc9906FeaturePopulator : global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainInterfaceFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Metadata.GrainClassFeature>, global::Orleans.Metadata.IFeaturePopulator<global::Orleans.Serialization.SerializerFeature>
     {
         public void Populate(global::Orleans.Metadata.GrainInterfaceFeature feature)
         {
             feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::Maddalena.Client.Interfaces.IFeedGrain), typeof (Maddalena.Client.Interfaces.OrleansCodeGenFeedGrainReference), typeof (Maddalena.Client.Interfaces.OrleansCodeGenFeedGrainMethodInvoker), -1642422289));
+            feature.Interfaces.Add(new global::Orleans.Metadata.GrainInterfaceMetadata(typeof (global::Maddalena.Client.Interfaces.ILabellingGrain), typeof (Maddalena.Client.Interfaces.OrleansCodeGenLabellingGrainReference), typeof (Maddalena.Client.Interfaces.OrleansCodeGenLabellingGrainMethodInvoker), -1623955373));
         }
 
         public void Populate(global::Orleans.Metadata.GrainClassFeature feature)
@@ -249,14 +386,15 @@ namespace OrleansGeneratedCode
 
         public void Populate(global::Orleans.Serialization.SerializerFeature feature)
         {
-            feature.AddSerializerType(typeof (global::Maddalena.Client.Feed), typeof (OrleansGeneratedCodeA5A73F46.OrleansCodeGenMaddalena_Client_FeedSerializer));
-            feature.AddSerializerType(typeof (global::Maddalena.Client.News), typeof (OrleansGeneratedCodeA5A73F46.OrleansCodeGenMaddalena_Client_NewsSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.Feed), typeof (OrleansGeneratedCode31568082.OrleansCodeGenMaddalena_Client_FeedSerializer));
+            feature.AddSerializerType(typeof (global::Maddalena.Client.News), typeof (OrleansGeneratedCode31568082.OrleansCodeGenMaddalena_Client_NewsSerializer));
             feature.AddKnownType(@"Maddalena.Client.ClusterClient,Maddalena.Client", @"Maddalena.Client.ClusterClient");
             feature.AddKnownType(@"Maddalena.Client.Feed,Maddalena.Client", @"Maddalena.Client.Feed");
             feature.AddKnownType(@"Maddalena.Client.LabelValue,Maddalena.Client", @"Maddalena.Client.LabelValue");
             feature.AddKnownType(@"Maddalena.Client.News,Maddalena.Client", @"Maddalena.Client.News");
             feature.AddKnownType(@"Maddalena.Client.SourceType,Maddalena.Client", @"Maddalena.Client.SourceType");
             feature.AddKnownType(@"Maddalena.Client.Interfaces.IFeedGrain,Maddalena.Client", @"Maddalena.Client.Interfaces.IFeedGrain");
+            feature.AddKnownType(@"Maddalena.Client.Interfaces.ILabellingGrain,Maddalena.Client", @"Maddalena.Client.Interfaces.ILabellingGrain");
             feature.AddKnownType(@"Microsoft.Extensions.Logging.ConsoleLoggerExtensions,Microsoft.Extensions.Logging.Console", @"Microsoft.Extensions.Logging.ConsoleLoggerExtensions");
             feature.AddKnownType(@"Microsoft.Extensions.Logging.Console.ConfigurationConsoleLoggerSettings,Microsoft.Extensions.Logging.Console", @"Microsoft.Extensions.Logging.Console.ConfigurationConsoleLoggerSettings");
             feature.AddKnownType(@"Microsoft.Extensions.Logging.Console.IConsoleLoggerSettings,Microsoft.Extensions.Logging.Console", @"Microsoft.Extensions.Logging.Console.IConsoleLoggerSettings");

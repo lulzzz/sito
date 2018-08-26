@@ -29,15 +29,21 @@ namespace Maddalena.Grains.Grains
         {
             foreach (var feed in Datastore.Feed.Feeds)
             {
-                await FeedProvider.ReadFeedAsync(feed, async news => 
+                try
                 {
-                    await Datastore.News.Create(news);
-
-                    foreach (var label in await Datastore.Settings.Labels())
+                    await FeedProvider.ReadFeedAsync(feed, async news =>
                     {
-                        await GrainFactory.GetGrain<ILabellingGrain>(label).LabelAsync(news);
-                    }
-                });
+                        if (!await Datastore.News.Create(news)) return;
+
+                        foreach (var label in await Datastore.Settings.Labels())
+                        {
+                            await GrainFactory.GetGrain<ILabellingGrain>(label).LabelAsync(news);
+                        }
+                    });
+                }
+                catch (Exception)
+                {
+                }
             }
         }
 

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Maddalena.Client;
 using Maddalena.Client.Interfaces;
+using Maddalena.Datastorage;
 using Maddalena.Grains.Grains;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,7 +44,7 @@ namespace SiloHost
             }
         }
 
-        private static async Task<ISiloHost> StartSilo()
+        public static async Task<ISiloHost> StartSilo()
         {
             var builder = new SiloHostBuilder()
                 .UseLocalhostClustering()
@@ -62,8 +63,14 @@ namespace SiloHost
                         var grainFactory = services.GetRequiredService<IGrainFactory>();
 
                         // Get a reference to a grain and call a method on it.
-                        var archiveGrain = grainFactory.GetGrain<IFeedGrain>(Guid.Empty);
-                        await archiveGrain.SetupReminderAsync();
+                        var feedGrain = grainFactory.GetGrain<IFeedGrain>(Guid.Empty);
+                        await feedGrain.SetupReminderAsync();
+
+                        foreach (var lbl in await Datastore.Settings.Labels())
+                        {
+                            var lblGrain = grainFactory.GetGrain<ILabellingGrain>(lbl);
+                            await lblGrain.SetupReminderAsync();
+                        }
                     })
                 .AddMemoryGrainStorageAsDefault()
                 .UseInMemoryReminderService();

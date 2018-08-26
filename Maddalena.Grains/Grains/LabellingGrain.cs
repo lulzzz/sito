@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maddalena.Client;
+using Maddalena.Client.Interfaces;
 using Maddalena.Datastorage;
 using Maddalena.Grains.Learning;
 using Maddalena.Numl.Model;
 using Maddalena.Numl.Supervised;
 using Maddalena.Numl.Supervised.DecisionTree;
 using Orleans;
+using Orleans.Runtime;
 
 namespace Maddalena.Grains.Grains
 {
-    class LabellingGrain : Grain, ILabellingGrain
+    class LabellingGrain : Grain, ILabellingGrain, IRemindable
     {
         private IModel _model;
 
@@ -25,11 +26,10 @@ namespace Maddalena.Grains.Grains
 
         public async Task LabelAsync(News news)
         {
-            await UpdateModelAsync();
-
             if(_model == null)
             {
-                await Datastore.News.LabelAsync(news, this.GetPrimaryKeyString(), LabelValue.Irrelevant);
+                var value = (LabelValue) (DateTime.Now.Millisecond % 3);
+                await Datastore.News.LabelAsync(news, this.GetPrimaryKeyString(), value);
                 return;
             }
 
@@ -44,9 +44,9 @@ namespace Maddalena.Grains.Grains
             await Datastore.News.LabelAsync(news,IdentityString, res.LabelValue);
         }
 
-        public async Task UpdateModelAsync()
+        public async Task ReceiveReminder(string reminderName, TickStatus status)
         {
-            var generator = new DecisionTreeGenerator(25,4);
+            var generator = new DecisionTreeGenerator(25, 4);
 
             var labeled = new Func<News, LabelValue, LabeledNews>((news, label) =>
              new LabeledNews
@@ -69,13 +69,28 @@ namespace Maddalena.Grains.Grains
 
             var data = bad.Concat(good.Concat(neutral)).ToArray();
 
-            if(data.Length >0 )
+            if (data.Length > 0)
             {
                 Descriptor descriptor = Descriptor.Create<LabeledNews>();
 
                 _model = generator.Generate(descriptor, data);
 
                 await Datastore.Model.SaveModelAsync(IdentityString, _model);
+
+                foreach (var item in await Datastore.News.AllAsync())
+                {
+                    await LabelAsync(item);
+                }
+            }
+        }
+
+        public async Task SetupReminderAsync()
+        {
+            const string reminderName = "modelReminder";
+
+            if (await GetReminder(reminderName) == null)
+            {
+                await RegisterOrUpdateReminder(reminderName, TimeSpan.Zero, TimeSpan.FromMinutes(5));
             }
         }
     }   

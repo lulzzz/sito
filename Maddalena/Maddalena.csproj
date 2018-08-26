@@ -140,6 +140,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Maddalena.Client\Maddalena.Client.csproj" />
     <ProjectReference Include="..\Maddalena.Datastore\Maddalena.Datastorage.csproj" />
+    <ProjectReference Include="..\SiloHost\SiloHost.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,7 +30,7 @@
                 @switch (await Datastore.News.GetLabel(item, label))
                 {
                     case Maddalena.Client.LabelValue.Bad:
-                        <span class="badge badge-danger float-left">@label</span>
+                        <span class="badge badge-danger">@label</span>
                         break;
                     case Maddalena.Client.LabelValue.Good:
                         <span class="badge badge-success">@label</span>
