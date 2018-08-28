@@ -1,9 +1,0 @@
-D:\Maddalena\Maddalena.ML\Maddalena.ML\bin\Debug\netstandard2.0\Maddalena.ML.deps.json
-D:\Maddalena\Maddalena.ML\Maddalena.ML\bin\Debug\netstandard2.0\Maddalena.ML.dll
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.csprojAssemblyReference.cache
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.csproj.CoreCompileInputs.cache
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.AssemblyInfoInputs.cache
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.AssemblyInfo.cs
-D:\Maddalena\Maddalena.ML\Maddalena.ML\bin\Debug\netstandard2.0\Maddalena.ML.pdb
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.dll
-D:\Maddalena\Maddalena.ML\Maddalena.ML\obj\Debug\netstandard2.0\Maddalena.ML.pdb

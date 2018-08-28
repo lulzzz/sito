@@ -7,13 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Madd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsCore", "JsCore\JsCore\JsCore.csproj", "{191E0B59-B935-4838-9F96-347970C10703}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Client", "Maddalena.Client\Maddalena.Client.csproj", "{D8DF4990-1C06-4B9F-AD20-D220BCEC4118}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Datastorage", "Maddalena.Datastore\Maddalena.Datastorage.csproj", "{A6928FAB-B97F-4ED7-AB8D-1EAA7F9B5120}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Grains", "Maddalena.Grains\Maddalena.Grains.csproj", "{EBBA8F8D-62A6-4BC8-B63F-90762A40158F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost", "SiloHost\SiloHost.csproj", "{B115FD6E-B3B3-4C64-A262-18C50119CE0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML", "Maddalena.ML\Maddalena.ML\Maddalena.ML.csproj", "{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,22 +23,10 @@ Global
 		{191E0B59-B935-4838-9F96-347970C10703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8DF4990-1C06-4B9F-AD20-D220BCEC4118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8DF4990-1C06-4B9F-AD20-D220BCEC4118}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8DF4990-1C06-4B9F-AD20-D220BCEC4118}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8DF4990-1C06-4B9F-AD20-D220BCEC4118}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6928FAB-B97F-4ED7-AB8D-1EAA7F9B5120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6928FAB-B97F-4ED7-AB8D-1EAA7F9B5120}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6928FAB-B97F-4ED7-AB8D-1EAA7F9B5120}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6928FAB-B97F-4ED7-AB8D-1EAA7F9B5120}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBBA8F8D-62A6-4BC8-B63F-90762A40158F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBBA8F8D-62A6-4BC8-B63F-90762A40158F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBBA8F8D-62A6-4BC8-B63F-90762A40158F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBBA8F8D-62A6-4BC8-B63F-90762A40158F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B115FD6E-B3B3-4C64-A262-18C50119CE0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B115FD6E-B3B3-4C64-A262-18C50119CE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B115FD6E-B3B3-4C64-A262-18C50119CE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B115FD6E-B3B3-4C64-A262-18C50119CE0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
