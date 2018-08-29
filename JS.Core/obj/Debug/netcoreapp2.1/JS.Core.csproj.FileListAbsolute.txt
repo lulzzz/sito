@@ -1,0 +1,12 @@
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.Strings.resources
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.csproj.GenerateResource.cache
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.csproj.CoreCompileInputs.cache
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.AssemblyInfoInputs.cache
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.AssemblyInfo.cs
+D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.deps.json
+D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.runtimeconfig.json
+D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.runtimeconfig.dev.json
+D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.dll
+D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.pdb
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.dll
+D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.pdb
