@@ -149,40 +149,38 @@ namespace JS.Core.Core
                     switch (key._iValue)
                     {
                         case 0:
-                            return (a0 ?? (!forWrite ? notExists : (a0 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                            return (a0 ?? (!forWrite ? notExists : (a0 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                         case 1:
-                            return (a1 ?? (!forWrite ? notExists : (a1 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                            return (a1 ?? (!forWrite ? notExists : (a1 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                         case 2:
-                            return (a2 ?? (!forWrite ? notExists : (a2 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                            return (a2 ?? (!forWrite ? notExists : (a2 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                         case 3:
-                            return (a3 ?? (!forWrite ? notExists : (a3 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                            return (a3 ?? (!forWrite ? notExists : (a3 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                         case 4:
-                            return (a4 ?? (!forWrite ? notExists : (a4 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                            return (a4 ?? (!forWrite ? notExists : (a4 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     }
                 }
                 switch (key.ToString())
                 {
                     case "0":
-                        return (a0 ?? (!forWrite ? notExists : (a0 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                        return (a0 ?? (!forWrite ? notExists : (a0 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     case "1":
-                        return (a1 ?? (!forWrite ? notExists : (a1 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                        return (a1 ?? (!forWrite ? notExists : (a1 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     case "2":
-                        return (a2 ?? (!forWrite ? notExists : (a2 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                        return (a2 ?? (!forWrite ? notExists : (a2 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     case "3":
-                        return (a3 ?? (!forWrite ? notExists : (a3 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                        return (a3 ?? (!forWrite ? notExists : (a3 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     case "4":
-                        return (a4 ?? (!forWrite ? notExists : (a4 = new JSValue() { _valueType = JSValueType.NotExistsInObject })));
+                        return (a4 ?? (!forWrite ? notExists : (a4 = new JSValue { _valueType = JSValueType.NotExistsInObject })));
                     case "length":
+                    {
+                        return _lengthContainer ?? (_lengthContainer = new _LengthContainer(this)
                         {
-                            if (_lengthContainer == null)
-                                _lengthContainer = new _LengthContainer(this)
-                                {
-                                    _valueType = JSValueType.Integer,
-                                    _iValue = length,
-                                    _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.Reassign
-                                };
-                            return _lengthContainer;
-                        }
+                            _valueType = JSValueType.Integer,
+                            _iValue = length,
+                            _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.Reassign
+                        });
+                    }
                     case "callee":
                         {
                             if (callee == null)
@@ -252,14 +250,14 @@ namespace JS.Core.Core
                 return;
             suppressClone = true;
 
-            var mask = JSValueAttributesInternal.ReadOnly
-                    | JSValueAttributesInternal.SystemObject
-                    | JSValueAttributesInternal.Temporary
-                    | JSValueAttributesInternal.Reassign
-                    | JSValueAttributesInternal.ProxyPrototype
-                    | JSValueAttributesInternal.DoNotEnumerate
-                    | JSValueAttributesInternal.NonConfigurable
-                    | JSValueAttributesInternal.DoNotDelete;
+            const JSValueAttributesInternal mask = JSValueAttributesInternal.ReadOnly
+                                                   | JSValueAttributesInternal.SystemObject
+                                                   | JSValueAttributesInternal.Temporary
+                                                   | JSValueAttributesInternal.Reassign
+                                                   | JSValueAttributesInternal.ProxyPrototype
+                                                   | JSValueAttributesInternal.DoNotEnumerate
+                                                   | JSValueAttributesInternal.NonConfigurable
+                                                   | JSValueAttributesInternal.DoNotDelete;
 
             for (var i = 0; i < length; i++)
             {
@@ -275,15 +273,15 @@ namespace JS.Core.Core
                 switch (name._iValue)
                 {
                     case 0:
-                        return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a0 = null) == null;
+                        return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                     case 1:
-                        return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a1 = null) == null;
+                        return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                     case 2:
-                        return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a2 = null) == null;
+                        return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                     case 3:
-                        return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a3 = null) == null;
+                        return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                     case 4:
-                        return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a4 = null) == null;
+                        return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                         //case 5:
                         //    return a5 == null || ((a5.attributes & JSObjectAttributesInternal.DoNotDelete) == 0) && (a5 = null) == null;
                         //case 6:
@@ -295,15 +293,15 @@ namespace JS.Core.Core
             switch (name.ToString())
             {
                 case "0":
-                    return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a0 = null) == null;
+                    return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                 case "1":
-                    return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a1 = null) == null;
+                    return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                 case "2":
-                    return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a2 = null) == null;
+                    return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                 case "3":
-                    return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a3 = null) == null;
+                    return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                 case "4":
-                    return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0) && (a4 = null) == null;
+                    return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
                     //case "5":
                     //    return a5 == null || ((a5.attributes & JSObjectAttributesInternal.DoNotDelete) == 0) && (a5 = null) == null;
                     //case "6":

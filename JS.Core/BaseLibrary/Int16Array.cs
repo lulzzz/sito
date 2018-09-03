@@ -36,7 +36,6 @@ namespace NiL.JS.BaseLibrary
         public override int BYTES_PER_ELEMENT => sizeof(short);
 
         public Int16Array()
-            : base()
         {
         }
 

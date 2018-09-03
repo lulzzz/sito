@@ -167,7 +167,7 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IReinforcementModel.</returns>
         public IReinforcementModel Generate(IEnumerable<object> examples1, IEnumerable<object> examples2)
         {
-            if (examples1.Count() == 0) throw new InvalidOperationException("Empty example set.");
+            if (!examples1.Any()) throw new InvalidOperationException("Empty example set.");
 
             if (this.Descriptor == null)
                 throw new InvalidOperationException("Descriptor is null");
@@ -186,7 +186,7 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IReinforcementModel.</returns>
         public IReinforcementModel Generate(Descriptor descriptor, IEnumerable<object> examples1, Descriptor transitionDescriptor, IEnumerable<object> examples2)
         {
-            if (examples1.Count() == 0) throw new InvalidOperationException("Empty example set.");
+            if (!examples1.Any()) throw new InvalidOperationException("Empty example set.");
 
             bool hasTransitionStates = (examples2 != null && examples2.Any());
 
@@ -200,7 +200,7 @@ namespace Maddalena.Numl.Reinforcement
 
             if (hasTransitionStates)
             {
-                if (TransitionDescriptor == null || TransitionDescriptor.Features == null || TransitionDescriptor.Features.Length == 0)
+                if (TransitionDescriptor?.Features == null || TransitionDescriptor.Features.Length == 0)
                     throw new ArgumentNullException($"Transition Descriptor was null. A transition desciptor is required for '{nameof(examples2)}'.");
                 if (examples2.Count() != examples1.Count())
                     throw new InvalidOperationException($"Length of '{nameof(examples1)}' must match length of '{nameof(examples2)}'.");

@@ -11,6 +11,9 @@ using JS.Core.Core.Interop;
 using JS.Core.Expressions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Math = System.Math;
+using String = NiL.JS.BaseLibrary.String;
 
 namespace JS.Core.Core
 {
@@ -80,7 +83,7 @@ namespace JS.Core.Core
         DoNotDelete = 1 << 1,
         ReadOnly = 1 << 2,
         Immutable = 1 << 3,
-        NonConfigurable = 1 << 4,
+        NonConfigurable = 1 << 4
     }
 
     internal sealed class JSObjectDebugView
@@ -113,10 +116,10 @@ namespace JS.Core.Core
         internal static readonly JSValue functionString = "function";
         internal static readonly JSValue objectString = "object";
 
-        internal static readonly JSValue undefined = new JSValue() { _valueType = JSValueType.Undefined, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSValue notExists = new JSValue() { _valueType = JSValueType.NotExists, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSObject @null = new JSObject() { _valueType = JSValueType.Object, _oValue = null, _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSValue nullString = new JSValue() { _valueType = JSValueType.String, _oValue = "null", _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
+        internal static readonly JSValue undefined = new JSValue { _valueType = JSValueType.Undefined, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
+        internal static readonly JSValue notExists = new JSValue { _valueType = JSValueType.NotExists, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
+        internal static readonly JSObject @null = new JSObject { _valueType = JSValueType.Object, _oValue = null, _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
+        internal static readonly JSValue nullString = new JSValue { _valueType = JSValueType.String, _oValue = "null", _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
 
         [Hidden]
         public static JSValue Undefined { [Hidden] get { return undefined; } }
@@ -306,7 +309,7 @@ namespace JS.Core.Core
         public bool Exists
         {
             [Hidden]
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             { return _valueType >= JSValueType.Undefined; }
         }
@@ -315,7 +318,7 @@ namespace JS.Core.Core
         public bool Defined
         {
             [Hidden]
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _valueType > JSValueType.Undefined;
@@ -326,7 +329,7 @@ namespace JS.Core.Core
         public bool IsNull
         {
             [Hidden]
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _valueType >= JSValueType.Object && _oValue == null;
@@ -337,14 +340,14 @@ namespace JS.Core.Core
         public bool IsNumber
         {
             [Hidden]
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             { return _valueType == JSValueType.Integer || _valueType == JSValueType.Double; }
         }
 
         internal bool NeedClone
         {
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return (_attributes & (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.SystemObject)) == JSValueAttributesInternal.SystemObject;
@@ -353,7 +356,7 @@ namespace JS.Core.Core
 
         internal bool IsBox
         {
-            [MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _valueType >= JSValueType.Object && _oValue != null && _oValue != this;
@@ -365,12 +368,12 @@ namespace JS.Core.Core
             switch (_valueType)
             {
                 case JSValueType.Boolean:
-                    return Context.CurrentGlobalContext.GetPrototype(typeof(NiL.JS.BaseLibrary.Boolean));
+                    return Context.CurrentGlobalContext.GetPrototype(typeof(Boolean));
                 case JSValueType.Double:
                 case JSValueType.Integer:
                     return Context.CurrentGlobalContext.GetPrototype(typeof(Number));
                 case JSValueType.String:
-                    return Context.CurrentGlobalContext.GetPrototype(typeof(NiL.JS.BaseLibrary.String));
+                    return Context.CurrentGlobalContext.GetPrototype(typeof(String));
             }
 
             if (_oValue != null && _oValue != this)
@@ -378,8 +381,7 @@ namespace JS.Core.Core
                 var oValueAsJsObject = _oValue as JSValue;
                 if (oValueAsJsObject != null)
                     return oValueAsJsObject.GetDefaultPrototype() ?? @null;
-                else
-                    return Context.CurrentGlobalContext.GetPrototype(_oValue.GetType());
+                return Context.CurrentGlobalContext.GetPrototype(_oValue.GetType());
             }
 
             return Context.CurrentGlobalContext.GetPrototype(GetType());
@@ -474,7 +476,7 @@ namespace JS.Core.Core
                     {
                         if (propertyScope == PropertyScope.Own)
                             return notExists;
-                        return Context.CurrentGlobalContext.GetPrototype(typeof(NiL.JS.BaseLibrary.Boolean)).GetProperty(key, false, PropertyScope.Common);
+                        return Context.CurrentGlobalContext.GetPrototype(typeof(Boolean)).GetProperty(key, false, PropertyScope.Common);
                     }
                 case JSValueType.Integer:
                 case JSValueType.Double:
@@ -484,7 +486,7 @@ namespace JS.Core.Core
                 }
                 case JSValueType.String:
                     {
-                        return stringGetProperty(key, forWrite, propertyScope);
+                        return stringGetProperty(key, propertyScope);
                     }
                 case JSValueType.Undefined:
                 case JSValueType.NotExists:
@@ -509,7 +511,7 @@ namespace JS.Core.Core
             return null;
         }
 
-        private JSValue stringGetProperty(JSValue name, bool forWrite, PropertyScope propertyScope)
+        private JSValue stringGetProperty(JSValue name, PropertyScope propertyScope)
         {
             if ((name._valueType == JSValueType.String || name._valueType >= JSValueType.Object)
                 && string.CompareOrdinal(name._oValue.ToString(), "length") == 0)
@@ -531,7 +533,7 @@ namespace JS.Core.Core
                 return notExists;
 
             return Context.CurrentGlobalContext
-                .GetPrototype(typeof(NiL.JS.BaseLibrary.String))
+                .GetPrototype(typeof(String))
                 .GetProperty(name, false, PropertyScope.Common);
         }
 
@@ -557,7 +559,6 @@ namespace JS.Core.Core
                 if (field != null)
                 {
                     field.SetProperty(name, value, propertyScope, throwOnError);
-                    return;
                 }
             }
             else if (_valueType <= JSValueType.Undefined)
@@ -587,7 +588,7 @@ namespace JS.Core.Core
         {
             if (!(obj is JSValue))
                 return false;
-            return object.ReferenceEquals(obj, this) || StrictEqual.Check(this, obj as JSValue);
+            return ReferenceEquals(obj, this) || StrictEqual.Check(this, obj as JSValue);
         }
 
         [Hidden]
@@ -599,14 +600,14 @@ namespace JS.Core.Core
         [Hidden]
         public static implicit operator JSValue(char value)
         {
-            return new NiL.JS.BaseLibrary.String(value.ToString());
+            return new String(value.ToString());
         }
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Hidden]
         public static implicit operator JSValue(bool value)
         {
-            return (NiL.JS.BaseLibrary.Boolean)value;
+            return (Boolean)value;
         }
 
         [Hidden]
@@ -630,7 +631,7 @@ namespace JS.Core.Core
         [Hidden]
         public static implicit operator JSValue(string value)
         {
-            return new NiL.JS.BaseLibrary.String(value);
+            return new String(value);
         }
 
         [Hidden]
@@ -709,7 +710,7 @@ namespace JS.Core.Core
 
             var res = new JSValue();
             res.Assign(this);
-            res._attributes = this._attributes & ~resetMask;
+            res._attributes = _attributes & ~resetMask;
             return res;
         }
 
@@ -739,7 +740,7 @@ namespace JS.Core.Core
                 return tempStr;
             }
 
-            var res = this._valueType >= JSValueType.Object ? ToPrimitiveValue_String_Value() : this;
+            var res = _valueType >= JSValueType.Object ? ToPrimitiveValue_String_Value() : this;
             switch (res._valueType)
             {
                 case JSValueType.Boolean:
@@ -760,10 +761,10 @@ namespace JS.Core.Core
         {
             if ((_attributes & (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.SystemObject)) != 0)
                 return;
-            this._valueType = value._valueType | JSValueType.Undefined;
-            this._iValue = value._iValue;
-            this._dValue = value._dValue;
-            this._oValue = value._oValue;
+            _valueType = value._valueType | JSValueType.Undefined;
+            _iValue = value._iValue;
+            _dValue = value._dValue;
+            _oValue = value._oValue;
         }
 
         internal JSValue ToPrimitiveValue_Value_String()
@@ -796,8 +797,8 @@ namespace JS.Core.Core
                 res = (tpvs._oValue as Function).Call(this, null);
                 if (res._valueType == JSValueType.Object)
                 {
-                    if (res._oValue is NiL.JS.BaseLibrary.String)
-                        res = res._oValue as NiL.JS.BaseLibrary.String;
+                    if (res._oValue is String)
+                        res = res._oValue as String;
                 }
 
                 if (res._valueType < JSValueType.Object)
@@ -812,8 +813,8 @@ namespace JS.Core.Core
                     res = (tpvs._oValue as Function).Call(this, null);
                     if (res._valueType == JSValueType.Object)
                     {
-                        if (res._oValue is NiL.JS.BaseLibrary.String)
-                            res = res._oValue as NiL.JS.BaseLibrary.String;
+                        if (res._oValue is String)
+                            res = res._oValue as String;
                     }
 
                     if (res._valueType < JSValueType.Object)
@@ -834,7 +835,7 @@ namespace JS.Core.Core
             if (_valueType >= JSValueType.Undefined)
                 return new ObjectWrapper(ToPrimitiveTypeContainer());
 
-            return new JSObject() { _valueType = JSValueType.Object };
+            return new JSObject { _valueType = JSValueType.Object };
         }
 
         [Hidden]
@@ -846,23 +847,23 @@ namespace JS.Core.Core
             switch (_valueType)
             {
                 case JSValueType.Boolean:
-                    return this is NiL.JS.BaseLibrary.Boolean ? this : new NiL.JS.BaseLibrary.Boolean(_iValue != 0);
+                    return this is Boolean ? this : new Boolean(_iValue != 0);
                 case JSValueType.Integer:
-                    return this is NiL.JS.BaseLibrary.Number ? this : new NiL.JS.BaseLibrary.Number(_iValue);
+                    return this is Number ? this : new Number(_iValue);
                 case JSValueType.Double:
-                    return this is NiL.JS.BaseLibrary.Number ? this : new NiL.JS.BaseLibrary.Number(_dValue);
+                    return this is Number ? this : new Number(_dValue);
                 case JSValueType.String:
-                    return this is NiL.JS.BaseLibrary.String ? this : new NiL.JS.BaseLibrary.String(_oValue.ToString());
+                    return this is String ? this : new String(_oValue.ToString());
                 case JSValueType.Symbol:
                     return _oValue as Symbol;
             }
 
-            return new JSValue() { _valueType = JSValueType.Undefined };
+            return new JSValue { _valueType = JSValueType.Undefined };
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         [Hidden]
@@ -907,7 +908,7 @@ namespace JS.Core.Core
         [AllowNullArguments]
         public virtual JSValue toString(Arguments args)
         {
-            var self = this._oValue as JSValue ?? this;
+            var self = _oValue as JSValue ?? this;
             switch (self._valueType)
             {
                 case JSValueType.Integer:
@@ -973,7 +974,7 @@ namespace JS.Core.Core
         [DoNotEnumerate]
         public virtual JSValue toLocaleString()
         {
-            var self = this._oValue as JSValue ?? this;
+            var self = _oValue as JSValue ?? this;
 
             if (self._valueType >= JSValueType.Object && self._oValue == null)
                 ExceptionHelper.Throw(new TypeError("toLocaleString calling on null."));
@@ -996,7 +997,7 @@ namespace JS.Core.Core
             if (_valueType <= JSValueType.Undefined)
                 ExceptionHelper.Throw(new TypeError("valueOf calling on undefined value."));
 
-            return _valueType < JSValueType.Object ? new JSObject() { _valueType = JSValueType.Object, _oValue = this } : this;
+            return _valueType < JSValueType.Object ? new JSObject { _valueType = JSValueType.Object, _oValue = this } : this;
         }
 
         [DoNotEnumerate]
@@ -1030,13 +1031,13 @@ namespace JS.Core.Core
 
             var a = args[0];
             a = a.__proto__;
-            if (this._valueType >= JSValueType.Object)
+            if (_valueType >= JSValueType.Object)
             {
                 if (_oValue != null)
                 {
                     while (a != null && a._valueType >= JSValueType.Object && a._oValue != null)
                     {
-                        if (a._oValue == this._oValue)
+                        if (a._oValue == _oValue)
                             return true;
                         var pi = (a._oValue as StaticProxy)?.PrototypeInstance;
                         if (pi != null && (this == pi || this == pi._oValue))
@@ -1047,7 +1048,7 @@ namespace JS.Core.Core
             }
             else
             {
-                if (a._oValue == this._oValue)
+                if (a._oValue == _oValue)
                     return true;
                 var pi = (a._oValue as StaticProxy)?.PrototypeInstance;
                 if (pi != null && (this == pi || this == pi._oValue))
@@ -1084,7 +1085,7 @@ namespace JS.Core.Core
 
         char IConvertible.ToChar(IFormatProvider provider)
         {
-            var s = this.ToString();
+            var s = ToString();
             return s.Length > 0 ? s[0] : '\0';
         }
 
@@ -1134,7 +1135,7 @@ namespace JS.Core.Core
 
         string IConvertible.ToString(IFormatProvider provider)
         {
-            return this.ToString();
+            return ToString();
         }
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
@@ -1176,15 +1177,15 @@ namespace JS.Core.Core
                     case JSValueType.Integer:
                         return _iValue - other._iValue;
                     case JSValueType.Double:
-                        return System.Math.Sign(_dValue - other._dValue);
+                        return Math.Sign(_dValue - other._dValue);
                     case JSValueType.String:
                         return string.CompareOrdinal(_oValue.ToString(), other._oValue.ToString());
                     default:
                         throw new NotImplementedException("Try to compare two values of " + _valueType);
                 }
             }
-            else
-                throw new InvalidOperationException("Type mismatch");
+
+            throw new InvalidOperationException("Type mismatch");
         }
 
         #endregion

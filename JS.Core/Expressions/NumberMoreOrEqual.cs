@@ -36,7 +36,7 @@ namespace JS.Core.Expressions
                             return itemp >= op._dValue;
                         default:
                             if (_tempContainer == null)
-                                _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
+                                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
                             _tempContainer._valueType = JSValueType.Integer;
                             _tempContainer._iValue = itemp;
                             return !Less.Check(_tempContainer, op, true);
@@ -53,14 +53,14 @@ namespace JS.Core.Expressions
                             return dtemp >= op._dValue;
                         default:
                             if (_tempContainer == null)
-                                _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
+                                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
                             _tempContainer._valueType = JSValueType.Double;
                             _tempContainer._dValue = dtemp;
                             return !Less.Check(_tempContainer, op, true);
                     }
                 default:
                     if (_tempContainer == null)
-                        _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
+                        _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
                     var temp = _tempContainer;
                     temp.Assign(op);
                     _tempContainer = null;

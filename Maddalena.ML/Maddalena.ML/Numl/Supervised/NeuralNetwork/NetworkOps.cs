@@ -468,7 +468,7 @@ namespace Maddalena.Numl.Supervised.NeuralNetwork
                 // add biases (for hidden network layers)
                 if (addBiases)
                 {
-                    if (!prevOutput.Any(a => a.IsBias == true))
+                    if (prevOutput.All(a => a.IsBias != true))
                     {
                         int layerId = prevOutput.First().LayerId;
                         var bias = new Neuron(true)

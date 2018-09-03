@@ -31,9 +31,7 @@ namespace JS.Core.Extensions
                     }
                 case TypeCode.Char:
                     {
-                        return (self != null
-                            && self._valueType == JSValueType.Object
-                            && self._oValue is char);
+                        return (self._valueType == JSValueType.Object && self._oValue is char);
                     }
                 case TypeCode.Decimal:
                     {

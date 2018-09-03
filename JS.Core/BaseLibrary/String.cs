@@ -85,8 +85,8 @@ namespace NiL.JS.BaseLibrary
             get
             {
                 if ((pos < 0) || (pos >= _oValue.ToString().Length))
-                    return JSValue.notExists;
-                return new JSValue() { _valueType = JSValueType.String, _oValue = (_oValue.ToString())[pos].ToString(), _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.DoNotDelete };
+                    return notExists;
+                return new JSValue { _valueType = JSValueType.String, _oValue = (_oValue.ToString())[pos].ToString(), _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.DoNotDelete };
             }
         }
 
@@ -121,7 +121,7 @@ namespace NiL.JS.BaseLibrary
             if (p < 0 || p >= selfStr.Length)
                 return Number.NaN;
 
-            return new Number((int)selfStr[p]);
+            return new Number(selfStr[p]);
         }
 
         [DoNotEnumerate]
@@ -136,7 +136,7 @@ namespace NiL.JS.BaseLibrary
 
             int p = Tools.JSObjectToInt32(args[0], true);
             if (p < 0 || p >= selfStr.Length)
-                return JSValue.undefined;
+                return undefined;
 
             return Tools.NextCodePoint(selfStr, ref p);
         }
@@ -289,50 +289,45 @@ namespace NiL.JS.BaseLibrary
                 ExceptionHelper.Throw(new TypeError("String.prototype.match called on null or undefined"));
 
             var a0 = args[0];
-            var regex = a0.Value as RegExp;
-
-            if (regex == null)
-                regex = new RegExp((a0._valueType > JSValueType.Undefined ? (object)a0 : "").ToString(), ""); // cached
+            var regex = a0.Value as RegExp ?? new RegExp((a0._valueType > JSValueType.Undefined ? (object)a0 : "").ToString(), "");
 
             if (!regex._global)
             {
                 return regex.exec(self);
             }
+
+            regex.lastIndex = 0;
+
+            if (regex.sticky)
+            {
+                var match = regex._regex.Match(self.ToString());
+                if (!match.Success || match.Index != 0)
+                    return null;
+
+                var res = new Array();
+                res._data[0] = match.Value;
+
+                int li = 0;
+                while (true)
+                {
+                    match = match.NextMatch();
+                    if (!match.Success || match.Index != ++li)
+                        break;
+                    res._data[li] = match.Value;
+                }
+                return res;
+            }
             else
             {
-                regex.lastIndex = 0;
+                var matches = regex._regex.Matches(self.ToString());
+                if (matches.Count == 0)
+                    return null;
 
-                if (regex.sticky)
-                {
-                    var match = regex._regex.Match(self.ToString());
-                    if (!match.Success || match.Index != 0)
-                        return null;
+                var res = new JSValue[matches.Count];
+                for (int i = 0; i < matches.Count; i++)
+                    res[i] = matches[i].Value;
 
-                    var res = new Array();
-                    res._data[0] = match.Value;
-
-                    int li = 0;
-                    while (true)
-                    {
-                        match = match.NextMatch();
-                        if (!match.Success || match.Index != ++li)
-                            break;
-                        res._data[li] = match.Value;
-                    }
-                    return res;
-                }
-                else
-                {
-                    var matches = regex._regex.Matches(self.ToString());
-                    if (matches.Count == 0)
-                        return null;
-
-                    var res = new JSValue[matches.Count];
-                    for (int i = 0; i < matches.Count; i++)
-                        res[i] = matches[i].Value;
-
-                    return new Array(res);
-                }
+                return new Array(res);
             }
         }
 
@@ -519,7 +514,7 @@ namespace NiL.JS.BaseLibrary
                     var fArgs = new Arguments(Context.CurrentContext);
                     return re.Replace(
                         selfStr,
-                        (m) =>
+                        m =>
                         {
                             str._oValue = selfStr;
                             str._valueType = JSValueType.String;
@@ -539,40 +534,36 @@ namespace NiL.JS.BaseLibrary
                         },
                         regex._global ? int.MaxValue : 1);
                 }
-                else
-                {
-                    string replacement = args.Length > 1 ? (a1 ?? "").ToString() : "undefined";
-                    return re.Replace(selfStr, replacement, regex._global ? int.MaxValue : 1);
-                }
+
+                string replacement = args.Length > 1 ? (a1 ?? "").ToString() : "undefined";
+                return re.Replace(selfStr, replacement, regex._global ? int.MaxValue : 1);
+            }
+
+            string pattern = (a0 ?? "").ToString();
+            if (f != null)
+            {
+                int index = selfStr.IndexOf(pattern, StringComparison.Ordinal);
+                if (index == -1)
+                    return selfStr;
+
+                var fArgs = new Arguments(Context.CurrentContext) { length = 3 };
+                fArgs[0] = pattern;
+                fArgs[1] = index;
+                fArgs[2] = self;
+
+                return selfStr.Substring(0, index) + f.Call(fArgs) + selfStr.Substring(index + pattern.Length);
             }
             else
             {
-                string pattern = (a0 ?? "").ToString();
-                if (f != null)
-                {
-                    int index = selfStr.IndexOf(pattern, StringComparison.Ordinal);
-                    if (index == -1)
-                        return selfStr;
+                string replacement = args.Length > 1 ? (a1 ?? "").ToString() : "undefined";
+                if (pattern.Length == 0)
+                    return replacement + selfStr;
 
-                    var fArgs = new Arguments(Context.CurrentContext) { length = 3 };
-                    fArgs[0] = pattern;
-                    fArgs[1] = index;
-                    fArgs[2] = self;
+                var index = selfStr.IndexOf(pattern, StringComparison.Ordinal);
+                if (index == -1)
+                    return selfStr;
 
-                    return selfStr.Substring(0, index) + f.Call(fArgs).ToString() + selfStr.Substring(index + pattern.Length);
-                }
-                else
-                {
-                    string replacement = args.Length > 1 ? (a1 ?? "").ToString() : "undefined";
-                    if (pattern.Length == 0)
-                        return replacement + selfStr;
-
-                    var index = selfStr.IndexOf(pattern, StringComparison.Ordinal);
-                    if (index == -1)
-                        return selfStr;
-
-                    return selfStr.Substring(0, index) + replacement + selfStr.Substring(index + pattern.Length);
-                }
+                return selfStr.Substring(0, index) + replacement + selfStr.Substring(index + pattern.Length);
             }
         }
 
@@ -699,38 +690,34 @@ namespace NiL.JS.BaseLibrary
 
                 return res;
             }
-            else
-            {
-                string fstr = a0.ToString();
 
-                if (string.IsNullOrEmpty(fstr))
+            string fstr = a0.ToString();
+
+            if (string.IsNullOrEmpty(fstr))
+            {
+                int len = System.Math.Min(selfStr.Length, (int)System.Math.Min(int.MaxValue, limit));
+                var arr = new JSValue[len];
+                for (var i = 0; i < len; i++)
+                    arr[i] = new String(selfStr[i].ToString());
+                return new Array(arr);
+            }
+
+            {
+                Array res = new Array();
+                int index = 0;
+                while (res._data.Length < limit)
                 {
-                    int len = System.Math.Min(selfStr.Length, (int)System.Math.Min(int.MaxValue, limit));
-                    var arr = new JSValue[len];
-                    for (var i = 0; i < len; i++)
-                        arr[i] = new String(selfStr[i].ToString());
-                    return new Array(arr);
-                }
-                else
-                {
-                    Array res = new Array();
-                    int index = 0;
-                    while (res._data.Length < limit)
+                    int nindex = selfStr.IndexOf(fstr, index, StringComparison.Ordinal);
+                    if (nindex == -1)
                     {
-                        int nindex = selfStr.IndexOf(fstr, index, StringComparison.Ordinal);
-                        if (nindex == -1)
-                        {
-                            res._data.Add(selfStr.Substring(index, selfStr.Length - index));
-                            break;
-                        }
-                        else
-                        {
-                            res._data.Add(selfStr.Substring(index, nindex - index));
-                            index = nindex + fstr.Length;
-                        }
+                        res._data.Add(selfStr.Substring(index, selfStr.Length - index));
+                        break;
                     }
-                    return res;
+
+                    res._data.Add(selfStr.Substring(index, nindex - index));
+                    index = nindex + fstr.Length;
                 }
+                return res;
             }
         }
 
@@ -892,7 +879,7 @@ namespace NiL.JS.BaseLibrary
             return self;
         }
 
-        private Number _length = null;
+        private Number _length;
 
         [Field]
         [ReadOnly]
@@ -916,7 +903,7 @@ namespace NiL.JS.BaseLibrary
         [Hidden]
         public override string ToString()
         {
-            if (this._valueType != JSValueType.String)
+            if (_valueType != JSValueType.String)
                 ExceptionHelper.Throw(new TypeError("Try to call String.toString for not string object."));
             return _oValue.ToString();
         }
@@ -1013,7 +1000,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.anchor called on null or undefined"));
 
-            return "<a name=\"" + arg[0].Value + "\">" + self.ToString() + "</a>";
+            return "<a name=\"" + arg[0].Value + "\">" + self + "</a>";
         }
 
         [DoNotEnumerate]
@@ -1023,7 +1010,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.big called on null or undefined"));
 
-            return "<big>" + self.ToString() + "</big>";
+            return "<big>" + self + "</big>";
         }
 
         [DoNotEnumerate]
@@ -1033,7 +1020,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.blink called on null or undefined"));
 
-            return "<blink>" + self.ToString() + "</blink>";
+            return "<blink>" + self + "</blink>";
         }
 
         [DoNotEnumerate]
@@ -1043,7 +1030,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.bold called on null or undefined"));
 
-            return "<bold>" + self.ToString() + "</bold>";
+            return "<bold>" + self + "</bold>";
         }
 
         [DoNotEnumerate]
@@ -1053,7 +1040,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.fixed called on null or undefined"));
 
-            return "<tt>" + self.ToString() + "</tt>";
+            return "<tt>" + self + "</tt>";
         }
 
         [DoNotEnumerate]
@@ -1063,7 +1050,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.fontcolor called on null or undefined"));
 
-            return "<font color=\"" + arg[0].Value + "\">" + self.ToString() + "</font>";
+            return "<font color=\"" + arg[0].Value + "\">" + self + "</font>";
         }
 
         [DoNotEnumerate]
@@ -1073,7 +1060,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.fontsize called on null or undefined"));
 
-            return "<font size=\"" + arg.Value + "\">" + self.ToString() + "</font>";
+            return "<font size=\"" + arg.Value + "\">" + self + "</font>";
         }
 
         [DoNotEnumerate]
@@ -1083,7 +1070,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.italics called on null or undefined"));
 
-            return "<i>" + self.ToString() + "</i>";
+            return "<i>" + self + "</i>";
         }
 
         [DoNotEnumerate]
@@ -1093,7 +1080,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.link called on null or undefined"));
 
-            return "<a href=\"" + arg[0].Value + "\">" + self.ToString() + "</a>";
+            return "<a href=\"" + arg[0].Value + "\">" + self + "</a>";
         }
 
         [DoNotEnumerate]
@@ -1103,7 +1090,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.small called on null or undefined"));
 
-            return "<small>" + self.ToString() + "</small>";
+            return "<small>" + self + "</small>";
         }
 
         [DoNotEnumerate]
@@ -1113,7 +1100,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.strike called on null or undefined"));
 
-            return "<strike>" + self.ToString() + "</strike>";
+            return "<strike>" + self + "</strike>";
         }
 
         [DoNotEnumerate]
@@ -1123,7 +1110,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.sub called on null or undefined"));
 
-            return "<sub>" + self.ToString() + "</sub>";
+            return "<sub>" + self + "</sub>";
         }
 
         [DoNotEnumerate]
@@ -1133,7 +1120,7 @@ namespace NiL.JS.BaseLibrary
             if (self == null || self._valueType <= JSValueType.Undefined || (self._valueType >= JSValueType.Object && self.Value == null))
                 ExceptionHelper.Throw(new TypeError("String.prototype.sup called on null or undefined"));
 
-            return "<sup>" + self.ToString() + "</sup>";
+            return "<sup>" + self + "</sup>";
         }
         #endregion
 

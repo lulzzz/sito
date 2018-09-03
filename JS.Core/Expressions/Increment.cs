@@ -66,15 +66,12 @@ namespace JS.Core.Expressions
             Arguments args = null;
             if (val._valueType == JSValueType.Property)
             {
-                var ppair = val._oValue as global::JS.Core.Core.PropertyPair;
+                var ppair = val._oValue as Core.PropertyPair;
                 setter = ppair.setter;
                 if (context._strict && setter == null)
                     ExceptionHelper.ThrowIncrementPropertyWOSetter(_left);
                 args = new Arguments();
-                if (ppair.getter == null)
-                    val = JSValue.undefined.CloneImpl(unchecked((JSValueAttributesInternal)(-1)));
-                else
-                    val = ppair.getter.Call(context._objectSource, args).CloneImpl(unchecked((JSValueAttributesInternal)(-1)));
+                val = ppair.getter == null ? JSValue.undefined.CloneImpl(unchecked((JSValueAttributesInternal)(-1))) : ppair.getter.Call(context._objectSource, args).CloneImpl(unchecked((JSValueAttributesInternal)(-1)));
             }
             else if ((val._attributes & JSValueAttributesInternal.ReadOnly) != 0)
             {
@@ -184,7 +181,7 @@ namespace JS.Core.Expressions
             if (f != null)
             {
                 (f.Descriptor.assignments ??
-                    (f.Descriptor.assignments = new System.Collections.Generic.List<Expression>())).Add(this);
+                    (f.Descriptor.assignments = new List<Expression>())).Add(this);
             }
             return false;
         }

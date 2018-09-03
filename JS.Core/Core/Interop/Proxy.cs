@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using JS.Core.Core.Functions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Math = System.Math;
 
 namespace JS.Core.Core.Interop
 {
@@ -55,7 +56,7 @@ namespace JS.Core.Core.Interop
                                 _prototypeInstance._attributes |= JSValueAttributesInternal.ProxyPrototype;
                                 _prototypeInstance._fields = _fields;
                                 //_prototypeInstance.valueType = (JSValueType)System.Math.Max((int)JSValueType.Object, (int)_prototypeInstance.valueType);
-                                _valueType = (JSValueType)System.Math.Max((int)JSValueType.Object, (int)_prototypeInstance._valueType);
+                                _valueType = (JSValueType)Math.Max((int)JSValueType.Object, (int)_prototypeInstance._valueType);
                             }
                             else
                             {
@@ -361,26 +362,19 @@ namespace JS.Core.Core.Interop
             {
                 JSValue property;
                 var protoInstanceAsJs = PrototypeInstance as JSValue;
-                if (protoInstanceAsJs != null)
-                    property = protoInstanceAsJs.GetProperty(key, forWrite && !_indexersSupported, memberScope);
-                else
-                    property = base.GetProperty(key, forWrite && !_indexersSupported, memberScope);
+                property = protoInstanceAsJs != null ? protoInstanceAsJs.GetProperty(key, forWrite && !_indexersSupported, memberScope) : base.GetProperty(key, forWrite && !_indexersSupported, memberScope);
 
                 if (!_indexersSupported)
                     return property;
 
                 if (property.Exists)
                 {
-                    if (forWrite)
-                    {
-                        if ((property._attributes & (JSValueAttributesInternal.SystemObject & JSValueAttributesInternal.ReadOnly)) == JSValueAttributesInternal.SystemObject)
-                        {
-                            if (protoInstanceAsJs != null)
-                                property = protoInstanceAsJs.GetProperty(key, true, memberScope);
-                            else
-                                property = base.GetProperty(key, true, memberScope);
-                        }
-                    }
+                    if (forWrite && (property._attributes &
+                                     (JSValueAttributesInternal.SystemObject & JSValueAttributesInternal.ReadOnly)) ==
+                        JSValueAttributesInternal.SystemObject)
+                        property = protoInstanceAsJs != null
+                            ? protoInstanceAsJs.GetProperty(key, true, memberScope)
+                            : base.GetProperty(key, true, memberScope);
 
                     return property;
                 }
@@ -393,14 +387,12 @@ namespace JS.Core.Core.Interop
                         _oValue = new PropertyPair(null, _indexerProperty.setter.bind(new Arguments { null, key }))
                     };
                 }
-                else
+
+                return new JSValue
                 {
-                    return new JSValue
-                    {
-                        _valueType = JSValueType.Property,
-                        _oValue = new PropertyPair(_indexerProperty.getter.bind(new Arguments { null, key }), null)
-                    };
-                }
+                    _valueType = JSValueType.Property,
+                    _oValue = new PropertyPair(_indexerProperty.getter.bind(new Arguments { null, key }), null)
+                };
             }
 
             var result = proxyMember(forWrite, m);
@@ -449,7 +441,7 @@ namespace JS.Core.Core.Interop
                             }
                             else
                             {
-                                r = new JSValue()
+                                r = new JSValue
                                 {
                                     _valueType = JSValueType.Property,
                                     _oValue = new PropertyPair
@@ -473,7 +465,7 @@ namespace JS.Core.Core.Interop
                     case MemberTypes.Property:
                         {
                             var pinfo = (PropertyInfo)m[0];
-                            r = new JSValue()
+                            r = new JSValue
                             {
                                 _valueType = JSValueType.Property,
                                 _oValue = new PropertyPair
@@ -501,7 +493,7 @@ namespace JS.Core.Core.Interop
                     case MemberTypes.Event:
                         {
                             var pinfo = (EventInfo)m[0];
-                            r = new JSValue()
+                            r = new JSValue
                             {
                                 _valueType = JSValueType.Property,
                                 _oValue = new PropertyPair
@@ -570,21 +562,19 @@ namespace JS.Core.Core.Interop
                     field._valueType = JSValueType.NotExistsInObject;
                 return _fields.Remove(stringName) | _members.Remove(stringName); // it's not mistake
             }
-            else
-            {
-                IList<MemberInfo> m = null;
-                if (_members.TryGetValue(stringName.ToString(), out m))
-                {
-                    for (var i = m.Count; i-- > 0;)
-                    {
-                        if (m[i].IsDefined(typeof(DoNotDeleteAttribute), false))
-                            return false;
-                    }
-                }
 
-                if (!_members.Remove(stringName) && PrototypeInstance != null)
-                    return _prototypeInstance.DeleteProperty(stringName);
+            IList<MemberInfo> m = null;
+            if (_members.TryGetValue(stringName, out m))
+            {
+                for (var i = m.Count; i-- > 0;)
+                {
+                    if (m[i].IsDefined(typeof(DoNotDeleteAttribute), false))
+                        return false;
+                }
             }
+
+            if (!_members.Remove(stringName) && PrototypeInstance != null)
+                return _prototypeInstance.DeleteProperty(stringName);
 
             return true;
         }

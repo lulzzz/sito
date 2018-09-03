@@ -5,7 +5,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
     /// <summary>
     /// Class Search.
     /// </summary>
-    public abstract class SearchBase<TState> where TState : class, IState
+    public abstract class SearchBase
     {
         /// <summary>
         /// Occurs when [successor expanded].
@@ -19,9 +19,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
         /// <param name="e">The <see cref="StateExpansionEventArgs&lt;T&gt;"/> instance containing the event data.</param>
         protected virtual void OnSuccessorExpanded(object sender, StateExpansionEventArgs e)
         {
-            EventHandler<StateExpansionEventArgs> handler = SuccessorExpanded;
-            if (handler != null)
-                handler(sender, e);
+            SuccessorExpanded?.Invoke(sender, e);
         }
     }
 

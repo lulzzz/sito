@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using JS.Core.Core.Functions;
 using NiL.JS.BaseLibrary;
+using Array = NiL.JS.BaseLibrary.Array;
 
 namespace JS.Core.Core.Interop
 {
-    [Prototype(typeof(NiL.JS.BaseLibrary.Array))]
+    [Prototype(typeof(Array))]
     public sealed class NativeList : CustomType
     {
         private sealed class Element : JSValue
@@ -194,7 +195,7 @@ namespace JS.Core.Core.Interop
         [Hidden]
         public NativeList()
         {
-            this.data = new List<object>();
+            data = new List<object>();
             elementType = typeof(object);
             lenObj = new Number(0);
         }
@@ -203,18 +204,11 @@ namespace JS.Core.Core.Interop
         public NativeList(IList data)
         {
             this.data = data;
-            this.elementType = data.GetType().GetElementType();
+            elementType = data.GetType().GetElementType();
             if (elementType == null)
             {
-#if PORTABLE
-                var @interface = data.GetType().GetInterface(typeof(IList<>).Name);
-#else
                 var @interface = data.GetType().GetTypeInfo().GetInterface(typeof(IList<>).Name);
-#endif
-                if (@interface != null)
-                    elementType = @interface.GetGenericArguments()[0];
-                else
-                    elementType = typeof(object);
+                elementType = @interface != null ? @interface.GetGenericArguments()[0] : typeof(object);
             }
 
             lenObj = new Number(data.Count);
@@ -237,8 +231,7 @@ namespace JS.Core.Core.Interop
             data.RemoveAt(data.Count - 1);
             if (result is IList)
                 return new NativeList(result as IList);
-            else
-                return Context.CurrentGlobalContext.ProxyValue(result);
+            return Context.CurrentGlobalContext.ProxyValue(result);
         }
 
         protected internal override JSValue GetProperty(JSValue key, bool forWrite, PropertyScope memberScope)

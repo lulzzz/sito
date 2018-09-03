@@ -26,7 +26,7 @@ namespace Maddalena.Controllers
 
                     return res.Any();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }

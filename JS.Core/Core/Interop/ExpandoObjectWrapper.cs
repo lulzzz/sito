@@ -80,9 +80,9 @@ namespace JS.Core.Core.Interop
                 return (_target as IDictionary<string, object>).Keys.Select(x => new KeyValuePair<string, JSValue>(x, null)).GetEnumerator();
 
             if (enumeratorMode == EnumerationMode.RequireValues)
-                return (_target as IDictionary<string, object>).Select(x => new KeyValuePair<string, JSValue>(x.Key, Marshal(x.Value))).GetEnumerator();
+                return _target.Select(x => new KeyValuePair<string, JSValue>(x.Key, Marshal(x.Value))).GetEnumerator();
 
-            return (_target as IDictionary<string, object>).Select(x => new KeyValuePair<string, JSValue>(x.Key, new ValueWrapper(this, x.Key))).GetEnumerator();
+            return _target.Select(x => new KeyValuePair<string, JSValue>(x.Key, new ValueWrapper(this, x.Key))).GetEnumerator();
         }
     }
 }

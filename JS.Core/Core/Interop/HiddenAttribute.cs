@@ -8,7 +8,7 @@ namespace JS.Core.Core.Interop
 #if !(PORTABLE)
     [Serializable]
 #endif
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.All, Inherited = false)]
     public sealed class HiddenAttribute : Attribute
     {
     }

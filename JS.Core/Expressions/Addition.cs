@@ -107,7 +107,7 @@ namespace JS.Core.Expressions
                                     else
                                     {
                                         resultContainer._valueType = JSValueType.Double;
-                                        resultContainer._dValue = (double)tl;
+                                        resultContainer._dValue = tl;
                                     }
                                     return;
                                 }
@@ -277,7 +277,7 @@ namespace JS.Core.Expressions
                         first = first.ToPrimitiveValue_Value_String();
                         if (first._valueType == JSValueType.Integer || first._valueType == JSValueType.Boolean)
                             goto case JSValueType.Integer;
-                        else if (first._valueType == JSValueType.Object) // null
+                        if (first._valueType == JSValueType.Object) // null
                         {
                             if (second._valueType >= JSValueType.String)
                                 second = second.ToPrimitiveValue_Value_String();
@@ -290,9 +290,10 @@ namespace JS.Core.Expressions
                             first._iValue = 0;
                             goto case JSValueType.Integer;
                         }
-                        else if (first._valueType == JSValueType.Double)
+
+                        if (first._valueType == JSValueType.Double)
                             goto case JSValueType.Double;
-                        else if (first._valueType == JSValueType.String)
+                        if (first._valueType == JSValueType.String)
                             goto case JSValueType.String;
                         break;
                     }
@@ -356,7 +357,6 @@ namespace JS.Core.Expressions
                 && Tools.IsEqual(_right.ResultType, PredictedType.Number, PredictedType.Group))
             {
                 _this = new NumberAddition(_left, _right);
-                return;
             }
         }
 #if !PORTABLE && !NET35

@@ -8,8 +8,11 @@
   <ItemGroup>
     <PackageReference Include="MathNet.Numerics" Version="4.5.1" />
     <PackageReference Include="MathNet.Numerics.Data.Matlab" Version="4.0.0" />
-    <PackageReference Include="NiL.JS.NetCore" Version="2.5.1278" />
     <PackageReference Include="Npm" Version="3.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\JS.Core\JS.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

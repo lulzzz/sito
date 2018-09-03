@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JS.Core.Core;
 using NiL.JS;
 using NiL.JS.Statements;
+using Array = NiL.JS.BaseLibrary.Array;
 
 namespace JS.Core.Expressions
 {
@@ -11,7 +12,7 @@ namespace JS.Core.Expressions
 #endif
     public sealed class ArrayDefinition : Expression
     {
-        private static JSValue writableNotExists = null;
+        private static JSValue writableNotExists;
 
         public Expression[] Elements { get; private set; }
 
@@ -57,7 +58,7 @@ namespace JS.Core.Expressions
                     elms.Add(null);
                 }
                 else
-                    elms.Add((Expression)ExpressionTree.Parse(state, ref i, false, false));
+                    elms.Add(ExpressionTree.Parse(state, ref i, false, false));
                 if (spread)
                     elms[elms.Count - 1] = new Spread(elms[elms.Count - 1]) { Position = start, Length = i - start };
                 while (Tools.IsWhiteSpace(state.Code[i]))
@@ -74,8 +75,8 @@ namespace JS.Core.Expressions
             i++;
             var pos = index;
             index = i;
-            return new ArrayDefinition()
-                {
+            return new ArrayDefinition
+            {
                     Elements = elms.ToArray(),
                     Position = pos,
                     Length = index - pos
@@ -85,7 +86,7 @@ namespace JS.Core.Expressions
         public override JSValue Evaluate(Context context)
         {
             var length = Elements.Length;
-            var res = new NiL.JS.BaseLibrary.Array(length);
+            var res = new Array(length);
             if (length > 0)
             {
                 for (int sourceIndex = 0, targetIndex = 0; sourceIndex < length; sourceIndex++, targetIndex++)
@@ -112,7 +113,7 @@ namespace JS.Core.Expressions
                     else
                     {
                         if (writableNotExists == null)
-                            writableNotExists = new JSValue() { _valueType = JSValueType.NotExistsInObject, _attributes = JSValueAttributesInternal.SystemObject };
+                            writableNotExists = new JSValue { _valueType = JSValueType.NotExistsInObject, _attributes = JSValueAttributesInternal.SystemObject };
                         res._data[targetIndex] = writableNotExists;
                     }
                 }

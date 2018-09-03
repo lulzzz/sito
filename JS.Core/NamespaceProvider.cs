@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using JS.Core.Core;
 using JS.Core.Core.Interop;
 
@@ -8,18 +10,16 @@ namespace NiL.JS
     /// <summary>
     /// Provides access to a CLR-namespace
     /// </summary>
-#if !PORTABLE
     [Serializable]
-#endif
     public class NamespaceProvider : CustomType
     {
         private static readonly BinaryTree<Type> types = new BinaryTree<Type>();
 
-        private static void addTypes(System.Reflection.Assembly assembly)
+        private static void addTypes(Assembly assembly)
         {
             try
             {
-                if (assembly is System.Reflection.Emit.AssemblyBuilder)
+                if (assembly is AssemblyBuilder)
                     return;
                 var types = assembly.GetExportedTypes();
                 for (var i = 0; i < types.Length; i++)
@@ -114,7 +114,7 @@ namespace NiL.JS
 
                 if (ut != null)
                 {
-                    res = Proxy.GetGenericTypeSelector(ut);
+                    res = GetGenericTypeSelector(ut);
 
                     if (childs == null)
                         childs = new BinaryTree<JSValue>();

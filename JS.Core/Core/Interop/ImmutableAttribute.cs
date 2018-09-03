@@ -9,7 +9,7 @@ namespace JS.Core.Core.Interop
 #if !(PORTABLE)
     [Serializable]
 #endif
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
     public sealed class ImmutableAttribute : Attribute
     {
     }

@@ -5,6 +5,9 @@ using System.Linq;
 using JS.Core.Core;
 using JS.Core.Expressions;
 using NiL.JS.BaseLibrary;
+using Array = System.Array;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Math = System.Math;
 
 namespace NiL.JS.Statements
 {
@@ -84,10 +87,8 @@ namespace NiL.JS.Statements
             state.lexicalScopeLevel++;
             try
             {
-                init = VariableDefinition.Parse(state, ref i, true);
-                if (init == null)
-                    init = ExpressionTree.Parse(state, ref i, forForLoop: true);
-                if ((init is ExpressionTree)
+                init = VariableDefinition.Parse(state, ref i, true) ?? ExpressionTree.Parse(state, ref i, forForLoop: true);
+                if (init is ExpressionTree
                     && (init as ExpressionTree).Type == OperationType.None
                     && (init as ExpressionTree)._right == null)
                     init = (init as ExpressionTree)._left;
@@ -96,13 +97,13 @@ namespace NiL.JS.Statements
                 do
                     i++;
                 while (Tools.IsWhiteSpace(state.Code[i]));
-                condition = state.Code[i] == ';' ? null as CodeNode : ExpressionTree.Parse(state, ref i, forForLoop: true);
+                condition = state.Code[i] == ';' ? null : ExpressionTree.Parse(state, ref i, forForLoop: true);
                 if (state.Code[i] != ';')
                     ExceptionHelper.Throw((new SyntaxError("Expected \";\" at + " + CodeCoordinates.FromTextPosition(state.Code, i, 0))));
                 do
                     i++;
                 while (Tools.IsWhiteSpace(state.Code[i]));
-                post = state.Code[i] == ')' ? null as CodeNode : ExpressionTree.Parse(state, ref i, forForLoop: true);
+                post = state.Code[i] == ')' ? null : ExpressionTree.Parse(state, ref i, forForLoop: true);
                 while (Tools.IsWhiteSpace(state.Code[i]))
                     i++;
                 if (state.Code[i] != ')')
@@ -136,7 +137,7 @@ namespace NiL.JS.Statements
                 int startPos = index;
                 index = i;
 
-                result = new For()
+                result = new For
                 {
                     _body = body,
                     _condition = condition,
@@ -208,7 +209,7 @@ namespace NiL.JS.Statements
                     {
                         if (context._executionMode < ExecutionMode.Return)
                         {
-                            var me = context._executionInfo == null || System.Array.IndexOf(labels, context._executionInfo._oValue as string) != -1;
+                            var me = context._executionInfo == null || Array.IndexOf(labels, context._executionInfo._oValue as string) != -1;
                             var _break = (context._executionMode > ExecutionMode.Continue) || !me;
                             if (me)
                             {
@@ -254,7 +255,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 _initializer,
                 _condition,
@@ -286,7 +287,7 @@ namespace NiL.JS.Statements
                     message(MessageLevel.Warning, Position, Length, "Last expression of for-loop was removed. Maybe, it's a mistake.");
             }
 
-            Parser.Build(ref _body, System.Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
+            Parser.Build(ref _body, Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
 
             if (initAsVds != null && initAsVds.Kind != VariableKind.FunctionScope && initAsVds._variables.Any(x => x.captured))
             {
@@ -294,7 +295,7 @@ namespace NiL.JS.Statements
                 if (bodyAsCodeBlock != null)
                 {
                     var newLines = new CodeNode[bodyAsCodeBlock._lines.Length + 1];
-                    System.Array.Copy(bodyAsCodeBlock._lines, newLines, bodyAsCodeBlock._lines.Length);
+                    Array.Copy(bodyAsCodeBlock._lines, newLines, bodyAsCodeBlock._lines.Length);
                     newLines[newLines.Length - 1] = new PerIterationScopeInitializer(initAsVds._variables);
                     bodyAsCodeBlock._lines = newLines;
                 }
@@ -308,13 +309,13 @@ namespace NiL.JS.Statements
                 for (var i = 0; i < initAsVds._variables.Length; i++)
                 {
                     if (initAsVds._variables[i].captured)
-                        initAsVds._variables[i].definitionScopeLevel = -1;
+                        initAsVds._variables[i].DefinitionScopeLevel = -1;
                 }
             }
 
             if (_condition == null)
             {
-                _condition = new Constant(BaseLibrary.Boolean.True);
+                _condition = new Constant(Boolean.True);
             }
             else if ((_condition is Expression)
                   && (_condition as Expression).ContextIndependent
@@ -352,11 +353,9 @@ namespace NiL.JS.Statements
                     && _post is Increment
                     && ((_post as Increment).LeftOperand as VariableReference)._descriptor == variable._descriptor)
                 {
-                    if (variable.ScopeLevel >= 0 && variable._descriptor.definitionScopeLevel >= 0)
+                    if (variable.ScopeLevel >= 0 && variable._descriptor.DefinitionScopeLevel >= 0)
                     {
-                        if (_initializer is Assignment
-                            && (_initializer as Assignment).LeftOperand is Variable
-                            && ((_initializer as Assignment).LeftOperand as Variable)._descriptor == variable._descriptor)
+                        if ((_initializer as Assignment)?.LeftOperand is Variable && ((_initializer as Assignment).LeftOperand as Variable)._descriptor == variable._descriptor)
                         {
                             var value = (_initializer as Assignment).RightOperand;
                             if (value is Constant)

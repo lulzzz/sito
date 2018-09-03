@@ -30,7 +30,7 @@ namespace JS.Core.Expressions
         
         public override JSValue Evaluate(Context context)
         {
-            _tempContainer._oValue = new global::JS.Core.Core.PropertyPair
+            _tempContainer._oValue = new Core.PropertyPair
             (
                 (Function) Getter?.Evaluate(context),
                 (Function) Setter?.Evaluate(context)

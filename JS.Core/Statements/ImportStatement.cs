@@ -1,9 +1,8 @@
-﻿using NiL.JS.Backward;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using JS.Core;
 using JS.Core.Core;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -143,9 +142,9 @@ namespace NiL.JS.Statements
         public override JSValue Evaluate(Context context)
         {
             if (context._module == null)
-                ExceptionHelper.Throw(new BaseLibrary.Error("Module undefined"));
+                ExceptionHelper.Throw(new Error("Module undefined"));
             if (string.IsNullOrEmpty(context._module.FilePath))
-                ExceptionHelper.Throw(new BaseLibrary.Error("Module must has name"));
+                ExceptionHelper.Throw(new Error("Module must has name"));
 
             Module module = context._module.Import(SourceModuleName);
             if (module == null)

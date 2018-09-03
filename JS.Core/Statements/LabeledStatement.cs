@@ -37,7 +37,7 @@ namespace NiL.JS.Statements
             }
             var pos = index;
             index = i;
-            return new LabeledStatement()
+            return new LabeledStatement
             {
                 statement = stat,
                 Label = label,

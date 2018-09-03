@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JS.Core.Core;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -17,7 +18,7 @@ namespace NiL.JS.Statements
             if (!Parser.Validate(state.Code, "continue", ref i) || !Parser.IsIdentifierTerminator(state.Code[i]))
                 return null;
             if (!state.AllowContinue.Peek())
-                ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("Invalid use of continue statement")));
+                ExceptionHelper.Throw((new SyntaxError("Invalid use of continue statement")));
             while (Tools.IsWhiteSpace(state.Code[i]) && !Tools.IsLineTerminator(state.Code[i])) i++;
             int sl = i;
             JSValue label = null;
@@ -25,12 +26,12 @@ namespace NiL.JS.Statements
             {
                 label = Tools.Unescape(state.Code.Substring(sl, i - sl), state.strict);
                 if (!state.Labels.Contains(label._oValue.ToString()))
-                    ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("Try to continue to undefined label.")));
+                    ExceptionHelper.Throw((new SyntaxError("Try to continue to undefined label.")));
             }
             int pos = index;
             index = i;
             state.continiesCount++;
-            return new Continue()
+            return new Continue
             {
                 Label = label,
                 Position = pos,

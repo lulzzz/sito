@@ -83,7 +83,8 @@ namespace JS.Core.Expressions
                     context._executionMode = ExecutionMode.Suspend;
                     return JSValue.notExists;
                 }
-                else if (context._executionMode == ExecutionMode.Resume)
+
+                if (context._executionMode == ExecutionMode.Resume)
                 {
                     IIterator iterator = context.SuspendData[this] as IIterator;
                     var iteratorResult = iterator.next(context._executionInfo.Defined ? new Arguments { context._executionInfo } : null);
@@ -95,12 +96,10 @@ namespace JS.Core.Expressions
                         context._executionMode = ExecutionMode.None;
                         return iteratorResult.value;
                     }
-                    else
-                    {
-                        context.SuspendData[this] = iterator;
-                        context._executionMode = ExecutionMode.Suspend;
-                        return JSValue.notExists;
-                    }
+
+                    context.SuspendData[this] = iterator;
+                    context._executionMode = ExecutionMode.Suspend;
+                    return JSValue.notExists;
                 }
             }
             else
@@ -111,7 +110,8 @@ namespace JS.Core.Expressions
                     context._executionMode = ExecutionMode.Suspend;
                     return JSValue.notExists;
                 }
-                else if (context._executionMode == ExecutionMode.Resume)
+
+                if (context._executionMode == ExecutionMode.Resume)
                 {
                     context._executionMode = ExecutionMode.None;
                     var result = context._executionInfo;

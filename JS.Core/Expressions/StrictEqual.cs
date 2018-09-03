@@ -1,5 +1,6 @@
 ﻿using System;
 using JS.Core.Core;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
 
 namespace JS.Core.Expressions
 {
@@ -35,23 +36,21 @@ namespace JS.Core.Expressions
                         return first._iValue == second._iValue;
                     }
                 case JSValueType.Integer:
-                    {
-                        if (second._valueType == JSValueType.Double)
+                {
+                    if (second._valueType == JSValueType.Double)
                             return first._iValue == second._dValue;
-                        else if (second._valueType != JSValueType.Integer)
-                            return false;
-                        else
-                            return first._iValue == second._iValue;
-                    }
+                    if (second._valueType != JSValueType.Integer)
+                        return false;
+                    return first._iValue == second._iValue;
+                }
                 case JSValueType.Double:
-                    {
-                        if (second._valueType == JSValueType.Integer)
+                {
+                    if (second._valueType == JSValueType.Integer)
                             return first._dValue == second._iValue;
-                        else if (second._valueType != JSValueType.Double)
-                            return false;
-                        else
-                            return first._dValue == second._dValue;
-                    }
+                    if (second._valueType != JSValueType.Double)
+                        return false;
+                    return first._dValue == second._dValue;
+                }
                 case JSValueType.String:
                     {
                         if (second._valueType != JSValueType.String)
@@ -62,14 +61,13 @@ namespace JS.Core.Expressions
                 case JSValueType.Function:
                 case JSValueType.Symbol:
                 case JSValueType.Object:
-                    {
-                        if (first._valueType != second._valueType)
+                {
+                    if (first._valueType != second._valueType)
                             return false;
-                        else if (first._oValue == null)
-                            return second._oValue == null;
-                        else
-                            return object.ReferenceEquals(second._oValue, first._oValue);
-                    }
+                    if (first._oValue == null)
+                        return second._oValue == null;
+                    return ReferenceEquals(second._oValue, first._oValue);
+                }
                 default:
                     throw new NotImplementedException();
             }
@@ -79,8 +77,8 @@ namespace JS.Core.Expressions
         {
             _tempContainer.Assign(_left.Evaluate(context));
             if (Check(_tempContainer, _right.Evaluate(context)))
-                return NiL.JS.BaseLibrary.Boolean.True;
-            return NiL.JS.BaseLibrary.Boolean.False;
+                return Boolean.True;
+            return Boolean.False;
         }
 
         public override T Visit<T>(Visitor<T> visitor)

@@ -5,7 +5,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
     /// <summary>
     /// Class SimpleSearch.
     /// </summary>
-    public class SimpleSearch<TState, TSuccessor> : SearchBase<TState> where TState : class, IState
+    public class SimpleSearch<TState, TSuccessor> : SearchBase where TState : class, IState
                                                                        where TSuccessor : class, ISuccessor
     {
         private readonly List<IState> _closed;
@@ -30,10 +30,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
         public SimpleSearch(ISearchStrategy strategy, bool avoidRepetition = true)
         {
             Strategy = strategy;
-            if (avoidRepetition)
-                _closed = new List<IState>();
-            else
-                _closed = null;
+            _closed = avoidRepetition ? new List<IState>() : null;
         }
 
         /// <summary>

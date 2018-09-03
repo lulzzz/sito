@@ -24,13 +24,6 @@ namespace Maddalena.Numl.Supervised.Classification
         public Dictionary<object, IClassifier> Classifiers { get; set; }
 
         /// <summary>
-        /// Instantiate a new ClassificationModel object.
-        /// </summary>
-        public ClassificationModel()
-        {
-        }
-
-        /// <summary>
         /// Predict the given Label across all classifiers for the current object.
         /// </summary>
         /// <typeparam name="T"></typeparam>

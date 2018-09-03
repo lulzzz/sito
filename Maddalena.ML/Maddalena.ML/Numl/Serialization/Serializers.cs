@@ -9,7 +9,7 @@ namespace Maddalena.Numl.Serialization
 	public static class Serializers
 	{
 		private static Lazy<List<ISerializer>> _serializers = new Lazy<List<ISerializer>>(loadSerializers);
-		private static Dictionary<Type, ISerializer> _mapping = new Dictionary<Type, ISerializer>();
+		private static readonly Dictionary<Type, ISerializer> _mapping = new Dictionary<Type, ISerializer>();
 
 		public static ISerializer GetSerializer(this Type t)
 		{

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JS.Core.Core;
 using JS.Core.Expressions;
 
@@ -41,8 +40,7 @@ namespace NiL.JS.Statements
 
             if (context._executionMode == ExecutionMode.Suspend)
                 return null;
-            else
-                context.SuspendData[_source] = ForWrite ? temp : temp.CloneImpl(false);
+            context.SuspendData[_source] = ForWrite ? temp : temp.CloneImpl(false);
 
             return null;
         }
@@ -59,7 +57,7 @@ namespace NiL.JS.Statements
 
         public override T Visit<T>(Visitor<T> visitor)
         {
-            return _source.Visit<T>(visitor);
+            return _source.Visit(visitor);
         }
 
         public override void Decompose(ref CodeNode self)

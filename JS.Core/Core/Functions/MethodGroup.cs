@@ -3,6 +3,7 @@ using System.Reflection;
 using JS.Core.Core.Interop;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Math = System.Math;
 
 namespace JS.Core.Core.Functions
 {
@@ -52,7 +53,7 @@ namespace JS.Core.Core.Functions
 
             var len = 0;
             for (var i = 0; i < methods.Length; i++)
-                len = System.Math.Max(len, methods[i]._parameters.Length);
+                len = Math.Max(len, methods[i]._parameters.Length);
 
             _length = new Number(len)
             {

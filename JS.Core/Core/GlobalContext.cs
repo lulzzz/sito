@@ -10,6 +10,10 @@ using JS.Core.Core.Interop;
 using JS.Core.Extensions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Array = NiL.JS.BaseLibrary.Array;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Math = NiL.JS.BaseLibrary.Math;
+using String = NiL.JS.BaseLibrary.String;
 
 namespace JS.Core.Core
 {
@@ -73,15 +77,15 @@ namespace JS.Core.Core
                 _globalPrototype = objectConstructor.prototype as JSObject;
                 _globalPrototype._objectPrototype = JSValue.@null;
 
-                DefineConstructor(typeof(NiL.JS.BaseLibrary.Math));
-                DefineConstructor(typeof(NiL.JS.BaseLibrary.Array));
+                DefineConstructor(typeof(Math));
+                DefineConstructor(typeof(Array));
                 DefineConstructor(typeof(JSON));
-                DefineConstructor(typeof(NiL.JS.BaseLibrary.String));
+                DefineConstructor(typeof(String));
                 DefineConstructor(typeof(Function));
                 DefineConstructor(typeof(Date));
                 DefineConstructor(typeof(Number));
                 DefineConstructor(typeof(Symbol));
-                DefineConstructor(typeof(NiL.JS.BaseLibrary.Boolean));
+                DefineConstructor(typeof(Boolean));
                 DefineConstructor(typeof(Error));
                 DefineConstructor(typeof(TypeError));
                 DefineConstructor(typeof(ReferenceError));
@@ -214,10 +218,7 @@ namespace JS.Core.Core
                             dynamicProxy = new PrototypeProxy(this, type, indexerSupport);
                         }
 
-                        if (type == typeof(JSObject))
-                            constructor = new ObjectConstructor(this, staticProxy, dynamicProxy);
-                        else
-                            constructor = new ConstructorProxy(this, staticProxy, dynamicProxy);
+                        constructor = type == typeof(JSObject) ? new ObjectConstructor(this, staticProxy, dynamicProxy) : new ConstructorProxy(this, staticProxy, dynamicProxy);
 
                         if (type.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false))
                             dynamicProxy._attributes |= JSValueAttributesInternal.Immutable;
@@ -292,12 +293,10 @@ namespace JS.Core.Core
             {
                 return JSValue.NotExists;
             }
-            else
-            {
-                var jsvalue = value as JSValue;
-                if (jsvalue != null)
-                    return jsvalue;
-            }
+
+            var jsvalue = value as JSValue;
+            if (jsvalue != null)
+                return jsvalue;
 #if PORTABLE
             switch (value.GetType().GetTypeCode())
 #else
@@ -416,14 +415,12 @@ namespace JS.Core.Core
                                 _valueType = JSValueType.Double
                             };
                         }
-                        else
+
+                        return new JSValue
                         {
-                            return new JSValue
-                            {
-                                _iValue = (int)v,
-                                _valueType = JSValueType.Integer
-                            };
-                        }
+                            _iValue = (int)v,
+                            _valueType = JSValueType.Integer
+                        };
                     }
                 case TypeCode.UInt64:
                     {
@@ -436,51 +433,50 @@ namespace JS.Core.Core
                                 _valueType = JSValueType.Double
                             };
                         }
-                        else
+
+                        return new JSValue
                         {
-                            return new JSValue
-                            {
-                                _iValue = (int)v,
-                                _valueType = JSValueType.Integer
-                            };
-                        }
+                            _iValue = (int)v,
+                            _valueType = JSValueType.Integer
+                        };
                     }
                 default:
-                    {
-                        if (value is Delegate)
+                {
+                    if (value is Delegate)
                         {
                             if (value is ExternalFunctionDelegate)
                                 return new ExternalFunction(value as ExternalFunctionDelegate);
                             return new MethodProxy(this, ((Delegate)value).GetMethodInfo(), ((Delegate)value).Target);
                         }
-                        else if (value is IList)
-                        {
-                            return new NativeList(value as IList);
-                        }
-                        else if (value is ExpandoObject)
-                        {
-                            return new ExpandoObjectWrapper(value as ExpandoObject);
-                        }
-                        else if (value is Task)
-                        {
-                            Task<JSValue> result;
-                            if (value.GetType().GetTypeInfo().IsGenericType && typeof(Task<>).IsAssignableFrom(value.GetType().GetGenericTypeDefinition()))
-                            {
-                                result = new Task<JSValue>(() => ProxyValue(value.GetType().GetMethod("get_Result", new Type[0]).Invoke(value, null)));
-                            }
-                            else
-                            {
-                                result = new Task<JSValue>(() => JSValue.NotExists);
-                            }
 
-                            (value as Task).ContinueWith(task => result.Start());
-                            return new ObjectWrapper(new Promise(result));
+                    if (value is IList)
+                    {
+                        return new NativeList(value as IList);
+                    }
+
+                    if (value is ExpandoObject)
+                    {
+                        return new ExpandoObjectWrapper(value as ExpandoObject);
+                    }
+
+                    if (value is Task)
+                    {
+                        Task<JSValue> result;
+                        if (value.GetType().GetTypeInfo().IsGenericType && typeof(Task<>).IsAssignableFrom(value.GetType().GetGenericTypeDefinition()))
+                        {
+                            result = new Task<JSValue>(() => ProxyValue(value.GetType().GetMethod("get_Result", new Type[0]).Invoke(value, null)));
                         }
                         else
                         {
-                            return new ObjectWrapper(value);
+                            result = new Task<JSValue>(() => JSValue.NotExists);
                         }
+
+                        (value as Task).ContinueWith(task => result.Start());
+                        return new ObjectWrapper(new Promise(result));
                     }
+
+                    return new ObjectWrapper(value);
+                }
             }
         }
 

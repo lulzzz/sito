@@ -106,7 +106,7 @@ namespace JS.Core.Expressions
                     setterArgs.Reset();
                     setterArgs.Add(value);
 
-                    var setter = (target._oValue as global::JS.Core.Core.PropertyPair).setter;
+                    var setter = (target._oValue as Core.PropertyPair).setter;
                     if (setter != null)
                         setter.Call(fieldSource, setterArgs);
                     else if (_context._strict)

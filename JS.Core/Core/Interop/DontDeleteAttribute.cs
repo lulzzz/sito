@@ -8,7 +8,7 @@ namespace JS.Core.Core.Interop
 #if !(PORTABLE)
     [Serializable]
 #endif
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, Inherited = false)]
     public sealed class DoNotDeleteAttribute : Attribute
     {
     }

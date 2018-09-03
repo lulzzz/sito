@@ -47,7 +47,7 @@ namespace JS.Core.Core.Functions
 
         protected internal override JSValue ConstructObject()
         {
-            return JSObject.CreateObject();
+            return CreateObject();
         }
 
         protected internal override IEnumerator<KeyValuePair<string, JSValue>> GetEnumerator(bool hideNonEnum, EnumerationMode enumerationMode)

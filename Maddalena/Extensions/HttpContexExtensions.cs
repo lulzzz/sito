@@ -12,7 +12,7 @@ namespace Maddalena.Extensions
 {
     public static class HttpContexExtensions
     {
-        static CountryCode[] Europe;
+        private static readonly CountryCode[] Europe;
 
         static HttpContexExtensions()
         {

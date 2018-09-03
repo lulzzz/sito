@@ -6,7 +6,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
     /// <summary>
     /// Class AdversarialSearch.
     /// </summary>
-    public abstract class AdversarialSearch<TState, TSuccessor> : SearchBase<TState> where TState : class, IState
+    public abstract class AdversarialSearch<TState, TSuccessor> : SearchBase where TState : class, IState
                                                                                      where TSuccessor : class, ISuccessor
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
                         .Where(n => n.Cost == v && n.State.IsTerminal);
 
             Node r;
-            if (q.Count() > 0) // favor terminal nodes first
+            if (q.Any()) // favor terminal nodes first
                 r = q.Random();
             else
                 r = node.Children

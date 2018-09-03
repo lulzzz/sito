@@ -11,7 +11,7 @@ namespace JS.Core.Extensions
         [Hidden]
         public IterableAdapter(JSValue source)
         {
-            this._source = source.IsBox ? source._oValue as JSValue : source;
+            _source = source.IsBox ? source._oValue as JSValue : source;
         }
 
         public IIterator iterator()

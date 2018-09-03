@@ -21,7 +21,7 @@ namespace JS.Core.Core.Functions
                 arguments[i].Evaluate(initiator);
 
             if (construct)
-                return base.ConstructObject();
+                return ConstructObject();
 
             return _value;
         }

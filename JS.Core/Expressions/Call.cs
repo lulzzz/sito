@@ -64,7 +64,7 @@ namespace JS.Core.Expressions
         internal Call(Expression first, Expression[] arguments)
             : base(first, null, false)
         {
-            this.Arguments = arguments;
+            Arguments = arguments;
         }
 
         public override JSValue Evaluate(Context context)
@@ -84,9 +84,7 @@ namespace JS.Core.Expressions
 
                 if (func == null)
                 {
-                    callable = temp._oValue as ICallable;
-                    if (callable == null)
-                        callable = temp.Value as ICallable;
+                    callable = temp._oValue as ICallable ?? temp.Value as ICallable;
                     if (callable == null)
                     {
                         if (temp.Value is Proxy typeProxy)
@@ -97,20 +95,21 @@ namespace JS.Core.Expressions
 
             if (callable == null)
             {
-                for (int i = 0; i < this.Arguments.Length; i++)
+                for (int i = 0; i < Arguments.Length; i++)
                 {
                     context._objectSource = null;
-                    this.Arguments[i].Evaluate(context);
+                    Arguments[i].Evaluate(context);
                 }
 
                 context._objectSource = null;
 
                 // Аргументы должны быть вычислены даже если функция не существует.
-                ExceptionHelper.ThrowTypeError(_left.ToString() + " is not a function");
+                ExceptionHelper.ThrowTypeError(_left + " is not a function");
 
                 return null;
             }
-            else if (func == null)
+
+            if (func == null)
             {
                 checkStack();
                 Context.CurrentGlobalContext._callDepth++;
@@ -119,13 +118,13 @@ namespace JS.Core.Expressions
                     switch (_callMode)
                     {
                         case CallMode.Construct:
-                            {
-                                return callable.Construct(Tools.CreateArguments(Arguments, context));
-                            }
+                        {
+                            return callable.Construct(Tools.CreateArguments(Arguments, context));
+                        }
                         case CallMode.Super:
-                            {
-                                return callable.Construct(targetObject, Tools.CreateArguments(Arguments, context));
-                            }
+                        {
+                            return callable.Construct(targetObject, Tools.CreateArguments(Arguments, context));
+                        }
                         default:
                             return callable.Call(targetObject, Tools.CreateArguments(Arguments, context));
                     }
@@ -135,39 +134,37 @@ namespace JS.Core.Expressions
                     Context.CurrentGlobalContext._callDepth--;
                 }
             }
-            else
+
+            if (allowTCO
+                && _callMode == 0
+                && (func._functionDefinition.kind != FunctionKind.Generator)
+                && (func._functionDefinition.kind != FunctionKind.MethodGenerator)
+                && (func._functionDefinition.kind != FunctionKind.AnonymousGenerator)
+                && context._owner != null
+                && func == context._owner._oValue)
             {
-                if (allowTCO
-                    && _callMode == 0
-                    && (func._functionDefinition.kind != FunctionKind.Generator)
-                    && (func._functionDefinition.kind != FunctionKind.MethodGenerator)
-                    && (func._functionDefinition.kind != FunctionKind.AnonymousGenerator)
-                    && context._owner != null
-                    && func == context._owner._oValue)
-                {
-                    tailCall(context, func);
-                    context._objectSource = targetObject;
-                    return JSValue.undefined;
-                }
-                else
-                    context._objectSource = null;
+                tailCall(context, func);
+                context._objectSource = targetObject;
+                return JSValue.undefined;
+            }
 
-                checkStack();
-                Context.CurrentGlobalContext._callDepth++;
-                try
-                {
-                    if (_callMode == CallMode.Construct)
-                        targetObject = null;
+            context._objectSource = null;
 
-                    if ((temp._attributes & JSValueAttributesInternal.Eval) != 0)
-                        return callEval(context);
+            checkStack();
+            Context.CurrentGlobalContext._callDepth++;
+            try
+            {
+                if (_callMode == CallMode.Construct)
+                    targetObject = null;
 
-                    return func.InternalInvoke(targetObject, Arguments, context, withSpread, _callMode != 0);
-                }
-                finally
-                {
-                    Context.CurrentGlobalContext._callDepth--;
-                }
+                if ((temp._attributes & JSValueAttributesInternal.Eval) != 0)
+                    return callEval(context);
+
+                return func.InternalInvoke(targetObject, Arguments, context, withSpread, _callMode != 0);
+            }
+            finally
+            {
+                Context.CurrentGlobalContext._callDepth--;
             }
         }
 
@@ -181,10 +178,10 @@ namespace JS.Core.Expressions
 
             var evalCode = Arguments[0].Evaluate(context);
 
-            for (int i = 1; i < this.Arguments.Length; i++)
+            for (int i = 1; i < Arguments.Length; i++)
             {
                 context._objectSource = null;
-                this.Arguments[i].Evaluate(context);
+                Arguments[i].Evaluate(context);
             }
 
             if (evalCode._valueType != JSValueType.String)
@@ -199,7 +196,7 @@ namespace JS.Core.Expressions
 
             var arguments = new Arguments(context);
 
-            for (int i = 0; i < this.Arguments.Length; i++)
+            for (int i = 0; i < Arguments.Length; i++)
                 arguments.Add(Tools.EvalExpressionSafe(context, Arguments[i]));
             context._objectSource = null;
 
@@ -218,7 +215,7 @@ namespace JS.Core.Expressions
             if (stats != null)
                 stats.UseCall = true;
 
-            this._codeContext = codeContext;
+            _codeContext = codeContext;
 
             if (_left is Super super)
             {

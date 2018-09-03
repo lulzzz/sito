@@ -45,7 +45,7 @@ namespace NiL.JS.Statements
             var body = state.Code[i] == ';' || Tools.IsLineTerminator(state.Code[i]) ? null : Parser.Parse(state, ref i, CodeFragmentType.Expression);
             var pos = index;
             index = i;
-            return new Return()
+            return new Return
             {
                 value = (Expression)body,
                 Position = pos,
@@ -84,7 +84,8 @@ namespace NiL.JS.Statements
                 _this = new IfElse(bat.LeftOperand, new Return(bts[0]), new Return(bts[1])) { Position = bat.Position, Length = bat.Length };
                 return true;
             }
-            else if (value is Call)
+
+            if (value is Call)
             {
                 (value as Call).allowTCO = true;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -56,7 +57,7 @@ namespace JS.Core.Core
         private Record[] _records = emptyRecords;
         private int[] _existsedIndexes;
 
-        private bool _emptyKeyValueExists = false;
+        private bool _emptyKeyValueExists;
         private TValue _emptyKeyValue;
 
         public StringMap()
@@ -439,10 +440,10 @@ namespace JS.Core.Core
                     var index = _existsedIndexes[i];
                     if (oldRecords[index].key != null)
                     {
-                        if (newLength == MaxAsListSize << 1)
-                            insert(oldRecords[index].key, oldRecords[index].value, computeHash(oldRecords[index].key), false, false);
-                        else
-                            insert(oldRecords[index].key, oldRecords[index].value, oldRecords[index].hash, false, false);
+                        insert(oldRecords[index].key, oldRecords[index].value,
+                            newLength == MaxAsListSize << 1
+                                ? computeHash(oldRecords[index].key)
+                                : oldRecords[index].hash, false, false);
                     }
                 }
             }
@@ -615,7 +616,7 @@ namespace JS.Core.Core
             }
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

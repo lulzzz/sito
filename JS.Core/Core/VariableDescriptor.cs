@@ -27,7 +27,7 @@ namespace JS.Core.Core
 #endif
     public class VariableDescriptor
     {
-        internal int definitionScopeLevel;
+        internal int DefinitionScopeLevel;
         internal Context cacheContext;
         internal JSValue cacheRes;
         internal readonly string name;
@@ -49,7 +49,7 @@ namespace JS.Core.Core
         public string Name => name;
         public int ReferenceCount => references.Count;
         public bool LexicalScope => lexicalScope;
-        public ReadOnlyCollection<Expression> Assignments => assignments == null ? null : assignments.AsReadOnly();
+        public ReadOnlyCollection<Expression> Assignments => assignments?.AsReadOnly();
 
         public IEnumerable<VariableReference> References
         {
@@ -64,7 +64,7 @@ namespace JS.Core.Core
         {
             context._objectSource = null;
 
-            if (((definitionScopeLevel | scopeLevel) & int.MinValue) != 0)
+            if (((DefinitionScopeLevel | scopeLevel) & int.MinValue) != 0)
                 return context.GetVariable(name, forWrite);
 
             if (context == cacheContext && !forWrite)
@@ -77,7 +77,7 @@ namespace JS.Core.Core
         {
             JSValue res = null;
 
-            var defsl = depth - definitionScopeLevel;
+            var defsl = depth - DefinitionScopeLevel;
             while (defsl > 0)
             {
                 defsl--;
@@ -110,7 +110,7 @@ namespace JS.Core.Core
 
             if (forWrite && res.NeedClone)
             {
-                res = context.GetVariable(name, forWrite);
+                res = context.GetVariable(name, true);
                 cacheRes = res;
             }
 
@@ -119,10 +119,10 @@ namespace JS.Core.Core
 
         internal VariableDescriptor(string name, int definitionScopeLevel)
         {
-            this.isDefined = true;
-            this.definitionScopeLevel = definitionScopeLevel;
+            isDefined = true;
+            this.DefinitionScopeLevel = definitionScopeLevel;
             this.name = name;
-            this.references = new List<VariableReference>();
+            references = new List<VariableReference>();
         }
 
         internal VariableDescriptor(VariableReference proto, int definitionDepth)
@@ -130,9 +130,9 @@ namespace JS.Core.Core
             if (proto._descriptor != null)
                 throw new ArgumentException("proto");
 
-            this.definitionScopeLevel = definitionDepth;
-            this.name = proto.Name;
-            this.references = new List<VariableReference>() { proto };
+            DefinitionScopeLevel = definitionDepth;
+            name = proto.Name;
+            references = new List<VariableReference> { proto };
             proto._descriptor = this;
         }
 

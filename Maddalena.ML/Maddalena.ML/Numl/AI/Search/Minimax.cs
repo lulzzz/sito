@@ -26,10 +26,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Search
             Root = new Node(state);
             Node a;
 
-            if (state.Player)
-                a = Max(Root);
-            else
-                a = Min(Root);
+            a = state.Player ? Max(Root) : Min(Root);
 
             return (TSuccessor)a.Successor;
         }

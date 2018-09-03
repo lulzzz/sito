@@ -13,7 +13,7 @@ namespace Maddalena.Numl.Math.Linkers
     public class AverageLinker : ILinker
     {
         /// <summary>The metric.</summary>
-        private IDistance _metric;
+        private readonly IDistance _metric;
         /// <summary>Constructor.</summary>
         /// <param name="metric">The metric.</param>
         public AverageLinker(IDistance metric)

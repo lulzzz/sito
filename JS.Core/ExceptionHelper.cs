@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using NiL.JS.BaseLibrary;
-using System.Diagnostics;
 using JS.Core;
 using JS.Core.Core;
+using NiL.JS.BaseLibrary;
+using Math = System.Math;
 
 namespace NiL.JS
 {
@@ -103,7 +101,7 @@ namespace NiL.JS
             var cord = CodeCoordinates.FromTextPosition(code, index, 0);
             Throw(new SyntaxError(string.Format(
                 Messages.UnknowIdentifier,
-                code.Substring(index, System.Math.Min(50, code.Length - index)).Split(Tools.TrimChars).FirstOrDefault(),
+                code.Substring(index, Math.Min(50, code.Length - index)).Split(Tools.TrimChars).FirstOrDefault(),
                 cord)));
         }
 
@@ -143,7 +141,7 @@ namespace NiL.JS
         internal static T ThrowIfNotExists<T>(T obj, object name) where T : JSValue
         {
             if (obj._valueType == JSValueType.NotExists)
-                ExceptionHelper.Throw((new NiL.JS.BaseLibrary.ReferenceError("Variable \"" + name + "\" is not defined.")));
+                Throw((new ReferenceError("Variable \"" + name + "\" is not defined.")));
             return obj;
         }
 

@@ -22,12 +22,8 @@
         public override TSuccessor Find(IAdversarialState state)
         {
             Root = new Node(state);
-            Node a;
 
-            if (state.Player)
-                a = Max(Root, double.NegativeInfinity, double.PositiveInfinity);
-            else
-                a = Min(Root, double.NegativeInfinity, double.PositiveInfinity);
+            var a = state.Player ? Max(Root, double.NegativeInfinity, double.PositiveInfinity) : Min(Root, double.NegativeInfinity, double.PositiveInfinity);
 
             return a.Successor as TSuccessor;
         }

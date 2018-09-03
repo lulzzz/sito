@@ -51,7 +51,7 @@ namespace JS.Core.Core.Functions
                 throw new ArgumentNullException();
 
             Delegate = @delegate;
-            RequireNewKeywordLevel = NiL.JS.BaseLibrary.RequireNewKeywordLevel.WithoutNewOnly;
+            RequireNewKeywordLevel = RequireNewKeywordLevel.WithoutNewOnly;
         }
 
         protected internal override JSValue Invoke(bool construct, JSValue targetObject, Arguments arguments)

@@ -2,6 +2,6 @@
 {
     public interface IIterable
     {
-        IIterator @iterator();
+        IIterator iterator();
     }
 }

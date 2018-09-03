@@ -52,10 +52,7 @@ namespace Maddalena.Numl.Model
 		public Descriptor As(Type type)
 		{
 			Property p;
-			if (_label)
-				p = TypeHelpers.GenerateLabel(type, _name);
-			else
-				p = TypeHelpers.GenerateFeature(type, _name);
+			p = _label ? type.GenerateLabel(_name) : type.GenerateFeature(_name);
 			AddProperty(p);
 			return _descriptor;
 		}
@@ -92,11 +89,13 @@ namespace Maddalena.Numl.Model
 		/// <returns>descriptor with added property.</returns>
 		public Descriptor AsString(StringSplitType splitType, string separator = " ", string exclusions = null)
 		{
-			StringProperty p = new StringProperty();
-			p.Name = _name;
-			p.SplitType = splitType;
-			p.Separator = separator;
-			p.ImportExclusions(exclusions);
+		    StringProperty p = new StringProperty
+		    {
+		        Name = _name,
+		        SplitType = splitType,
+		        Separator = separator
+		    };
+		    p.ImportExclusions(exclusions);
 			p.AsEnum = _label;
 			AddProperty(p);
 			return _descriptor;
@@ -108,10 +107,12 @@ namespace Maddalena.Numl.Model
 		/// <returns>Descriptor.</returns>
 		public Descriptor AsCharEnum()
 		{
-			StringProperty p = new StringProperty();
-			p.Name = _name;
-			p.AsEnum = true;
-			AddProperty(p);
+		    StringProperty p = new StringProperty
+		    {
+		        Name = _name,
+		        AsEnum = true
+		    };
+		    AddProperty(p);
 			return _descriptor;
 		}
 
@@ -119,10 +120,12 @@ namespace Maddalena.Numl.Model
 		/// <returns>descriptor with added property.</returns>
 		public Descriptor AsStringEnum()
 		{
-			StringProperty p = new StringProperty();
-			p.Name = _name;
-			p.AsEnum = true;
-			AddProperty(p);
+		    StringProperty p = new StringProperty
+		    {
+		        Name = _name,
+		        AsEnum = true
+		    };
+		    AddProperty(p);
 			return _descriptor;
 		}
 
@@ -130,9 +133,11 @@ namespace Maddalena.Numl.Model
 		/// <returns>descriptor with added property.</returns>
 		public Descriptor AsGuid()
 		{
-			GuidProperty p = new GuidProperty();
-			p.Name = _name;
-			AddProperty(p);
+            GuidProperty p = new GuidProperty
+            {
+                Name = _name
+            };
+            AddProperty(p);
 			return _descriptor;
 		}
 

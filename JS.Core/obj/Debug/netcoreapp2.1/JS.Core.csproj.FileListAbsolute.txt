@@ -10,3 +10,14 @@ D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.dll
 D:\Maddalena\NiL.JS\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.pdb
 D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.dll
 D:\Maddalena\NiL.JS\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.pdb
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.csproj.CoreCompileInputs.cache
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.AssemblyInfoInputs.cache
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.AssemblyInfo.cs
+D:\Maddalena\sito\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.deps.json
+D:\Maddalena\sito\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.runtimeconfig.json
+D:\Maddalena\sito\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.runtimeconfig.dev.json
+D:\Maddalena\sito\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.dll
+D:\Maddalena\sito\JS.Core\bin\Debug\netcoreapp2.1\JS.Core.pdb
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.dll
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.pdb
+D:\Maddalena\sito\JS.Core\obj\Debug\netcoreapp2.1\JS.Core.csprojAssemblyReference.cache

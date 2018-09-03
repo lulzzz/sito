@@ -23,11 +23,9 @@ namespace JS.Core.Expressions
             {
                 return setProperty(context, field);
             }
-            else
-            {
-                if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
-                    throwReadOnlyError();
-            }
+
+            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
+                throwReadOnlyError();
             temp = _right.Evaluate(context);
             var oldAttributes = field._attributes;
             field._attributes &= ~JSValueAttributesInternal.ReadOnly;
@@ -65,11 +63,9 @@ namespace JS.Core.Expressions
             {
                 return setProperty(context, field);
             }
-            else
-            {
-                if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
-                    throwReadOnlyError();
-            }
+
+            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
+                throwReadOnlyError();
 
             temp = _right.Evaluate(context);
             field.Assign(temp);
@@ -108,7 +104,7 @@ namespace JS.Core.Expressions
                 setterArgs.Reset();
                 setterArgs.Add(temp);
 
-                var setter = (field._oValue as global::JS.Core.Core.PropertyPair).setter;
+                var setter = (field._oValue as Core.PropertyPair).setter;
                 if (setter != null)
                     setter.Call(fieldSource, setterArgs);
                 else if (context._strict)
@@ -213,9 +209,9 @@ namespace JS.Core.Expressions
                                 else
                                 {
                                     _this = _right;
-                                    this._right = null;
-                                    this.Eliminated = true;
-                                    this._right = _this as Expression;
+                                    _right = null;
+                                    Eliminated = true;
+                                    _right = _this as Expression;
                                 }
                             }
                         }

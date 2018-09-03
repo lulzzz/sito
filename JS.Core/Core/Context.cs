@@ -7,6 +7,7 @@ using JS.Core.Core.Functions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
 using NiL.JS.Statements;
+using Debugger = System.Diagnostics.Debugger;
 using Module = NiL.JS.Module;
 
 namespace JS.Core.Core
@@ -63,7 +64,7 @@ namespace JS.Core.Core
             }
         }
 
-        internal static readonly GlobalContext _DefaultGlobalContext = new GlobalContext() { _strict = true };
+        internal static readonly GlobalContext _DefaultGlobalContext = new GlobalContext { _strict = true };
         public static GlobalContext DefaultGlobalContext => _DefaultGlobalContext;
 
         internal ExecutionMode _executionMode;
@@ -265,7 +266,8 @@ namespace JS.Core.Core
 
                     break;
                 }
-                else if (_ThreadIds[i] == -1 && firstEmptyIndex == -1)
+
+                if (_ThreadIds[i] == -1 && firstEmptyIndex == -1)
                 {
                     firstEmptyIndex = i;
                 }
@@ -447,7 +449,7 @@ namespace JS.Core.Core
 
                 if (forWrite)
                 {
-                    res = new JSValue() { _valueType = JSValueType.NotExists };
+                    res = new JSValue { _valueType = JSValueType.NotExists };
                     _variables[name] = res;
                 }
                 else
@@ -479,13 +481,13 @@ namespace JS.Core.Core
             {
                 if (p.DebuggerCallback != null)
                 {
-                    p.DebuggerCallback(this, new DebuggerCallbackEventArgs() { Statement = nextStatement });
+                    p.DebuggerCallback(this, new DebuggerCallbackEventArgs { Statement = nextStatement });
                     return;
                 }
                 p = p._parent;
             }
-            if (System.Diagnostics.Debugger.IsAttached)
-                System.Diagnostics.Debugger.Break();
+            if (Debugger.IsAttached)
+                Debugger.Break();
         }
 
         public void DefineConstructor(Type moduleType)
@@ -507,7 +509,7 @@ namespace JS.Core.Core
 
         public virtual bool DeleteVariable(string variableName)
         {
-            return this._variables.Remove(variableName);
+            return _variables.Remove(variableName);
         }
 
         internal void SetAbortState(ExecutionMode abortReason, JSValue abortInfo)
@@ -588,7 +590,7 @@ namespace JS.Core.Core
 
             var debugging = Debugging;
             Debugging = false;
-            var runned = this.Activate();
+            var runned = Activate();
 
             try
             {
@@ -599,14 +601,14 @@ namespace JS.Core.Core
 
                 if (suppressScopeCreation || (!_strict && !body._strict))
                 {
-                    foreach (var @var in body._variables)
+                    foreach (var var in body._variables)
                     {
-                        if (@var.lexicalScope) continue;
+                        if (var.lexicalScope) continue;
 
                         JSValue variable;
                         var cc = mainFunctionContext;
                         while (cc._parent._parent != null
-                               && (cc._variables == null || !cc._variables.TryGetValue(@var.name, out variable)))
+                               && (cc._variables == null || !cc._variables.TryGetValue(var.name, out variable)))
                         {
                             cc = cc._parent;
                         }
@@ -615,25 +617,25 @@ namespace JS.Core.Core
                         {
                             for (var j = 0; j < cc._definedVariables.Length; j++)
                             {
-                                if (cc._definedVariables[j].name == @var.name)
+                                if (cc._definedVariables[j].name == var.name)
                                 {
-                                    cc._definedVariables[j].definitionScopeLevel = -1;
+                                    cc._definedVariables[j].DefinitionScopeLevel = -1;
                                 }
                             }
                         }
 
-                        variable = mainFunctionContext.DefineVariable(@var.name, !suppressScopeCreation);
+                        variable = mainFunctionContext.DefineVariable(var.name, !suppressScopeCreation);
 
-                        if (@var.initializer != null)
+                        if (var.initializer != null)
                         {
-                            variable.Assign(@var.initializer.Evaluate(context));
+                            variable.Assign(var.initializer.Evaluate(context));
                         }
 
                         // блокирует создание переменной в конктексте eval
-                        @var.lexicalScope = true;
+                        var.lexicalScope = true;
 
                         // блокирует кеширование
-                        @var.definitionScopeLevel = -1;
+                        var.DefinitionScopeLevel = -1;
                     }
                 }
 
@@ -667,8 +669,8 @@ namespace JS.Core.Core
             finally
             {
                 if (runned)
-                    this.Deactivate();
-                this.Debugging = debugging;
+                    Deactivate();
+                Debugging = debugging;
             }
         }
 

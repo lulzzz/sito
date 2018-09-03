@@ -47,11 +47,6 @@ namespace Maddalena.Numl.Model
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 	public class RewardAttribute : NumlAttribute
 	{
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public RewardAttribute() { }
-
 		/// <summary>Generates a property.</summary>
 		/// <exception cref="InvalidOperationException">Thrown when the requested operation is invalid.</exception>
 		/// <param name="property">The property.</param>
@@ -136,10 +131,6 @@ namespace Maddalena.Numl.Model
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 	public class GuidFeatureAttribute : FeatureAttribute
 	{
-		/// <summary>Default constructor.</summary>
-		public GuidFeatureAttribute()
-		{
-		}
 		/// <summary>Generates a property.</summary>
 		/// <exception cref="InvalidOperationException">Thrown when the requested operation is invalid.</exception>
 		/// <param name="property">The property.</param>
@@ -168,7 +159,7 @@ namespace Maddalena.Numl.Model
 	public class DateFeatureAttribute : FeatureAttribute
 	{
 		/// <summary>The dp.</summary>
-		DateTimeProperty dp;
+		readonly DateTimeProperty dp;
 		/// <summary>Constructor.</summary>
 		/// <param name="features">The features.</param>
 		public DateFeatureAttribute(DateTimeFeature features)

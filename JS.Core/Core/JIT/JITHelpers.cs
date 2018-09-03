@@ -14,7 +14,7 @@ namespace JS.Core.Core.JIT
         public static readonly Expression UndefinedConstant = Expression.Field(null, typeof(JSValue).GetField("undefined", BindingFlags.Static | BindingFlags.NonPublic));
         public static readonly Expression NotExistsConstant = Expression.Field(null, typeof(JSValue).GetField("notExists", BindingFlags.Static | BindingFlags.NonPublic));
 
-        public static readonly MethodInfo JSObjectToBooleanMethod = null;
+        public static readonly MethodInfo JSObjectToBooleanMethod;
         public static readonly MethodInfo JSObjectToInt32Method = typeof(Tools).GetMethod("JSObjectToInt32", new[] { typeof(JSValue) });
 
         internal static readonly MethodInfo EvaluateForWriteMethod = typeof(CodeNode).GetMethod("EvaluateForWrite", new[] { typeof(Context) });

@@ -8,7 +8,7 @@ namespace JS.Core.Core.Interop
 #if !(PORTABLE)
     [Serializable]
 #endif
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Field, Inherited = false)]
     public sealed class ReadOnlyAttribute : Attribute
     {
 

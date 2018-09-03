@@ -4,6 +4,7 @@ using System.Reflection;
 using JS.Core.Core.JIT;
 using JS.Core.Expressions;
 using NiL.JS;
+using Expression = System.Linq.Expressions.Expression;
 
 #if !(PORTABLE)
 
@@ -38,10 +39,10 @@ namespace JS.Core.Core
         private static readonly CodeNode[] emptyCodeNodeArray = new CodeNode[0];
 
 #if !NET35 && !(PORTABLE)
-        internal System.Linq.Expressions.Expression JitOverCall(bool forAssign)
+        internal Expression JitOverCall(bool forAssign)
         {
-            return System.Linq.Expressions.Expression.Call(
-                System.Linq.Expressions.Expression.Constant(this),
+            return Expression.Call(
+                Expression.Constant(this),
                 GetType().GetMethod(forAssign ? "EvaluateForWrite" : "Evaluate", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(Context) }, null),
                 JITHelpers.ContextParameter
                 );
@@ -79,7 +80,7 @@ namespace JS.Core.Core
 
         }
 #if !PORTABLE
-        internal virtual System.Linq.Expressions.Expression TryCompile(bool selfCompile, bool forAssign, Type expectedType, List<CodeNode> dynamicValues)
+        internal virtual Expression TryCompile(bool selfCompile, bool forAssign, Type expectedType, List<CodeNode> dynamicValues)
         {
             return null;
         }

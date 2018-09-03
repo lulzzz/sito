@@ -14,7 +14,7 @@ using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
 namespace Maddalena.Numl.Supervised.NeuralNetwork
 {
     /// <summary>A network.</summary>
-    public partial class Network : Graph
+    public class Network : Graph
     {
         /// <summary>Gets or sets the in.</summary>
         /// <value>The in.</value>

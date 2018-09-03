@@ -461,10 +461,7 @@ namespace Maddalena.Numl.Math.LinearAlgebra
             matrix.Append("\n[");
             for (int i = 0; i < Rows; i++)
             {
-                if (i == 0)
-                    matrix.Append("[ ");
-                else
-                    matrix.Append(" [ ");
+                matrix.Append(i == 0 ? "[ " : " [ ");
 
                 for (int j = 0; j < Cols; j++)
                 {
@@ -474,10 +471,7 @@ namespace Maddalena.Numl.Math.LinearAlgebra
                         matrix.Append(",");
                 }
 
-                if (i < Rows - 1)
-                    matrix.Append("],\n");
-                else
-                    matrix.Append("]]");
+                matrix.Append(i < Rows - 1 ? "],\n" : "]]");
             }
 
             return matrix.ToString();

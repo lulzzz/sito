@@ -34,15 +34,8 @@ namespace Maddalena.Numl.Supervised.DecisionTree
         private Impurity _impurity;
         /// <summary>Gets the impurity.</summary>
         /// <value>The impurity.</value>
-        public Impurity Impurity
-        {
-            get
-            {
-                if (_impurity == null)
-                    _impurity = (Impurity)Activator.CreateInstance(ImpurityType);
-                return _impurity;
-            }
-        }
+        public Impurity Impurity => _impurity ?? (_impurity = (Impurity) Activator.CreateInstance(ImpurityType));
+
         /// <summary>Constructor.</summary>
         /// <param name="descriptor">the descriptor.</param>
         public DecisionTreeGenerator(Descriptor descriptor)
@@ -185,7 +178,7 @@ namespace Maddalena.Numl.Supervised.DecisionTree
                 // if this number is 0 then this edge 
                 // leads to a dead end - the edge will 
                 // not be built
-                if (slice.Count() > 0)
+                if (slice.Any())
                 {
                     Vector ySlice = y.Slice(slice);
                     // only one answer, set leaf
@@ -256,11 +249,7 @@ namespace Maddalena.Numl.Supervised.DecisionTree
                 // cols)
                 var property = Descriptor.At(i);
                 // if discrete, calculate full relative gain
-                if (property.Discrete)
-                    gain = measure.RelativeGain(y, feature);
-                // otherwise segment based on width
-                else
-                    gain = measure.SegmentedRelativeGain(y, feature, Width);
+                gain = property.Discrete ? measure.RelativeGain(y, feature) : measure.SegmentedRelativeGain(y, feature, Width);
 
                 // best one?
                 if (gain > bestGain)

@@ -74,8 +74,8 @@ namespace JS.Core.Expressions
                     }
                     return _tempContainer;
                 }
-                else
-                    da = a;
+
+                da = a;
             }
             else
             {

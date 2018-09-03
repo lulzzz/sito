@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using JS.Core.Core.Interop;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Array = NiL.JS.BaseLibrary.Array;
+using Math = System.Math;
 
 namespace JS.Core.Core.Functions
 {
@@ -90,7 +93,7 @@ namespace JS.Core.Core.Functions
                 if (!ctors[i].IsDefined(typeof(HiddenAttribute), false) || ctors[i].IsDefined(typeof(ForceUseAttribute), true))
                 {
                     ctorsL.Add(new MethodProxy(context, ctors[i]));
-                    length._iValue = System.Math.Max(ctorsL[ctorsL.Count - 1]._length._iValue, _length._iValue);
+                    length._iValue = Math.Max(ctorsL[ctorsL.Count - 1]._length._iValue, _length._iValue);
                 }
             }
 
@@ -158,18 +161,18 @@ namespace JS.Core.Core.Functions
             try
             {
                 object obj;
-                if (_staticProxy._hostedType == typeof(NiL.JS.BaseLibrary.Array))
+                if (_staticProxy._hostedType == typeof(Array))
                 {
                     if (arguments == null)
                     {
-                        obj = new NiL.JS.BaseLibrary.Array();
+                        obj = new Array();
                     }
                     else
                     {
                         switch (arguments.length)
                         {
                             case 0:
-                                obj = new NiL.JS.BaseLibrary.Array();
+                                obj = new Array();
                                 break;
                             case 1:
                                 {
@@ -177,31 +180,26 @@ namespace JS.Core.Core.Functions
                                     switch (a0._valueType)
                                     {
                                         case JSValueType.Integer:
-                                            obj = new NiL.JS.BaseLibrary.Array(a0._iValue);
+                                            obj = new Array(a0._iValue);
                                             break;
                                         case JSValueType.Double:
-                                            obj = new NiL.JS.BaseLibrary.Array(a0._dValue);
+                                            obj = new Array(a0._dValue);
                                             break;
                                         default:
-                                            obj = new NiL.JS.BaseLibrary.Array(arguments);
+                                            obj = new Array(arguments);
                                             break;
                                     }
                                     break;
                                 }
                             default:
-                                obj = new NiL.JS.BaseLibrary.Array(arguments);
+                                obj = new Array(arguments);
                                 break;
                         }
                     }
                 }
                 else
                 {
-                    if ((arguments == null || arguments.length == 0)
-#if (PORTABLE)
- && _staticProxy._hostedType.GetTypeInfo().IsValueType)
-#else
- && _staticProxy._hostedType.IsValueType)
-#endif
+                    if ((arguments == null || arguments.length == 0) && _staticProxy._hostedType.IsValueType)
                     {
                         obj = Activator.CreateInstance(_staticProxy._hostedType);
                     }
@@ -217,14 +215,11 @@ namespace JS.Core.Core.Functions
                             args = new object[] { arguments };
 
                         var target = constructor.GetTargetObject(targetObject, null);
-                        if (target != null)
-                            obj = constructor._method.Invoke(target, args);
-                        else
-                            obj = (constructor._method as ConstructorInfo).Invoke(args);
+                        obj = target != null ? constructor._method.Invoke(target, args) : (constructor._method as ConstructorInfo).Invoke(args);
                     }
                 }
 
-                JSValue res = obj as JSValue;
+                var res = obj as JSValue;
 
                 if (construct)
                 {
@@ -241,10 +236,6 @@ namespace JS.Core.Core.Functions
                         else if (res._oValue is JSValue)
                         {
                             res._oValue = res;
-                            // На той стороне понять, по new или нет вызван конструктор не получится,
-                            // поэтому по соглашению такие типы себя настраивают так, как будто они по new,
-                            // а в oValue пишут экземпляр аргумента на тот случай, если вызван конструктор типа как функция
-                            // с передачей в качестве аргумента существующего экземпляра
                         }
                     }
                     else
@@ -254,8 +245,6 @@ namespace JS.Core.Core.Functions
                         objc._attributes |= _staticProxy._hostedType.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false) ? JSValueAttributesInternal.Immutable : JSValueAttributesInternal.None;
                         if (obj.GetType() == typeof(Date))
                             objc._valueType = JSValueType.Date;
-                        else if (res != null)
-                            objc._valueType = (JSValueType)System.Math.Max((int)objc._valueType, (int)res._valueType);
 
                         res = objc;
                     }
@@ -279,8 +268,8 @@ namespace JS.Core.Core.Functions
             catch (TargetInvocationException e)
             {
 #if !(PORTABLE)
-                if (System.Diagnostics.Debugger.IsAttached)
-                    System.Diagnostics.Debugger.Log(10, "Exception", e.ToString());
+                if (Debugger.IsAttached)
+                    Debugger.Log(10, "Exception", e.ToString());
 #endif
                 throw e.GetBaseException();
             }

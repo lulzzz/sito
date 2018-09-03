@@ -11,7 +11,7 @@ namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Selection
     /// </summary>
     public class RouletteSelection : ISelectionFunction
     {
-        private IFilter _Filter;
+        private readonly IFilter _Filter;
 
         /// <summary>
         /// Initializes a new RouletteSelection object.

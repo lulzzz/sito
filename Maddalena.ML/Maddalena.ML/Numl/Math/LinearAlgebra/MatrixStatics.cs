@@ -609,7 +609,7 @@ namespace Maddalena.Numl.Math.LinearAlgebra
 			if (vectors.Length == 0)
 				throw new InvalidOperationException("Cannot construct Matrix from empty vector set!");
 
-			if (!vectors.All(v => v.Length == vectors[0].Length))
+			if (vectors.Any(v => v.Length != vectors[0].Length))
 				throw new InvalidOperationException("Vectors must all be of the same length!");
 
 			int n = type == VectorType.Row ? vectors.Length : vectors[0].Length;

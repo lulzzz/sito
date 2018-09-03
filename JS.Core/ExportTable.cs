@@ -16,12 +16,7 @@ namespace NiL.JS
                 if (string.IsNullOrWhiteSpace(key) || !Parser.ValidateName(key))
                     ExceptionHelper.Throw(new ArgumentException());
 
-                var result = JSValue.undefined;
-
-                if (!_items.TryGetValue(key, out result))
-                    return JSValue.undefined;
-
-                return result;
+                return !_items.TryGetValue(key, out var result) ? JSValue.undefined : result;
             }
             internal set => _items[key] = value;
         }

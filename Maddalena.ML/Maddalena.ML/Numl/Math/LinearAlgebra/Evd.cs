@@ -13,7 +13,7 @@ namespace Maddalena.Numl.Math.LinearAlgebra
     public class Evd
     {
         /// <summary>The Matrix to process.</summary>
-        private Matrix A;
+        private readonly Matrix A;
         /// <summary>The Matrix to process.</summary>
         private Matrix V;
         /// <summary>Gets the eigenvectors.</summary>

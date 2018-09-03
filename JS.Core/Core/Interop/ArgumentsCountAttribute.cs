@@ -8,7 +8,7 @@ namespace JS.Core.Core.Interop
 #if !(PORTABLE)
     [Serializable]
 #endif
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
     internal sealed class ArgumentsCountAttribute : Attribute
     {
         public int Count { get; private set; }

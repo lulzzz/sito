@@ -5,6 +5,8 @@ using JS.Core.Core;
 using JS.Core.Expressions;
 using JS.Core.Extensions;
 using NiL.JS.BaseLibrary;
+using Array = System.Array;
+using Math = System.Math;
 
 namespace NiL.JS.Statements
 {
@@ -36,7 +38,7 @@ namespace NiL.JS.Statements
 #if (PORTABLE)
                 return new ReadOnlyCollection<string>(_labels);
 #else
-                return System.Array.AsReadOnly(_labels);
+                return Array.AsReadOnly(_labels);
 #endif
             }
         }
@@ -57,7 +59,7 @@ namespace NiL.JS.Statements
 
             Tools.SkipSpaces(state.Code, ref i);
 
-            var result = new ForOf()
+            var result = new ForOf
             {
                 _labels = state.Labels.GetRange(state.Labels.Count - state.LabelsCount, state.LabelsCount).ToArray()
             };
@@ -97,9 +99,9 @@ namespace NiL.JS.Statements
 
                         var defVal = ExpressionTree.Parse(state, ref i, false, false, false, true, true);
                         if (defVal == null)
-                            return defVal;
+                            return null;
 
-                        Expression exp = new AssignmentOperatorCache(result._variable as Variable ?? (result._variable as VariableDefinition)._initializers[0] as Variable);
+                        Expression exp = new AssignmentOperatorCache((Variable) result._variable);
                         exp = new Assignment(exp, defVal)
                         {
                             Position = exp.Position,
@@ -171,7 +173,7 @@ namespace NiL.JS.Statements
             }
 
             JSValue source = null;
-            if (suspendData == null || suspendData.source == null)
+            if (suspendData?.source == null)
             {
                 if (context.Debugging && !(_source is CodeBlock))
                     context.raiseDebugger(_source);
@@ -186,14 +188,13 @@ namespace NiL.JS.Statements
             else
                 source = suspendData.source;
 
-            JSValue variable = null;
-            if (suspendData == null || suspendData.variable == null)
+            JSValue variable;
+            if (suspendData?.variable == null)
             {
                 if (context.Debugging && !(_variable is CodeBlock))
                     context.raiseDebugger(_variable);
 
-                var varialeDefStat = _variable as VariableDefinition;
-                if (varialeDefStat != null)
+                if (_variable is VariableDefinition varialeDefStat)
                 {
                     _variable.Evaluate(context);
                     variable = (varialeDefStat._initializers[0]._left ?? varialeDefStat._initializers[0]).EvaluateForWrite(context);
@@ -201,7 +202,7 @@ namespace NiL.JS.Statements
                 else if (_variable is Assignment)
                 {
                     _variable.Evaluate(context);
-                    variable = (_variable as Assignment)._left.Evaluate(context);
+                    variable = ((Assignment) _variable)._left.Evaluate(context);
                 }
                 else
                     variable = _variable.EvaluateForWrite(context);
@@ -236,7 +237,7 @@ namespace NiL.JS.Statements
                 {
                     if (context._executionMode < ExecutionMode.Return)
                     {
-                        var me = context._executionInfo == null || System.Array.IndexOf(_labels, context._executionInfo._oValue as string) != -1;
+                        var me = context._executionInfo == null || Array.IndexOf(_labels, context._executionInfo._oValue as string) != -1;
                         var _break = (context._executionMode > ExecutionMode.Continue) || !me;
                         if (me)
                         {
@@ -283,7 +284,7 @@ namespace NiL.JS.Statements
         {
             Parser.Build(ref _variable, 2, variables, codeContext | CodeContext.InExpression, message, stats, opts);
             Parser.Build(ref _source, 2, variables, codeContext | CodeContext.InExpression, message, stats, opts);
-            Parser.Build(ref _body, System.Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
+            Parser.Build(ref _body, Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
 
             if (_variable is Comma)
             {

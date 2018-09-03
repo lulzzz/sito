@@ -61,10 +61,8 @@ namespace JS.Core.Expressions
                         _this = null;
                         return false;
                     }
-                    else
-                    {
-                        _this = new Comma(_left, new Constant(JSValue.undefined));
-                    }
+
+                    _this = new Comma(_left, new Constant(JSValue.undefined));
                 }
                 else if (threads[0] == null)
                 {

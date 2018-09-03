@@ -24,10 +24,7 @@ namespace JS.Core.Core
         public ObjectWrapper(object instance, JSObject proto)
         {
             this.instance = instance;
-            if (instance is Date)
-                _valueType = JSValueType.Date;
-            else
-                _valueType = JSValueType.Object;
+            _valueType = instance is Date ? JSValueType.Date : JSValueType.Object;
             _oValue = this;
             _attributes = JSValueAttributesInternal.SystemObject;
             if (proto != null)

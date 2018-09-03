@@ -11,7 +11,7 @@ namespace JS.Core.Extensions
         [Hidden]
         public IteratorAdapter(JSValue iterator)
         {
-            this._iterator = iterator;
+            _iterator = iterator;
         }
 
         public IIteratorResult next(Arguments arguments = null)

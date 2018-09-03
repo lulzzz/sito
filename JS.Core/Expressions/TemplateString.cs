@@ -28,7 +28,7 @@ namespace JS.Core.Expressions
         internal TemplateString(string[] strings, Expression[] expression)
         {
             this.strings = strings;
-            this.expressions = expression;
+            expressions = expression;
         }
 
         public static CodeNode Parse(ParseInfo state, ref int index)
@@ -150,8 +150,7 @@ namespace JS.Core.Expressions
 
             if (Mode == TemplateStringMode.Regular)
                 return result.ToString();
-            else
-                return new JSValue { _oValue = tagResult, _valueType = JSValueType.SpreadOperatorResult };
+            return new JSValue { _oValue = tagResult, _valueType = JSValueType.SpreadOperatorResult };
         }
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)

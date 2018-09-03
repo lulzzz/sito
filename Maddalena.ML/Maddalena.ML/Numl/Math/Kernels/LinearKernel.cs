@@ -14,19 +14,11 @@ namespace Maddalena.Numl.Math.Kernels
     /// </summary>
     public class LinearKernel : IKernel
     {
-        /// <summary>ctor.</summary>
-        public LinearKernel() { }
 
         /// <summary>
         /// Returns True (always) indicating this is a linear kernel.
         /// </summary>
-        public bool IsLinear
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsLinear => true;
 
         /// <summary>Computes a linear Kernel in the dimension space.</summary>
         /// <param name="m">Input Matrix.</param>

@@ -4,7 +4,7 @@ using System.Text;
 using JS.Core;
 using JS.Core.Core;
 using JS.Core.Expressions;
-using NiL.JS.Backward;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -48,7 +48,7 @@ namespace NiL.JS.Statements
                 var definition =
                     VariableDefinition.Parse(state, ref index)
                     ?? ClassDefinition.Parse(state, ref index)
-                    ?? FunctionDefinition.Parse(state, ref index, BaseLibrary.FunctionKind.Function);
+                    ?? FunctionDefinition.Parse(state, ref index, FunctionKind.Function);
 
                 if (definition == null)
                     ExceptionHelper.ThrowSyntaxError(Messages.UnexpectedToken, state.Code, index);
@@ -149,12 +149,12 @@ namespace NiL.JS.Statements
         public override JSValue Evaluate(Context context)
         {
             if (context._module == null)
-                ExceptionHelper.Throw(new BaseLibrary.Error("Module undefined"));
+                ExceptionHelper.Throw(new Error("Module undefined"));
 
             if (ReExportSourceModuleName != null)
             {
                 if (string.IsNullOrEmpty(context._module.FilePath))
-                    ExceptionHelper.Throw(new BaseLibrary.Error("Module must has name"));
+                    ExceptionHelper.Throw(new Error("Module must has name"));
 
                 var module = context._module.Import(ReExportSourceModuleName);
 
@@ -189,7 +189,7 @@ namespace NiL.JS.Statements
                 {
                     var entityDef = _internalDefinition as EntityDefinition;
 
-                    context._module.Exports[entityDef.Name] = entityDef.reference.Descriptor.Get(context, false, 1);
+                    context._module.Exports[entityDef.Name] = entityDef.Reference.Descriptor.Get(context, false, 1);
                 }
             }
             else

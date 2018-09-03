@@ -10,6 +10,7 @@ using Array = NiL.JS.BaseLibrary.Array;
 
 namespace JS.Core.Core
 {
+    [Serializable]
     public class JSObject : JSValue
     {
         internal IDictionary<string, JSValue> _fields;
@@ -346,7 +347,7 @@ namespace JS.Core.Core
                     if (desc._valueType == JSValueType.Property)
                     {
                         var getter = (desc._oValue as PropertyPair).getter;
-                        if (getter == null || getter._oValue == null)
+                        if (getter?._oValue == null)
                             ExceptionHelper.Throw(
                                 new TypeError("Invalid property descriptor for property " + item.Key + " ."));
                         desc = (getter._oValue as Function).Call(members, null);
@@ -460,7 +461,7 @@ namespace JS.Core.Core
                     if (desc._valueType == JSValueType.Property)
                     {
                         var getter = (desc._oValue as PropertyPair).getter;
-                        if (getter == null || getter._oValue == null)
+                        if (getter?._oValue == null)
                             ExceptionHelper.Throw(
                                 new TypeError("Invalid property descriptor for property " + item.Key + " ."));
                         desc = (getter._oValue as Function).Call(members, null);

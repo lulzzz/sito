@@ -5,6 +5,7 @@ using NiL.JS.BaseLibrary;
 
 namespace JS.Core.Core.Functions
 {
+    [Serializable]
     [Prototype(typeof(Function), true)]
     internal sealed class SimpleFunction : Function
     {
@@ -18,8 +19,6 @@ namespace JS.Core.Core.Functions
             if (construct || withSpread)
                 return base.InternalInvoke(targetObject, arguments, initiator, withSpread, construct);
 
-            var body = _functionDefinition._body;
-            var result = notExists;
             notExists._valueType = JSValueType.NotExists;
 
             if (_functionDefinition.parameters.Length == arguments.Length // из-за необходимости иметь возможность построить аргументы, если они потребуются
@@ -28,15 +27,11 @@ namespace JS.Core.Core.Functions
                 return fastInvoke(targetObject, arguments, initiator);
             }
 
-            return base.InternalInvoke(targetObject, arguments, initiator, withSpread, construct);
+            return base.InternalInvoke(targetObject, arguments, initiator, false, false);
         }
 
         private JSValue fastInvoke(JSValue targetObject, Expression[] arguments, Context initiator)
         {
-#if DEBUG && !(PORTABLE)
-            if (_functionDefinition.trace)
-                System.Console.WriteLine("DEBUG: Run \"" + _functionDefinition.Reference.Name + "\"");
-#endif
             var body = _functionDefinition._body;
             targetObject = correctTargetObject(targetObject, body._strict);
             if (_functionDefinition.recursionDepth > _functionDefinition.parametersStored) // рекурсивный вызов.
@@ -50,12 +45,13 @@ namespace JS.Core.Core.Functions
             bool tailCall = false;
             for (;;)
             {
-                var internalContext = new Context(_initialContext, false, this);
+                var internalContext = new Context(_initialContext, false, this)
+                {
+                    _thisBind = _functionDefinition.kind == FunctionKind.Arrow
+                        ? _initialContext._thisBind
+                        : targetObject
+                };
 
-                if (_functionDefinition.kind == FunctionKind.Arrow)
-                    internalContext._thisBind = _initialContext._thisBind;
-                else
-                    internalContext._thisBind = targetObject;
 
                 if (tailCall)
                     initParameters(args, internalContext);
@@ -65,10 +61,10 @@ namespace JS.Core.Core.Functions
                 // Эта строка обязательно должна находиться после инициализации параметров
                 _functionDefinition.recursionDepth++;
 
-                if (this._functionDefinition.reference._descriptor != null && _functionDefinition.reference._descriptor.cacheRes == null)
+                if (_functionDefinition.Reference._descriptor != null && _functionDefinition.Reference._descriptor.cacheRes == null)
                 {
-                    _functionDefinition.reference._descriptor.cacheContext = internalContext._parent;
-                    _functionDefinition.reference._descriptor.cacheRes = this;
+                    _functionDefinition.Reference._descriptor.cacheContext = internalContext._parent;
+                    _functionDefinition.Reference._descriptor.cacheRes = this;
                 }
 
                 internalContext._strict |= body._strict;
@@ -87,10 +83,6 @@ namespace JS.Core.Core.Functions
                 }
                 finally
                 {
-#if DEBUG && !(PORTABLE)
-                    if (_functionDefinition.trace)
-                        System.Console.WriteLine("DEBUG: Exit \"" + _functionDefinition.Reference.Name + "\"");
-#endif
                     _functionDefinition.recursionDepth--;
                     if (_functionDefinition.parametersStored > _functionDefinition.recursionDepth)
                         _functionDefinition.parametersStored--;
@@ -105,7 +97,7 @@ namespace JS.Core.Core.Functions
             return res;
         }
 
-        private void initParametersFast(Expression[] arguments, Core.Context initiator, Context internalContext)
+        private void initParametersFast(Expression[] arguments, Context initiator, Context internalContext)
         {
             JSValue a0 = null,
                     a1 = null,

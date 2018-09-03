@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using JS.Core.Core.Interop;
+using JS.Core.Expressions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
 
@@ -21,7 +21,7 @@ namespace JS.Core.Core.Functions
     [Prototype(typeof(Function), true)]
     internal sealed class MethodProxy : Function
     {
-        private delegate object WrapperDelegate(object target, Context initiator, Expressions.Expression[] arguments, Arguments argumentsObject);
+        private delegate object WrapperDelegate(object target, Context initiator, Expression[] arguments, Arguments argumentsObject);
 
         private static readonly Dictionary<MethodBase, WrapperDelegate> WrapperCache = new Dictionary<MethodBase, WrapperDelegate>();
         private static readonly MethodInfo ArgumentsGetItemMethod = typeof(Arguments).GetMethod("get_Item", new[] { typeof(int) });
@@ -149,15 +149,15 @@ namespace JS.Core.Core.Functions
 
         private WrapperDelegate makeFastWrapper(MethodInfo methodInfo)
         {
-            Expression tree = null;
-            var target = Expression.Parameter(typeof(object), "target");
-            var context = Expression.Parameter(typeof(Context), "context");
-            var arguments = Expression.Parameter(typeof(Expressions.Expression[]), "arguments");
-            var argumentsObjectPrm = Expression.Parameter(typeof(Arguments), "argumentsObject");
-            var argumentsObject = Expression.Condition(
-                Expression.NotEqual(argumentsObjectPrm, Expression.Constant(null)),
+            System.Linq.Expressions.Expression tree = null;
+            var target = System.Linq.Expressions.Expression.Parameter(typeof(object), "target");
+            var context = System.Linq.Expressions.Expression.Parameter(typeof(Context), "context");
+            var arguments = System.Linq.Expressions.Expression.Parameter(typeof(Expression[]), "arguments");
+            var argumentsObjectPrm = System.Linq.Expressions.Expression.Parameter(typeof(Arguments), "argumentsObject");
+            var argumentsObject = System.Linq.Expressions.Expression.Condition(
+                System.Linq.Expressions.Expression.NotEqual(argumentsObjectPrm, System.Linq.Expressions.Expression.Constant(null)),
                 argumentsObjectPrm,
-                Expression.Assign(argumentsObjectPrm, Expression.Call(((Func<Expressions.Expression[], Context, Arguments>)Tools.CreateArguments).GetMethodInfo(), arguments, context)));
+                System.Linq.Expressions.Expression.Assign(argumentsObjectPrm, System.Linq.Expressions.Expression.Call(((Func<Expression[], Context, Arguments>)Tools.CreateArguments).GetMethodInfo(), arguments, context)));
 
             if (_forceInstance)
             {
@@ -167,14 +167,15 @@ namespace JS.Core.Core.Functions
                     {
                         if (_parameters.Length == 1)
                         {
-                            tree = Expression.Call(methodInfo, Expression.Convert(target, typeof(JSValue)));
+                            tree = System.Linq.Expressions.Expression.Call(methodInfo, System.Linq.Expressions.Expression.Convert(target, typeof(JSValue)));
                             break;
                         }
-                        else if (_parameters.Length == 2 && _parameters[1].ParameterType == typeof(Arguments))
+
+                        if (_parameters.Length == 2 && _parameters[1].ParameterType == typeof(Arguments))
                         {
-                            tree = Expression.Call(
+                            tree = System.Linq.Expressions.Expression.Call(
                                 methodInfo,
-                                Expression.Convert(target, typeof(JSValue)),
+                                System.Linq.Expressions.Expression.Convert(target, typeof(JSValue)),
                                 argumentsObject);
                             break;
                         }
@@ -183,77 +184,65 @@ namespace JS.Core.Core.Functions
                     throw new ArgumentException("Invalid method signature");
                 }
             }
-            else if (_parameters.Length == 0)
+            else switch (_parameters.Length)
             {
-                if (methodInfo.IsStatic)
-                    tree = Expression.Call(methodInfo);
-                else
-                    tree = Expression.Call(Expression.Convert(target, methodInfo.DeclaringType), methodInfo);
-            }
-            else
-            {
-                if (_parameters.Length == 1 && _parameters[0].ParameterType == typeof(Arguments))
-                {
-                    if (methodInfo.IsStatic)
-                        tree = Expression.Call(methodInfo, argumentsObject);
-                    else
-                        tree = Expression.Call(Expression.Convert(target, methodInfo.DeclaringType), methodInfo, argumentsObject);
-                }
-                else
-                {
-                    var processArg = ((Func<Expressions.Expression[], Context, int, object>)processArgument).GetMethodInfo();
-                    var processArgTail = ((Func<Expressions.Expression[], Context, int, object>)processArgumentsTail).GetMethodInfo();
+                case 0:
+                    tree = methodInfo.IsStatic ? System.Linq.Expressions.Expression.Call(methodInfo) : System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Convert(target, methodInfo.DeclaringType), methodInfo);
+                    break;
+                case 1 when _parameters[0].ParameterType == typeof(Arguments):
+                    tree = methodInfo.IsStatic ? System.Linq.Expressions.Expression.Call(methodInfo, argumentsObject) : System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Convert(target, methodInfo.DeclaringType), methodInfo, argumentsObject);
+                    break;
+                default:
+                    var processArg = ((Func<Expression[], Context, int, object>)processArgument).GetMethodInfo();
+                    var processArgTail = ((Func<Expression[], Context, int, object>)processArgumentsTail).GetMethodInfo();
                     var convertArg = ((Func<int, JSValue, object>)convertArgument).GetMethodInfo();
 
-                    var prms = new Expression[_parameters.Length];
+                    var prms = new System.Linq.Expressions.Expression[_parameters.Length];
                     for (var i = 0; i < prms.Length; i++)
                     {
-                        prms[i] = Expression.Convert(
-                            Expression.Call(
-                                Expression.Constant(this),
+                        prms[i] = System.Linq.Expressions.Expression.Convert(
+                            System.Linq.Expressions.Expression.Call(
+                                System.Linq.Expressions.Expression.Constant(this),
                                 i + 1 < prms.Length ? processArg : processArgTail,
                                 arguments,
                                 context,
-                                Expression.Constant(i)),
+                                System.Linq.Expressions.Expression.Constant(i)),
                             _parameters[i].ParameterType);
                     }
 
                     if (methodInfo.IsStatic)
-                        tree = Expression.Call(methodInfo, prms);
+                        tree = System.Linq.Expressions.Expression.Call(methodInfo, prms);
                     else
-                        tree = Expression.Call(Expression.Convert(target, methodInfo.DeclaringType), methodInfo, prms);
+                        tree = System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Convert(target, methodInfo.DeclaringType), methodInfo, prms);
 
                     for (var i = 0; i < prms.Length; i++)
                     {
-                        prms[i] = Expression.Convert(
-                            Expression.Call(
-                                Expression.Constant(this),
+                        prms[i] = System.Linq.Expressions.Expression.Convert(
+                            System.Linq.Expressions.Expression.Call(
+                                System.Linq.Expressions.Expression.Constant(this),
                                 convertArg,
-                                Expression.Constant(i),
-                                Expression.Call(argumentsObjectPrm, ArgumentsGetItemMethod, Expression.Constant(i))),
+                                System.Linq.Expressions.Expression.Constant(i),
+                                System.Linq.Expressions.Expression.Call(argumentsObjectPrm, ArgumentsGetItemMethod, System.Linq.Expressions.Expression.Constant(i))),
                             _parameters[i].ParameterType);
                     }
 
-                    Expression treeWithObjectAsSource;
-                    if (methodInfo.IsStatic)
-                        treeWithObjectAsSource = Expression.Call(methodInfo, prms);
-                    else
-                        treeWithObjectAsSource = Expression.Call(Expression.Convert(target, methodInfo.DeclaringType), methodInfo, prms);
+                    System.Linq.Expressions.Expression treeWithObjectAsSource;
+                    treeWithObjectAsSource = methodInfo.IsStatic ? System.Linq.Expressions.Expression.Call(methodInfo, prms) : System.Linq.Expressions.Expression.Call(System.Linq.Expressions.Expression.Convert(target, methodInfo.DeclaringType), methodInfo, prms);
 
-                    tree = Expression.Condition(Expression.Equal(argumentsObjectPrm, Expression.Constant(null)),
-                                                 tree,
-                                                 treeWithObjectAsSource);
-                }
+                    tree = System.Linq.Expressions.Expression.Condition(System.Linq.Expressions.Expression.Equal(argumentsObjectPrm, System.Linq.Expressions.Expression.Constant(null)),
+                        tree,
+                        treeWithObjectAsSource);
+                    break;
             }
 
             if (methodInfo.ReturnType == typeof(void))
-                tree = Expression.Block(tree, Expression.Constant(null));
+                tree = System.Linq.Expressions.Expression.Block(tree, System.Linq.Expressions.Expression.Constant(null));
 
             try
             {
-                return Expression
+                return System.Linq.Expressions.Expression
                     .Lambda<WrapperDelegate>(
-                        Expression.Convert(tree, typeof(object)),
+                        System.Linq.Expressions.Expression.Convert(tree, typeof(object)),
                         methodInfo.Name,
                         new[]
                         {
@@ -272,62 +261,62 @@ namespace JS.Core.Core.Functions
 
         private WrapperDelegate makeFastWrapper(ConstructorInfo constructorInfo)
         {
-            Expression tree = null;
-            var target = Expression.Parameter(typeof(object), "target");
-            var context = Expression.Parameter(typeof(Context), "context");
-            var arguments = Expression.Parameter(typeof(Expressions.Expression[]), "arguments");
-            var argumentsObjectPrm = Expression.Parameter(typeof(Arguments), "argumentsObject");
-            var argumentsObject = Expression.Condition(
-                Expression.NotEqual(argumentsObjectPrm, Expression.Constant(null)),
+            System.Linq.Expressions.Expression tree = null;
+            var target = System.Linq.Expressions.Expression.Parameter(typeof(object), "target");
+            var context = System.Linq.Expressions.Expression.Parameter(typeof(Context), "context");
+            var arguments = System.Linq.Expressions.Expression.Parameter(typeof(Expression[]), "arguments");
+            var argumentsObjectPrm = System.Linq.Expressions.Expression.Parameter(typeof(Arguments), "argumentsObject");
+            var argumentsObject = System.Linq.Expressions.Expression.Condition(
+                System.Linq.Expressions.Expression.NotEqual(argumentsObjectPrm, System.Linq.Expressions.Expression.Constant(null)),
                 argumentsObjectPrm,
-                Expression.Assign(argumentsObjectPrm, Expression.Call(((Func<Expressions.Expression[], Context, Arguments>)Tools.CreateArguments).GetMethodInfo(), arguments, context)));
+                System.Linq.Expressions.Expression.Assign(argumentsObjectPrm, System.Linq.Expressions.Expression.Call(((Func<Expression[], Context, Arguments>)Tools.CreateArguments).GetMethodInfo(), arguments, context)));
 
             if (_parameters.Length == 0)
             {
-                tree = Expression.New(constructorInfo);
+                tree = System.Linq.Expressions.Expression.New(constructorInfo);
             }
             else
             {
                 if (_parameters.Length == 1 && _parameters[0].ParameterType == typeof(Arguments))
                 {
-                    tree = Expression.New(constructorInfo, argumentsObject);
+                    tree = System.Linq.Expressions.Expression.New(constructorInfo, argumentsObject);
                 }
                 else
                 {
-                    Func<Expressions.Expression[], Context, int, object> processArg = processArgument;
-                    Func<Expressions.Expression[], Context, int, object> processArgTail = processArgumentsTail;
+                    Func<Expression[], Context, int, object> processArg = processArgument;
+                    Func<Expression[], Context, int, object> processArgTail = processArgumentsTail;
                     Func<int, JSValue, object> convertArg = convertArgument;
 
-                    var prms = new Expression[_parameters.Length];
+                    var prms = new System.Linq.Expressions.Expression[_parameters.Length];
                     for (var i = 0; i < prms.Length; i++)
                     {
-                        prms[i] = Expression.Convert(
-                            Expression.Call(
-                                Expression.Constant(this),
+                        prms[i] = System.Linq.Expressions.Expression.Convert(
+                            System.Linq.Expressions.Expression.Call(
+                                System.Linq.Expressions.Expression.Constant(this),
                                 i + 1 < prms.Length ? processArg.GetMethodInfo() : processArgTail.GetMethodInfo(),
                                 arguments,
                                 context,
-                                Expression.Constant(i)),
+                                System.Linq.Expressions.Expression.Constant(i)),
                             _parameters[i].ParameterType);
                     }
 
-                    tree = Expression.New(constructorInfo, prms);
+                    tree = System.Linq.Expressions.Expression.New(constructorInfo, prms);
 
                     for (var i = 0; i < prms.Length; i++)
                     {
-                        prms[i] = Expression.Convert(
-                            Expression.Call(
-                                Expression.Constant(this),
+                        prms[i] = System.Linq.Expressions.Expression.Convert(
+                            System.Linq.Expressions.Expression.Call(
+                                System.Linq.Expressions.Expression.Constant(this),
                                 convertArg.GetMethodInfo(),
-                                Expression.Constant(i),
-                                Expression.Call(argumentsObject, ArgumentsGetItemMethod, Expression.Constant(i))),
+                                System.Linq.Expressions.Expression.Constant(i),
+                                System.Linq.Expressions.Expression.Call(argumentsObject, ArgumentsGetItemMethod, System.Linq.Expressions.Expression.Constant(i))),
                             _parameters[i].ParameterType);
                     }
 
-                    Expression treeWithObjectAsSource;
-                    treeWithObjectAsSource = Expression.New(constructorInfo, prms);
+                    System.Linq.Expressions.Expression treeWithObjectAsSource;
+                    treeWithObjectAsSource = System.Linq.Expressions.Expression.New(constructorInfo, prms);
 
-                    tree = Expression.Condition(Expression.Equal(argumentsObjectPrm, Expression.Constant(null)),
+                    tree = System.Linq.Expressions.Expression.Condition(System.Linq.Expressions.Expression.Equal(argumentsObjectPrm, System.Linq.Expressions.Expression.Constant(null)),
                                                  tree,
                                                  treeWithObjectAsSource);
                 }
@@ -335,9 +324,9 @@ namespace JS.Core.Core.Functions
 
             try
             {
-                return Expression
+                return System.Linq.Expressions.Expression
                     .Lambda<WrapperDelegate>(
-                        Expression.Convert(tree, typeof(object)),
+                        System.Linq.Expressions.Expression.Convert(tree, typeof(object)),
                         constructorInfo.DeclaringType.Name,
                         new[]
                         {
@@ -354,13 +343,13 @@ namespace JS.Core.Core.Functions
             }
         }
 
-        internal override JSValue InternalInvoke(JSValue targetValue, Expressions.Expression[] argumentsSource, Context initiator, bool withSpread, bool withNew)
+        internal override JSValue InternalInvoke(JSValue targetValue, Expression[] argumentsSource, Context initiator, bool withSpread, bool withNew)
         {
             if (withNew)
             {
                 if (RequireNewKeywordLevel == RequireNewKeywordLevel.WithoutNewOnly)
                 {
-                    ExceptionHelper.ThrowTypeError(string.Format(Messages.InvalidTryToCreateWithNew, name));
+                    ExceptionHelper.ThrowTypeError(string.Format(Messages.InvalidTryToCreateWithoutNew, name));
                 }
             }
             else
@@ -375,7 +364,7 @@ namespace JS.Core.Core.Functions
             return Context.GlobalContext.ProxyValue(value);
         }
 
-        private object invokeMethod(JSValue targetValue, Expressions.Expression[] argumentsSource, Arguments argumentsObject, Context initiator)
+        private object invokeMethod(JSValue targetValue, Expression[] argumentsSource, Arguments argumentsObject, Context initiator)
         {
             object value;
             var target = GetTargetObject(targetValue, _hardTarget);
@@ -407,7 +396,7 @@ namespace JS.Core.Core.Functions
             return value;
         }
 
-        private object processArgumentsTail(Expressions.Expression[] arguments, Context context, int index)
+        private object processArgumentsTail(Expression[] arguments, Context context, int index)
         {
             var result = processArgument(arguments, context, index);
 
@@ -447,7 +436,7 @@ namespace JS.Core.Core.Functions
                     {
                         // Исключительная ситуация. Я не знаю почему Function.length обобщённое свойство, а не константа. Array.length работает по-другому.
                         if (_method.Name == "get_length" && typeof(Function).IsAssignableFrom(_method.DeclaringType))
-                            return Function.Empty;
+                            return Empty;
 
                         ExceptionHelper.Throw(new TypeError("Can not call function \"" + name + "\" for object of another type."));
                     }
@@ -467,7 +456,7 @@ namespace JS.Core.Core.Functions
             return res;
         }
 
-        private object processArgument(Expressions.Expression[] arguments, Context initiator, int index)
+        private object processArgument(Expression[] arguments, Context initiator, int index)
         {
             var value = arguments.Length > index ? Tools.EvalExpressionSafe(initiator, arguments[index]) : notExists;
 
@@ -499,7 +488,8 @@ namespace JS.Core.Core.Functions
             {
                 return null;
             }
-            else if (value.Defined)
+
+            if (value.Defined)
             {
                 result = Tools.convertJStoObj(value, parameterInfo.ParameterType, !strictConversion);
                 if (strictConversion && result == null)
@@ -513,29 +503,20 @@ namespace JS.Core.Core.Functions
             }
             else
             {
-                if (parameterInfo.ParameterType.IsAssignableFrom(value.GetType()))
+                if (parameterInfo.ParameterType.IsInstanceOfType(value))
                     return value;
             }
 
-            if (result == null
-                && (options.HasFlag(ConvertArgsOptions.DummyValues) || parameterInfo.Attributes.HasFlag(ParameterAttributes.HasDefault)))
+            if (result == null && (options.HasFlag(ConvertArgsOptions.DummyValues) || parameterInfo.Attributes.HasFlag(ParameterAttributes.HasDefault)))
             {
                 result = parameterInfo.DefaultValue;
 
-#if (PORTABLE)
-                if (result != null && result.GetType().FullName == "System.DBNull")
-                {
-#else
                 if (result is DBNull)
                 {
-#endif
                     if (strictConversion && options.HasFlag(ConvertArgsOptions.ThrowOnError))
                         ExceptionHelper.ThrowTypeError("Unable to convert " + value + " to type " + parameterInfo.ParameterType);
 
-                    if (parameterInfo.ParameterType.GetTypeInfo().IsValueType)
-                        result = Activator.CreateInstance(parameterInfo.ParameterType);
-                    else
-                        result = null;
+                    result = parameterInfo.ParameterType.GetTypeInfo().IsValueType ? Activator.CreateInstance(parameterInfo.ParameterType) : null;
                 }
             }
 
@@ -583,7 +564,7 @@ namespace JS.Core.Core.Functions
             return result as JSValue ?? Context.GlobalContext.ProxyValue(result);
         }
 
-        public sealed override Function bind(Arguments args)
+        public override Function bind(Arguments args)
         {
             if (_hardTarget != null || args.Length == 0)
                 return this;

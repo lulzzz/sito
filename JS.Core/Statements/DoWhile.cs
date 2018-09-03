@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using JS.Core.Core;
 using JS.Core.Expressions;
 using NiL.JS.BaseLibrary;
+using Array = System.Array;
+using Math = System.Math;
 
 namespace NiL.JS.Statements
 {
@@ -47,7 +49,7 @@ namespace NiL.JS.Statements
             if (body is FunctionDefinition)
             {
                 if (state.strict)
-                    ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
+                    ExceptionHelper.Throw((new SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
                 state.message?.Invoke(MessageLevel.CriticalWarning, body.Position, body.Length, "Do not declare function in nested blocks.");
                 body = new CodeBlock(new[] { body }); // для того, чтобы не дублировать код по декларации функции, 
                 // она оборачивается в блок, который сделает самовыпил на втором этапе, но перед этим корректно объявит функцию.
@@ -77,7 +79,7 @@ namespace NiL.JS.Statements
             i++;
             var pos = index;
             index = i;
-            return new DoWhile()
+            return new DoWhile
             {
                 allowRemove = ccs == state.continiesCount && cbs == state.breaksCount,
                 body = body,
@@ -103,7 +105,7 @@ namespace NiL.JS.Statements
                     {
                         if (context._executionMode < ExecutionMode.Return)
                         {
-                            var me = context._executionInfo == null || System.Array.IndexOf(labels, context._executionInfo._oValue as string) != -1;
+                            var me = context._executionInfo == null || Array.IndexOf(labels, context._executionInfo._oValue as string) != -1;
                             var _break = (context._executionMode > ExecutionMode.Continue) || !me;
                             if (me)
                             {
@@ -134,7 +136,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 body,
                 condition
@@ -145,7 +147,7 @@ namespace NiL.JS.Statements
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)
         {
-            expressionDepth = System.Math.Max(1, expressionDepth);
+            expressionDepth = Math.Max(1, expressionDepth);
             Parser.Build(ref body, expressionDepth, variables, codeContext | CodeContext.InLoop, message, stats, opts);
             Parser.Build(ref condition, 2, variables, codeContext | CodeContext.InLoop | CodeContext.InExpression, message, stats, opts);
             try

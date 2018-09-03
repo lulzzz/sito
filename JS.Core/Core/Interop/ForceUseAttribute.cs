@@ -13,7 +13,7 @@ namespace JS.Core.Core.Interop
 #if (PORTABLE)
         & ~AttributeTargets.Constructor
 #endif
-, AllowMultiple = false, Inherited = true)]
+    )]
 #if !WRC
     public
 #endif

@@ -89,7 +89,7 @@ namespace NiL.JS.Statements
 
             var pos = index;
             index = i;
-            return new TryCatch()
+            return new TryCatch
             {
                 body = (CodeBlock)b,
                 catchBody = (CodeBlock)cb,
@@ -127,7 +127,7 @@ namespace NiL.JS.Statements
             }
             catch (Exception e)
             {
-                if (this._catch)
+                if (_catch)
                 {
                     if (catchBody != null)
                         catchHandler(context, e);
@@ -163,32 +163,28 @@ namespace NiL.JS.Statements
             var ainfo = context._executionInfo;
             if (abort == ExecutionMode.Return && ainfo != null)
             {
-                if (ainfo.Defined)
-                    ainfo = ainfo.CloneImpl(false);
-                else
-                    ainfo = JSValue.Undefined;
+                ainfo = ainfo.Defined ? ainfo.CloneImpl(false) : JSValue.Undefined;
             }
 
             context._executionMode = ExecutionMode.None;
             context._executionInfo = JSValue.undefined;
 
-            Action<Context> finallyAction = null;
-            finallyAction = (c) =>
+            void FinallyAction(Context c)
             {
                 c._lastResult = finallyBody.Evaluate(c) ?? context._lastResult;
                 if (c._executionMode == ExecutionMode.None)
                 {
                     c._executionMode = abort;
                     c._executionInfo = ainfo;
-                    if (exception != null)
-                        throw exception as JSException ?? new JSException(null as JSValue, exception);
+                    if (exception != null) throw exception as JSException ?? new JSException(null as JSValue, exception);
                 }
                 else if (c._executionMode == ExecutionMode.Suspend)
                 {
-                    c.SuspendData[this] = finallyAction;
+                    c.SuspendData[this] = (Action<Context>) FinallyAction;
                 }
-            };
-            finallyAction(context);
+            }
+
+            FinallyAction(context);
         }
 
         private void catchHandler(Context context, Exception e)
@@ -220,7 +216,7 @@ namespace NiL.JS.Statements
 #endif
 
             Action<Context> catchAction = null;
-            catchAction = (c) =>
+            catchAction = c =>
             {
                 try
                 {
@@ -241,7 +237,7 @@ namespace NiL.JS.Statements
                 {
                     if (finallyBody != null)
                     {
-                        c.SuspendData[this] = new Action<Context>((c2) =>
+                        c.SuspendData[this] = new Action<Context>(c2 =>
                         {
                             try
                             {
@@ -299,12 +295,12 @@ namespace NiL.JS.Statements
 
             if (_catch && (catchBody == null || (catchBody is Empty)))
             {
-                message?.Invoke(MessageLevel.Warning, catchPosition, (catchBody ?? this as CodeNode).Length, "Empty (or reduced to empty) catch block. Do not ignore exceptions.");
+                message?.Invoke(MessageLevel.Warning, catchPosition, (catchBody ?? this).Length, "Empty (or reduced to empty) catch block. Do not ignore exceptions.");
             }
 
             if (finallyPosition != 0 && (finallyBody == null || (finallyBody is Empty)))
             {
-                message?.Invoke(MessageLevel.Warning, catchPosition, (catchBody ?? this as CodeNode).Length, "Empty (or reduced to empty) finally block.");
+                message?.Invoke(MessageLevel.Warning, catchPosition, (catchBody ?? this).Length, "Empty (or reduced to empty) finally block.");
             }
 
             return false;
@@ -323,7 +319,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 body,
                 catchBody,

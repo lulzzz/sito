@@ -106,7 +106,7 @@ namespace NiL.JS.BaseLibrary
                 threads = new Thread[threadsCount];
                 for (var i = 0; i < threadsCount; i++)
                 {
-                    (threads[i] = new Thread((o) =>
+                    (threads[i] = new Thread(o =>
                     {
                         var targs = new Arguments();
                         targs.length = 1;
@@ -119,7 +119,7 @@ namespace NiL.JS.BaseLibrary
 
             return Context.CurrentGlobalContext.ProxyValue(new
             {
-                isAlive = new Func<Arguments, bool>((arg) =>
+                isAlive = new Func<Arguments, bool>(arg =>
                 {
                     if (threads == null)
                         return false;

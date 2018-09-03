@@ -1,6 +1,7 @@
 ﻿using System;
 using JS.Core.Core;
 using NiL.JS;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
 
 namespace JS.Core.Expressions
 {
@@ -39,19 +40,18 @@ namespace JS.Core.Expressions
                             case JSValueType.Boolean:
                             case JSValueType.Integer:
                                 {
-                                    return tint == tjso._iValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return tint == tjso._iValue ? Boolean.True : Boolean.False;
                                 }
                             case JSValueType.Double:
                                 {
-                                    return tint == tjso._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return tint == tjso._dValue ? Boolean.True : Boolean.False;
                                 }
                             case JSValueType.String:
                                 {
                                     tstr = tjso._oValue.ToString();
                                     if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                        return tint == tdouble ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                    else
-                                        return false;
+                                        return tint == tdouble ? Boolean.True : Boolean.False;
+                                    return false;
                                 }
                             case JSValueType.Date:
                             case JSValueType.Object:
@@ -70,7 +70,7 @@ namespace JS.Core.Expressions
                                     throw new NotImplementedException();
                                 }
                         }
-                        return NiL.JS.BaseLibrary.Boolean.False;
+                        return Boolean.False;
                     }
                 case JSValueType.Double:
                     {
@@ -81,19 +81,18 @@ namespace JS.Core.Expressions
                             case JSValueType.Boolean:
                             case JSValueType.Integer:
                                 {
-                                    return tdouble == tjso._iValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return tdouble == tjso._iValue ? Boolean.True : Boolean.False;
                                 }
                             case JSValueType.Double:
                                 {
-                                    return tdouble == tjso._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return tdouble == tjso._dValue ? Boolean.True : Boolean.False;
                                 }
                             case JSValueType.String:
                                 {
                                     tstr = tjso._oValue.ToString();
                                     if (Tools.ParseNumber(tstr, ref index, out tjso._dValue) && (index == tstr.Length))
-                                        return tdouble == tjso._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                    else
-                                        return false;
+                                        return tdouble == tjso._dValue ? Boolean.True : Boolean.False;
+                                    return false;
                                 }
                             case JSValueType.Date:
                             case JSValueType.Object:
@@ -124,22 +123,20 @@ namespace JS.Core.Expressions
                         {
                             case JSValueType.Boolean:
                             case JSValueType.Integer:
-                                {
-                                    if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                        return tdouble == temp._iValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                    else
-                                        return false;
-                                }
+                            {
+                                if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
+                                        return tdouble == temp._iValue ? Boolean.True : Boolean.False;
+                                return false;
+                            }
                             case JSValueType.Double:
-                                {
-                                    if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                        return tdouble == temp._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                    else
-                                        return false;
-                                }
+                            {
+                                if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
+                                        return tdouble == temp._dValue ? Boolean.True : Boolean.False;
+                                return false;
+                            }
                             case JSValueType.String:
                                 {
-                                    return string.CompareOrdinal(tstr, temp._oValue.ToString()) == 0 ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return string.CompareOrdinal(tstr, temp._oValue.ToString()) == 0 ? Boolean.True : Boolean.False;
                                 }
                             case JSValueType.Function:
                             case JSValueType.Object:
@@ -149,23 +146,21 @@ namespace JS.Core.Expressions
                                     {
                                         case JSValueType.Integer:
                                         case JSValueType.Boolean:
-                                            {
-                                                if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                                    return tdouble == temp._iValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                                else
-                                                    goto
-                                                        case JSValueType.String;
-                                            }
+                                        {
+                                            if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
+                                                    return tdouble == temp._iValue ? Boolean.True : Boolean.False;
+                                            goto
+                                                case JSValueType.String;
+                                        }
                                         case JSValueType.Double:
-                                            {
-                                                if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                                    return tdouble == temp._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                                else
-                                                    goto case JSValueType.String;
-                                            }
+                                        {
+                                            if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
+                                                    return tdouble == temp._dValue ? Boolean.True : Boolean.False;
+                                            goto case JSValueType.String;
+                                        }
                                         case JSValueType.String:
                                             {
-                                                return string.CompareOrdinal(tstr, temp._oValue.ToString()) == 0 ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                                return string.CompareOrdinal(tstr, temp._oValue.ToString()) == 0 ? Boolean.True : Boolean.False;
                                             }
                                     }
                                     break;
@@ -179,7 +174,7 @@ namespace JS.Core.Expressions
                 case JSValueType.Object:
                     {
                         if (_tempContainer == null)
-                            _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
+                            _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
                         _tempContainer.Assign(temp);
                         temp = _tempContainer;
 
@@ -197,19 +192,18 @@ namespace JS.Core.Expressions
                                         case JSValueType.Boolean:
                                         case JSValueType.Integer:
                                             {
-                                                return temp._iValue == tdouble ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                                return temp._iValue == tdouble ? Boolean.True : Boolean.False;
                                             }
                                         case JSValueType.Double:
                                             {
-                                                return temp._dValue == tdouble ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                                return temp._dValue == tdouble ? Boolean.True : Boolean.False;
                                             }
                                         case JSValueType.String:
                                             {
                                                 tstr = temp._oValue.ToString();
                                                 if (Tools.ParseNumber(tstr, ref index, out temp._dValue) && (index == tstr.Length))
-                                                    return tdouble == temp._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                                else
-                                                    return false;
+                                                    return tdouble == temp._dValue ? Boolean.True : Boolean.False;
+                                                return false;
                                             }
                                     }
                                     return false;
@@ -226,20 +220,19 @@ namespace JS.Core.Expressions
                                             {
                                                 temp._dValue = temp._valueType == JSValueType.Double ? temp._dValue : temp._iValue;
                                                 if (Tools.ParseNumber(tstr, ref index, out tdouble) && (index == tstr.Length))
-                                                    return tdouble == temp._dValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
-                                                else
-                                                    return false;
+                                                    return tdouble == temp._dValue ? Boolean.True : Boolean.False;
+                                                return false;
                                             }
                                         case JSValueType.String:
                                             {
-                                                return temp._oValue.ToString() == tstr ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                                return temp._oValue.ToString() == tstr ? Boolean.True : Boolean.False;
                                             }
                                     }
                                     break;
                                 }
                             default:
                                 {
-                                    return temp._oValue == tjso._oValue ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return temp._oValue == tjso._oValue ? Boolean.True : Boolean.False;
                                 }
                         }
                         break;
@@ -253,11 +246,11 @@ namespace JS.Core.Expressions
                         {
                             case JSValueType.Object:
                                 {
-                                    return temp._oValue == null ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return temp._oValue == null ? Boolean.True : Boolean.False;
                                 }
                             default:
                                 {
-                                    return !temp.Defined ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False;
+                                    return !temp.Defined ? Boolean.True : Boolean.False;
                                 }
                         }
                     }

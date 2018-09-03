@@ -17,7 +17,7 @@ namespace NiL.JS.Statements
             i ^= index;
             index ^= i;
             i ^= index;
-            return new Debugger()
+            return new Debugger
             {
                 Position = i,
                 Length = index - i

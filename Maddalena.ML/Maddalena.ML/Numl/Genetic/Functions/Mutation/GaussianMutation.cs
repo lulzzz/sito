@@ -41,8 +41,8 @@ namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation
         /// <param name="sigma">Standard deviation of the population.</param>
         public GaussianMutation(double mu, double sigma)
         {
-            this.Mu = mu;
-            this.Sigma = sigma;
+            Mu = mu;
+            Sigma = sigma;
         }
 
         /// <summary>
@@ -54,14 +54,14 @@ namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation
         {
             var clone = chromosome.Clone();
 
-            double val = Sampling.GetNormal(this.Mu, this.Sigma);
+            double val = Sampling.GetNormal(Mu, Sigma);
 
-            if (this.Compound)
+            if (Compound)
             {
-                val += clone.Sequence[this.N];
+                val += clone.Sequence[N];
             }
 
-            clone.Sequence[this.N] = (this.Range != null ? this.Range.Clip(val) : val);
+            clone.Sequence[N] = Range?.Clip(val) ?? val;
 
             return clone;
         }

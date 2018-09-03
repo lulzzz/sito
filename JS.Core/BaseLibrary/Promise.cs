@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,7 +91,7 @@ namespace NiL.JS.BaseLibrary
         internal Promise(Task<JSValue> task)
             : this()
         {
-            var continuation = new Action<Task<JSValue>>((t) =>
+            var continuation = new Action<Task<JSValue>>(t =>
             {
                 if (t.Status == TaskStatus.RanToCompletion)
                 {
@@ -117,7 +116,7 @@ namespace NiL.JS.BaseLibrary
             var task = (value?.Value as Promise)?.Task ?? value?.Value as Task<JSValue>;
             if (task != null)
             {
-                task.ContinueWith((t) =>
+                task.ContinueWith(t =>
                 {
                     handlePromiseCascade(t.Result);
                 });
@@ -247,10 +246,8 @@ namespace NiL.JS.BaseLibrary
                     {
                         return onRejection(jsException.Error);
                     }
-                    else
-                    {
-                        return onRejection(JSValue.Wrap(task.Exception));
-                    }
+
+                    return onRejection(JSValue.Wrap(task.Exception));
                 }, 
                 TaskContinuationOptions.NotOnRanToCompletion);
 
@@ -337,7 +334,7 @@ namespace NiL.JS.BaseLibrary
 
         private static Task<JSValue> fromException(Exception exception)
         {
-            var task = new Task<JSValue>(new Func<JSValue>(() => { throw exception; }));
+            var task = new Task<JSValue>(() => { throw exception; });
             task.Start();
             return task;
         }

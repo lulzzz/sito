@@ -12,7 +12,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
     {
         private const int _defaultSize = 4;
 
-        private IComparer<T> _Comparer;
+        private readonly IComparer<T> _Comparer;
         private int _Length = 0;
         private T[] _Items = new T[_defaultSize];
         private int _Limit = -1;
@@ -435,11 +435,11 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
 
         private struct Enumerator : IEnumerator<T>, IEnumerator
         {
-            private NSortedList<T> sortedList;
+            private readonly NSortedList<T> sortedList;
             private int index;
             private T value;
 
-            int version;
+            readonly int version;
 
             public T Current => this.value;
 
@@ -497,7 +497,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
 
         private class ReverseComparer : IComparer<T>
         {
-            private IComparer<T> _Comparer;
+            private readonly IComparer<T> _Comparer;
 
             public ReverseComparer(IComparer<T> comparer)
             {

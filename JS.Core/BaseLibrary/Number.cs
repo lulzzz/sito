@@ -67,7 +67,7 @@ namespace NiL.JS.BaseLibrary
         [Hidden]
         public Number(long value)
         {
-            if ((long)(int)(value) == value)
+            if ((int)(value) == value)
             {
                 _valueType = JSValueType.Integer;
                 _iValue = (int)value;
@@ -148,7 +148,7 @@ namespace NiL.JS.BaseLibrary
                     throw new InvalidOperationException();
             }
             int dgts = 0;
-            switch ((digits ?? JSValue.undefined)._valueType)
+            switch ((digits ?? undefined)._valueType)
             {
                 case JSValueType.Integer:
                     {
@@ -180,9 +180,9 @@ namespace NiL.JS.BaseLibrary
                         break;
                     }
                 default:
-                    return res.ToString("e", System.Globalization.CultureInfo.InvariantCulture);
+                    return res.ToString("e", CultureInfo.InvariantCulture);
             }
-            return res.ToString("e" + dgts, System.Globalization.CultureInfo.InvariantCulture);
+            return res.ToString("e" + dgts, CultureInfo.InvariantCulture);
         }
 
         [DoNotEnumerate]
@@ -217,10 +217,10 @@ namespace NiL.JS.BaseLibrary
             if (dgts < 0 || dgts > 20)
                 ExceptionHelper.Throw((new RangeError("toFixed() digits argument must be between 0 and 20")));
             if (System.Math.Abs(self._dValue) >= 1e+21)
-                return self._dValue.ToString("0.####e+0", System.Globalization.CultureInfo.InvariantCulture);
+                return self._dValue.ToString("0.####e+0", CultureInfo.InvariantCulture);
             if (dgts > 0)
                 dgts++;
-            return System.Math.Round(res, dgts).ToString("0.00000000000000000000".Substring(0, dgts + 1), System.Globalization.CultureInfo.InvariantCulture);
+            return System.Math.Round(res, dgts).ToString("0.00000000000000000000".Substring(0, dgts + 1), CultureInfo.InvariantCulture);
         }
 
         [DoNotEnumerate]
@@ -228,7 +228,7 @@ namespace NiL.JS.BaseLibrary
         [ArgumentsCount(0)]
         public static JSValue toLocaleString(JSValue self)
         {
-            return self._valueType == JSValueType.Integer ? self._iValue.ToString(System.Globalization.CultureInfo.CurrentCulture) : self._dValue.ToString(System.Globalization.CultureInfo.CurrentCulture);
+            return self._valueType == JSValueType.Integer ? self._iValue.ToString(CultureInfo.CurrentCulture) : self._dValue.ToString(CultureInfo.CurrentCulture);
         }
 
         [InstanceMember]

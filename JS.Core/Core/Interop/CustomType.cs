@@ -32,8 +32,7 @@ namespace JS.Core.Core.Interop
         {
             if (_oValue != this || _valueType < JSValueType.Object)
                 return base.ToString();
-            else
-                return GetType().ToString();
+            return GetType().ToString();
         }
 
         [Hidden]

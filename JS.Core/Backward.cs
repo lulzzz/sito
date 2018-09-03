@@ -8,7 +8,7 @@ namespace NiL.JS.Backward
 {
     internal static class Backward
     {
-        private static readonly Type[] _Types =
+        private static readonly Type[] Types =
         {
             null,
             typeof(object),
@@ -125,7 +125,7 @@ namespace NiL.JS.Backward
 
             if (type.GetTypeInfo().IsClass)
             {
-                if (type == _Types[2])
+                if (type == Types[2])
                     return TypeCode.DBNull;
 
                 if (type == typeof(string))
@@ -134,8 +134,8 @@ namespace NiL.JS.Backward
                 return TypeCode.Object;
             }
 
-            for (var i = 3; i < _Types.Length; i++)
-                if (_Types[i] == type)
+            for (var i = 3; i < Types.Length; i++)
+                if (Types[i] == type)
                     return (TypeCode) i;
 
             return TypeCode.Object;

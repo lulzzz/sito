@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JS.Core.Core;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -24,14 +25,14 @@ namespace NiL.JS.Statements
             {
                 label = Tools.Unescape(state.Code.Substring(sl, i - sl), state.strict);
                 if (!state.Labels.Contains(label._oValue.ToString()))
-                    ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("Try to break to undefined label.")));
+                    ExceptionHelper.Throw((new SyntaxError("Try to break to undefined label.")));
             }
             else if (!state.AllowBreak.Peek())
-                ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("Invalid use of break statement")));
+                ExceptionHelper.Throw((new SyntaxError("Invalid use of break statement")));
             var pos = index;
             index = i;
             state.breaksCount++;
-            return new Break()
+            return new Break
             {
                 Label = label,
                 Position = pos,

@@ -12,11 +12,6 @@ namespace JS.Core.Expressions
 
         protected internal override bool LValueModifier => false;
 
-        public NewTarget()
-        {
-
-        }
-
         public override JSValue Evaluate(Context context)
         {
             if (context._thisBind != null && (context._thisBind._attributes & JSValueAttributesInternal.ConstructingObject) != 0)

@@ -34,7 +34,7 @@ namespace NiL.JS.BaseLibrary
         public override int BYTES_PER_ELEMENT => sizeof(byte);
 
         public Uint8ClampedArray()
-            : base() { }
+        { }
 
         public Uint8ClampedArray(int length)
             : base(length) { }

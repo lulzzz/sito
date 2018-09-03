@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using JS.Core;
 using JS.Core.Core;
 using JS.Core.Expressions;
-using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -161,7 +160,7 @@ namespace NiL.JS.Statements
                 bool skip = false;
                 for (var j = 0; j < state.Variables.Count - i + skiped; j++)
                 {
-                    if (state.Variables[j].name == names[i] && state.Variables[j].definitionScopeLevel >= level)
+                    if (state.Variables[j].name == names[i] && state.Variables[j].DefinitionScopeLevel >= level)
                     {
                         if (state.Variables[j].lexicalScope && mode > VariableKind.FunctionScope)
                             ExceptionHelper.ThrowSyntaxError(string.Format(Messages.IdentifierAlreadyDeclared, names[i]), state.Code, index);

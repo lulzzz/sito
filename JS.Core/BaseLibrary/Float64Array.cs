@@ -56,7 +56,6 @@ namespace NiL.JS.BaseLibrary
         public override int BYTES_PER_ELEMENT => sizeof(double);
 
         public Float64Array()
-            : base()
         {
         }
 

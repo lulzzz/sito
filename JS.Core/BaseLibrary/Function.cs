@@ -59,10 +59,10 @@ namespace NiL.JS.BaseLibrary
         {
             ExceptionHelper.Throw(new TypeError("Properties \"caller\", \"callee\" and \"arguments\" may not be accessed in strict mode."));
         }
-        internal static readonly JSValue propertiesDummySM = new JSValue()
+        internal static readonly JSValue propertiesDummySM = new JSValue
         {
             _valueType = JSValueType.Property,
-            _oValue = new PropertyPair() { getter = TTEProxy, setter = TTEProxy },
+            _oValue = new PropertyPair { getter = TTEProxy, setter = TTEProxy },
             _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.Immutable | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable
         };
 
@@ -93,7 +93,7 @@ namespace NiL.JS.BaseLibrary
         }
 
         [Hidden]
-        internal Number _length = null;
+        internal Number _length;
         [Field]
         [global::JS.Core.Core.Interop.ReadOnly]
         [DoNotDelete]
@@ -394,7 +394,7 @@ namespace NiL.JS.BaseLibrary
 
         protected internal virtual JSValue ConstructObject()
         {
-            JSValue targetObject = new JSObject() { _valueType = JSValueType.Object };
+            JSValue targetObject = new JSObject { _valueType = JSValueType.Object };
             targetObject._oValue = targetObject;
             targetObject.__proto__ = prototype._valueType < JSValueType.Object ? Context.GlobalContext._globalPrototype : prototype._oValue as JSObject;
 
@@ -521,7 +521,7 @@ namespace NiL.JS.BaseLibrary
             var context = Context.GetRunningContextFor(this, out var oldContext);
             if (context != null && context._arguments == null)
             {
-                var args = new Arguments()
+                var args = new Arguments
                 {
                     caller = oldContext?._owner,
                     callee = this,
@@ -681,7 +681,7 @@ namespace NiL.JS.BaseLibrary
                         if (i == min && restArray != null)
                             parameter.cacheRes = restArray.CloneImpl(false);
                         else
-                            parameter.cacheRes = new JSValue() { _valueType = JSValueType.Undefined };
+                            parameter.cacheRes = new JSValue { _valueType = JSValueType.Undefined };
                         parameter.cacheRes._attributes = JSValueAttributesInternal.Argument;
                     }
                     else

@@ -17,22 +17,21 @@ namespace JS.Core.Core
 
         public Rule(string token, ParseDelegate parseDel)
         {
-            this.Validate = (string code, int pos) => Parser.Validate(code, token, pos);
-            this.Parse = parseDel;
+            Validate = (code, pos) => Parser.Validate(code, token, pos);
+            Parse = parseDel;
         }
 
         public Rule(ValidateDelegate valDel, ParseDelegate parseDel)
         {
-            this.Validate = valDel;
-            this.Parse = parseDel;
+            Validate = valDel;
+            Parse = parseDel;
         }
     }
 
     public static class Parser
     {
         private static HashSet<string> customReservedWords;
-        private static readonly List<Rule>[] rules = new List<Rule>[]
-        {
+        private static readonly List<Rule>[] rules = {
             // 0
             new List<Rule> // Общий
             {
@@ -107,7 +106,7 @@ namespace JS.Core.Core
                 new Rule("void", ExpressionTree.Parse),
                 new Rule("yield", Yield.Parse),
                 new Rule(ValidateName, ExpressionTree.Parse),
-                new Rule(ValidateValue, ExpressionTree.Parse),
+                new Rule(ValidateValue, ExpressionTree.Parse)
             },
             // 2
             new List<Rule> // Сущности внутри выражения
@@ -121,7 +120,7 @@ namespace JS.Core.Core
                 new Rule("new", New.Parse),
                 new Rule("yield", Yield.Parse),
                 new Rule(ValidateArrow, FunctionDefinition.ParseFunction(FunctionKind.Arrow)),
-                new Rule(ValidateRegex, RegExpExpression.Parse),
+                new Rule(ValidateRegex, RegExpExpression.Parse)
             }
         };
 
@@ -290,7 +289,8 @@ namespace JS.Core.Core
                             index = j;
                         return res;
                     }
-                    else if (nname.IndexOf('\\') != -1)
+
+                    if (nname.IndexOf('\\') != -1)
                         return false;
                 }
 
@@ -483,8 +483,7 @@ namespace JS.Core.Core
                                 }
                                 if (throwError)
                                     throw new ArgumentException("Invalid flag in regexp definition");
-                                else
-                                    return false;
+                                return false;
                             }
                     }
                 }
@@ -648,16 +647,13 @@ namespace JS.Core.Core
 
                 for (; s < index; s++)
                 {
-                    if (Tools.IsWhiteSpace(code[s]))
-                        res.Append(code[s]);
-                    else
-                        res.Append(' ');
+                    res.Append(Tools.IsWhiteSpace(code[s]) ? code[s] : ' ');
                 }
 
                 if (index >= code.Length)
                     continue;
 
-                if (Parser.ValidateRegex(code, ref index, false)) // оно путает деление с комментарием в конце строки и regexp.
+                if (ValidateRegex(code, ref index, false)) // оно путает деление с комментарием в конце строки и regexp.
                 // Посему делаем так: если встретили что-то похожее на regexp - останавливаемся.
                 // Остальные комментарии удалим когда, в процессе разбора, поймём, что же это на самом деле
                 {
@@ -667,7 +663,7 @@ namespace JS.Core.Core
                     break;
                 }
 
-                if (Parser.ValidateString(code, ref index, false))
+                if (ValidateString(code, ref index, false))
                 {
                     if (res != null)
                     {

@@ -42,7 +42,6 @@ namespace NiL.JS.BaseLibrary
         public override int BYTES_PER_ELEMENT => sizeof(int);
 
         public Int32Array()
-            : base()
         {
         }
 

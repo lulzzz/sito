@@ -134,7 +134,7 @@ namespace Maddalena.Numl.Supervised
         /// <returns>Model.</returns>
         public IModel Generate(IEnumerable<object> examples)
         {
-            if (examples.Count() == 0) throw new InvalidOperationException("Empty example set.");
+            if (!examples.Any()) throw new InvalidOperationException("Empty example set.");
 
             if (Descriptor == null)
                 throw new InvalidOperationException("Descriptor is null");
@@ -149,7 +149,7 @@ namespace Maddalena.Numl.Supervised
         /// <returns>Model.</returns>
         public IModel Generate(Descriptor description, IEnumerable<object> examples)
         {
-            if (examples.Count() == 0) throw new InvalidOperationException("Empty example set.");
+            if (!examples.Any()) throw new InvalidOperationException("Empty example set.");
 
             Descriptor = description;
             if (Descriptor.Features == null || Descriptor.Features.Length == 0)

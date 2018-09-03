@@ -2,7 +2,7 @@
 
 namespace JS.Core.Core
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public sealed class CustomCodeFragment : Attribute
     {
         public CodeFragmentType Type { get; private set; }

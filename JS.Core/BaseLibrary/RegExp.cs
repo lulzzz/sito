@@ -260,7 +260,8 @@ namespace NiL.JS.BaseLibrary
                     sC.RemoveAt(i);
                     continue;
                 }
-                else if (sC[i].stop > 0xFFFF)
+
+                if (sC[i].stop > 0xFFFF)
                     sC[i] = new CharRange(sC[i].start, 0xFFFF);
                 break;
             }
@@ -380,14 +381,16 @@ namespace NiL.JS.BaseLibrary
                         r.Add(new CharRange(58, CharRange.MaxValue));
                         continue;
                     }
-                    else if (c == 's')
+
+                    if (c == 's')
                     {
                         r.Add(new CharRange(9, 10));
                         r.Add(new CharRange(13, 13));
                         r.Add(new CharRange(32, 32));
                         continue;
                     }
-                    else if (c == 'S')
+
+                    if (c == 'S')
                     {
                         r.Add(new CharRange(0, 8));
                         r.Add(new CharRange(11, 12));
@@ -395,7 +398,8 @@ namespace NiL.JS.BaseLibrary
                         r.Add(new CharRange(33, CharRange.MaxValue));
                         continue;
                     }
-                    else if (c == 'w')
+
+                    if (c == 'w')
                     {
                         r.Add(new CharRange(48, 57));
                         r.Add(new CharRange(65, 90));
@@ -403,7 +407,8 @@ namespace NiL.JS.BaseLibrary
                         r.Add(new CharRange(97, 122));
                         continue;
                     }
-                    else if (c == 'W')
+
+                    if (c == 'W')
                     {
                         r.Add(new CharRange(0, 47));
                         r.Add(new CharRange(58, 64));
@@ -437,7 +442,7 @@ namespace NiL.JS.BaseLibrary
 
             // sort
 
-            r.Sort(new Comparison<CharRange>(new Func<CharRange, CharRange, int>((x, y) => x.start - y.start)));
+            r.Sort((x, y) => x.start - y.start);
 
             // optimize
 
@@ -464,7 +469,7 @@ namespace NiL.JS.BaseLibrary
         private static CharRange[] invertCharSet(CharRange[] set)
         {
             if (set.Length == 0)
-                return new CharRange[] { new CharRange(0, CharRange.MaxValue) };
+                return new[] { new CharRange(0, CharRange.MaxValue) };
 
             var r = new List<CharRange>();
 
@@ -568,7 +573,7 @@ namespace NiL.JS.BaseLibrary
             get => _lastIndex ?? (_lastIndex = 0);
             set
             {
-                _lastIndex = (value ?? JSValue.undefined).CloneImpl(false);
+                _lastIndex = (value ?? undefined).CloneImpl(false);
             }
         }
 
@@ -590,11 +595,11 @@ namespace NiL.JS.BaseLibrary
 
                 var m = _regex.Match(input);
                 if (!m.Success)
-                    return JSValue.@null;
+                    return @null;
 
                 var res = new Array(m.Groups.Count);
                 for (int i = 0; i < m.Groups.Count; i++)
-                    res._data[i] = m.Groups[i].Success ? (JSValue)m.Groups[i].Value : null;
+                    res._data[i] = m.Groups[i].Success ? m.Groups[i].Value : null;
 
                 res.DefineProperty("index").Assign(m.Index);
                 res.DefineProperty("input").Assign(input);
@@ -616,15 +621,15 @@ namespace NiL.JS.BaseLibrary
                 _lastIndex._iValue = 0;
 
                 if (li >= input.Length && input.Length > 0)
-                    return JSValue.@null;
+                    return @null;
 
                 var m = _regex.Match(input, li);
                 if (!m.Success || (_sticky && m.Index != li))
-                    return JSValue.@null;
+                    return @null;
 
                 var res = new Array(m.Groups.Count);
                 for (int i = 0; i < m.Groups.Count; i++)
-                    res._data[i] = m.Groups[i].Success ? (JSValue)m.Groups[i].Value : null;
+                    res._data[i] = m.Groups[i].Success ? m.Groups[i].Value : null;
 
                 _lastIndex._iValue = m.Index + m.Length;
 

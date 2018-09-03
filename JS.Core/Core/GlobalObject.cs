@@ -13,7 +13,6 @@ namespace JS.Core.Core
         private readonly Context _context;
 
         public GlobalObject(Context context)
-            : base()
         {
             _attributes = JSValueAttributesInternal.SystemObject;
             _context = context;

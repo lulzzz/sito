@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using JS.Core.Core;
 using JS.Core.Core.JIT;
 using NiL.JS;
+using NiL.JS.BaseLibrary;
+using Math = System.Math;
 
 #if !PORTABLE
 
@@ -22,7 +24,7 @@ namespace JS.Core.Expressions
 
         protected internal override JSValue EvaluateForWrite(Context context)
         {
-            if (context._owner._functionDefinition.kind == NiL.JS.BaseLibrary.FunctionKind.Arrow)
+            if (context._owner._functionDefinition.kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -36,7 +38,7 @@ namespace JS.Core.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            if (context._owner._functionDefinition.kind == NiL.JS.BaseLibrary.FunctionKind.Arrow)
+            if (context._owner._functionDefinition.kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -81,9 +83,7 @@ namespace JS.Core.Expressions
                     }
                     else
                     {
-                        var code = context.RootContext._owner?._functionDefinition?._body?.Code;
-                        if (code == null)
-                            code = context._module?.Code;
+                        var code = context.RootContext._owner?._functionDefinition?._body?.Code ?? context._module?.Code;
 
                         ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code ?? "", Position, Length, this);
                     }
@@ -114,9 +114,7 @@ namespace JS.Core.Expressions
                             }
                             else
                             {
-                                var code = context.RootContext._owner?._functionDefinition?._body?.Code;
-                                if (code == null)
-                                    code = context._module?.Code;
+                                var code = context.RootContext._owner?._functionDefinition?._body?.Code ?? context._module?.Code;
 
                                 ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code, Position, Length, this);
                             }
@@ -168,7 +166,7 @@ namespace JS.Core.Expressions
             if (!variables.TryGetValue(_variableName, out desc) || desc == null)
             {
                 desc = new VariableDescriptor(this, 1) { isDefined = false };
-                variables[_variableName] = this.Descriptor;
+                variables[_variableName] = Descriptor;
             }
             else
             {
@@ -180,12 +178,12 @@ namespace JS.Core.Expressions
             if (_variableName == "this")
             {
                 stats.ContainsThis = true;
-                desc.definitionScopeLevel = -1;
+                desc.DefinitionScopeLevel = -1;
             }
             else if (((codeContext & CodeContext.InWith) != 0) || (stats.ContainsEval && !desc.isDefined))
             {
                 ScopeLevel = -Math.Abs(ScopeLevel);
-                desc.definitionScopeLevel = -Math.Abs(desc.definitionScopeLevel);
+                desc.DefinitionScopeLevel = -Math.Abs(desc.DefinitionScopeLevel);
             }
 
             _ForceThrow |= desc.lexicalScope; // ����� TDZ
@@ -230,7 +228,7 @@ namespace JS.Core.Expressions
 
                         if (assigns[i].Position > Position)
                         {
-                            if ((_codeContext & CodeContext.InLoop) != 0 && ((assigns[i] as Expression)._codeContext & CodeContext.InLoop) != 0)
+                            if ((_codeContext & CodeContext.InLoop) != 0 && (assigns[i]._codeContext & CodeContext.InLoop) != 0)
                             {
                                 lastAssign = null;
                                 break;

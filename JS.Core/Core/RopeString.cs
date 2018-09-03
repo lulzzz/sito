@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Math = System.Math;
 
 namespace JS.Core.Core
 {
@@ -40,14 +41,14 @@ namespace JS.Core.Core
 
         public RopeString(object source)
         {
-            _firstSource = source ?? "" as object;
+            _firstSource = source ?? "";
             _secondSource = "";
         }
 
         public RopeString(object firstSource, object secondSource)
         {
-            _firstSource = firstSource ?? "" as object;
-            _secondSource = secondSource ?? "" as object;
+            _firstSource = firstSource ?? "";
+            _secondSource = secondSource ?? "";
 
             Length = calcLength();
 
@@ -372,7 +373,7 @@ namespace JS.Core.Core
             var str = arg.ToString();
             var start = sb.Length;
             if (sb.Capacity < start + str.Length)
-                sb.EnsureCapacity(System.Math.Max(sb.Capacity << 1, start + str.Length));
+                sb.EnsureCapacity(Math.Max(sb.Capacity << 1, start + str.Length));
             sb.Length += str.Length;
             for (var i = 0; i < str.Length; i++)
             {
@@ -410,12 +411,10 @@ namespace JS.Core.Core
                                 step.Push(0);
                                 continue;
                             }
-                            else
-                            {
-                                _append(res, stack.Peek().firstSource ?? "");
-                                step.Pop();
-                                step.Push(1);
-                            }
+
+                            _append(res, stack.Peek().firstSource ?? "");
+                            step.Pop();
+                            step.Push(1);
                         }
 
                         if (step.Peek() < 2)
@@ -429,12 +428,10 @@ namespace JS.Core.Core
                                 step.Push(0);
                                 continue;
                             }
-                            else
-                            {
-                                _append(res, stack.Peek().secondSource ?? "");
-                                step.Pop();
-                                step.Push(2);
-                            }
+
+                            _append(res, stack.Peek().secondSource ?? "");
+                            step.Pop();
+                            step.Push(2);
                         }
 
                         stack.Pop();
@@ -534,18 +531,7 @@ namespace JS.Core.Core
             if (_firstSource != null)
             {
                 var rs = _firstSource as RopeString;
-                if (rs != null)
-                {
-                    res = rs.Length;
-                }
-                else
-                {
-                    var sb = _firstSource as StringBuilder;
-                    if (sb != null)
-                        res = sb.Length;
-                    else
-                        res = firstSource.Length;
-                }
+                res = rs != null ? rs.Length : (_firstSource is StringBuilder sb ? sb.Length : firstSource.Length);
             }
 
             if (_secondSource != null)

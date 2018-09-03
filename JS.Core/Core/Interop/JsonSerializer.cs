@@ -102,11 +102,9 @@ namespace JS.Core.Core.Interop
 
             if (deserializedJson._valueType < JSValueType.Object)
                 return deserializedJson.Value;
-#if PORTABLE
-            var result = resultContainer ?? TargetType.GetTypeInfo().DeclaredConstructors.First(x=>x.GetParameters().Length == 0).Invoke(new object[0]);
-#else
+
             var result = resultContainer ?? TargetType.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-#endif
+
             var tempSrcObject = deserializedJson._oValue as JSObject;
             foreach (var property in tempSrcObject._fields)
             {
@@ -115,10 +113,7 @@ namespace JS.Core.Core.Interop
                 {
                     object value = property.Value;
                     var deserializer = GetSerializer(value, Context.CurrentGlobalContext);
-                    if (deserializer != null)
-                        value = deserializer.Deserialize(property.Value);
-                    else
-                        value = Convert.ChangeType(property.Value.Value, prop.PropertyType);
+                    value = deserializer != null ? deserializer.Deserialize(property.Value) : Convert.ChangeType(property.Value.Value, prop.PropertyType);
 
                     prop.SetValue(result, value, null);
                     continue;
@@ -127,15 +122,7 @@ namespace JS.Core.Core.Interop
                 var field = getField(property.Key);
                 if (field != null)
                 {
-                    object value = property.Value;
-                    var deserializer = GetSerializer(value, Context.CurrentGlobalContext);
-                    if (deserializer != null)
-                        value = deserializer.Deserialize(property.Value);
-                    else
-                        value = Convert.ChangeType(property.Value.Value, field.FieldType);
-
                     field.SetValue(result, Convert.ChangeType(property.Value, field.FieldType));
-                    continue;
                 }
             }
 
@@ -154,12 +141,11 @@ namespace JS.Core.Core.Interop
         {
             if (value == null)
             {
-                result.Append("\"").Append(value ?? "null").Append("\"");
+                result.Append("\"").Append("null").Append("\"");
                 return;
             }
 
-            var jsValue = value as JSValue;
-            if (jsValue != null)
+            if (value is JSValue jsValue)
             {
                 result.Append(JSON.stringify(jsValue, replacer, keys, space));
                 return;

@@ -67,7 +67,7 @@ namespace JS.Core.Core
                 }
                 else
                 {
-                    result = Error.ToString() + result;
+                    result = Error + result;
                 }
 
                 return result;

@@ -31,20 +31,20 @@ namespace JS.Core.Expressions
                 {
                     return itemp < op._iValue;
                 }
-                else if (op._valueType == JSValueType.Double)
+
+                if (op._valueType == JSValueType.Double)
                 {
                     return itemp < op._dValue;
                 }
-                else
-                {
-                    if (_tempContainer == null)
-                        _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
-                    _tempContainer._valueType = JSValueType.Integer;
-                    _tempContainer._iValue = itemp;
-                    return Less.Check(_tempContainer, op);
-                }
+
+                if (_tempContainer == null)
+                    _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                _tempContainer._valueType = JSValueType.Integer;
+                _tempContainer._iValue = itemp;
+                return Less.Check(_tempContainer, op);
             }
-            else if (op._valueType == JSValueType.Double)
+
+            if (op._valueType == JSValueType.Double)
             {
                 dtemp = op._dValue;
                 op = _right.Evaluate(context);
@@ -52,30 +52,27 @@ namespace JS.Core.Expressions
                 {
                     return dtemp < op._iValue;
                 }
-                else if (op._valueType == JSValueType.Double)
+
+                if (op._valueType == JSValueType.Double)
                 {
                     return dtemp < op._dValue;
                 }
-                else
-                {
-                    if (_tempContainer == null)
-                        _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
-                    _tempContainer._valueType = JSValueType.Double;
-                    _tempContainer._dValue = dtemp;
-                    return Less.Check(_tempContainer, op);
-                }
-            }
-            else
-            {
+
                 if (_tempContainer == null)
-                    _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
-                var temp = _tempContainer;
-                temp.Assign(op);
-                _tempContainer = null;
-                var res = Less.Check(temp, _right.Evaluate(context));
-                _tempContainer = temp;
-                return res;
+                    _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                _tempContainer._valueType = JSValueType.Double;
+                _tempContainer._dValue = dtemp;
+                return Less.Check(_tempContainer, op);
             }
+
+            if (_tempContainer == null)
+                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+            var temp = _tempContainer;
+            temp.Assign(op);
+            _tempContainer = null;
+            var res = Less.Check(temp, _right.Evaluate(context));
+            _tempContainer = temp;
+            return res;
         }
 
         public override T Visit<T>(Visitor<T> visitor)

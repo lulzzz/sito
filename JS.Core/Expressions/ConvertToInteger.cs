@@ -27,10 +27,7 @@ namespace JS.Core.Expressions
         public override JSValue Evaluate(Context context)
         {
             var t = _left.Evaluate(context);
-            if (t._valueType == JSValueType.Integer)
-                _tempContainer._iValue = t._iValue;
-            else
-                _tempContainer._iValue = Tools.JSObjectToInt32(t, 0, false);
+            _tempContainer._iValue = t._valueType == JSValueType.Integer ? t._iValue : Tools.JSObjectToInt32(t, 0, false);
             _tempContainer._valueType = JSValueType.Integer;
             return _tempContainer;
         }

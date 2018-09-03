@@ -98,10 +98,7 @@ namespace NiL.JS.BaseLibrary
         public static JSValue acosh(JSValue value)
         {
             var res = Tools.JSObjectToDouble(value);
-            if (res < 1.0)
-                res = double.NaN;
-            else
-                res = System.Math.Log(res + System.Math.Sqrt(res * res - 1.0));
+            res = res < 1.0 ? double.NaN : System.Math.Log(res + System.Math.Sqrt(res * res - 1.0));
             return res;
         }
 
@@ -182,8 +179,6 @@ namespace NiL.JS.BaseLibrary
         {
             var x = (uint)Tools.JSObjectToInt32(value, 0, 0, false);
 
-            if (x < 0)
-                return 0;
             if (x == 0)
                 return 32;
 
@@ -427,8 +422,8 @@ namespace NiL.JS.BaseLibrary
                 }
                 return res;
             }
-            else
-                res = System.Math.Log(x + 1.0);
+
+            res = System.Math.Log(x + 1.0);
 
             if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
             {
@@ -538,17 +533,14 @@ namespace NiL.JS.BaseLibrary
             {
                 return Number.NaN;
             }
-            else
-            {
-                var @base = Tools.JSObjectToDouble(a);
-                var degree = Tools.JSObjectToDouble(b);
-                if ((@base == 1 || @base == -1) && double.IsInfinity(degree))
-                    return Number.NaN;
-                else if (double.IsNaN(@base) && degree == 0.0)
-                    return 1;
-                else
-                    return System.Math.Pow(@base, degree);
-            }
+
+            var @base = Tools.JSObjectToDouble(a);
+            var degree = Tools.JSObjectToDouble(b);
+            if ((@base == 1 || @base == -1) && double.IsInfinity(degree))
+                return Number.NaN;
+            if (double.IsNaN(@base) && degree == 0.0)
+                return 1;
+            return System.Math.Pow(@base, degree);
         }
 
         [DoNotEnumerate]

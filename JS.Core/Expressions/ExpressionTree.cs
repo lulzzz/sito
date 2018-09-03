@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JS.Core.Core;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
 
 namespace JS.Core.Expressions
 {
@@ -130,7 +131,7 @@ namespace JS.Core.Expressions
                     }
                 case OperationType.Decriment:
                     {
-                        return new Decrement(_left ?? _right, _left == null ? DecrimentType.Postdecriment : DecrimentType.Postdecriment);
+                        return new Decrement(_left ?? _right, DecrimentType.Postdecriment);
                     }
                 case OperationType.LessOrEqual:
                     {
@@ -288,7 +289,7 @@ namespace JS.Core.Expressions
             }
             while (stats.Count > 1)
             {
-                var stat = types.Pop() as Expression;
+                var stat = types.Pop();
                 stat._right = stats.Pop();
                 stat._left = stats.Pop();
                 stat.Position = (stat._left ?? stat).Position;
@@ -475,7 +476,6 @@ namespace JS.Core.Expressions
                                 binary = false;
                                 repeat = false;
                                 i = rollbackPos;
-                                break;
                             }
                             else
                             {
@@ -511,7 +511,6 @@ namespace JS.Core.Expressions
                                 binary = false;
                                 repeat = false;
                                 i = rollbackPos;
-                                break;
                             }
                             else
                             {
@@ -560,18 +559,16 @@ namespace JS.Core.Expressions
                                 kind = OperationType.LogicalAnd;
                                 break;
                             }
-                            else
+
+                            binary = true;
+                            assign = false;
+                            kind = OperationType.And;
+                            if (state.Code[i + 1] == '=')
                             {
-                                binary = true;
-                                assign = false;
-                                kind = OperationType.And;
-                                if (state.Code[i + 1] == '=')
-                                {
-                                    assign = true;
-                                    i++;
-                                }
-                                break;
+                                assign = true;
+                                i++;
                             }
+                            break;
                         }
                     case '|':
                         {
@@ -590,18 +587,16 @@ namespace JS.Core.Expressions
                                 kind = OperationType.LogicalOr;
                                 break;
                             }
-                            else
+
+                            binary = true;
+                            assign = false;
+                            kind = OperationType.Or;
+                            if (state.Code[i + 1] == '=')
                             {
-                                binary = true;
-                                assign = false;
-                                kind = OperationType.Or;
-                                if (state.Code[i + 1] == '=')
-                                {
-                                    assign = true;
-                                    i++;
-                                }
-                                break;
+                                assign = true;
+                                i++;
                             }
+                            break;
                         }
                     case '^':
                         {
@@ -765,7 +760,7 @@ namespace JS.Core.Expressions
                                 i++;
                             while (Tools.IsWhiteSpace(state.Code[i]));
                             int startPos = i;
-                            mname = (Expression)ExpressionTree.Parse(state, ref i, false, true, false, true, false);
+                            mname = Parse(state, ref i, false, true, false, true, false);
                             if (mname == null)
                                 ExceptionHelper.Throw((new SyntaxError("Unexpected token at " + CodeCoordinates.FromTextPosition(state.Code, startPos, 0))));
                             while (Tools.IsWhiteSpace(state.Code[i]))
@@ -804,26 +799,24 @@ namespace JS.Core.Expressions
                                 {
                                     break;
                                 }
-                                else
+
+                                bool commaExists = args.Count == 0;
+                                for (;;)
                                 {
-                                    bool commaExists = args.Count == 0;
-                                    for (;;)
+                                    if (state.Code[i] == ',')
                                     {
-                                        if (state.Code[i] == ',')
-                                        {
-                                            if (commaExists)
-                                                ExceptionHelper.ThrowSyntaxError("Missing argument of function call", state.Code, i);
-                                            do
-                                                i++;
-                                            while (Tools.IsWhiteSpace(state.Code[i]));
-                                            commaExists = true;
-                                        }
-                                        else
-                                            break;
+                                        if (commaExists)
+                                            ExceptionHelper.ThrowSyntaxError("Missing argument of function call", state.Code, i);
+                                        do
+                                            i++;
+                                        while (Tools.IsWhiteSpace(state.Code[i]));
+                                        commaExists = true;
                                     }
-                                    if (!commaExists)
-                                        ExceptionHelper.ThrowSyntaxError("Expected ','", state.Code, i);
+                                    else
+                                        break;
                                 }
+                                if (!commaExists)
+                                    ExceptionHelper.ThrowSyntaxError("Expected ','", state.Code, i);
                                 if (i + 1 == state.Code.Length)
                                     ExceptionHelper.ThrowSyntaxError("Unexpected end of source", state.Code, i);
 
@@ -854,7 +847,7 @@ namespace JS.Core.Expressions
                     case '`':
                         {
                             var template = TemplateString.Parse(state, ref i, TemplateStringMode.Tag);
-                            first = new Call(first, new Expression[] { template })
+                            first = new Call(first, new[] { template })
                             {
                                 Position = first.Position,
                                 Length = i - first.Position + 1,
@@ -881,7 +874,8 @@ namespace JS.Core.Expressions
                                 binary = true;
                                 break;
                             }
-                            else if (Parser.Validate(state.Code, "in", ref i))
+
+                            if (Parser.Validate(state.Code, "in", ref i))
                             {
                                 if (forForLoop)
                                 {
@@ -963,7 +957,7 @@ namespace JS.Core.Expressions
                         second = parseContinuation(state, parseTernaryBranches(state, forForLoop, ref i), startIndex, ref i, ref proot, forUnary, processComma, false, forForLoop);
                     }
                     else
-                        second = ExpressionTree.Parse(state, ref i, false, processComma, false, false, forForLoop);
+                        second = Parse(state, ref i, false, processComma, false, false, forForLoop);
                 }
                 else
                 {
@@ -979,7 +973,7 @@ namespace JS.Core.Expressions
                 var opassigncache = new AssignmentOperatorCache(first);
                 if (second is ExpressionTree && (second as ExpressionTree).Type == OperationType.None)
                 {
-                    second._left = new Assignment(opassigncache, new ExpressionTree()
+                    second._left = new Assignment(opassigncache, new ExpressionTree
                     {
                         _left = opassigncache,
                         _right = second._left,
@@ -995,7 +989,7 @@ namespace JS.Core.Expressions
                 }
                 else
                 {
-                    res = new Assignment(opassigncache, new ExpressionTree()
+                    res = new Assignment(opassigncache, new ExpressionTree
                     {
                         _left = opassigncache,
                         _right = second,
@@ -1014,9 +1008,9 @@ namespace JS.Core.Expressions
                 if (!root || kind != OperationType.None || second != null)
                 {
                     if (forUnary && (kind == OperationType.None) && (first is ExpressionTree))
-                        res = first as Expression;
+                        res = first;
                     else
-                        res = new ExpressionTree() { _left = first, _right = second, Type = kind, Position = startIndex, Length = i - startIndex };
+                        res = new ExpressionTree { _left = first, _right = second, Type = kind, Position = startIndex, Length = i - startIndex };
                 }
                 else
                     res = first;
@@ -1128,30 +1122,22 @@ namespace JS.Core.Expressions
                     }
                     else
                     {
-                        bool b = false;
                         if (value == "null")
                             operand = new Constant(JSValue.@null) { Position = start, Length = i - start };
-                        else if (bool.TryParse(value, out b))
-                            operand = new Constant(b ? NiL.JS.BaseLibrary.Boolean.True : NiL.JS.BaseLibrary.Boolean.False) { Position = start, Length = i - start };
+                        else if (bool.TryParse(value, out var b))
+                            operand = new Constant(b ? Boolean.True : Boolean.False) { Position = start, Length = i - start };
                         else
                         {
-                            int n = 0;
-                            double d = 0;
-                            if (Tools.ParseNumber(state.Code, ref start, out d, 0, ParseNumberOptions.Default | (state.strict ? ParseNumberOptions.RaiseIfOctal : ParseNumberOptions.None)))
+                            if (Tools.ParseNumber(state.Code, ref start, out var d, 0, ParseNumberOptions.Default | (state.strict ? ParseNumberOptions.RaiseIfOctal : ParseNumberOptions.None)))
                             {
+                                int n;
                                 if ((n = (int)d) == d && !double.IsNegativeInfinity(1.0 / d))
                                 {
-                                    if (state.intConstants.ContainsKey(n))
-                                        operand = new Constant(state.intConstants[n]) { Position = start, Length = i - start };
-                                    else
-                                        operand = new Constant(state.intConstants[n] = n) { Position = start, Length = i - start };
+                                    operand = state.intConstants.ContainsKey(n) ? new Constant(state.intConstants[n]) { Position = start, Length = i - start } : new Constant(state.intConstants[n] = n) { Position = start, Length = i - start };
                                 }
                                 else
                                 {
-                                    if (state.doubleConstants.ContainsKey(d))
-                                        operand = new Constant(state.doubleConstants[d]) { Position = start, Length = i - start };
-                                    else
-                                        operand = new Constant(state.doubleConstants[d] = d) { Position = start, Length = i - start };
+                                    operand = state.doubleConstants.ContainsKey(d) ? new Constant(state.doubleConstants[d]) { Position = start, Length = i - start } : new Constant(state.doubleConstants[d] = d) { Position = start, Length = i - start };
                                 }
                             }
                             else if (Parser.ValidateRegex(state.Code, ref start, true))
@@ -1182,7 +1168,7 @@ namespace JS.Core.Expressions
                                     if (i >= state.Code.Length)
                                         ExceptionHelper.Throw(new SyntaxError("Unexpected end of source."));
 
-                                    operand = (Expression)Parse(state, ref i, true, true, false, true, forForLoop);
+                                    operand = Parse(state, ref i, true, true, false, true, forForLoop);
 
                                     if (((operand as Property) as object ?? (operand as Variable)) == null)
                                     {
@@ -1202,7 +1188,7 @@ namespace JS.Core.Expressions
                                 {
                                     while (Tools.IsWhiteSpace(state.Code[i]))
                                         i++;
-                                    var f = (Expression)Parse(state, ref i, true, true, false, true, forForLoop);
+                                    var f = Parse(state, ref i, true, true, false, true, forForLoop);
                                     operand = new ConvertToNumber(f);
                                 }
                                 break;
@@ -1218,7 +1204,7 @@ namespace JS.Core.Expressions
                                     if (i >= state.Code.Length)
                                         ExceptionHelper.Throw(new SyntaxError("Unexpected end of source."));
 
-                                    operand = (Expression)Parse(state, ref i, true, true, false, true, forForLoop);
+                                    operand = Parse(state, ref i, true, true, false, true, forForLoop);
 
                                     if (((operand as Property) as object ?? (operand as Variable)) == null)
                                     {
@@ -1236,7 +1222,7 @@ namespace JS.Core.Expressions
                                 {
                                     while (Tools.IsWhiteSpace(state.Code[i]))
                                         i++;
-                                    var f = (Expression)Parse(state, ref i, true, true, false, true, forForLoop);
+                                    var f = Parse(state, ref i, true, true, false, true, forForLoop);
                                     operand = new Negation(f);
                                 }
                                 break;
@@ -1246,12 +1232,7 @@ namespace JS.Core.Expressions
                                 do
                                     i++;
                                 while (Tools.IsWhiteSpace(state.Code[i]));
-                                operand = new LogicalNegation((Expression)Parse(state, ref i, true, true, false, true, forForLoop));
-                                if (operand == null)
-                                {
-                                    var cord = CodeCoordinates.FromTextPosition(state.Code, i, 0);
-                                    ExceptionHelper.Throw((new SyntaxError("Invalid prefix operation. " + cord)));
-                                }
+                                operand = new LogicalNegation(Parse(state, ref i, true, true, false, true, forForLoop));
                                 break;
                             }
                         case '~':
@@ -1259,7 +1240,7 @@ namespace JS.Core.Expressions
                                 do
                                     i++;
                                 while (Tools.IsWhiteSpace(state.Code[i]));
-                                operand = (Expression)Parse(state, ref i, true, true, false, true, forForLoop);
+                                operand = Parse(state, ref i, true, true, false, true, forForLoop);
                                 if (operand == null)
                                 {
                                     var cord = CodeCoordinates.FromTextPosition(state.Code, i, 0);
@@ -1274,7 +1255,7 @@ namespace JS.Core.Expressions
                                 do
                                     i++;
                                 while (Tools.IsWhiteSpace(state.Code[i]));
-                                operand = (Expression)Parse(state, ref i, true, false, false, true, forForLoop);
+                                operand = Parse(state, ref i, true, false, false, true, forForLoop);
                                 if (operand == null)
                                 {
                                     var cord = CodeCoordinates.FromTextPosition(state.Code, i, 0);
@@ -1291,7 +1272,7 @@ namespace JS.Core.Expressions
                                 while (Tools.IsWhiteSpace(state.Code[i]));
 
                                 operand = new Comma(
-                                    (Expression)Parse(state, ref i, true, false, false, true, forForLoop),
+                                    Parse(state, ref i, true, false, false, true, forForLoop),
                                     new Constant(JSValue.undefined));
 
                                 if (operand == null)
@@ -1307,13 +1288,13 @@ namespace JS.Core.Expressions
                                 do
                                     i++;
                                 while (Tools.IsWhiteSpace(state.Code[i]));
-                                operand = (Expression)Parse(state, ref i, true, false, false, true, forForLoop);
+                                operand = Parse(state, ref i, true, false, false, true, forForLoop);
                                 if (operand == null)
                                 {
                                     var cord = CodeCoordinates.FromTextPosition(state.Code, i, 0);
                                     ExceptionHelper.Throw((new SyntaxError("Invalid prefix operation. " + cord)));
                                 }
-                                operand = new Expressions.Delete(operand);
+                                operand = new Delete(operand);
                                 break;
                             }
                     }
@@ -1326,10 +1307,7 @@ namespace JS.Core.Expressions
                             i++;
                         while (Tools.IsWhiteSpace(state.Code[i]));
                         var temp = Parse(state, ref i, false, false);
-                        if (operand == null)
-                            operand = temp;
-                        else
-                            operand = new Comma(operand, temp);
+                        operand = operand == null ? temp : new Comma(operand, temp);
                         while (Tools.IsWhiteSpace(state.Code[i]))
                             i++;
                         if (state.Code[i] != ')' && state.Code[i] != ',')
@@ -1381,7 +1359,7 @@ namespace JS.Core.Expressions
                 do
                     i++;
                 while (Tools.IsWhiteSpace(state.Code[i]));
-                result = new Constant(new JSValue() { _valueType = JSValueType.Object, _oValue = threads }) { Position = position };
+                result = new Constant(new JSValue { _valueType = JSValueType.Object, _oValue = threads }) { Position = position };
                 threads[1] = Parse(state, ref i, false, false, false, true, forEnumeration);
                 result.Length = i - position;
             }

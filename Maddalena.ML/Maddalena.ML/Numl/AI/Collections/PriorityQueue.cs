@@ -10,8 +10,8 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
     /// <typeparam name="V">Value type.</typeparam>
     public class PriorityQueue<P, V>
     {
-        private SortedDictionary<P, Queue<V>> list = new SortedDictionary<P, Queue<V>>();
-        private int _count = 0;
+        private readonly SortedDictionary<P, Queue<V>> list = new SortedDictionary<P, Queue<V>>();
+
         /// <summary>
         /// Enqueues the specified priority.
         /// </summary>
@@ -19,14 +19,13 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
         /// <param name="value">The value.</param>
         public void Enqueue(P priority, V value)
         {
-            Queue<V> q;
-            if (!list.TryGetValue(priority, out q))
+            if (!list.TryGetValue(priority, out var q))
             {
                 q = new Queue<V>();
                 list.Add(priority, q);
             }
             q.Enqueue(value);
-            _count++;
+            Count++;
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
             var v = pair.Value.Dequeue();
             if (pair.Value.Count == 0) // nothing left of the top priority.
                 list.Remove(pair.Key);
-            _count--;
+            Count--;
             return v;
         }
 
@@ -57,12 +56,6 @@ namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
         /// Gets the count.
         /// </summary>
         /// <value>The count.</value>
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count { get; private set; } = 0;
     }
 }

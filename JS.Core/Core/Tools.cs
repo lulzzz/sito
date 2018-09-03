@@ -5,13 +5,18 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using JS.Core.Core.Functions;
 using JS.Core.Core.Interop;
 using JS.Core.Extensions;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Array = NiL.JS.BaseLibrary.Array;
+using Expression = JS.Core.Expressions.Expression;
 using JSBool = NiL.JS.BaseLibrary.Boolean;
+using Math = System.Math;
+using String = NiL.JS.BaseLibrary.String;
 
 namespace JS.Core.Core
 {
@@ -52,9 +57,9 @@ namespace JS.Core.Core
             if (position < 0)
                 throw new ArgumentOutOfRangeException(nameof(position));
 
-            int line = 1;
-            int column = 1;
-            for (int i = 0; i < position; i++)
+            var line = 1;
+            var column = 1;
+            for (var i = 0; i < position; i++)
             {
                 if (i >= text.Length) {
                     return null;
@@ -84,12 +89,9 @@ namespace JS.Core.Core
 
     public static class Tools
     {
-        private static readonly Type[] intTypeWithinArray = new[] { typeof(int) };
+        internal static readonly char[] TrimChars = { '\u0020', '\u0009', '\u000A', '\u000D', '\u000B', '\u000C', '\u00A0', '\u1680', '\u180E', '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006', '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F', '\u205F', '\u3000', '\uFEFF' };
 
-        internal static readonly char[] TrimChars = new[] { '\u0020', '\u0009', '\u000A', '\u000D', '\u000B', '\u000C', '\u00A0', '\u1680', '\u180E', '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006', '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F', '\u205F', '\u3000', '\uFEFF' };
-
-        internal static readonly char[] NumChars = new[]
-        {
+        internal static readonly char[] NumChars = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
@@ -101,7 +103,7 @@ namespace JS.Core.Core
         }
 
         private static readonly DoubleStringCacheItem[] cachedDoubleString = new DoubleStringCacheItem[8];
-        private static int cachedDoubleStringsIndex = 0;
+        private static int cachedDoubleStringsIndex;
         private static readonly string[] divFormats =
             {
                 ".#",
@@ -121,8 +123,7 @@ namespace JS.Core.Core
                 ".###############"
             };
 
-        private static readonly decimal[] powersOf10 = new[]
-            {
+        private static readonly decimal[] powersOf10 = {
                 1e-18M, 1e-17M, 1e-16M, 1e-15M, 1e-14M, 1e-13M, 1e-12M, 1e-11M,
                 1e-10M, 1e-9M, 1e-8M, 1e-7M, 1e-6M, 1e-5M, 1e-4M, 1e-3M, 1e-2M,
                 1e-1M, 1e+0M, 1e+1M, 1e+2M, 1e+3M, 1e+4M, 1e+5M, 1e+6M, 1e+7M,
@@ -139,27 +140,17 @@ namespace JS.Core.Core
             public _ForcedEnumerator(IEnumerable<T> owner)
             {
                 this.owner = owner;
-                this.parent = owner.GetEnumerator();
+                parent = owner.GetEnumerator();
             }
 
-            #region Члены IEnumerator<T>
-
             public T Current => parent.Current;
-
-            #endregion
-
-            #region Члены IDisposable
 
             public void Dispose()
             {
                 parent.Dispose();
             }
 
-            #endregion
-
-            #region Члены IEnumerator
-
-            object System.Collections.IEnumerator.Current => parent.Current;
+            object IEnumerator.Current => parent.Current;
 
             public bool MoveNext()
             {
@@ -173,7 +164,7 @@ namespace JS.Core.Core
                 catch
                 {
                     parent = owner.GetEnumerator();
-                    for (int i = 0; i < index && parent.MoveNext(); i++)
+                    for (var i = 0; i < index && parent.MoveNext(); i++)
                         ;
                     return MoveNext();
                 }
@@ -183,13 +174,9 @@ namespace JS.Core.Core
             {
                 parent.Reset();
             }
-
-            #endregion
         }
 
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double JSObjectToDouble(JSValue arg)
         {
             do
@@ -210,13 +197,12 @@ namespace JS.Core.Core
                         }
                     case JSValueType.String:
                         {
-                            double x = double.NaN;
-                            int ix = 0;
-                            string s = (arg._oValue.ToString());
-                            if (s.Length > 0 && (Tools.IsWhiteSpace(s[0]) || Tools.IsWhiteSpace(s[s.Length - 1])))
-                                s = s.Trim(Tools.TrimChars);
+                            var ix = 0;
+                            var s = (arg._oValue.ToString());
+                            if (s.Length > 0 && (IsWhiteSpace(s[0]) || IsWhiteSpace(s[s.Length - 1])))
+                                s = s.Trim(TrimChars);
 
-                            if (Tools.ParseNumber(s, ref ix, out x, 0, ParseNumberOptions.AllowFloat | ParseNumberOptions.AllowAutoRadix) && ix < s.Length)
+                            if (ParseNumber(s, ref ix, out var x, 0, ParseNumberOptions.AllowFloat | ParseNumberOptions.AllowAutoRadix) && ix < s.Length)
                                 return double.NaN;
 
                             return x;
@@ -241,14 +227,7 @@ namespace JS.Core.Core
             } while (true);
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа integer.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int JSObjectToInt32(JSValue arg)
         {
             if (arg._valueType == JSValueType.Integer)
@@ -262,29 +241,13 @@ namespace JS.Core.Core
                 i++;
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа integer.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <param name="nullOrUndefinedOrNan">Значение, которое будет возвращено, если значение arg null или undefined.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int JSObjectToInt32(JSValue arg, int nullOrUndefinedOrNan)
         {
             return JSObjectToInt32(arg, nullOrUndefinedOrNan, 0, false);
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа integer.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <param name="alternateInfinity">Если истина, для значений +Infinity и -Infinity будут возвращены значения int.MaxValue и int.MinValue соответственно.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int JSObjectToInt32(JSValue arg, bool alternateInfinity)
         {
             return JSObjectToInt32(arg, 0, 0, alternateInfinity);
@@ -325,10 +288,10 @@ namespace JS.Core.Core
                 case JSValueType.String:
                     {
                         double x = 0;
-                        int ix = 0;
-                        string s = (value._oValue.ToString()).Trim();
+                        var ix = 0;
+                        var s = (value._oValue.ToString()).Trim();
 
-                        if (!Tools.ParseNumber(s, ref ix, out x, 0, ParseNumberOptions.AllowAutoRadix | ParseNumberOptions.AllowFloat) || ix < s.Length)
+                        if (!ParseNumber(s, ref ix, out x, 0, ParseNumberOptions.AllowAutoRadix | ParseNumberOptions.AllowFloat) || ix < s.Length)
                             return 0;
 
                         if (double.IsNaN(x))
@@ -358,41 +321,18 @@ namespace JS.Core.Core
             }
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа integer.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <param name="nullOrUndef">Значение, которое будет возвращено, если значение arg null или undefined.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long JSObjectToInt64(JSValue arg)
         {
             return JSObjectToInt64(arg, 0, false);
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа integer.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <param name="nullOrUndefinedOrNan">Значение, которое будет возвращено, если значение arg null или undefined.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long JSObjectToInt64(JSValue arg, long nullOrUndefinedOrNan)
         {
             return JSObjectToInt64(arg, nullOrUndefinedOrNan, false);
         }
 
-        /// <summary>
-        /// Преобразует JSObject в значение типа Int64.
-        /// </summary>
-        /// <param name="arg">JSObject, значение которого нужно преобразовать.</param>
-        /// <param name="nullOrUndefined">Значение, которое будет возвращено, если значение arg null или undefined.</param>
-        /// <param name="alternateInfinity">Если истина, для значений +Infinity и -Infinity будут возвращены значения int.MaxValue и int.MinValue соответственно.</param>
-        /// <returns>Целочисленное значение, представленное в объекте arg.</returns>
         public static long JSObjectToInt64(JSValue arg, long nullOrUndefined, bool alternateInfinity)
         {
             if (arg == null)
@@ -417,9 +357,9 @@ namespace JS.Core.Core
                 case JSValueType.String:
                     {
                         double x = 0;
-                        int ix = 0;
-                        string s = (r._oValue.ToString()).Trim();
-                        if (!Tools.ParseNumber(s, ref ix, out x, 0, ParseNumberOptions.AllowAutoRadix | ParseNumberOptions.AllowFloat) || ix < s.Length)
+                        var ix = 0;
+                        var s = (r._oValue.ToString()).Trim();
+                        if (!ParseNumber(s, ref ix, out x, 0, ParseNumberOptions.AllowAutoRadix | ParseNumberOptions.AllowFloat) || ix < s.Length)
                             return 0;
                         if (double.IsNaN(x))
                             return 0;
@@ -445,9 +385,8 @@ namespace JS.Core.Core
             }
         }
 
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static JSValue JSObjectToNumber(JSValue arg)
         {
             return JSObjectToNumber(arg, new JSValue());
@@ -474,10 +413,9 @@ namespace JS.Core.Core
                     return arg;
                 case JSValueType.String:
                     {
-                        double x = 0;
-                        int ix = 0;
-                        string s = (arg._oValue.ToString()).Trim(TrimChars);
-                        if (!Tools.ParseNumber(s, ref ix, out x) || ix < s.Length)
+                        var ix = 0;
+                        var s = (arg._oValue.ToString()).Trim(TrimChars);
+                        if (!ParseNumber(s, ref ix, out var x) || ix < s.Length)
                             x = double.NaN;
                         result._valueType = JSValueType.Double;
                         result._dValue = x;
@@ -514,13 +452,13 @@ namespace JS.Core.Core
             if (jsobj == null)
                 return null;
 
-            if (targetType.IsAssignableFrom(jsobj.GetType()))
+            if (targetType.IsInstanceOfType(jsobj))
                 return jsobj;
 
             if (targetType.GetTypeInfo().IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 targetType = targetType.GetGenericArguments()[0];
 
-            object value = null;
+            object value;
             switch (jsobj._valueType)
             {
                 case JSValueType.Boolean:
@@ -535,10 +473,7 @@ namespace JS.Core.Core
                         if (targetType == typeof(bool))
                             return jsobj._iValue != 0;
 
-                        if (targetType == typeof(JSBool))
-                            return new JSBool(jsobj._iValue != 0);
-
-                        return null;
+                        return targetType == typeof(JSBool) ? new JSBool(jsobj._iValue != 0) : null;
                     }
                 case JSValueType.Double:
                     {
@@ -562,7 +497,7 @@ namespace JS.Core.Core
                         }
 
                         if (targetType == typeof(double))
-                            return (double)jsobj._dValue;
+                            return jsobj._dValue;
                         if (targetType == typeof(float))
                             return (float)jsobj._dValue;
 
@@ -580,7 +515,7 @@ namespace JS.Core.Core
                         }
 
                         if (targetType == typeof(int))
-                            return (int)jsobj._iValue;
+                            return jsobj._iValue;
 
                         if (targetType == typeof(uint))
                             return (uint)jsobj._iValue;
@@ -670,8 +605,8 @@ namespace JS.Core.Core
                         if (targetType == typeof(string))
                             return jsobj.Value.ToString();
 
-                        if (targetType == typeof(NiL.JS.BaseLibrary.String))
-                            return new NiL.JS.BaseLibrary.String(jsobj.Value.ToString());
+                        if (targetType == typeof(String))
+                            return new String(jsobj.Value.ToString());
 
                         return null;
                     }
@@ -712,71 +647,53 @@ namespace JS.Core.Core
                     }
             }
 
-            if (targetType.IsAssignableFrom(value.GetType()))
+            if (targetType.IsInstanceOfType(value))
                 return value;
-#if (PORTABLE)
-            if (IntrospectionExtensions.GetTypeInfo(targetType).IsEnum && Enum.IsDefined(targetType, value))
-                return value;
-#else
+
             if (targetType.IsEnum && Enum.IsDefined(targetType, value))
                 return value;
-#endif
-            var tpres = value as Proxy;
-            if (tpres != null && targetType.IsAssignableFrom(tpres._hostedType))
+
+            if (value is Proxy tpres && targetType.IsAssignableFrom(tpres._hostedType))
             {
                 jsobj = tpres.PrototypeInstance;
-                if (jsobj is ObjectWrapper)
-                    return jsobj.Value;
-
-                return jsobj;
+                return jsobj is ObjectWrapper ? jsobj.Value : jsobj;
             }
 
             if (value is ConstructorProxy && typeof(Type).IsAssignableFrom(targetType))
             {
-                return (value as ConstructorProxy)._staticProxy._hostedType;
+                return ((ConstructorProxy) value)._staticProxy._hostedType;
             }
 
-            if ((value is NiL.JS.BaseLibrary.Array || value is TypedArray || value is ArrayBuffer)
-                && typeof(IEnumerable).IsAssignableFrom(targetType))
+            if ((!(value is Array) && !(value is TypedArray) && !(value is ArrayBuffer)) || !typeof(IEnumerable).IsAssignableFrom(targetType)) return null;
+
+            Type @interface;
+            Type elementType;
+
+            if ((targetType.IsArray && (elementType = targetType.GetElementType()) != null) || ((@interface = targetType.GetTypeInfo().GetInterface(typeof(IEnumerable<>).Name)) != null && targetType.IsAssignableFrom((elementType = @interface.GetGenericArguments()[0]).MakeArrayType())))
             {
-                Type @interface = null;
-                Type elementType = null;
+                if (!elementType.GetTypeInfo().IsPrimitive) return convertArray(value as Array, elementType, hightLoyalty);
 
-                if ((targetType.IsArray && (elementType = targetType.GetElementType()) != null)
-#if PORTABLE
-                || ((@interface = targetType.GetInterface(typeof(IEnumerable<>).Name)) != null
-#else
-                || ((@interface = targetType.GetTypeInfo().GetInterface(typeof(IEnumerable<>).Name)) != null
-#endif
-                     && targetType.IsAssignableFrom((elementType = @interface.GetGenericArguments()[0]).MakeArrayType())))
-                {
-                    if (elementType.GetTypeInfo().IsPrimitive)
-                    {
-                        if (elementType == typeof(byte) && value is ArrayBuffer)
-                            return (value as ArrayBuffer).GetData();
+                if (elementType == typeof(byte) && value is ArrayBuffer) return ((ArrayBuffer) value).GetData();
 
-                        var ta = value as TypedArray;
-                        if (ta != null && ta.ElementType == elementType)
-                            return ta.ToNativeArray();
-                    }
+                if (value is TypedArray ta && ta.ElementType == elementType) return ta.ToNativeArray();
 
-                    return convertArray(value as NiL.JS.BaseLibrary.Array, elementType, hightLoyalty);
-                }
-                else if (targetType.IsAssignableFrom(typeof(object[])))
-                {
-                    return convertArray(value as NiL.JS.BaseLibrary.Array, typeof(object), hightLoyalty);
-                }
+                return convertArray(value as Array, elementType, hightLoyalty);
+            }
+
+            if (targetType.IsAssignableFrom(typeof(object[])))
+            {
+                return convertArray(value as Array, typeof(object), hightLoyalty);
             }
 
             return null;
         }
 
-        private static object convertArray(NiL.JS.BaseLibrary.Array array, Type elementType, bool hightLoyalty)
+        private static object convertArray(Array array, Type elementType, bool hightLoyalty)
         {
             if (array == null)
                 return null;
 
-            var result = (IList)Activator.CreateInstance(elementType.MakeArrayType(), new object[] { (int)array._data.Length });
+            var result = (IList)Activator.CreateInstance(elementType.MakeArrayType(), (int)array._data.Length);
 
             for (var j = result.Count; j-- > 0;)
             {
@@ -812,14 +729,14 @@ namespace JS.Core.Core
                         return cachedDoubleString[i].value;
                 }
 
-                var abs = System.Math.Abs(d);
+                var abs = Math.Abs(d);
                 if (abs < 0.000001)
                     res = d.ToString("0.####e-0", CultureInfo.InvariantCulture);
                 else if (abs >= 1e+21)
                     res = d.ToString("0.####e+0", CultureInfo.InvariantCulture);
                 else
                 {
-                    int neg = (d < 0.0 || (d == -0.0 && double.IsNegativeInfinity(1.0 / d))) ? 1 : 0;
+                    var neg = (d < 0.0 || (d == -0.0 && double.IsNegativeInfinity(1.0 / d))) ? 1 : 0;
 
                     if (abs >= 1e+18)
                     {
@@ -827,13 +744,13 @@ namespace JS.Core.Core
                     }
                     else
                     {
-                        ulong absIntPart = (abs < 1.0) ? 0L : (ulong)(abs);
+                        var absIntPart = (abs < 1.0) ? 0L : (ulong)(abs);
                         res = (absIntPart == 0 ? "0" : absIntPart.ToString(CultureInfo.InvariantCulture));
 
                         abs %= 1.0;
                         if (abs != 0 && res.Length <= 15)
                         {
-                            string fracPart = abs.ToString(divFormats[15 - res.Length], CultureInfo.InvariantCulture);
+                            var fracPart = abs.ToString(divFormats[15 - res.Length], CultureInfo.InvariantCulture);
                             if (fracPart == "1")
                                 res = (absIntPart + 1).ToString(CultureInfo.InvariantCulture);
                             else
@@ -894,19 +811,19 @@ namespace JS.Core.Core
 
         public static bool ParseNumber(string code, out double value, int radix)
         {
-            int index = 0;
+            var index = 0;
             return ParseNumber(code, ref index, out value, radix, ParseNumberOptions.Default);
         }
 
         public static bool ParseNumber(string code, out double value, ParseNumberOptions options)
         {
-            int index = 0;
+            var index = 0;
             return ParseNumber(code, ref index, out value, 0, options);
         }
 
         public static bool ParseNumber(string code, out double value, int radix, ParseNumberOptions options)
         {
-            int index = 0;
+            var index = 0;
             return ParseNumber(code, ref index, out value, radix, options);
         }
 
@@ -948,12 +865,12 @@ namespace JS.Core.Core
                 return false;
             }
 
-            bool raiseOldOctalLiterals = (options & ParseNumberOptions.RaiseIfOctal) != 0;
-            bool processOldOctals = (options & ParseNumberOptions.ProcessOctalLiteralsOldSyntax) != 0;
-            bool allowRadixDetection = (options & ParseNumberOptions.AllowAutoRadix) != 0;
-            bool allowFloat = (options & ParseNumberOptions.AllowFloat) != 0;
+            var raiseOldOctalLiterals = (options & ParseNumberOptions.RaiseIfOctal) != 0;
+            var processOldOctals = (options & ParseNumberOptions.ProcessOctalLiteralsOldSyntax) != 0;
+            var allowRadixDetection = (options & ParseNumberOptions.AllowAutoRadix) != 0;
+            var allowFloat = (options & ParseNumberOptions.AllowFloat) != 0;
 
-            int i = index;
+            var i = index;
             while (i < code.Length && IsWhiteSpace(code[i]) && !IsLineTerminator(code[i]))
                 i++;
 
@@ -971,7 +888,7 @@ namespace JS.Core.Core
                 return true;
             }
 
-            int sign = 1;
+            var sign = 1;
             if (code[i] == '-' || code[i] == '+')
                 sign = 44 - code[i++];
 
@@ -983,7 +900,7 @@ namespace JS.Core.Core
                 return true;
             }
 
-            bool result = false;
+            var result = false;
             if (allowRadixDetection
                 && (code[i] == '0')
                 && (i + 1 < code.Length))
@@ -1027,8 +944,8 @@ namespace JS.Core.Core
             if (allowFloat && radix == 0)
             {
                 ulong temp = 0;
-                int scount = 0;
-                int deg = 0;
+                var scount = 0;
+                var deg = 0;
                 while (i < code.Length)
                 {
                     if (IsDigit(code[i]))
@@ -1094,8 +1011,8 @@ namespace JS.Core.Core
                 if (i < code.Length && (code[i] == 'e' || code[i] == 'E'))
                 {
                     i++;
-                    int td = 0;
-                    int esign = code[i] == 43 || code[i] == 45 ? 44 - code[i++] : 1;
+                    var td = 0;
+                    var esign = code[i] == 43 || code[i] == 45 ? 44 - code[i++] : 1;
                     if (!IsDigit(code[i]))
                     {
                         i--;
@@ -1109,13 +1026,10 @@ namespace JS.Core.Core
                         {
                             if (!IsDigit(code[i]))
                                 break;
+                            if (scount <= 6)
+                                td = td * 10 + (code[i++] - '0');
                             else
-                            {
-                                if (scount <= 6)
-                                    td = td * 10 + (code[i++] - '0');
-                                else
-                                    i++;
-                            }
+                                i++;
                         }
 
                         deg += td * esign;
@@ -1155,7 +1069,7 @@ namespace JS.Core.Core
                             frac -= (temp * (ulong)powersOf10[-deg + 18]);
                             var mask = (ulong)powersOf10[-deg + 18];
 
-                            int e = 0;
+                            var e = 0;
 
                             if (frac != 0)
                             {
@@ -1232,7 +1146,7 @@ namespace JS.Core.Core
                         }
                         else
                         {
-                            var exp = System.Math.Pow(10.0, deg);
+                            var exp = Math.Pow(10.0, deg);
                             value *= exp;
                         }
                     }
@@ -1249,8 +1163,8 @@ namespace JS.Core.Core
                 if (radix == 0)
                     radix = 10;
                 value = 0;
-                bool extended = false;
-                double doubleTemp = 0.0;
+                var extended = false;
+                var doubleTemp = 0.0;
                 ulong temp = 0;
                 while (i < code.Length)
                 {
@@ -1259,23 +1173,21 @@ namespace JS.Core.Core
                     {
                         break;
                     }
+
+                    if (extended)
+                    {
+                        doubleTemp = doubleTemp * radix + degSign;
+                    }
                     else
                     {
-                        if (extended)
+                        temp = temp * (ulong)radix + (ulong)degSign;
+                        if ((temp & 0xFE00000000000000) != 0)
                         {
-                            doubleTemp = doubleTemp * radix + degSign;
+                            extended = true;
+                            doubleTemp = temp;
                         }
-                        else
-                        {
-                            temp = temp * (ulong)radix + (ulong)degSign;
-                            if ((temp & 0xFE00000000000000) != 0)
-                            {
-                                extended = true;
-                                doubleTemp = temp;
-                            }
-                        }
-                        result = true;
                     }
+                    result = true;
                     i++;
                 }
                 if (!result)
@@ -1314,7 +1226,7 @@ namespace JS.Core.Core
                 return code;
 
             StringBuilder res = null;
-            for (int i = 0; i < code.Length; i++)
+            for (var i = 0; i < code.Length; i++)
             {
                 if (code[i] == '\\' && i + 1 < code.Length)
                 {
@@ -1338,8 +1250,8 @@ namespace JS.Core.Core
                                     res.Append(code[i]);
                                     break;
                                 }
-                                else
-                                    ExceptionHelper.ThrowSyntaxError("Invalid escape code (\"" + code + "\")");
+
+                                ExceptionHelper.ThrowSyntaxError("Invalid escape code (\"" + code + "\")");
                             }
 
                             if (fullUnicode && code[i] == 'u' && code[i + 1] == '{')
@@ -1347,11 +1259,11 @@ namespace JS.Core.Core
                                 // look here in section 3.7 Surrogates for more information.
                                 // http://unicode.org/versions/Unicode3.0.0/ch03.pdf
 
-                                int closingBracket = code.IndexOf('}', i + 2);
+                                var closingBracket = code.IndexOf('}', i + 2);
                                 if (closingBracket == -1)
                                     ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence"));
 
-                                string c = code.Substring(i + 2, closingBracket - i - 2);
+                                var c = code.Substring(i + 2, closingBracket - i - 2);
                                 uint ucs = 0;
                                 if (uint.TryParse(c, NumberStyles.HexNumber, null, out ucs))
                                 {
@@ -1360,8 +1272,8 @@ namespace JS.Core.Core
                                     else if (ucs <= 0x10FFFF)
                                     {
                                         ucs -= 0x10000;
-                                        char h = (char)((ucs >> 10) + 0xD800);
-                                        char l = (char)((ucs % 0x400) + 0xDC00);
+                                        var h = (char)((ucs >> 10) + 0xD800);
+                                        var l = (char)((ucs % 0x400) + 0xDC00);
                                         res.Append(h).Append(l);
                                     }
                                     else
@@ -1378,11 +1290,11 @@ namespace JS.Core.Core
                             }
                             else
                             {
-                                string c = code.Substring(i + 1, code[i] == 'u' ? 4 : 2);
+                                var c = code.Substring(i + 1, code[i] == 'u' ? 4 : 2);
                                 ushort chc = 0;
                                 if (ushort.TryParse(c, NumberStyles.HexNumber, null, out chc))
                                 {
-                                    char ch = (char)chc;
+                                    var ch = (char)chc;
                                     res.Append(ch);
                                     i += c.Length;
                                 }
@@ -1445,7 +1357,7 @@ namespace JS.Core.Core
 
                             if (i + 1 < code.Length)
                             {
-                                char ch = code[i + 1];
+                                var ch = code[i + 1];
                                 // convert a -> A
                                 if (ch >= 'a' && ch <= 'z')
                                     ch = (char)(ch - ('a' - 'A'));
@@ -1536,7 +1448,7 @@ namespace JS.Core.Core
                 return "";
 
 
-            int i = index;
+            var i = index;
             if (code[i] == '\\' && i + 1 < code.Length)
             {
                 i++;
@@ -1550,8 +1462,7 @@ namespace JS.Core.Core
                             {
                                 if (processRegexComp)
                                     return code[i].ToString();
-                                else
-                                    ExceptionHelper.Throw(new SyntaxError("Invalid escape code (\"" + code + "\")"));
+                                ExceptionHelper.Throw(new SyntaxError("Invalid escape code (\"" + code + "\")"));
                             }
 
                             if (code[i] == 'u' && code[i + 1] == '{')
@@ -1561,33 +1472,32 @@ namespace JS.Core.Core
                                     // look here in section 3.7 Surrogates for more information.
                                     // http://unicode.org/versions/Unicode3.0.0/ch03.pdf
 
-                                    int closingBracket = code.IndexOf('}', i + 2);
+                                    var closingBracket = code.IndexOf('}', i + 2);
                                     if (closingBracket == -1)
                                         ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence"));
 
-                                    string c = code.Substring(i + 2, closingBracket - i - 2);
+                                    var c = code.Substring(i + 2, closingBracket - i - 2);
                                     uint ucs = 0;
                                     if (uint.TryParse(c, NumberStyles.HexNumber, null, out ucs))
                                     {
                                         processedChars += c.Length + 2;
                                         if (ucs <= 0xFFFF)
                                             return ((char)ucs).ToString();
-                                        else if (ucs <= 0x10FFFF)
+                                        if (ucs <= 0x10FFFF)
                                         {
                                             ucs -= 0x10000;
-                                            char h = (char)((ucs >> 10) + 0xD800);
-                                            char l = (char)((ucs % 0x400) + 0xDC00);
-                                            return h.ToString() + l.ToString();
+                                            var h = (char)((ucs >> 10) + 0xD800);
+                                            var l = (char)((ucs % 0x400) + 0xDC00);
+                                            return h + l.ToString();
                                         }
-                                        else
-                                            ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\u{" + c + "}'"));
+
+                                        ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\u{" + c + "}'"));
                                     }
                                     else
                                     {
                                         if (processRegexComp)
                                             return code[i].ToString();
-                                        else
-                                            ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\u{" + c + "}'"));
+                                        ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\u{" + c + "}'"));
                                     }
                                 }
                                 else
@@ -1595,21 +1505,18 @@ namespace JS.Core.Core
                             }
                             else
                             {
-                                string c = code.Substring(i + 1, code[i] == 'u' ? 4 : 2);
+                                var c = code.Substring(i + 1, code[i] == 'u' ? 4 : 2);
                                 ushort chc = 0;
-                                if (ushort.TryParse(c, System.Globalization.NumberStyles.HexNumber, null, out chc))
+                                if (ushort.TryParse(c, NumberStyles.HexNumber, null, out chc))
                                 {
                                     processedChars += c.Length;
-                                    char ch = (char)chc;
+                                    var ch = (char)chc;
                                     return ch.ToString();
                                 }
-                                else
-                                {
-                                    if (processRegexComp)
-                                        return code[i].ToString();
-                                    else
-                                        ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\" + code[i] + c + "'"));
-                                }
+
+                                if (processRegexComp)
+                                    return code[i].ToString();
+                                ExceptionHelper.Throw(new SyntaxError("Invalid escape sequence '\\" + code[i] + c + "'"));
                             }
                             return code[i].ToString(); // this will never be reached
                         }
@@ -1643,14 +1550,14 @@ namespace JS.Core.Core
 
                             if (i + 1 < code.Length)
                             {
-                                char ch = code[i + 1];
+                                var ch = code[i + 1];
                                 // convert a -> A
                                 if (ch >= 'a' && ch <= 'z')
                                     ch = (char)(ch - ('a' - 'A'));
                                 if ((char)(ch - '@') < ' ')
                                 {
                                     processedChars++;
-                                    return "\\c" + ch.ToString();
+                                    return "\\c" + ch;
                                 }
                             }
 
@@ -1689,12 +1596,10 @@ namespace JS.Core.Core
                                 }
                                 return ((char)ccode).ToString();
                             }
-                            else
-                            {
-                                if (!processUnknown)
-                                    return "\\" + code[i].ToString();
-                                return code[i].ToString();
-                            }
+
+                            if (!processUnknown)
+                                return "\\" + code[i];
+                            return code[i].ToString();
                         }
                 }
             }
@@ -1769,9 +1674,9 @@ namespace JS.Core.Core
                 return ((char)codePoint).ToString();
 
             codePoint -= 0x10000;
-            char h = (char)((codePoint >> 10) + 0xD800);
-            char l = (char)((codePoint % 0x400) + 0xDC00);
-            return h.ToString() + l.ToString();
+            var h = (char)((codePoint >> 10) + 0xD800);
+            var l = (char)((codePoint % 0x400) + 0xDC00);
+            return h + l.ToString();
         }
 
 #if INLINE
@@ -1814,7 +1719,7 @@ namespace JS.Core.Core
             if (reassignLen)
             {
                 if (length._valueType == JSValueType.Property)
-                    ((length._oValue as PropertyPair).setter ?? Function.Empty).Call(src, new Arguments() { result });
+                    ((length._oValue as PropertyPair).setter ?? Function.Empty).Call(src, new Arguments { result });
                 else
                     length.Assign(result);
             }
@@ -1822,14 +1727,14 @@ namespace JS.Core.Core
             return result;
         }
 
-        internal static NiL.JS.BaseLibrary.Array arraylikeToArray(JSValue src, bool evalProps, bool clone, bool reassignLen, long _length)
+        internal static Array arraylikeToArray(JSValue src, bool evalProps, bool clone, bool reassignLen, long _length)
         {
-            var temp = new NiL.JS.BaseLibrary.Array();
-            bool goDeep = true;
+            var temp = new Array();
+            var goDeep = true;
             for (; goDeep;)
             {
                 goDeep = false;
-                var srca = src as NiL.JS.BaseLibrary.Array;
+                var srca = src as Array;
                 if (srca != null)
                 {
                     if (_length == -1)
@@ -1842,7 +1747,7 @@ namespace JS.Core.Core
                         var value = element.Value;
                         if (value == null || !value.Exists)
                             continue;
-                        if (!goDeep && System.Math.Abs(prew - element.Key) > 1)
+                        if (!goDeep && Math.Abs(prew - element.Key) > 1)
                         {
                             goDeep = true;
                         }
@@ -1853,7 +1758,7 @@ namespace JS.Core.Core
                         if (temp._data[element.Key] == null)
                             temp._data[element.Key] = value;
                     }
-                    goDeep |= System.Math.Abs(prew - _length) > 1;
+                    goDeep |= Math.Abs(prew - _length) > 1;
                 }
                 else
                 {
@@ -1873,14 +1778,14 @@ namespace JS.Core.Core
                             value = (value._oValue as PropertyPair).getter == null ? JSValue.undefined : (value._oValue as PropertyPair).getter.Call(src, null).CloneImpl(false);
                         else if (clone)
                             value = value.CloneImpl(false);
-                        if (!goDeep && System.Math.Abs(prew - index.Key) > 1)
+                        if (!goDeep && Math.Abs(prew - index.Key) > 1)
                         {
                             goDeep = true;
                         }
-                        if (temp._data[(int)(uint)index.Key] == null)
-                            temp._data[(int)(uint)index.Key] = value;
+                        if (temp._data[(int)index.Key] == null)
+                            temp._data[(int)index.Key] = value;
                     }
-                    goDeep |= System.Math.Abs(prew - _length) > 1;
+                    goDeep |= Math.Abs(prew - _length) > 1;
                 }
                 if (src.__proto__ == JSValue.@null)
                     break;
@@ -1894,9 +1799,9 @@ namespace JS.Core.Core
 
         internal static IEnumerable<KeyValuePair<uint, JSValue>> EnumerateArraylike(long length, JSValue src)
         {
-            if (src._valueType == JSValueType.Object && src.Value is NiL.JS.BaseLibrary.Array)
+            if (src._valueType == JSValueType.Object && src.Value is Array)
             {
-                foreach (var item in (src.Value as NiL.JS.BaseLibrary.Array)._data.DirectOrder)
+                foreach (var item in (src.Value as Array)._data.DirectOrder)
                 {
                     yield return new KeyValuePair<uint, JSValue>((uint)item.Key, item.Value);
                 }
@@ -1908,7 +1813,7 @@ namespace JS.Core.Core
                 var pindex = 0;
                 var dindex = 0.0;
                 var lindex = 0U;
-                if (Tools.ParseNumber(i, ref pindex, out dindex)
+                if (ParseNumber(i, ref pindex, out dindex)
                     && (pindex == i.Length)
                     && dindex < length
                     && (lindex = (uint)dindex) == dindex)
@@ -1934,7 +1839,7 @@ namespace JS.Core.Core
                 return property;
 
             var getter = property._oValue as PropertyPair;
-            if (getter == null || getter.getter == null)
+            if (getter?.getter == null)
                 return JSValue.undefined;
 
             property = getter.getter.Call(target, null);
@@ -1944,7 +1849,7 @@ namespace JS.Core.Core
             return property;
         }
 
-        internal static JSValue EvalExpressionSafe(Context context, Expressions.Expression source)
+        internal static JSValue EvalExpressionSafe(Context context, Expression source)
         {
             var a = source.Evaluate(context);
             if (a == null)
@@ -1981,14 +1886,14 @@ namespace JS.Core.Core
             return false;
         }
 
-        internal static Arguments CreateArguments(Expressions.Expression[] arguments, Context initiator)
+        internal static Arguments CreateArguments(Expression[] arguments, Context initiator)
         {
-            Arguments argumentsObject = new Arguments(initiator);
+            var argumentsObject = new Arguments(initiator);
             IList<JSValue> spreadSource = null;
 
-            int targetIndex = 0;
-            int sourceIndex = 0;
-            int spreadIndex = 0;
+            var targetIndex = 0;
+            var sourceIndex = 0;
+            var spreadIndex = 0;
 
             while (sourceIndex < arguments.Length)
             {
@@ -2014,11 +1919,9 @@ namespace JS.Core.Core
                         spreadSource = value._oValue as IList<JSValue>;
                         continue;
                     }
-                    else
-                    {
-                        sourceIndex++;
-                        argumentsObject[targetIndex] = value;
-                    }
+
+                    sourceIndex++;
+                    argumentsObject[targetIndex] = value;
                     targetIndex++;
                 }
             }
@@ -2027,7 +1930,7 @@ namespace JS.Core.Core
             return argumentsObject;
         }
 
-        internal static LambdaExpression BuildJsCallTree(string name, Expression functionGetter, ParameterExpression thisParameter, MethodInfo method, Type delegateType)
+        internal static LambdaExpression BuildJsCallTree(string name, System.Linq.Expressions.Expression functionGetter, ParameterExpression thisParameter, MethodInfo method, Type delegateType)
         {
             var prms = method.GetParameters();
 
@@ -2040,41 +1943,41 @@ namespace JS.Core.Core
 
                 for (; i < prms.Length; i++)
                 {
-                    handlerArgumentsParameters[i] = Expression.Parameter(prms[i].ParameterType, prms[i].Name);
+                    handlerArgumentsParameters[i] = System.Linq.Expressions.Expression.Parameter(prms[i].ParameterType, prms[i].Name);
                 }
             }
 
-            var argumentsParameter = Expression.Parameter(typeof(Arguments), "arguments");
-            var expressions = new List<Expression>();
+            var argumentsParameter = System.Linq.Expressions.Expression.Parameter(typeof(Arguments), "arguments");
+            var expressions = new List<System.Linq.Expressions.Expression>();
 
             if (prms.Length != 0)
             {
-                expressions.Add(Expression.Assign(argumentsParameter, Expression.New(typeof(Arguments))));
+                expressions.Add(System.Linq.Expressions.Expression.Assign(argumentsParameter, System.Linq.Expressions.Expression.New(typeof(Arguments))));
                 for (var i = 0; i < handlerArgumentsParameters.Length; i++)
                 {
-                    Expression argument = handlerArgumentsParameters[i];
+                    System.Linq.Expressions.Expression argument = handlerArgumentsParameters[i];
 #if (PORTABLE)
                     if (argument.Type.GetTypeInfo().IsValueType)
 #else
                     if (argument.Type.IsValueType)
 #endif
                     {
-                        argument = Expression.Convert(argument, typeof(object));
+                        argument = System.Linq.Expressions.Expression.Convert(argument, typeof(object));
                     }
 
                     var currentBaseContext = Context.CurrentGlobalContext;
 
-                    expressions.Add(Expression.Call(
+                    expressions.Add(System.Linq.Expressions.Expression.Call(
                         argumentsParameter,
                         typeof(Arguments).GetRuntimeMethod("Add", new[] { typeof(JSValue) }),
-                        Expression.Call(
-                            Expression.Constant(currentBaseContext),
+                        System.Linq.Expressions.Expression.Call(
+                            System.Linq.Expressions.Expression.Constant(currentBaseContext),
                             methodof<object, JSValue>(currentBaseContext.ProxyValue),
                             argument)));
                 }
             }
 
-            var callTree = Expression.Call(functionGetter, typeof(Function).GetRuntimeMethod(nameof(Function.Call), new[] { typeof(Arguments) }), argumentsParameter);
+            var callTree = System.Linq.Expressions.Expression.Call(functionGetter, typeof(Function).GetRuntimeMethod(nameof(Function.Call), new[] { typeof(Arguments) }), argumentsParameter);
 
             expressions.Add(callTree);
             if (method.ReturnParameter.ParameterType != typeof(void)
@@ -2082,15 +1985,14 @@ namespace JS.Core.Core
                 && !typeof(JSValue).IsAssignableFrom(method.ReturnParameter.ParameterType))
             {
                 var asMethod = typeof(JSValueExtensions).GetRuntimeMethods().First(x => x.Name == "As").MakeGenericMethod(method.ReturnParameter.ParameterType);
-                expressions[expressions.Count - 1] = Expression.Call(asMethod, callTree);
+                expressions[expressions.Count - 1] = System.Linq.Expressions.Expression.Call(asMethod, callTree);
             }
 
-            var result = Expression.Block(new[] { argumentsParameter }, expressions);
+            var result = System.Linq.Expressions.Expression.Block(new[] { argumentsParameter }, expressions);
 
             if (delegateType != null)
-                return Expression.Lambda(delegateType, result, name, handlerArgumentsParameters);
-            else
-                return Expression.Lambda(result, name, handlerArgumentsParameters);
+                return System.Linq.Expressions.Expression.Lambda(delegateType, result, name, handlerArgumentsParameters);
+            return System.Linq.Expressions.Expression.Lambda(result, name, handlerArgumentsParameters);
         }
 
         internal static MethodInfo methodof<T0, T1, T2, T3>(Action<T0, T1, T2, T3> method)
@@ -2126,9 +2028,7 @@ namespace JS.Core.Core
                     return "Symbol";
                 case JSValueType.Object:
                     {
-                        var o = v as ObjectWrapper;
-                        if (o == null)
-                            o = v._oValue as ObjectWrapper;
+                        var o = v as ObjectWrapper ?? v._oValue as ObjectWrapper;
                         if (o != null)
                             return o.Value.GetType().Name;
 
@@ -2177,12 +2077,12 @@ namespace JS.Core.Core
 
         public static string JSValueToObjectString(JSValue v)
         {
-            return Tools.JSValueToObjectString(v, 1, 0);
+            return JSValueToObjectString(v, 1, 0);
         }
 
         public static string JSValueToObjectString(JSValue v, int maxRecursionDepth)
         {
-            return Tools.JSValueToObjectString(v, maxRecursionDepth, 0);
+            return JSValueToObjectString(v, maxRecursionDepth, 0);
         }
 
         internal static string JSValueToObjectString(JSValue v, int maxRecursionDepth, int recursionDepth = 0)
@@ -2193,14 +2093,14 @@ namespace JS.Core.Core
             switch (v.ValueType)
             {
                 case JSValueType.String:
-                    return "\"" + v.ToString() + "\"";
+                    return "\"" + v + "\"";
                 case JSValueType.Date:
-                    string dstr = v.ToString();
+                    var dstr = v.ToString();
                     if (dstr == "Invalid date")
                         return dstr;
                     return "Date " + dstr;
                 case JSValueType.Function:
-                    NiL.JS.BaseLibrary.Function f = v.Value as NiL.JS.BaseLibrary.Function;
+                    var f = v.Value as Function;
                     if (f == null)
                         return v.ToString();
                     if (recursionDepth >= maxRecursionDepth)
@@ -2215,36 +2115,36 @@ namespace JS.Core.Core
                     if (v.Value is RegExp)
                         return v.ToString();
 
-                    if (v.Value is NiL.JS.BaseLibrary.Array
-                        || v.Value == Context.CurrentGlobalContext.GetPrototype(typeof(NiL.JS.BaseLibrary.Array))
-                        || v == Context.CurrentGlobalContext.GetPrototype(typeof(NiL.JS.BaseLibrary.Array)))
+                    if (v.Value is Array
+                        || v.Value == Context.CurrentGlobalContext.GetPrototype(typeof(Array))
+                        || v == Context.CurrentGlobalContext.GetPrototype(typeof(Array)))
                     {
-                        NiL.JS.BaseLibrary.Array a = v.Value as NiL.JS.BaseLibrary.Array;
+                        var a = v.Value as Array;
                         StringBuilder s;
 
                         if (a == null) // v == Array.prototype
                         {
                             s = new StringBuilder("Array [ ");
-                            int j = 0;
+                            var j = 0;
                             for (var e = v.GetEnumerator(true, EnumerationMode.RequireValues); e.MoveNext();)
                             {
                                 if (j++ > 0)
                                     s.Append(", ");
                                 s.Append(e.Current.Key).Append(": ");
-                                s.Append(Tools.JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
+                                s.Append(JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
                             }
                             s.Append(" ]");
                             return s.ToString();
                         }
 
-                        long len = (long)a.length;
+                        var len = (long)a.length;
 
                         if (recursionDepth >= maxRecursionDepth)
                             return $"Array[{len}]";
 
                         s = new StringBuilder($"Array ({len}) [ ");
-                        int i = 0;
-                        int undefs = 0;
+                        var i = 0;
+                        var undefs = 0;
                         for (i = 0; i < len; i++)
                         {
                             var val = a[i];
@@ -2256,7 +2156,7 @@ namespace JS.Core.Core
                                 {
                                     s.Append(" x ").Append(undefs);
                                     s.Append(", ");
-                                    s.Append(Tools.JSValueToObjectString(val, maxRecursionDepth, recursionDepth + 1));
+                                    s.Append(JSValueToObjectString(val, maxRecursionDepth, recursionDepth + 1));
                                     undefs = 0;
                                 }
                             }
@@ -2271,7 +2171,7 @@ namespace JS.Core.Core
                                     undefs = 0;
                                 if (i > 0)
                                     s.Append(", ");
-                                s.Append(Tools.JSValueToObjectString(val, maxRecursionDepth, recursionDepth + 1));
+                                s.Append(JSValueToObjectString(val, maxRecursionDepth, recursionDepth + 1));
                             }
                         }
                         if (undefs > 0)
@@ -2284,7 +2184,7 @@ namespace JS.Core.Core
                                 if (i++ > 0)
                                     s.Append(", ");
                                 s.Append(e.Current.Key).Append(": ");
-                                s.Append(Tools.JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
+                                s.Append(JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
                             }
                         }
                         s.Append(" ]");
@@ -2293,27 +2193,26 @@ namespace JS.Core.Core
                     }
                     else
                     {
-                        string typeName = Tools.GetTypeName(v);
+                        var typeName = GetTypeName(v);
                         if (recursionDepth >= maxRecursionDepth)
                             return typeName;
 
-                        StringBuilder s = new StringBuilder(typeName);
+                        var s = new StringBuilder(typeName);
                         s.Append(" { ");
 
-                        JSObject o = v as JSObject;
-                        if (o == null)
+                        if (!(v is JSObject o))
                             o = v._oValue as JSObject;
                         if (o == null)
                             return v.ToString();
 
 
-                        int i = 0;
+                        var i = 0;
                         for (var e = o.GetEnumerator(true, EnumerationMode.RequireValues); e.MoveNext();)
                         {
                             if (i++ > 0)
                                 s.Append(", ");
                             s.Append(e.Current.Key).Append(": ");
-                            s.Append(Tools.JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
+                            s.Append(JSValueToObjectString(e.Current.Value, maxRecursionDepth, recursionDepth + 1));
                         }
 
                         s.Append(" }");
@@ -2334,9 +2233,7 @@ namespace JS.Core.Core
                 if (v._oValue == null)
                     return "null";
 
-                var o = v as ObjectWrapper;
-                if (o == null)
-                    o = v._oValue as ObjectWrapper;
+                var o = v as ObjectWrapper ?? v._oValue as ObjectWrapper;
                 if (o != null)
                     return o.Value.ToString();
             }
@@ -2350,53 +2247,53 @@ namespace JS.Core.Core
             if (args == null)
                 return null;
 
-            IEnumerable ie = args;
+            var ie = args;
             if (args is IEnumerable<KeyValuePair<string, JSValue>>)
-                ie = (args as IEnumerable<KeyValuePair<string, JSValue>>).Select((x) => x.Value);
+                ie = (args as IEnumerable<KeyValuePair<string, JSValue>>).Select(x => x.Value);
 
             var e = ie.GetEnumerator();
             if (!e.MoveNext())
                 return null;
 
-            object o = e.Current;
-            JSValue v = o as JSValue;
+            var o = e.Current;
+            var v = o as JSValue;
             string f = null;
 
-            if (f == null && o != null && (o is string))
+            if (o is string)
                 f = v.ToString();
             if (f == null && v != null && v.ValueType == JSValueType.String)
                 f = v.ToString();
 
-            bool hasNext = e.MoveNext();
+            var hasNext = e.MoveNext();
 
             var s = new StringBuilder();
 
             if (f != null && hasNext)
             {
-                int pos = 0;
+                var pos = 0;
                 while (pos < f.Length && hasNext)
                 {
                     v = (o = e.Current) as JSValue;
-                    bool usedArg = false;
+                    var usedArg = false;
 
-                    int next = f.IndexOf('%', pos);
+                    var next = f.IndexOf('%', pos);
                     if (next < 0 || next == f.Length - 1)
                         break;
                     if (next > 0)
                         s.Append(f.Substring(pos, next - pos));
                     pos = next; // now: f[pos] == '%'
 
-                    bool include = false;
-                    int len = 2;
+                    var include = false;
+                    var len = 2;
 
-                    char c = f[pos + 1];
+                    var c = f[pos + 1];
 
-                    int para = -1; // the int parameter after "%."
+                    var para = -1; // the int parameter after "%."
                     if (c == '.') // expected format: "%.0000f"
                     {
                         while (pos + len < f.Length)
                         {
-                            if (Tools.IsDigit(f[pos + len]))
+                            if (IsDigit(f[pos + len]))
                                 len++;
                             else
                                 break;
@@ -2410,7 +2307,7 @@ namespace JS.Core.Core
                         {
                             long res = -1;
                             if (len > 2 && long.TryParse(f.Substring(pos + 2, len - 2), out res))
-                                para = (int)System.Math.Min(res, int.MaxValue);
+                                para = (int)Math.Min(res, int.MaxValue);
                         }
                         if (len > 2)
                             c = f[pos + len++];
@@ -2421,23 +2318,23 @@ namespace JS.Core.Core
                     {
                         case 's':
                             if (v != null)
-                                s.Append(Tools.JSValueToString(v));
+                                s.Append(JSValueToString(v));
                             else
-                                s.Append((o ?? "null").ToString());
+                                s.Append((o ?? "null"));
 
                             usedArg = true;
                             break;
                         case 'o':
                         case 'O':
-                            int maxRec = (c == 'o') ? 1 : 2;
+                            var maxRec = (c == 'o') ? 1 : 2;
                             if (v != null)
-                                s.Append(Tools.JSValueToObjectString(v, maxRec));
+                                s.Append(JSValueToObjectString(v, maxRec));
                             else if (o == null)
                                 s.Append("null");
                             else if (o is string || o is char || o is StringBuilder)
-                                s.Append('"').Append(o.ToString()).Append('"');
+                                s.Append('"').Append(o).Append('"');
                             else
-                                s.Append((o ?? "null").ToString());
+                                s.Append((o));
 
                             usedArg = true;
                             break;
@@ -2445,15 +2342,15 @@ namespace JS.Core.Core
                         case 'd':
                             d = double.NaN;
                             if (v != null)
-                                d = (double)Tools.JSObjectToNumber(v);
-                            else if (!Tools.ParseNumber((o ?? "null").ToString(), out d, 0))
+                                d = (double)JSObjectToNumber(v);
+                            else if (!ParseNumber((o ?? "null").ToString(), out d, 0))
                                 d = double.NaN;
 
                             if (double.IsNaN(d) || double.IsInfinity(d))
                                 d = 0.0;
-                            d = System.Math.Truncate(d);
+                            d = Math.Truncate(d);
 
-                            string dstr = Tools.DoubleToString(System.Math.Abs(d));
+                            var dstr = DoubleToString(Math.Abs(d));
                             if (d < 0)
                                 s.Append('-');
                             if (dstr.Length < para)
@@ -2465,13 +2362,13 @@ namespace JS.Core.Core
                         case 'f':
                             d = double.NaN;
                             if (v != null)
-                                d = (double)Tools.JSObjectToNumber(v);
-                            else if (!Tools.ParseNumber((o ?? "null").ToString(), out d, 0))
+                                d = (double)JSObjectToNumber(v);
+                            else if (!ParseNumber((o ?? "null").ToString(), out d, 0))
                                 d = double.NaN;
 
                             if (para >= 0)
-                                d = System.Math.Round(d, System.Math.Min(15, para));
-                            s.Append(Tools.DoubleToString(d));
+                                d = Math.Round(d, Math.Min(15, para));
+                            s.Append(DoubleToString(d));
 
                             usedArg = true;
                             break;
@@ -2503,12 +2400,12 @@ namespace JS.Core.Core
                     if (v != null)
                     {
                         if (v.ValueType == JSValueType.Object)
-                            s.Append(Tools.JSValueToObjectString(v));
+                            s.Append(JSValueToObjectString(v));
                         else
-                            s.Append(v.ToString());
+                            s.Append(v);
                     }
                     else
-                        s.Append((o ?? "null").ToString());
+                        s.Append((o ?? "null"));
                     hasNext = e.MoveNext();
                 }
             }
@@ -2517,12 +2414,12 @@ namespace JS.Core.Core
                 if (v != null)
                 {
                     if (v.ValueType == JSValueType.Object)
-                        s.Append(Tools.JSValueToObjectString(v));
+                        s.Append(JSValueToObjectString(v));
                     else
-                        s.Append(v.ToString());
+                        s.Append(v);
                 }
                 else
-                    s.Append((o ?? "null").ToString());
+                    s.Append((o ?? "null"));
 
                 while (hasNext)
                 {
@@ -2531,12 +2428,12 @@ namespace JS.Core.Core
                     if (v != null)
                     {
                         if (v.ValueType == JSValueType.Object)
-                            s.Append(Tools.JSValueToObjectString(v));
+                            s.Append(JSValueToObjectString(v));
                         else
-                            s.Append(v.ToString());
+                            s.Append(v);
                     }
                     else
-                        s.Append((o ?? "null").ToString());
+                        s.Append((o ?? "null"));
                     hasNext = e.MoveNext();
                 }
             }

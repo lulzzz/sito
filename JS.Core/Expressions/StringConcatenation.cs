@@ -55,22 +55,13 @@ namespace JS.Core.Expressions
 
         private static object prep(JSValue x)
         {
-            if (x._valueType == JSValueType.String)
-            {
-                return x._oValue;
-            }
+            if (x._valueType == JSValueType.String) return x._oValue;
 
-            if (x._valueType == JSValueType.Date)
-                x = x.ToPrimitiveValue_String_Value();
-            else
-                x = x.ToPrimitiveValue_Value_String();
+            x = x._valueType == JSValueType.Date
+                ? x.ToPrimitiveValue_String_Value()
+                : x.ToPrimitiveValue_Value_String();
 
-            if (x._valueType == JSValueType.String)
-            {
-                return x._oValue;
-            }
-
-            return x.BaseToString();
+            return x._valueType == JSValueType.String ? x._oValue : x.BaseToString();
         }
 
         public override JSValue Evaluate(Context context)

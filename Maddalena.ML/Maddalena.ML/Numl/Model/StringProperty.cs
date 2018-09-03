@@ -114,11 +114,11 @@ namespace Maddalena.Numl.Model
         {
             // check for valid dictionary
             if (Dictionary == null || Dictionary.Length == 0)
-                throw new InvalidOperationException(string.Format("{0} dictionaries do not exist.", Name));
+                throw new InvalidOperationException($"{Name} dictionaries do not exist.");
 
             // sanitize string
-            string s = "";
-            if (o == null || string.IsNullOrEmpty(o.ToString()) || string.IsNullOrWhiteSpace(o.ToString()))
+            var s = "";
+            if (string.IsNullOrEmpty(o?.ToString()) || string.IsNullOrWhiteSpace(o.ToString()))
                 s = StringHelpers.EMPTY_STRING;
             else
                 s = o.ToString();
@@ -138,14 +138,10 @@ namespace Maddalena.Numl.Model
             // add exclusions
             if (!string.IsNullOrEmpty(file) && !string.IsNullOrWhiteSpace(file) && File.Exists(file))
             {
-                Regex regex;
-                if (SplitType == StringSplitType.Word)
-                    regex = new Regex(@"\w+", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                else
-                    regex = new Regex(@"\w", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                var regex = SplitType == StringSplitType.Word ? new Regex(@"\w+", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase) : new Regex(@"\w", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-                List<string> exclusionList = new List<string>();
-                using (StreamReader sr = File.OpenText(file))
+                var exclusionList = new List<string>();
+                using (var sr = File.OpenText(file))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)

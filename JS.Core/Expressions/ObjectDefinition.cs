@@ -94,14 +94,7 @@ namespace JS.Core.Expressions
                     }
 
                     CodeNode initializer;
-                    if (state.Code[i] == '(')
-                    {
-                        initializer = FunctionDefinition.Parse(state, ref i, asterisk ? FunctionKind.AnonymousGenerator : FunctionKind.AnonymousFunction);
-                    }
-                    else
-                    {
-                        initializer = ExpressionTree.Parse(state, ref i);
-                    }
+                    initializer = state.Code[i] == '(' ? FunctionDefinition.Parse(state, ref i, asterisk ? FunctionKind.AnonymousGenerator : FunctionKind.AnonymousFunction) : ExpressionTree.Parse(state, ref i);
 
                     switch (state.Code[s])
                     {
@@ -127,7 +120,7 @@ namespace JS.Core.Expressions
                     i = s;
                     var mode = state.Code[i] == 's' ? FunctionKind.Setter : FunctionKind.Getter;
                     var propertyAccessor = FunctionDefinition.Parse(state, ref i, mode) as FunctionDefinition;
-                    var accessorName = propertyAccessor._name;
+                    var accessorName = propertyAccessor.Name;
                     if (!flds.ContainsKey(accessorName))
                     {
                         var propertyPair = new PropertyPair
@@ -273,10 +266,10 @@ namespace JS.Core.Expressions
                 var val = Values[i].Evaluate(context);
                 val = val.CloneImpl(false);
                 val._attributes = JSValueAttributesInternal.None;
-                if (this.FieldNames[i] == "__proto__")
+                if (FieldNames[i] == "__proto__")
                     res.__proto__ = val._oValue as JSObject;
                 else
-                    res._fields[this.FieldNames[i]] = val;
+                    res._fields[FieldNames[i]] = val;
             }
 
             for (var i = 0; i < ComputedProperties.Length; i++)
@@ -307,8 +300,8 @@ namespace JS.Core.Expressions
                 {
                     if (existedValue.Is(JSValueType.Property) && value.Is(JSValueType.Property))
                     {
-                        var egs = existedValue.As<global::JS.Core.Core.PropertyPair>();
-                        var ngs = value.As<global::JS.Core.Core.PropertyPair>();
+                        var egs = existedValue.As<Core.PropertyPair>();
+                        var ngs = value.As<Core.PropertyPair>();
                         egs.getter = ngs.getter ?? egs.getter;
                         egs.setter = ngs.setter ?? egs.setter;
                     }

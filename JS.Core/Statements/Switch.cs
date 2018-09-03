@@ -43,7 +43,7 @@ namespace NiL.JS.Statements
 
         internal Switch(CodeNode[] body)
         {
-            this.Body = body;
+            Body = body;
         }
 
         internal static CodeNode Parse(ParseInfo state, ref int index)
@@ -59,7 +59,7 @@ namespace NiL.JS.Statements
             var funcs = new List<FunctionDefinition>();
             var cases = new List<SwitchCase>();
             CodeNode result = null;
-            cases.Add(new SwitchCase() { index = int.MaxValue });
+            cases.Add(new SwitchCase { index = int.MaxValue });
             state.AllowBreak.Push(true);
             var oldVariablesCount = state.Variables.Count;
             VariableDescriptor[] vars = null;
@@ -95,7 +95,7 @@ namespace NiL.JS.Statements
                             if (state.Code[i] != ':')
                                 ExceptionHelper.Throw((new SyntaxError("Expected \":\" at + " + CodeCoordinates.FromTextPosition(state.Code, i, 0))));
                             i++;
-                            cases.Add(new SwitchCase() { index = body.Count, statement = sample });
+                            cases.Add(new SwitchCase { index = body.Count, statement = sample });
                         }
                         else if (Parser.Validate(state.Code, "default", i) && Parser.IsIdentifierTerminator(state.Code[i + 7]))
                         {
@@ -154,10 +154,6 @@ namespace NiL.JS.Statements
 
         public override JSValue Evaluate(Context context)
         {
-#if DEBUG
-            if (Functions != null)
-                throw new InvalidOperationException();
-#endif
             JSValue imageValue = null;
             int caseIndex = 1;
             int lineIndex = Cases[0].index;
@@ -165,10 +161,7 @@ namespace NiL.JS.Statements
             if (context._executionMode >= ExecutionMode.Resume)
             {
                 var sdata = context.SuspendData[this] as SuspendData;
-                if (sdata.imageValue == null)
-                    imageValue = image.Evaluate(context);
-                else
-                    imageValue = sdata.imageValue;
+                imageValue = sdata.imageValue ?? image.Evaluate(context);
                 caseIndex = sdata.caseIndex;
                 lineIndex = sdata.lineIndex;
             }
@@ -181,7 +174,7 @@ namespace NiL.JS.Statements
             }
             if (context._executionMode == ExecutionMode.Suspend)
             {
-                context.SuspendData[this] = new SuspendData() { caseIndex = 1 };
+                context.SuspendData[this] = new SuspendData { caseIndex = 1 };
                 return null;
             }
 
@@ -193,7 +186,7 @@ namespace NiL.JS.Statements
                 var cseResult = Cases[caseIndex].statement.Evaluate(context);
                 if (context._executionMode == ExecutionMode.Suspend)
                 {
-                    context.SuspendData[this] = new SuspendData()
+                    context.SuspendData[this] = new SuspendData
                     {
                         caseIndex = caseIndex,
                         imageValue = imageValue
@@ -222,7 +215,7 @@ namespace NiL.JS.Statements
                     }
                     else if (context._executionMode == ExecutionMode.Suspend)
                     {
-                        context.SuspendData[this] = new SuspendData()
+                        context.SuspendData[this] = new SuspendData
                         {
                             caseIndex = caseIndex,
                             imageValue = imageValue,
@@ -255,7 +248,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 image
             };
@@ -277,7 +270,7 @@ namespace NiL.JS.Statements
             {
                 if (Body[i] == null)
                     continue;
-                var cn = Body[i] as CodeNode;
+                var cn = Body[i];
                 cn.Optimize(ref cn, owner, message, opts, stats);
                 Body[i] = cn;
             }

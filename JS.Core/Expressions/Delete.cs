@@ -27,11 +27,12 @@ namespace JS.Core.Expressions
             if (temp._valueType < JSValueType.Undefined)
                 return true;
 
-            else if ((temp._attributes & JSValueAttributesInternal.Argument) != 0)
+            if ((temp._attributes & JSValueAttributesInternal.Argument) != 0)
             {
                 return false;
             }
-            else if ((temp._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+
+            if ((temp._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
             {
                 if ((temp._attributes & JSValueAttributesInternal.SystemObject) == 0)
                 {
@@ -41,7 +42,8 @@ namespace JS.Core.Expressions
 
                 return true;
             }
-            else if (context._strict)
+
+            if (context._strict)
             {
                 ExceptionHelper.Throw(new TypeError("Can not delete property \"" + _left + "\"."));
             }
@@ -65,13 +67,13 @@ namespace JS.Core.Expressions
                 _this = new DeleteProperty(gme._left, gme._right);
                 return false;
             }
-            var f = _left as VariableReference ?? ((_left is AssignmentOperatorCache) ? (_left as AssignmentOperatorCache).Source as VariableReference : null);
+            var f = _left as VariableReference ?? (_left as AssignmentOperatorCache)?.Source as VariableReference;
             if (f != null)
             {
-                if (f.Descriptor.IsDefined && message != null)
-                    message(MessageLevel.Warning, Position, Length, "Tring to delete defined variable." + ((codeContext & CodeContext.Strict) != 0 ? " In strict mode it cause exception." : " It is not allowed"));
+                if (f.Descriptor.IsDefined)
+                    message?.Invoke(MessageLevel.Warning, Position, Length, "Tring to delete defined variable." + ((codeContext & CodeContext.Strict) != 0 ? " In strict mode it cause exception." : " It is not allowed"));
                 (f.Descriptor.assignments ??
-                    (f.Descriptor.assignments = new System.Collections.Generic.List<Expression>())).Add(this);
+                    (f.Descriptor.assignments = new List<Expression>())).Add(this);
             }
             return false;
         }

@@ -51,9 +51,9 @@ namespace JS.Core.Core.Functions
             if (_length == null)
                 _length = new Number(0);
             _length._iValue = proto.length._iValue;
-            this.original = proto;
-            this._thisBind = args[0];
-            this.bindedArguments = args;
+            original = proto;
+            _thisBind = args[0];
+            bindedArguments = args;
             if (args.length > 0)
             {
                 args.length--;

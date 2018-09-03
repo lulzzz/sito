@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JS.Core.Core;
 using JS.Core.Expressions;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -22,7 +23,7 @@ namespace NiL.JS.Statements
             if (!Parser.Validate(state.Code, "with (", ref i) && !Parser.Validate(state.Code, "with(", ref i))
                 return null;
             if (state.strict)
-                ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("WithStatement is not allowed in strict mode.")));
+                ExceptionHelper.Throw((new SyntaxError("WithStatement is not allowed in strict mode.")));
 
             state.message?.Invoke(MessageLevel.CriticalWarning, index, 4, "Do not use \"with\".");
 
@@ -30,7 +31,7 @@ namespace NiL.JS.Statements
             while (Tools.IsWhiteSpace(state.Code[i]))
                 i++;
             if (state.Code[i] != ')')
-                ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("Invalid syntax WithStatement.")));
+                ExceptionHelper.Throw((new SyntaxError("Invalid syntax WithStatement.")));
             do
                 i++;
             while (Tools.IsWhiteSpace(state.Code[i]));
@@ -60,7 +61,7 @@ namespace NiL.JS.Statements
 
             var pos = index;
             index = i;
-            return new With()
+            return new With
             {
                 _scope = obj,
                 _body = body,
@@ -96,7 +97,7 @@ namespace NiL.JS.Statements
             }
 
             intcontext = new WithContext(scopeObject, context);
-            action = (c) =>
+            action = c =>
             {
                 try
                 {
@@ -126,7 +127,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 _body,
                 _scope
@@ -146,11 +147,9 @@ namespace NiL.JS.Statements
 
         public override void Optimize(ref CodeNode _this, FunctionDefinition owner, InternalCompilerMessageCallback message, Options opts, FunctionInfo stats)
         {
-            if (_scope != null)
-                _scope.Optimize(ref _scope, owner, message, opts, stats);
+            _scope?.Optimize(ref _scope, owner, message, opts, stats);
 
-            if (_body != null)
-                _body.Optimize(ref _body, owner, message, opts, stats);
+            _body?.Optimize(ref _body, owner, message, opts, stats);
 
             if (_body == null)
                 _this = _scope;
@@ -158,10 +157,8 @@ namespace NiL.JS.Statements
 
         public override void Decompose(ref CodeNode self)
         {
-            if (_scope != null)
-                _scope.Decompose(ref _scope);
-            if (_body != null)
-                _body.Decompose(ref _body);
+            _scope?.Decompose(ref _scope);
+            _body?.Decompose(ref _body);
         }
 
         public override void RebuildScope(FunctionInfo functionInfo, Dictionary<string, VariableDescriptor> transferedVariables, int scopeBias)
@@ -170,28 +167,26 @@ namespace NiL.JS.Statements
 
             var tempVariables = new Dictionary<string, VariableDescriptor>();
             _body?.RebuildScope(functionInfo, tempVariables, scopeBias + 1);
-            if (tempVariables != null)
-            {
-                var block = _body as CodeBlock;
-                if (block != null)
-                {
-                    var variables = new List<VariableDescriptor>();
-                    foreach (var variable in tempVariables)
-                    {
-                        if ((variable.Value is ParameterDescriptor) || !(variable.Value.initializer is FunctionDefinition))
-                        {
-                            transferedVariables.Add(variable.Key, variable.Value);
-                        }
-                        else
-                        {
-                            variables.Add(variable.Value);
-                        }
-                    }
 
-                    block._variables = variables.ToArray();
-                    block._suppressScopeIsolation = block._variables.Length == 0 ? SuppressScopeIsolationMode.Suppress : SuppressScopeIsolationMode.DoNotSuppress;
+            if (!(_body is CodeBlock block)) return;
+
+            var variables = new List<VariableDescriptor>();
+            foreach (var variable in tempVariables)
+            {
+                if ((variable.Value is ParameterDescriptor) || !(variable.Value.initializer is FunctionDefinition))
+                {
+                    transferedVariables.Add(variable.Key, variable.Value);
+                }
+                else
+                {
+                    variables.Add(variable.Value);
                 }
             }
+
+            block._variables = variables.ToArray();
+            block._suppressScopeIsolation = block._variables.Length == 0
+                ? SuppressScopeIsolationMode.Suppress
+                : SuppressScopeIsolationMode.DoNotSuppress;
         }
 
         public override string ToString()

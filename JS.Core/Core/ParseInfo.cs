@@ -53,10 +53,8 @@ namespace JS.Core.Core
                 intConstants[value] = jsvalue;
                 return jsvalue;
             }
-            else
-            {
-                return intConstants[value];
-            }
+
+            return intConstants[value];
         }
     }
 

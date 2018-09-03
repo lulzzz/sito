@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -57,7 +58,7 @@ namespace JS.Core.Core
         public SparseArray(TValue[] values)
         {
             Mode = ArrayMode.Flat;
-            this._values = values;
+            _values = values;
             _navyData = emptyNavyData;
             _allocatedCount = (Length = (uint)values.Length);
         }
@@ -68,7 +69,7 @@ namespace JS.Core.Core
         {
             for (var i = 0; i < _allocatedCount; i++)
             {
-                if (object.Equals(_values[i], item))
+                if (Equals(_values[i], item))
                 {
                     if (Mode == ArrayMode.Flat)
                         return i;
@@ -128,7 +129,8 @@ namespace JS.Core.Core
                     {
                         return default(TValue);
                     }
-                    else if (_navyData[i].index == unsignedIndex)
+
+                    if (_navyData[i].index == unsignedIndex)
                     {
                         return _values[i];
                     }
@@ -220,7 +222,8 @@ namespace JS.Core.Core
                             this[(int)oi] = ov;
                         return;
                     }
-                    else if (_navyData[i].index < unsignedIndex)
+
+                    if (_navyData[i].index < unsignedIndex)
                     {
                         var b = (unsignedIndex & (1 << bi)) == 0;
                         ni = b ? _navyData[i].zeroContinue : _navyData[i].oneContinue;
@@ -325,7 +328,7 @@ namespace JS.Core.Core
                 yield return this[(int)i];
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -562,7 +565,7 @@ namespace JS.Core.Core
             {
                 for (var i = _values.Length; i-- > 0;)
                 {
-                    if (!object.Equals(_values[i], default(TValue)))
+                    if (!Equals(_values[i], default(TValue)))
                     {
                         len = i;
                         break;
@@ -573,7 +576,7 @@ namespace JS.Core.Core
             {
                 for (var i = _allocatedCount; i-- > 0;)
                 {
-                    if (_navyData[i].index > len && !object.Equals(_values[i], default(TValue)))
+                    if (_navyData[i].index > len && !Equals(_values[i], default(TValue)))
                         len = _navyData[i].index;
                 }
             }

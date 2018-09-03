@@ -3,10 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NiL.JS.BaseLibrary;
 using System.Text;
 using JS.Core.Core;
 using JS.Core.Expressions;
+using NiL.JS.BaseLibrary;
+using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Expression = System.Linq.Expressions.Expression;
+using Math = System.Math;
 
 namespace NiL.JS.Statements
 {
@@ -30,12 +33,7 @@ namespace NiL.JS.Statements
         internal static readonly VariableDescriptor[] emptyVariables = new VariableDescriptor[0];
 
         private string code;
-#if (NET40 || INLINE) && JIT
         internal Func<Context, JSObject> compiledVersion;
-#endif
-#if DEBUG
-        internal HashSet<string> directives;
-#endif
         internal VariableDescriptor[] _variables;
         internal CodeNode[] _lines;
         internal bool _strict;
@@ -58,10 +56,7 @@ namespace NiL.JS.Statements
         public override int Length
         {
             get => base.Length < 0 ? -base.Length : base.Length;
-            internal set
-            {
-                base.Length = value;
-            }
+            internal set => base.Length = value;
         }
 
         public CodeBlock(CodeNode[] body)
@@ -209,10 +204,7 @@ namespace NiL.JS.Statements
                 _variables = variables ?? emptyVariables,
                 Position = startPos,
                 code = state.SourceCode,
-                Length = position - startPos,
-#if DEBUG
-                directives = directives
-#endif
+                Length = position - startPos
             };
         }
 
@@ -222,7 +214,7 @@ namespace NiL.JS.Statements
             var count = 0;
             for (var i = oldVariablesCount; i < state.Variables.Count; i++)
             {
-                if (state.Variables[i].definitionScopeLevel == state.lexicalScopeLevel)
+                if (state.Variables[i].DefinitionScopeLevel == state.lexicalScopeLevel)
                     count++;
             }
 
@@ -235,7 +227,7 @@ namespace NiL.JS.Statements
 
                 for (int i = oldVariablesCount, targetIndex = 0; i < state.Variables.Count; i++)
                 {
-                    if (state.Variables[i].definitionScopeLevel == state.lexicalScopeLevel)
+                    if (state.Variables[i].DefinitionScopeLevel == state.lexicalScopeLevel)
                     {
                         variables[targetIndex] = state.Variables[i];
                         if (declaredVariables != null)
@@ -350,16 +342,16 @@ namespace NiL.JS.Statements
                         System.Diagnostics.Debugger.Break();
                     else
                         throw new ApplicationException("notExists has been rewitten");
-                if (BaseLibrary.Boolean.False._valueType != JSValueType.Boolean
-                    || BaseLibrary.Boolean.False._iValue != 0
-                    || BaseLibrary.Boolean.False._attributes != JSValueAttributesInternal.SystemObject)
+                if (Boolean.False._valueType != JSValueType.Boolean
+                    || Boolean.False._iValue != 0
+                    || Boolean.False._attributes != JSValueAttributesInternal.SystemObject)
                     if (System.Diagnostics.Debugger.IsAttached)
                         System.Diagnostics.Debugger.Break();
                     else
                         throw new ApplicationException("Boolean.False has been rewitten");
-                if (BaseLibrary.Boolean.True._valueType != JSValueType.Boolean
-                    || BaseLibrary.Boolean.True._iValue != 1
-                    || BaseLibrary.Boolean.True._attributes != JSValueAttributesInternal.SystemObject)
+                if (Boolean.True._valueType != JSValueType.Boolean
+                    || Boolean.True._iValue != 1
+                    || Boolean.True._attributes != JSValueAttributesInternal.SystemObject)
                     if (System.Diagnostics.Debugger.IsAttached)
                         System.Diagnostics.Debugger.Break();
                     else
@@ -418,7 +410,7 @@ namespace NiL.JS.Statements
                 for (var i = 0; i < _variables.Length; i++)
                 {
                     VariableDescriptor desc = null;
-                    if (variables.TryGetValue(_variables[i].name, out desc) && desc.definitionScopeLevel < _variables[i].definitionScopeLevel)
+                    if (variables.TryGetValue(_variables[i].name, out desc) && desc.DefinitionScopeLevel < _variables[i].DefinitionScopeLevel)
                     {
                         if (variablesToRestore == null)
                             variablesToRestore = new List<VariableDescriptor>();
@@ -434,9 +426,9 @@ namespace NiL.JS.Statements
                 {
                     Parser.Build(
                         ref _variables[i].initializer,
-                        System.Math.Max(2, expressionDepth),
+                        Math.Max(2, expressionDepth),
                         variables,
-                        codeContext | (this._strict ? CodeContext.Strict : CodeContext.None),
+                        codeContext | (_strict ? CodeContext.Strict : CodeContext.None),
                         message,
                         stats,
                         opts);
@@ -462,7 +454,7 @@ namespace NiL.JS.Statements
                         if (unreachable && message != null)
                             message(MessageLevel.CriticalWarning, _lines[i].Position, _lines[i].Length, "Unreachable code detected.");
                         var cn = _lines[i];
-                        Parser.Build(ref cn, (codeContext & CodeContext.InEval) != 0 ? 2 : System.Math.Max(1, expressionDepth), variables, codeContext | (this._strict ? CodeContext.Strict : CodeContext.None), message, stats, opts);
+                        Parser.Build(ref cn, (codeContext & CodeContext.InEval) != 0 ? 2 : Math.Max(1, expressionDepth), variables, codeContext | (_strict ? CodeContext.Strict : CodeContext.None), message, stats, opts);
                         if (cn is Empty)
                             _lines[i] = null;
                         else
@@ -568,7 +560,7 @@ namespace NiL.JS.Statements
 
             for (int i = 0; i < _lines.Length; i++)
             {
-                var cn = _lines[i] as CodeNode;
+                var cn = _lines[i];
                 cn.Optimize(ref cn, owner, message, opts, stats);
                 _lines[i] = cn;
             }
@@ -640,10 +632,10 @@ namespace NiL.JS.Statements
 
                 for (var i = 0; i < initialVariables.Length; i++)
                 {
-                    if (initialVariables[i].definitionScopeLevel != -1)
+                    if (initialVariables[i].DefinitionScopeLevel != -1)
                     {
-                        initialVariables[i].definitionScopeLevel -= initialVariables[i].scopeBias;
-                        initialVariables[i].definitionScopeLevel += scopeBias;
+                        initialVariables[i].DefinitionScopeLevel -= initialVariables[i].scopeBias;
+                        initialVariables[i].DefinitionScopeLevel += scopeBias;
                     }
 
                     initialVariables[i].scopeBias = scopeBias;
@@ -700,14 +692,14 @@ namespace NiL.JS.Statements
                 if (isArg && v.initializer == null)
                     continue;
 
-                var f = new JSValue()
+                var f = new JSValue
                 {
                     _valueType = JSValueType.Undefined,
                     _attributes = JSValueAttributesInternal.DoNotDelete
                 };
                 v.cacheRes = f;
                 v.cacheContext = context;
-                if (v.definitionScopeLevel < 0 || v.captured || cew)
+                if (v.DefinitionScopeLevel < 0 || v.captured || cew)
                     (context._variables ?? (context._variables = JSObject.getFieldsContainer()))[v.name] = f;
                 if (v.initializer != null)
                     f.Assign(v.initializer.Evaluate(context));
@@ -720,7 +712,7 @@ namespace NiL.JS.Statements
         }
 
 #if !PORTABLE
-        internal override System.Linq.Expressions.Expression TryCompile(bool selfCompile, bool forAssign, Type expectedType, List<CodeNode> dynamicValues)
+        internal override Expression TryCompile(bool selfCompile, bool forAssign, Type expectedType, List<CodeNode> dynamicValues)
         {
             for (int i = _variables.Length; i-- > 0;)
                 if (_variables[i].initializer != null)
@@ -765,17 +757,15 @@ namespace NiL.JS.Statements
                 }
                 return res.Append("}").ToString();
             }
-            else
-            {
-                if (base.Length > 0)
-                {
-                    Length = -base.Length;
-                    if (Position > 0)
-                        code = code.Substring(Position + 1, Length - 2);
-                }
 
-                return '{' + code + '}';
+            if (base.Length > 0)
+            {
+                Length = -base.Length;
+                if (Position > 0)
+                    code = code.Substring(Position + 1, Length - 2);
             }
+
+            return '{' + code + '}';
         }
     }
 }

@@ -43,7 +43,6 @@ namespace NiL.JS.BaseLibrary
         public override int BYTES_PER_ELEMENT => sizeof(float);
 
         public Float32Array()
-            : base()
         {
         }
 

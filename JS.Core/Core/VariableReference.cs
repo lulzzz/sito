@@ -45,11 +45,6 @@ namespace JS.Core.Core
 
         protected internal override PredictedType ResultType => _descriptor.lastPredictedType;
 
-        protected VariableReference()
-        {
-
-        }
-
         protected internal override CodeNode[] GetChildsImpl()
         {
             return null;

@@ -29,7 +29,6 @@ namespace JS.Core.Expressions
                 if (_left.ResultType == PredictedType.Number && _right.ResultType == PredictedType.Number)
                 {
                     _this = new NumberMoreOrEqual(_left, _right);
-                    return;
                 }
         }
 

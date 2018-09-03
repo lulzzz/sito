@@ -55,8 +55,7 @@ namespace NiL.JS.BaseLibrary
         {
             if (ll == LogLevel.Error)
                 return Console.Error;
-            else
-                return Console.Out;
+            return Console.Out;
         }
 
         internal void LogArguments(LogLevel level, Arguments args)
@@ -192,7 +191,7 @@ namespace NiL.JS.BaseLibrary
             if (args[0] == null)
                 return log(args);
 
-            var a = args[0].Value as BaseLibrary.Array;
+            var a = args[0].Value as Array;
             if (a == null)
                 return log(args);
 
@@ -204,7 +203,7 @@ namespace NiL.JS.BaseLibrary
             HashSet<string> filter = null;
             if (args[1] != null)
             {
-                var f = args[1].Value as BaseLibrary.Array;
+                var f = args[1].Value as Array;
                 if (f != null && (int)f.length > 0)
                 {
                     filter = new HashSet<string>();
@@ -266,18 +265,15 @@ namespace NiL.JS.BaseLibrary
                 }
 
                 indexWidth = System.Math.Max(indexWidth, i.ToString().Length);
-                d.Add(indexName, new string[] { i.ToString() });
+                d.Add(indexName, new[] { i.ToString() });
                 rows.Add(d);
             }
 
             if (rows.Count == 0 || cols.Count == 0)
                 return log(args);
 
-            List<string> colsN = new List<string> { indexName };
-            if (filter != null)
-                colsN.AddRange(filter.Where((x) => cols.ContainsKey(x)));
-            else
-                colsN.AddRange(cols.Select((x) => x.Key));
+            var colsN = new List<string> { indexName };
+            colsN.AddRange(filter != null ? filter.Where(x => cols.ContainsKey(x)) : cols.Select(x => x.Key));
             cols.Add(indexName, indexWidth);
             int columns = colsN.Count;
 

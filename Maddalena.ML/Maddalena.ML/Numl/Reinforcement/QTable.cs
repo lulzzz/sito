@@ -29,17 +29,17 @@ namespace Maddalena.Numl.Reinforcement
         {
             get
             {
-                IState s = this.Keys.FirstOrDefault(f => f.Id == state);
-                IAction a = this.GetKeys(s).FirstOrDefault(f => f.Id == action);
+                IState s = Keys.FirstOrDefault(f => f.Id == state);
+                IAction a = GetKeys(s).FirstOrDefault(f => f.Id == action);
 
                 return base[s, a];
             }
             set
             {
-                IState s = this.Keys.FirstOrDefault(f => f.Id == state);
-                IAction a = this.GetKeys(s).FirstOrDefault(f => f.Id == action);
+                var s = Keys.FirstOrDefault(f => f.Id == state);
+                var a = GetKeys(s).FirstOrDefault(f => f.Id == action);
 
-                this.AddOrUpdate(s, a, value);
+                AddOrUpdate(s, a, value);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Maddalena.Numl.Reinforcement
         /// </summary>
         public QTable()
         {
-            this.DefaultValue = -0.03;
+            DefaultValue = -0.03;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IEnumerable&lt;IAction&gt;</returns>
         public IEnumerable<IAction> GetActions(IState state)
         {
-            return this.GetKeys(state);
+            return GetKeys(state);
         }
 
         /// <summary>
@@ -69,10 +69,8 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IEnumerable&lt;IAction&gt;</returns>
         public IEnumerable<IAction> GetActions(int state)
         {
-            IState s = this.Keys.FirstOrDefault(f => f.Id == state);
-            if (s != null)
-                return this.GetActions(s);
-            return null;
+            var s = Keys.FirstOrDefault(f => f.Id == state);
+            return s != null ? GetActions(s) : null;
         }
 
         /// <summary>
@@ -83,11 +81,8 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IAction.</returns>
         public IAction GetMaxAction(IState state)
         {
-            var pairs = this.GetPairs(state);
-            if (pairs.Any())
-                return pairs.OrderByDescending(f => f.Value).Head(s => s.Key);
-            else
-                return this.DefaultAction;
+            var pairs = GetPairs(state);
+            return pairs.Any() ? pairs.OrderByDescending(f => f.Value).Head(s => s.Key) : DefaultAction;
         }
 
         /// <summary>
@@ -98,15 +93,15 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns>IAction.</returns>
         public int GetMaxAction(int state)
         {
-            IState sta = this.Keys.FirstOrDefault(f => f.Id == state);
+            IState sta = Keys.FirstOrDefault(f => f.Id == state);
             if (sta != null)
             {
-                var action = this.GetMaxAction(sta);
+                var action = GetMaxAction(sta);
                 if (action != null)
                     return action.Id;
             }
 
-            return (this.DefaultAction != null ? this.DefaultAction.Id : -1);
+            return DefaultAction?.Id ?? -1;
         }
     }
 }

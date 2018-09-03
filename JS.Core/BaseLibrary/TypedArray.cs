@@ -115,12 +115,12 @@ namespace NiL.JS.BaseLibrary
                 ExceptionHelper.Throw(new RangeError("buffer.byteLength is not alligned"));
             if (buffer.byteLength < byteOffset)
                 ExceptionHelper.Throw(new RangeError("Invalid offset"));
-            this.byteLength = System.Math.Min(buffer.byteLength - byteOffset, length * BYTES_PER_ELEMENT);
+            byteLength = System.Math.Min(buffer.byteLength - byteOffset, length * BYTES_PER_ELEMENT);
             this.buffer = buffer;
             this.length = new Number(byteLength / BYTES_PER_ELEMENT);
             this.byteOffset = byteOffset;
-            this._valueType = JSValueType.Object;
-            this._oValue = this;
+            _valueType = JSValueType.Object;
+            _oValue = this;
         }
 
         [DoNotEnumerate]
@@ -128,13 +128,13 @@ namespace NiL.JS.BaseLibrary
         {
             var src = Tools.arraylikeToArray(iterablyObject, true, false, false, -1);
             if (src._data.Length > int.MaxValue)
-                throw new System.OutOfMemoryException();
+                throw new OutOfMemoryException();
             var length = (int)src._data.Length;
-            this.buffer = new ArrayBuffer(length * BYTES_PER_ELEMENT);
+            buffer = new ArrayBuffer(length * BYTES_PER_ELEMENT);
             this.length = new Number(length);
-            this.byteLength = length * BYTES_PER_ELEMENT;
-            this._valueType = JSValueType.Object;
-            this._oValue = this;
+            byteLength = length * BYTES_PER_ELEMENT;
+            _valueType = JSValueType.Object;
+            _oValue = this;
             foreach (var item in src._data.ReversOrder)
                 this[item.Key] = item.Value;
         }

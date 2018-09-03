@@ -1,7 +1,6 @@
 ﻿//#define CALLSTACKTOSTRING
 
 using System;
-using System.Text;
 using JS.Core.Core;
 using JS.Core.Core.Interop;
 
@@ -36,7 +35,7 @@ namespace NiL.JS.BaseLibrary
         [DoNotEnumerate]
         public Error()
         {
-            name = this.GetType().Name;
+            name = GetType().Name;
             message = "";
 #if CALLSTACKTOSTRING
             makeCallStack();
@@ -46,7 +45,7 @@ namespace NiL.JS.BaseLibrary
         [DoNotEnumerate]
         public Error(Arguments args)
         {
-            name = this.GetType().Name;
+            name = GetType().Name;
             message = args[0].ToString();
 #if CALLSTACKTOSTRING
             makeCallStack();
@@ -56,7 +55,7 @@ namespace NiL.JS.BaseLibrary
         [DoNotEnumerate]
         public Error(string message)
         {
-            name = this.GetType().Name;
+            name = GetType().Name;
             this.message = message;
 #if CALLSTACKTOSTRING
             makeCallStack();

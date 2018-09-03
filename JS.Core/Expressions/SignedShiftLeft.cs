@@ -22,7 +22,7 @@ namespace JS.Core.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            _tempContainer._iValue = (int)(Tools.JSObjectToInt32(_left.Evaluate(context)) << Tools.JSObjectToInt32(_right.Evaluate(context)));
+            _tempContainer._iValue = Tools.JSObjectToInt32(_left.Evaluate(context)) << Tools.JSObjectToInt32(_right.Evaluate(context));
             _tempContainer._valueType = JSValueType.Integer;
             return _tempContainer;
         }

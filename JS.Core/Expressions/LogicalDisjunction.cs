@@ -25,8 +25,7 @@ namespace JS.Core.Expressions
             var left = _left.Evaluate(context);
             if ((bool)left)
                 return left;
-            else
-                return _right.Evaluate(context);
+            return _right.Evaluate(context);
         }
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)

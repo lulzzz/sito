@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using JS.Core.Core;
 using JS.Core.Core.Interop;
-using NiL.JS.Backward;
 
 namespace NiL.JS.BaseLibrary
 {
@@ -76,8 +75,8 @@ namespace NiL.JS.BaseLibrary
         {
             var stack = new Stack<StackFrame>();
             var pos = 0;
-            var revargs = reviewer != null ? new Arguments() { length = 2 } : null;
-            stack.Push(new StackFrame() { container = null, value = null, state = ParseState.Value });
+            var revargs = reviewer != null ? new Arguments { length = 2 } : null;
+            stack.Push(new StackFrame { container = null, value = null, state = ParseState.Value });
 
             while (code.Length > pos && isSpace(code[pos]))
                 pos++;
@@ -237,9 +236,9 @@ namespace NiL.JS.BaseLibrary
                                 ExceptionHelper.ThrowSyntaxError("Unexpected token.");
 
                             if (frame.state == ParseState.Array)
-                                frame = new StackFrame() { state = ParseState.Value, fieldName = (frame.valuesCount++).ToString(CultureInfo.InvariantCulture), container = frame.value };
+                                frame = new StackFrame { state = ParseState.Value, fieldName = (frame.valuesCount++).ToString(CultureInfo.InvariantCulture), container = frame.value };
                             else if (frame.state == ParseState.Object)
-                                frame = new StackFrame() { state = ParseState.Name, container = frame.value };
+                                frame = new StackFrame { state = ParseState.Name, container = frame.value };
                             else
                                 ExceptionHelper.ThrowSyntaxError("Unexpected token.");
 

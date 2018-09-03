@@ -21,11 +21,11 @@ namespace NiL.JS.BaseLibrary
 
             public Element(int index, ArrayBuffer parent)
             {
-                this._valueType = JSValueType.Integer;
+                _valueType = JSValueType.Integer;
                 this.index = index;
-                this._iValue = parent.data[index];
-                this.data = parent.data;
-                this._attributes |= JSValueAttributesInternal.Reassign;
+                _iValue = parent.data[index];
+                data = parent.data;
+                _attributes |= JSValueAttributesInternal.Reassign;
             }
 
             public override void Assign(JSValue value)
@@ -110,8 +110,7 @@ namespace NiL.JS.BaseLibrary
                 return this;
             if (l == 1)
                 return slice(Tools.JSObjectToInt32(args[0]), data.Length - 1);
-            else
-                return slice(Tools.JSObjectToInt32(args[0]), Tools.JSObjectToInt32(args[1]));
+            return slice(Tools.JSObjectToInt32(args[0]), Tools.JSObjectToInt32(args[1]));
         }
 
         [Hidden]

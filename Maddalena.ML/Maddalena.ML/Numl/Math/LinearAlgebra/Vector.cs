@@ -16,15 +16,15 @@ namespace Maddalena.Numl.Math.LinearAlgebra
     public partial class Vector : IEnumerable<double>
     {
         /// <summary>The vector.</summary>
-        private double[] _vector;
+        private readonly double[] _vector;
         /// <summary>true to as matrix reference.</summary>
-        private bool _asMatrixRef;
+        private readonly bool _asMatrixRef;
         /// <summary>true to as col.</summary>
         private readonly bool _asCol;
         /// <summary>The matrix.</summary>
         private readonly double[][] _matrix = null;
         /// <summary>Zero-based index of the static.</summary>
-        private int _staticIdx = -1;
+        private readonly int _staticIdx = -1;
         /// <summary>The transpose.</summary>
         private Matrix _transpose;
         /// <summary>

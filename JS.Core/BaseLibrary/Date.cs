@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using JS.Core.Core;
 using JS.Core.Core.Interop;
 
@@ -44,7 +45,7 @@ namespace NiL.JS.BaseLibrary
                                                 };
 
         private static readonly string[] daysOfWeek = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-        private static readonly string[] months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        private static readonly string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
         private long _time;
         private long _timeZoneOffset;
@@ -725,7 +726,7 @@ namespace NiL.JS.BaseLibrary
             "T" + getHoursImpl(false).ToString("00") +
             ":" + getMinutesImpl(false).ToString("00") +
             ":" + getSecondsImpl().ToString("00") +
-            "." + (getMillisecondsImpl() / 1000.0).ToString(".000", System.Globalization.CultureInfo.InvariantCulture).Substring(1) +
+            "." + (getMillisecondsImpl() / 1000.0).ToString(".000", CultureInfo.InvariantCulture).Substring(1) +
             "Z";
         }
 
@@ -917,10 +918,8 @@ namespace NiL.JS.BaseLibrary
                     position++;
                     continue;
                 }
-                else
-                {
-                    allowSlash &= source[position] == '/';
-                }
+
+                allowSlash &= source[position] == '/';
 
                 if (prevPos != position)
                 {
@@ -994,8 +993,6 @@ namespace NiL.JS.BaseLibrary
                             year = month;
                             wasYear = true;
                         }
-                        else
-                            return false;
                     }
 
                     wasForceMonth = true;
@@ -1051,19 +1048,14 @@ namespace NiL.JS.BaseLibrary
                     if (wasTZ)
                         return false;
 
-                    if (token.Length <= 3)
+                    if (token.Length > 3)
                     {
-                        // time zone offset
-                    }
-                    else
-                    {
-                        if (wasTzo)
-                            return false;
                         if (!int.TryParse(token.Substring(3), out temp))
                             return false;
                         tzoM += temp % 100;
                         tzoH += temp / 100;
                     }
+
                     if (token.StartsWith("pst", StringComparison.OrdinalIgnoreCase))
                         tzoH -= 8;
                     if (token.StartsWith("pdt", StringComparison.OrdinalIgnoreCase))
@@ -1158,8 +1150,7 @@ namespace NiL.JS.BaseLibrary
                 {
                     if (format[i] == '|')
                         break;
-                    else
-                        return false;
+                    return false;
                 }
 
                 switch (char.ToLowerInvariant(format[i]))
@@ -1289,11 +1280,8 @@ namespace NiL.JS.BaseLibrary
                             }
                             if (part != 1)
                                 return false;
-                            else
-                            {
-                                part++;
-                                break;
-                            }
+                            part++;
+                            break;
                         }
                     case '|':
                         {

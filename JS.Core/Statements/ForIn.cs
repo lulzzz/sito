@@ -4,7 +4,8 @@ using System.Collections.ObjectModel;
 using JS.Core.Core;
 using JS.Core.Expressions;
 using NiL.JS.BaseLibrary;
-using NiL.JS.Backward;
+using Array = System.Array;
+using Math = System.Math;
 
 namespace NiL.JS.Statements
 {
@@ -29,7 +30,7 @@ namespace NiL.JS.Statements
         public CodeNode Variable => _variable;
         public CodeNode Source => _source;
         public CodeNode Body => _body;
-        public ReadOnlyCollection<string> Labels => System.Array.AsReadOnly(_labels);
+        public ReadOnlyCollection<string> Labels => Array.AsReadOnly(_labels);
 
         private ForIn()
         {
@@ -47,7 +48,7 @@ namespace NiL.JS.Statements
 
             Tools.SkipSpaces(state.Code, ref i);
 
-            var result = new ForIn()
+            var result = new ForIn
             {
                 _labels = state.Labels.GetRange(state.Labels.Count - state.LabelsCount, state.LabelsCount).ToArray()
             };
@@ -101,9 +102,9 @@ namespace NiL.JS.Statements
 
                         var defVal = ExpressionTree.Parse(state, ref i, false, false, false, true, true);
                         if (defVal == null)
-                            return defVal;
+                            return null;
 
-                        Expression exp = new AssignmentOperatorCache(result._variable as Variable ?? (result._variable as VariableDefinition)._initializers[0] as Variable);
+                        Expression exp = new AssignmentOperatorCache((Variable) result._variable);
                         exp = new Assignment(exp, defVal)
                         {
                             Position = exp.Position,
@@ -170,7 +171,7 @@ namespace NiL.JS.Statements
             }
 
             JSValue source = null;
-            if (suspendData == null || suspendData.source == null)
+            if (suspendData?.source == null)
             {
                 if (context.Debugging && !(_source is CodeBlock))
                     context.raiseDebugger(_source);
@@ -248,7 +249,7 @@ namespace NiL.JS.Statements
                     {
                         if (context._executionMode < ExecutionMode.Return)
                         {
-                            var me = context._executionInfo == null || System.Array.IndexOf(_labels, context._executionInfo._oValue as string) != -1;
+                            var me = context._executionInfo == null || Array.IndexOf(_labels, context._executionInfo._oValue as string) != -1;
                             var _break = (context._executionMode > ExecutionMode.Continue) || !me;
                             if (me)
                             {
@@ -286,7 +287,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 _body,
                 _variable,
@@ -300,7 +301,7 @@ namespace NiL.JS.Statements
         {
             Parser.Build(ref _variable, 2, variables, codeContext | CodeContext.InExpression, message, stats, opts);
             Parser.Build(ref _source, 2, variables, codeContext | CodeContext.InExpression, message, stats, opts);
-            Parser.Build(ref _body, System.Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
+            Parser.Build(ref _body, Math.Max(1, expressionDepth), variables, codeContext | CodeContext.Conditional | CodeContext.InLoop, message, stats, opts);
             if (_variable is Comma)
             {
                 if ((_variable as Comma).RightOperand != null)

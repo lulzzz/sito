@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+
 #if !(PORTABLE)
 
 #endif
@@ -79,7 +80,7 @@ namespace JS.Core.Core
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return (this as IEnumerable<TValue>).GetEnumerator();
+                return GetEnumerator();
             }
         }
 
@@ -137,19 +138,17 @@ namespace JS.Core.Core
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return (this as IEnumerable<TKey>).GetEnumerator();
+                return GetEnumerator();
             }
         }
 
-#if !(PORTABLE)
         [Serializable]
-#endif
         internal sealed class Node
         {
             public TKey key;
-            public TValue value = default(TValue);
-            public Node less = null;
-            public Node greater = null;
+            public TValue value;
+            public Node less;
+            public Node greater;
             public int height;
 
             private void rotateLtM(ref Node _this)
@@ -198,8 +197,8 @@ namespace JS.Core.Core
                 int delta = lessH - greaterH;
                 if (delta > 1)
                 {
-                    int llessH = less.less != null ? less.less.height : 0;
-                    int lgreaterH = less.greater != null ? less.greater.height : 0;
+                    int llessH = less.less?.height ?? 0;
+                    int lgreaterH = less.greater?.height ?? 0;
                     if (llessH < lgreaterH)
                     {
                         less.rotateMtL(ref less);
@@ -212,8 +211,8 @@ namespace JS.Core.Core
                 }
                 else if (delta < -1)
                 {
-                    int mlessH = greater.less != null ? greater.less.height : 0;
-                    int ggreaterH = greater.greater != null ? greater.greater.height : 0;
+                    int mlessH = greater.less?.height ?? 0;
+                    int ggreaterH = greater.greater?.height ?? 0;
                     if (mlessH > ggreaterH)
                     {
                         greater.rotateLtM(ref greater);
@@ -225,7 +224,7 @@ namespace JS.Core.Core
                     _this.validateHeight();
                 }
                 else
-                    height = Math.Max(less != null ? less.height : 0, greater != null ? greater.height : 0) + 1;
+                    height = Math.Max(less?.height ?? 0, greater?.height ?? 0) + 1;
             }
 
             public override string ToString()
@@ -240,27 +239,27 @@ namespace JS.Core.Core
         }
 
         private readonly IComparer<TKey> comparer;
-#if !(PORTABLE)
+
         [NonSerialized]
-#endif
-        private long state = 0;
-#if !(PORTABLE)
+        private long state;
+
         [NonSerialized]
-#endif
         private readonly Stack<Node> stack = new Stack<Node>();
-        public int Height => root == null ? 0 : root.height;
+        public int Height => root?.height ?? 0;
+
         public int Count { get; private set; }
         public bool IsReadOnly => false;
-#if !(PORTABLE)
+
         [NonSerialized]
-#endif
-        private ICollection<TKey> keys;
-        public ICollection<TKey> Keys => keys ?? (keys = new _Keys(this));
-#if !(PORTABLE)
+        private ICollection<TKey> _keys;
+
+        public ICollection<TKey> Keys => _keys ?? (_keys = new _Keys(this));
+
+
         [NonSerialized]
-#endif
         private ICollection<TValue> values;
         public ICollection<TValue> Values => values ?? (values = new _Values(this));
+
         private Node root;
         internal Node Root => root;
 
@@ -282,7 +281,7 @@ namespace JS.Core.Core
             state = DateTime.UtcNow.Ticks;
             this.comparer = comparer;
         }
-#if !(PORTABLE)
+
         protected BinaryTree(SerializationInfo info, StreamingContext context)
         {
             root = info.GetValue("root", typeof(Node)) as Node;
@@ -303,7 +302,7 @@ namespace JS.Core.Core
             info.AddValue("count", Count);
             info.AddValue("comparer", comparer);
         }
-#endif
+
         public TValue this[TKey key]
         {
             get
@@ -323,7 +322,7 @@ namespace JS.Core.Core
                         throw new ArgumentNullException(nameof(key));
                     if (root == null)
                     {
-                        root = new Node() { value = value, key = key };
+                        root = new Node { value = value, key = key };
                         Count++;
                         state = state ^ state << 1;
                     }
@@ -339,11 +338,12 @@ namespace JS.Core.Core
                                 c.value = value;
                                 return;
                             }
-                            else if (cmp > 0)
+
+                            if (cmp > 0)
                             {
                                 if (c.greater == null)
                                 {
-                                    c.greater = new Node() { key = key, value = value };
+                                    c.greater = new Node { key = key, value = value };
                                     c.height = 0;
                                     while (stack.Count != 0)
                                         stack.Pop().height = 0;
@@ -359,7 +359,7 @@ namespace JS.Core.Core
                             {
                                 if (c.less == null)
                                 {
-                                    c.less = new Node() { key = key, value = value };
+                                    c.less = new Node { key = key, value = value };
                                     c.height = 0;
                                     while (stack.Count != 0)
                                         stack.Pop().height = 0;
@@ -403,60 +403,58 @@ namespace JS.Core.Core
                     throw new ArgumentNullException(nameof(key));
                 if (root == null)
                 {
-                    root = new Node() { value = value, key = key };
+                    root = new Node { value = value, key = key };
                     Count++;
                     state = state ^ state << 1;
                     return true;
                 }
-                else
+
+                var c = root;
+                stack.Clear();
+                do
                 {
-                    var c = root;
-                    stack.Clear();
-                    do
+                    var cmp = comparer != null ? comparer.Compare(key, c.key) : key.CompareTo(c.key);
+                    if (cmp == 0)
                     {
-                        var cmp = comparer != null ? comparer.Compare(key, c.key) : key.CompareTo(c.key);
-                        if (cmp == 0)
-                        {
-                            if (throwIfExists)
-                                throw new ArgumentException("Element Exists");
-                            else
-                                return false;
-                        }
-                        else if (cmp > 0)
-                        {
-                            if (c.greater == null)
-                            {
-                                c.greater = new Node() { key = key, value = value };
-                                c.height = 0;
-                                while (stack.Count != 0)
-                                    stack.Pop().height = 0;
-                                root.Balance(ref root);
-                                Count++;
-                                state = state ^ state << 1;
-                                return true;
-                            }
-                            stack.Push(c);
-                            c = c.greater;
-                        }
-                        else if (cmp < 0)
-                        {
-                            if (c.less == null)
-                            {
-                                c.less = new Node() { key = key, value = value };
-                                c.height = 0;
-                                while (stack.Count != 0)
-                                    stack.Pop().height = 0;
-                                root.Balance(ref root);
-                                Count++;
-                                state = state ^ state << 1;
-                                return true;
-                            }
-                            stack.Push(c);
-                            c = c.less;
-                        }
+                        if (throwIfExists)
+                            throw new ArgumentException("Element Exists");
+                        return false;
                     }
-                    while (true);
+
+                    if (cmp > 0)
+                    {
+                        if (c.greater == null)
+                        {
+                            c.greater = new Node { key = key, value = value };
+                            c.height = 0;
+                            while (stack.Count != 0)
+                                stack.Pop().height = 0;
+                            root.Balance(ref root);
+                            Count++;
+                            state = state ^ state << 1;
+                            return true;
+                        }
+                        stack.Push(c);
+                        c = c.greater;
+                    }
+                    else if (cmp < 0)
+                    {
+                        if (c.less == null)
+                        {
+                            c.less = new Node { key = key, value = value };
+                            c.height = 0;
+                            while (stack.Count != 0)
+                                stack.Pop().height = 0;
+                            root.Balance(ref root);
+                            Count++;
+                            state = state ^ state << 1;
+                            return true;
+                        }
+                        stack.Push(c);
+                        c = c.less;
+                    }
                 }
+                while (true);
             }
         }
 #if INLINE
@@ -471,38 +469,37 @@ namespace JS.Core.Core
                     value = default(TValue);
                     return false;
                 }
-                else
+
+                var c = root;
+                do
                 {
-                    var c = root;
-                    do
+                    var cmp = comparer != null ? comparer.Compare(key, c.key) : key.CompareTo(c.key);
+                    if (cmp == 0)
                     {
-                        var cmp = comparer != null ? comparer.Compare(key, c.key) : key.CompareTo(c.key);
-                        if (cmp == 0)
-                        {
-                            value = c.value;
-                            return true;
-                        }
-                        else if (cmp > 0)
-                        {
-                            if (c.greater == null)
-                            {
-                                value = default(TValue);
-                                return false;
-                            }
-                            c = c.greater;
-                        }
-                        else
-                        {
-                            if (c.less == null)
-                            {
-                                value = default(TValue);
-                                return false;
-                            }
-                            c = c.less;
-                        }
+                        value = c.value;
+                        return true;
                     }
-                    while (true);
+
+                    if (cmp > 0)
+                    {
+                        if (c.greater == null)
+                        {
+                            value = default(TValue);
+                            return false;
+                        }
+                        c = c.greater;
+                    }
+                    else
+                    {
+                        if (c.less == null)
+                        {
+                            value = default(TValue);
+                            return false;
+                        }
+                        c = c.less;
+                    }
                 }
+                while (true);
             }
         }
 
@@ -598,7 +595,8 @@ namespace JS.Core.Core
                         Count--;
                         return true;
                     }
-                    else if (cmp > 0)
+
+                    if (cmp > 0)
                     {
                         if (c.greater == null)
                             return false;
@@ -631,7 +629,7 @@ namespace JS.Core.Core
                 stack.Clear();
                 do
                 {
-                    var cmp = comparer != null ? comparer.Compare(key, c.key) : key.CompareTo(c.key);
+                    var cmp = comparer?.Compare(key, c.key) ?? key.CompareTo(c.key);
                     if (cmp == 0)
                     {
                         if (!item.Value.Equals(c.value))
@@ -700,7 +698,8 @@ namespace JS.Core.Core
                         root.Balance(ref root);
                         return true;
                     }
-                    else if (cmp > 0)
+
+                    if (cmp > 0)
                     {
                         if (c.greater == null)
                             return false;
@@ -900,7 +899,8 @@ namespace JS.Core.Core
                         }
                         break;
                     }
-                    else if (cmp > 0)
+
+                    if (cmp > 0)
                     {
                         c = c.greater;
                     }
@@ -984,14 +984,8 @@ namespace JS.Core.Core
                         }
                         break;
                     }
-                    else if (cmp > 0)
-                    {
-                        c = c.greater;
-                    }
-                    else
-                    {
-                        c = c.less;
-                    }
+
+                    c = cmp > 0 ? c.greater : c.less;
                     if (c == null)
                         break;
                 }

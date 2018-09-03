@@ -76,7 +76,7 @@ namespace Maddalena.Numl.Utils
 		/// <returns></returns>
 		public static bool IsSimpleType(this Type t, params Type[] excludeTypes)
 		{
-			return ((excludeTypes != null ? !excludeTypes.Contains(t) : true) &&
+			return ((!excludeTypes?.Contains(t) ?? true) &&
 				   (t == typeof(string) ||
 					t == typeof(bool) ||
 					t == typeof(char) ||
@@ -107,7 +107,7 @@ namespace Maddalena.Numl.Utils
 		{
 			if (type == null) throw new ArgumentNullException("The supplied type parameter was not specified");
 
-			return (T) Activator.CreateInstance(type) ?? default(T);
+			return (T) Activator.CreateInstance(type);
 		}
 	}
 }

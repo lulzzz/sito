@@ -104,9 +104,9 @@ namespace JS.Core.Expressions
         private ClassDefinition(string name, Expression baseType, MemberDescriptor[] fields, FunctionDefinition ctor, MemberDescriptor[] computedProperties)
             : base(name)
         {
-            this._baseClass = baseType;
-            this._constructor = ctor;
-            this._members = fields;
+            _baseClass = baseType;
+            _constructor = ctor;
+            _members = fields;
             this.computedProperties = computedProperties;
         }
 
@@ -202,31 +202,23 @@ namespace JS.Core.Expressions
                             i++;
                         while (Tools.IsWhiteSpace(state.Code[i]));
 
-                        CodeNode initializer;
-                        if (state.Code[i] == '(')
-                        {
-                            initializer = FunctionDefinition.Parse(state, ref i, asterisk ? FunctionKind.AnonymousGenerator : FunctionKind.AnonymousFunction);
-                        }
-                        else
-                        {
-                            initializer = ExpressionTree.Parse(state, ref i);
-                        }
+                        var initializer = state.Code[i] == '(' ? FunctionDefinition.Parse(state, ref i, asterisk ? FunctionKind.AnonymousGenerator : FunctionKind.AnonymousFunction) : ExpressionTree.Parse(state, ref i);
 
                         switch (state.Code[s])
                         {
                             case 'g':
                                 {
-                                    computedProperties.Add(new MemberDescriptor((Expression)propertyName, new PropertyPair((Expression)initializer, null), @static));
+                                    computedProperties.Add(new MemberDescriptor(propertyName, new PropertyPair((Expression)initializer, null), @static));
                                     break;
                                 }
                             case 's':
                                 {
-                                    computedProperties.Add(new MemberDescriptor((Expression)propertyName, new PropertyPair(null, (Expression)initializer), @static));
+                                    computedProperties.Add(new MemberDescriptor(propertyName, new PropertyPair(null, (Expression)initializer), @static));
                                     break;
                                 }
                             default:
                                 {
-                                    computedProperties.Add(new MemberDescriptor((Expression)propertyName, (Expression)initializer, @static));
+                                    computedProperties.Add(new MemberDescriptor(propertyName, (Expression)initializer, @static));
                                     break;
                                 }
                         }
@@ -363,7 +355,7 @@ namespace JS.Core.Expressions
                         FunctionKind.Method);
                 }
 
-                result = new ClassDefinition(name, baseType, new List<MemberDescriptor>(flds.Values).ToArray(), ctor as FunctionDefinition, computedProperties.ToArray());
+                result = new ClassDefinition(name, baseType, new List<MemberDescriptor>(flds.Values).ToArray(), ctor, computedProperties.ToArray());
 
                 if ((oldCodeContext & CodeContext.InExpression) == 0)
                 {
@@ -449,7 +441,7 @@ namespace JS.Core.Expressions
                 variable = context.DefineVariable(Name);
             }
 
-            var ctor = new ClassConstructor(context, this._constructor, this)
+            var ctor = new ClassConstructor(context, _constructor, this)
             {
                 RequireNewKeywordLevel = RequireNewKeywordLevel.WithNewOnly
             };
@@ -506,8 +498,8 @@ namespace JS.Core.Expressions
 
                 if (existedValue.Is(JSValueType.Property) && value.Is(JSValueType.Property))
                 {
-                    var egs = existedValue.As<global::JS.Core.Core.PropertyPair>();
-                    var ngs = value.As<global::JS.Core.Core.PropertyPair>();
+                    var egs = existedValue.As<Core.PropertyPair>();
+                    var ngs = value.As<Core.PropertyPair>();
                     egs.getter = ngs.getter ?? egs.getter;
                     egs.setter = ngs.setter ?? egs.setter;
                 }

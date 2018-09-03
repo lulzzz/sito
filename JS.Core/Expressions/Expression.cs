@@ -6,9 +6,7 @@ using NiL.JS.Statements;
 
 namespace JS.Core.Expressions
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     public abstract class Expression : CodeNode
     {
         internal Expression _left;
@@ -51,10 +49,10 @@ namespace JS.Core.Expressions
 
         protected Expression(Expression first, Expression second, bool createTempContainer)
         {
-            this._left = first;
-            this._right = second;
+            _left = first;
+            _right = second;
             if (createTempContainer)
-                _tempContainer = new JSValue() { _attributes = JSValueAttributesInternal.Temporary };
+                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
         }
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)
@@ -64,22 +62,22 @@ namespace JS.Core.Expressions
 
             Parser.Build(ref _left, expressionDepth + 1, variables, codeContext, message, stats, opts);
             Parser.Build(ref _right, expressionDepth + 1, variables, codeContext, message, stats, opts);
-            if (this.ContextIndependent)
+            if (ContextIndependent)
             {
                 if (message != null && !(this is RegExpExpression))
                     message(MessageLevel.Warning, Position, Length, "Constant expression. Maybe, it's a mistake.");
 
                 try
                 {
-                    var res = this.Evaluate(null);
+                    var res = Evaluate(null);
                     if (res._valueType == JSValueType.Double
                         && !double.IsNegativeInfinity(1.0 / res._dValue)
-                        && res._dValue == (double)(int)res._dValue)
+                        && res._dValue == (int)res._dValue)
                     {
                         res._iValue = (int)res._dValue;
                         res._valueType = JSValueType.Integer;
                     }
-                    _this = new Constant(res) as CodeNode;
+                    _this = new Constant(res);
                     return true;
                 }
                 catch (JSException e)
@@ -195,21 +193,17 @@ namespace JS.Core.Expressions
 
         public virtual void Decompose(ref Expression self, IList<CodeNode> result)
         {
-            if (_left != null)
+            _left?.Decompose(ref _left, result);
+
+            if (_right == null) return;
+
+            if (_right.NeedDecompose && !(_left is ExtractStoredValue))
             {
-                _left.Decompose(ref _left, result);
+                result.Add(new StoreValue(_left, LValueModifier));
+                _left = new ExtractStoredValue(_left);
             }
 
-            if (_right != null)
-            {
-                if (_right.NeedDecompose && !(_left is ExtractStoredValue))
-                {
-                    result.Add(new StoreValue(_left, LValueModifier));
-                    _left = new ExtractStoredValue(_left);
-                }
-
-                _right.Decompose(ref _right, result);
-            }
+            _right.Decompose(ref _right, result);
         }
 
         public override void RebuildScope(FunctionInfo functionInfo, Dictionary<string, VariableDescriptor> transferedVariables, int scopeBias)

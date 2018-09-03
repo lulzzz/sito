@@ -9,21 +9,17 @@ using Expression = JS.Core.Expressions.Expression;
 
 namespace JS.Core.Core
 {
-#if !NET35
-#if !PORTABLE 
     [Serializable]
-#endif
-    public sealed class CompiledNode : Expressions.Expression
+    public sealed class CompiledNode : Expression
     {
-        private static readonly MethodInfo wrapMethod = typeof(JITHelpers).GetMethod("wrap", BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo WrapMethod = typeof(JITHelpers).GetMethod("wrap", BindingFlags.Static | BindingFlags.NonPublic);
 
-        private static readonly ParameterExpression wrapContainerParameter = System.Linq.Expressions.Expression.Parameter(typeof(JSValue), "wrapContainer");
+        private static readonly ParameterExpression WrapContainerParameter = System.Linq.Expressions.Expression.Parameter(typeof(JSValue), "wrapContainer");
 
-        private static readonly ParameterExpression[] lambdaArgs = new[]
-                {
+        private static readonly ParameterExpression[] LambdaArgs = {
                     JITHelpers.ContextParameter,
                     JITHelpers.DynamicValuesParameter,
-                    wrapContainerParameter
+                    WrapContainerParameter
                 };
 
         private readonly CodeNode[] _dynamicValues;
@@ -32,46 +28,32 @@ namespace JS.Core.Core
 
         public CodeNode Original { get; }
 
-        protected internal override bool ContextIndependent => Original is Expression && (Original as Expression).ContextIndependent;
+        protected internal override bool ContextIndependent => Original is Expression && ((Expression) Original).ContextIndependent;
 
         internal override bool ResultInTempContainer => false;
 
-        protected internal override PredictedType ResultType
-        {
-            get
-            {
-                if (!(Original is Expression))
-                    return PredictedType.Unknown;
-                return (Original as Expression).ResultType;
-            }
-        }
+        protected internal override PredictedType ResultType => (Original as Expression)?.ResultType ?? PredictedType.Unknown;
 
         public override int Length
         {
             get => Original.Length;
-            internal set
-            {
-                Original.Length = value;
-            }
+            internal set => Original.Length = value;
         }
 
         public override int Position
         {
             get => Original.Position;
-            internal set
-            {
-                Original.Position = value;
-            }
+            internal set => Original.Position = value;
         }
 
         public CompiledNode(CodeNode original, System.Linq.Expressions.Expression tree, CodeNode[] dynamicValues)
-            : base(original is Expression ? (original as Expression)._left : null, original is Expression ? (original as Expression)._right : null, (original is Expression) && (original as Expression)._tempContainer == null)
+            : base((original as Expression)?._left, (original as Expression)?._right, (original is Expression) && (original as Expression)._tempContainer == null)
         {
             if (_tempContainer == null)
                 _tempContainer = (original as Expression)._tempContainer;
-            this.Original = original;
-            this._tree = tree;
-            this._dynamicValues = dynamicValues;
+            Original = original;
+            _tree = tree;
+            _dynamicValues = dynamicValues;
         }
 
         public CompiledNode(Expression original, System.Linq.Expressions.Expression tree, CodeNode[] dynamicValues)
@@ -79,9 +61,9 @@ namespace JS.Core.Core
         {
             if (_tempContainer == null)
                 _tempContainer = original._tempContainer;
-            this.Original = original;
-            this._tree = tree;
-            this._dynamicValues = dynamicValues;
+            Original = original;
+            _tree = tree;
+            _dynamicValues = dynamicValues;
         }
 
         protected internal override CodeNode[] GetChildsImpl()
@@ -94,39 +76,16 @@ namespace JS.Core.Core
             if (_compiledTree == null)
             {
                 System.Linq.Expressions.Expression tree;
-                this._tree = this._tree.Reduce();
+                _tree = _tree.Reduce();
                 if (Original is Expression)
                 {
-                    if (typeof(JSValue).IsAssignableFrom(this._tree.Type))
-                        tree = this._tree;
-                    else
-                        tree = System.Linq.Expressions.Expression.Call(wrapMethod.MakeGenericMethod(this._tree.Type), this._tree, wrapContainerParameter);
+                    tree = typeof(JSValue).IsAssignableFrom(_tree.Type) ? _tree : System.Linq.Expressions.Expression.Call(WrapMethod.MakeGenericMethod(_tree.Type), _tree, WrapContainerParameter);
                 }
                 else
                 {
-                    tree = System.Linq.Expressions.Expression.Block(this._tree, JITHelpers.UndefinedConstant);
+                    tree = System.Linq.Expressions.Expression.Block(_tree, JITHelpers.UndefinedConstant);
                 }
-                //var ps = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
-                //ps.Assert();
-                //ps.AddPermission(new System.Security.Permissions.ZoneIdentityPermission(SecurityZone.MyComputer));
-                //var assm = AppDomain.CurrentDomain.DefineDynamicAssembly(
-                //    new AssemblyName("DynamicAssm" + Environment.TickCount),
-                //    AssemblyBuilderAccess.RunAndCollect,
-                //    ps,
-                //    null,
-                //    null);
-                //var module = assm.DefineDynamicModule("DynamicModule");
-                //var type = module.DefineType("DynamicType", TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Abstract);
-                //var method = type.DefineMethod(
-                //    "DynamicMethod",
-                //    MethodAttributes.Public | MethodAttributes.Static,
-                //    typeof(JSObject),
-                //    new[] { typeof(Context), typeof(CodeNode[]), typeof(JSObject) });
-
-                //Expression.Lambda(tree, lambdaArgs).CompileToMethod(method);
-                //compiledTree = (Func<Context, CodeNode[], JSObject, JSObject>)type.CreateType().GetMethods()[0].CreateDelegate(typeof(Func<Context, CodeNode[], JSObject, JSObject>));
-
-                _compiledTree = System.Linq.Expressions.Expression.Lambda<Func<Context, CodeNode[], JSValue, JSValue>>(tree, lambdaArgs).Compile();
+                _compiledTree = System.Linq.Expressions.Expression.Lambda<Func<Context, CodeNode[], JSValue, JSValue>>(tree, LambdaArgs).Compile();
             }
             var result = _compiledTree(context, _dynamicValues, _tempContainer);
             return result;
@@ -162,5 +121,4 @@ namespace JS.Core.Core
             return Original.ToString();
         }
     }
-#endif
 }

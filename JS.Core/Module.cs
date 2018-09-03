@@ -11,7 +11,7 @@ namespace NiL.JS
         None = 0,
         SuppressUselessExpressionsElimination = 1,
         SuppressUselessStatementsElimination = 2,
-        SuppressConstantPropogation = 4,
+        SuppressConstantPropogation = 4
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace NiL.JS
 #endif
     public class Module
     {
-        private static readonly char[] __pathSplitChars = new[] { '\\', '/' };
+        private static readonly char[] __pathSplitChars = { '\\', '/' };
         private static readonly StringMap<Module> __modulesCache = new StringMap<Module>();
         private static readonly List<ResolveModuleHandler> __resolveModuleHandlers = new List<ResolveModuleHandler> { defaultModuleResolver };
 
@@ -151,7 +151,7 @@ namespace NiL.JS
 
             var stat = new FunctionInfo();
             Parser.Build(ref _root, 0, new Dictionary<string, VariableDescriptor>(), CodeContext.None, internalCallback, stat, options);
-            var body = _root as CodeBlock;
+            var body = _root;
             body._suppressScopeIsolation = SuppressScopeIsolationMode.Suppress;
             Context._thisBind = new GlobalObject(Context);
             Context._strict = body._strict;
@@ -241,7 +241,7 @@ namespace NiL.JS
 
         private string processPath(string path)
         {
-            var thisName = this.FilePath.Split(__pathSplitChars);
+            var thisName = FilePath.Split(__pathSplitChars);
             var requestedName = path.Split(__pathSplitChars);
             var pathTokens = new LinkedList<string>(thisName);
 

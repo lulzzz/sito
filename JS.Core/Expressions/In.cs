@@ -2,6 +2,7 @@
 using JS.Core.Core;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
+using Array = NiL.JS.BaseLibrary.Array;
 
 namespace JS.Core.Expressions
 {
@@ -33,7 +34,7 @@ namespace JS.Core.Expressions
                 ExceptionHelper.Throw(new TypeError("Right-hand value of operator in is not object."));
             if (temp._valueType == JSValueType.Integer)
             {
-                var array = source._oValue as NiL.JS.BaseLibrary.Array;
+                var array = source._oValue as Array;
                 if (array != null)
                 {
                     res = temp._iValue >= 0 && temp._iValue < array._data.Length && (array._data[temp._iValue] ?? JSValue.notExists).Exists;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using JS.Core.Core;
 using JS.Core.Core.Interop;
 
@@ -79,12 +80,12 @@ namespace NiL.JS.BaseLibrary
         public static implicit operator Boolean(bool value)
         {
 #if DEBUG
-            if (Boolean.True._iValue != 1)
-                System.Diagnostics.Debugger.Break();
-            if (Boolean.False._iValue != 0)
-                System.Diagnostics.Debugger.Break();
+            if (True._iValue != 1)
+                Debugger.Break();
+            if (False._iValue != 0)
+                Debugger.Break();
 #endif
-            return value ? Boolean.True : Boolean.False;
+            return value ? True : False;
             //var res = value ? Boolean.True : Boolean.False;
             //res.iValue = value ? 1 : 0;
             //return res;

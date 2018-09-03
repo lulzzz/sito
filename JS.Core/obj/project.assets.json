@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Maddalena\\NiL.JS\\JS.Core\\JS.Core.csproj",
+      "projectUniqueName": "D:\\Maddalena\\sito\\JS.Core\\JS.Core.csproj",
       "projectName": "JS.Core",
-      "projectPath": "D:\\Maddalena\\NiL.JS\\JS.Core\\JS.Core.csproj",
+      "projectPath": "D:\\Maddalena\\sito\\JS.Core\\JS.Core.csproj",
       "packagesPath": "C:\\Users\\mf185129\\.nuget\\packages\\",
-      "outputPath": "D:\\Maddalena\\NiL.JS\\JS.Core\\obj\\",
+      "outputPath": "D:\\Maddalena\\sito\\JS.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -74,21 +74,21 @@ namespace Maddalena.Numl
             var training = generator.Descriptor.Convert(examples.Slice(trainingSlice).ToArray(), true).ToExamples();
 
             // convert label to 1's and 0's
-            Vector y = MultiClassLearner.ChangeClassLabels(examples.ToArray(), descriptor, truthLabel);
+            Vector y = ChangeClassLabels(examples.ToArray(), descriptor, truthLabel);
 
             IModel model = generator.Generate(training.X, y.Slice(trainingSlice));
 
             Score score = new Score();
 
-            if (testingSlice.Count() > 0)
+            if (testingSlice.Any())
             {
                 object[] testExamples = examples.Slice(testingSlice).ToArray();
-                var testing = generator.Descriptor.Convert(testExamples, true).ToExamples();
+                var testing = generator.Descriptor.Convert(testExamples).ToExamples();
                 
                 Vector y_pred = new Vector(testExamples.Length);
 
                 // make sure labels are 1 / 0 based
-                Vector y_test = MultiClassLearner.ChangeClassLabels(testExamples.ToArray(), descriptor, truthLabel);
+                Vector y_test = ChangeClassLabels(testExamples.ToArray(), descriptor, truthLabel);
 
                 for (int i = 0; i < testExamples.Length; i++)
                 {

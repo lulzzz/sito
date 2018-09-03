@@ -13,9 +13,6 @@ namespace Maddalena.Controllers
 {
     public class SitemapController : Controller
     {
-        public SitemapController()
-        {
-        }
 
         [Route("rss.xml")]
         public async Task<ActionResult> Rss()

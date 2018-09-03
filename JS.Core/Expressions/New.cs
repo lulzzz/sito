@@ -30,7 +30,7 @@ namespace JS.Core.Expressions
                 return null;
             while (Tools.IsWhiteSpace(state.Code[i]))
                 i++;
-            var result = (Expression)ExpressionTree.Parse(state, ref i, true, false, true, true, false);
+            var result = ExpressionTree.Parse(state, ref i, true, false, true, true, false);
             if (result == null)
             {
                 var cord = CodeCoordinates.FromTextPosition(state.Code, i, 0);
@@ -41,7 +41,7 @@ namespace JS.Core.Expressions
             else
             {
                 state.message?.Invoke(MessageLevel.Warning, index, 0, "Missed brackets in a constructor invocation.");
-                result = new Expressions.New(new Call(result, new Expression[0]) { Position = result.Position, Length = result.Length }) { Position = index, Length = i - index };
+                result = new New(new Call(result, new Expression[0]) { Position = result.Position, Length = result.Length }) { Position = index, Length = i - index };
             }
             index = i;
             return result;
@@ -70,7 +70,7 @@ namespace JS.Core.Expressions
 
         public override string ToString()
         {
-            return "new " + _left.ToString();
+            return "new " + _left;
         }
     }
 }

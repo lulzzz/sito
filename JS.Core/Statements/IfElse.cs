@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JS.Core.Core;
 using JS.Core.Expressions;
+using NiL.JS.BaseLibrary;
 
 namespace NiL.JS.Statements
 {
@@ -26,8 +27,8 @@ namespace NiL.JS.Statements
         public IfElse(Expression condition, CodeNode body, CodeNode elseBody)
         {
             this.condition = condition;
-            this.then = body;
-            this.@else = elseBody;
+            then = body;
+            @else = elseBody;
         }
 
         internal static CodeNode Parse(ParseInfo state, ref int index)
@@ -49,7 +50,7 @@ namespace NiL.JS.Statements
             if (body is FunctionDefinition)
             {
                 if (state.strict)
-                    ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
+                    ExceptionHelper.Throw((new SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
                 state.message?.Invoke(MessageLevel.CriticalWarning, body.Position, body.Length, "Do not declare function in nested blocks.");
                 body = new CodeBlock(new[] { body }); // для того, чтобы не дублировать код по декларации функции, 
                 // она оборачивается в блок, который сделает самовыпил на втором этапе, но перед этим корректно объявит функцию.
@@ -73,7 +74,7 @@ namespace NiL.JS.Statements
                 if (elseBody is FunctionDefinition)
                 {
                     if (state.strict)
-                        ExceptionHelper.Throw((new NiL.JS.BaseLibrary.SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
+                        ExceptionHelper.Throw((new SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
                     state.message?.Invoke(MessageLevel.CriticalWarning, elseBody.Position, elseBody.Length, "Do not declare function in nested blocks.");
                     elseBody = new CodeBlock(new[] { elseBody }); // для того, чтобы не дублировать код по декларации функции, 
                     // она оборачивается в блок, который сделает самовыпил на втором этапе, но перед этим корректно объявит функцию.
@@ -83,7 +84,7 @@ namespace NiL.JS.Statements
                 i = pos;
             pos = index;
             index = i;
-            return new IfElse()
+            return new IfElse
             {
                 then = body,
                 condition = condition,
@@ -135,7 +136,7 @@ namespace NiL.JS.Statements
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new List<CodeNode>()
+            var res = new List<CodeNode>
             {
                 then,
                 condition,
@@ -154,7 +155,7 @@ namespace NiL.JS.Statements
             if ((opts & Options.SuppressUselessExpressionsElimination) == 0 && condition is ConvertToBoolean)
             {
                 message?.Invoke(MessageLevel.Warning, condition.Position, 2, "Useless conversion. Remove double negation in condition");
-                condition = (condition as Expression)._left;
+                condition = condition._left;
             }
             try
             {

@@ -29,7 +29,7 @@ namespace JS.Core.Expressions
                 cachedMemberName = fieldName.Evaluate(null);
             else
                 tempContainer1 = new JSValue();
-            this.Value = value;
+            Value = value;
             tempContainer2 = new JSValue();
         }
 
@@ -73,7 +73,7 @@ namespace JS.Core.Expressions
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)
         {
-            this._codeContext = codeContext;
+            _codeContext = codeContext;
             return false;
         }
 

@@ -57,21 +57,17 @@ namespace JS.Core.Expressions
 
         protected internal override JSValue EvaluateForWrite(Context context)
         {
-            if (value == JSValue.undefined)
-                return value;
-            return base.EvaluateForWrite(context);
+            return value == JSValue.undefined ? value : base.EvaluateForWrite(context);
         }
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            if (value != null && value._oValue is CodeNode[])
-                return value._oValue as CodeNode[];
-            return null;
+            return value?._oValue as CodeNode[];
         }
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)
         {
-            this._codeContext = codeContext;
+            _codeContext = codeContext;
 
             if ((opts & Options.SuppressUselessExpressionsElimination) == 0 && expressionDepth <= 1)
             {
