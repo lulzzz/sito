@@ -18,13 +18,10 @@ namespace JS.Core.Core.Interop
         public JsonSerializer(Type targetType)
         {
             TargetType = targetType ?? throw new ArgumentNullException(nameof(targetType));
-#if PORTABLE
-            _properties = targetType.GetRuntimeProperties().ToArray();
-            _fields = targetType.GetRuntimeFields().ToArray();
-#else
+
             _properties = targetType.GetProperties();
             _fields = targetType.GetFields();
-#endif
+
             var weight = 0;
             var curType = targetType;
             while (curType != null && curType != typeof(object))

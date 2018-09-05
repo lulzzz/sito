@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using JS.Core.Core.Interop;
 using JS.Core.Expressions;
 using NiL.JS;
@@ -535,10 +536,10 @@ namespace JS.Core.Core
             obj = target.DefineProperty(memberName);
             if ((obj._attributes & JSValueAttributesInternal.Argument) != 0 && (set.Exists || get.Exists))
             {
-                if (target is Arguments &&
+                if (target is Arguments arguments &&
                     int.TryParse(memberName, NumberStyles.Integer, CultureInfo.InvariantCulture, out var ti) && ti >= 0 &&
                     ti < 16)
-                    ((Arguments) target)[ti] = obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject);
+                    arguments[ti] = obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject);
                 else
                     target._fields[memberName] = obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject);
                 obj._attributes &= ~JSValueAttributesInternal.Argument;
@@ -839,8 +840,7 @@ namespace JS.Core.Core
                 return false;
             if (obj is Proxy)
                 return true;
-            var arr = obj as Array;
-            if (arr != null)
+            if (obj is Array arr)
                 foreach (var node in arr._data)
                     if (node != null
                         && node.Exists
@@ -882,38 +882,36 @@ namespace JS.Core.Core
                 ExceptionHelper.Throw(new TypeError("Object.isFrozen called on non-object."));
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Object.isFrozen called on null."));
+
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            if ((obj._attributes & JSValueAttributesInternal.Immutable) == 0)
+            if (obj != null && (obj._attributes & JSValueAttributesInternal.Immutable) == 0)
                 return false;
-            if (obj is Proxy)
-                return true;
-            var arr = obj as Array;
-            if (arr != null)
+
+            switch (obj)
             {
-                foreach (var node in arr._data.DirectOrder)
-                    if (node.Value != null && node.Value.Exists &&
-                        ((node.Value._attributes & JSValueAttributesInternal.NonConfigurable) == 0
-                         || node.Value._valueType != JSValueType.Property &&
-                         (node.Value._attributes & JSValueAttributesInternal.ReadOnly) == 0))
-                        return false;
-            }
-            else if (obj is Arguments)
-            {
-                var arg = obj as Arguments;
-                for (var i = 0; i < 16; i++)
-                    if ((arg[i]._attributes & JSValueAttributesInternal.NonConfigurable) == 0
-                        || arg[i]._valueType != JSValueType.Property &&
-                        (arg[i]._attributes & JSValueAttributesInternal.ReadOnly) == 0)
-                        return false;
+                case Proxy _:
+                    return true;
+                case Array arr:
+                    foreach (var node in arr._data.DirectOrder)
+                        if (node.Value != null && node.Value.Exists &&
+                            ((node.Value._attributes & JSValueAttributesInternal.NonConfigurable) == 0
+                             || node.Value._valueType != JSValueType.Property &&
+                             (node.Value._attributes & JSValueAttributesInternal.ReadOnly) == 0))
+                            return false;
+                    break;
+                case Arguments _:
+                    var arg = obj as Arguments;
+                    for (var i = 0; i < 16; i++)
+                        if ((arg[i]._attributes & JSValueAttributesInternal.NonConfigurable) == 0
+                            || arg[i]._valueType != JSValueType.Property &&
+                            (arg[i]._attributes & JSValueAttributesInternal.ReadOnly) == 0)
+                            return false;
+                    break;
             }
 
-            if (obj._fields != null)
-                foreach (var f in obj._fields)
-                    if ((f.Value._attributes & JSValueAttributesInternal.NonConfigurable) == 0
-                        || f.Value._valueType != JSValueType.Property &&
-                        (f.Value._attributes & JSValueAttributesInternal.ReadOnly) == 0)
-                        return false;
-            return true;
+            return obj._fields == null ||
+                   obj._fields.All(f => (f.Value._attributes & JSValueAttributesInternal.NonConfigurable) != 0 
+                                        && (f.Value._valueType == JSValueType.Property || (f.Value._attributes & JSValueAttributesInternal.ReadOnly) != 0));
         }
 
         [DoNotEnumerate]
@@ -945,7 +943,7 @@ namespace JS.Core.Core
             if (obj._valueType != JSValueType.Property || (obj._attributes & JSValueAttributesInternal.Field) != 0)
             {
                 if (obj._valueType == JSValueType.Property)
-                    res["value"] = (obj._oValue as PropertyPair).getter.Call(source, null);
+                    res["value"] = (obj._oValue as PropertyPair)?.getter.Call(source, null);
                 else
                     res["value"] = obj;
                 res["writable"] = obj._valueType < JSValueType.Undefined ||
@@ -953,8 +951,8 @@ namespace JS.Core.Core
             }
             else
             {
-                res["set"] = (obj._oValue as PropertyPair).setter;
-                res["get"] = (obj._oValue as PropertyPair).getter;
+                res["set"] = (obj._oValue as PropertyPair)?.setter;
+                res["get"] = (obj._oValue as PropertyPair)?.getter;
             }
 
             res["configurable"] = (obj._attributes & JSValueAttributesInternal.NonConfigurable) == 0 ||
@@ -997,13 +995,12 @@ namespace JS.Core.Core
 
         public static bool @is(JSValue value1, JSValue value2)
         {
-            if (value1 == value2)
+            if (Equals(value1, value2))
                 return true;
 
-            if (value1 != null && value2 == null || value1 == null && value2 != null)
-                return false;
+            if (value1 == null) return value2 == null;
 
-            if ((value1._valueType | JSValueType.Undefined) != (value2._valueType | JSValueType.Undefined))
+            if ((value1._valueType | JSValueType.Undefined) != (value2?._valueType | JSValueType.Undefined))
                 return false;
 
             if (value1._valueType == JSValueType.Double

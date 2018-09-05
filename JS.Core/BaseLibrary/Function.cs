@@ -112,7 +112,7 @@ namespace NiL.JS.BaseLibrary
                         | JSValueAttributesInternal.DoNotDelete
                         | JSValueAttributesInternal.DoNotEnumerate
                         | JSValueAttributesInternal.NonConfigurable,
-                    _iValue = _functionDefinition.parameters.Length
+                    _iValue = _functionDefinition.Parameters.Length
                 };
 
                 return _length;
@@ -124,7 +124,7 @@ namespace NiL.JS.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition?._body._strict ?? true;
+                return _functionDefinition?.Body._strict ?? true;
             }
         }
         [Hidden]
@@ -133,7 +133,7 @@ namespace NiL.JS.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition?._body;
+                return _functionDefinition?.Body;
             }
         }
 
@@ -143,7 +143,7 @@ namespace NiL.JS.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition.kind;
+                return _functionDefinition.Kind;
             }
         }
 
@@ -233,7 +233,7 @@ namespace NiL.JS.BaseLibrary
                 if (context == null)
                     return null;
 
-                if (_functionDefinition._body._strict)
+                if (_functionDefinition.Body._strict)
                     ExceptionHelper.Throw(new TypeError("Property \"arguments\" may not be accessed in strict mode."));
 
                 if (context._arguments == null && _functionDefinition.recursionDepth > 0)
@@ -248,7 +248,7 @@ namespace NiL.JS.BaseLibrary
                 if (context == null)
                     return;
 
-                if (_functionDefinition._body._strict)
+                if (_functionDefinition.Body._strict)
                     ExceptionHelper.Throw(new TypeError("Property \"arguments\" may not be accessed in strict mode."));
 
                 context._arguments = value;
@@ -403,7 +403,7 @@ namespace NiL.JS.BaseLibrary
 
         internal virtual JSValue InternalInvoke(JSValue targetObject, Expression[] arguments, Context initiator, bool withSpread, bool construct)
         {
-            if (_functionDefinition._body == null)
+            if (_functionDefinition.Body == null)
                 return NotExists;
 
             Arguments argumentsObject = Tools.CreateArguments(arguments, initiator);
@@ -432,21 +432,21 @@ namespace NiL.JS.BaseLibrary
                 ExceptionHelper.ThrowTypeError(string.Format(Messages.InvalidTryToCreateWithoutNew, name));
             }
 
-            targetObject = correctTargetObject(targetObject, _functionDefinition._body._strict);
+            targetObject = correctTargetObject(targetObject, _functionDefinition.Body._strict);
             return Invoke(false, targetObject, arguments);
         }
 
         protected internal virtual JSValue Invoke(bool construct, JSValue targetObject, Arguments arguments)
         {
             JSValue result;
-            var body = _functionDefinition._body;
+            var body = _functionDefinition.Body;
             if (body._lines.Length == 0)
             {
                 notExists._valueType = JSValueType.NotExists;
                 return notExists;
             }
 
-            var ceocw = _functionDefinition._functionInfo.ContainsEval || _functionDefinition._functionInfo.ContainsWith || _functionDefinition._functionInfo.NeedDecompose;
+            var ceocw = _functionDefinition.FunctionInfo.ContainsEval || _functionDefinition.FunctionInfo.ContainsWith || _functionDefinition.FunctionInfo.NeedDecompose;
             if (_functionDefinition.recursionDepth > _functionDefinition.parametersStored) // рекурсивный вызов.
             {
                 if (!ceocw)
@@ -490,7 +490,7 @@ namespace NiL.JS.BaseLibrary
 
         internal JSValue evaluateBody(Context internalContext)
         {
-            _functionDefinition._body.Evaluate(internalContext);
+            _functionDefinition.Body.Evaluate(internalContext);
             if (internalContext._executionMode == ExecutionMode.TailRecursion)
                 return null;
 
@@ -511,7 +511,7 @@ namespace NiL.JS.BaseLibrary
 
         internal void exit(Context internalContext)
         {
-            _functionDefinition?._body?.clearVariablesCache();
+            _functionDefinition?.Body?.clearVariablesCache();
             internalContext._executionMode = ExecutionMode.Return;
             internalContext.Deactivate();
         }
@@ -525,15 +525,15 @@ namespace NiL.JS.BaseLibrary
                 {
                     caller = oldContext?._owner,
                     callee = this,
-                    length = _functionDefinition.parameters.Length
+                    length = _functionDefinition.Parameters.Length
                 };
 
-                for (var i = 0; i < _functionDefinition.parameters.Length; i++)
+                for (var i = 0; i < _functionDefinition.Parameters.Length; i++)
                 {
-                    if (_functionDefinition._body._strict)
-                        args[i] = _functionDefinition.parameters[i].cacheRes.CloneImpl(false);
+                    if (_functionDefinition.Body._strict)
+                        args[i] = _functionDefinition.Parameters[i].cacheRes.CloneImpl(false);
                     else
-                        args[i] = _functionDefinition.parameters[i].cacheRes;
+                        args[i] = _functionDefinition.Parameters[i].cacheRes;
                 }
 
                 context._arguments = args;
@@ -549,8 +549,8 @@ namespace NiL.JS.BaseLibrary
             }
 
             internalContext._thisBind = targetObject;
-            internalContext._strict |= _functionDefinition._body._strict;
-            if (_functionDefinition.kind == FunctionKind.Arrow)
+            internalContext._strict |= _functionDefinition.Body._strict;
+            if (_functionDefinition.Kind == FunctionKind.Arrow)
             {
                 internalContext._arguments = internalContext._parent._arguments;
                 internalContext._thisBind = internalContext._parent._thisBind;
@@ -562,7 +562,7 @@ namespace NiL.JS.BaseLibrary
                 if (storeArguments)
                     internalContext._variables["arguments"] = arguments;
 
-                if (_functionDefinition._body._strict)
+                if (_functionDefinition.Body._strict)
                 {
                     arguments._attributes |= JSValueAttributesInternal.ReadOnly;
                     arguments.callee = propertiesDummySM;
@@ -577,26 +577,26 @@ namespace NiL.JS.BaseLibrary
 
         internal void initParameters(Arguments args, Context internalContext)
         {
-            var ceaw = _functionDefinition._functionInfo.ContainsEval || _functionDefinition._functionInfo.ContainsArguments || _functionDefinition._functionInfo.ContainsWith;
-            int min = System.Math.Min(args.length, _functionDefinition.parameters.Length - (_functionDefinition._functionInfo.ContainsRestParameters ? 1 : 0));
+            var ceaw = _functionDefinition.FunctionInfo.ContainsEval || _functionDefinition.FunctionInfo.ContainsArguments || _functionDefinition.FunctionInfo.ContainsWith;
+            int min = System.Math.Min(args.length, _functionDefinition.Parameters.Length - (_functionDefinition.FunctionInfo.ContainsRestParameters ? 1 : 0));
 
             JSValue[] defaultValues = null;
             Array restArray = null;
-            if (_functionDefinition._functionInfo.ContainsRestParameters)
+            if (_functionDefinition.FunctionInfo.ContainsRestParameters)
             {
                 restArray = new Array();
             }
 
-            for (var i = 0; i < _functionDefinition.parameters.Length; i++)
+            for (var i = 0; i < _functionDefinition.Parameters.Length; i++)
             {
                 JSValue t = args[i];
-                var prm = _functionDefinition.parameters[i];
+                var prm = _functionDefinition.Parameters[i];
                 if (!t.Defined)
                 {
                     if (prm.initializer != null)
                     {
                         if (defaultValues == null)
-                            defaultValues = new JSValue[_functionDefinition.parameters.Length];
+                            defaultValues = new JSValue[_functionDefinition.Parameters.Length];
                         defaultValues[i] = prm.initializer.Evaluate(internalContext);
                     }
                 }
@@ -605,7 +605,7 @@ namespace NiL.JS.BaseLibrary
             for (var i = 0; i < min; i++)
             {
                 JSValue t = args[i];
-                var prm = _functionDefinition.parameters[i];
+                var prm = _functionDefinition.Parameters[i];
                 if (!t.Defined)
                 {
                     if (prm.initializer != null)
@@ -614,7 +614,7 @@ namespace NiL.JS.BaseLibrary
                         t = undefined;
                 }
 
-                if (_functionDefinition._body._strict)
+                if (_functionDefinition.Body._strict)
                 {
                     if (ceaw)
                     {
@@ -658,9 +658,9 @@ namespace NiL.JS.BaseLibrary
                 restArray?._data.Add(t);
             }
 
-            for (var i = min; i < _functionDefinition.parameters.Length; i++)
+            for (var i = min; i < _functionDefinition.Parameters.Length; i++)
             {
-                var parameter = _functionDefinition.parameters[i];
+                var parameter = _functionDefinition.Parameters[i];
                 if (parameter.initializer != null)
                 {
                     if (ceaw || parameter.assignments != null)
@@ -731,13 +731,13 @@ namespace NiL.JS.BaseLibrary
 
         internal void storeParameters()
         {
-            if (_functionDefinition.parameters.Length == 0) return;
-            var context = _functionDefinition.parameters[0].cacheContext;
+            if (_functionDefinition.Parameters.Length == 0) return;
+            var context = _functionDefinition.Parameters[0].cacheContext;
 
             if (context._variables == null)
                 context._variables = getFieldsContainer();
 
-            foreach (var parameter in _functionDefinition.parameters)
+            foreach (var parameter in _functionDefinition.Parameters)
                 context._variables[parameter.Name] = parameter.cacheRes;
         }
 
@@ -748,7 +748,7 @@ namespace NiL.JS.BaseLibrary
             {
                 string name = nameObj.ToString();
 
-                if (_functionDefinition._body._strict && (name == "caller" || name == "arguments"))
+                if (_functionDefinition.Body._strict && (name == "caller" || name == "arguments"))
                     return propertiesDummySM;
 
                 if ((!forWrite || (_attributes & JSValueAttributesInternal.ProxyPrototype) != 0) && name == "prototype")
@@ -841,7 +841,7 @@ namespace NiL.JS.BaseLibrary
                 return this;
 
             var newThis = args[0];
-            var strict = (_functionDefinition._body != null && _functionDefinition._body._strict) || Context.CurrentContext._strict;
+            var strict = (_functionDefinition.Body != null && _functionDefinition.Body._strict) || Context.CurrentContext._strict;
             return new BindedFunction(this, args);
         }
 

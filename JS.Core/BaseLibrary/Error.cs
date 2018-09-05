@@ -6,9 +6,7 @@ using JS.Core.Core.Interop;
 
 namespace NiL.JS.BaseLibrary
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     public class Error
     {
         [DoNotEnumerate]
@@ -16,7 +14,6 @@ namespace NiL.JS.BaseLibrary
         {
             [Hidden]
             get;
-            private set;
         }
         [DoNotEnumerate]
         public JSValue name
@@ -25,21 +22,12 @@ namespace NiL.JS.BaseLibrary
             get;
             set;
         }
-#if CALLSTACKTOSTRING
-        public JSObject callstack
-        {
-            get;
-            private set;
-        }
-#endif
+
         [DoNotEnumerate]
         public Error()
         {
             name = GetType().Name;
             message = "";
-#if CALLSTACKTOSTRING
-            makeCallStack();
-#endif
         }
 
         [DoNotEnumerate]
@@ -47,9 +35,6 @@ namespace NiL.JS.BaseLibrary
         {
             name = GetType().Name;
             message = args[0].ToString();
-#if CALLSTACKTOSTRING
-            makeCallStack();
-#endif
         }
 
         [DoNotEnumerate]
@@ -57,23 +42,8 @@ namespace NiL.JS.BaseLibrary
         {
             name = GetType().Name;
             this.message = message;
-#if CALLSTACKTOSTRING
-            makeCallStack();
-#endif
         }
-#if CALLSTACKTOSTRING
-        private void makeCallStack()
-        {
-            StringBuilder res = new StringBuilder();
-            var context = Context.CurrentContext;
-            while (context != null)
-            {
-                res.Append("in ").AppendLine(context.caller == null ? "" : (context.caller.name ?? "<anonymous method>"));
-                context = context.oldContext;
-            }
-            callstack = res.ToString();
-        }
-#endif
+
         [Hidden]
         public override string ToString()
         {
@@ -82,24 +52,12 @@ namespace NiL.JS.BaseLibrary
             if (message == null
                 || message._valueType <= JSValueType.Undefined
                 || string.IsNullOrEmpty((mstring = message.ToString())))
-                return name.ToString()
-#if CALLSTACKTOSTRING
- + Environment.NewLine + callstack
-#endif
-;
+                return name.ToString();
             if (name == null
                 || name._valueType <= JSValueType.Undefined
                 || string.IsNullOrEmpty((nstring = name.ToString())))
-                return mstring
-#if CALLSTACKTOSTRING
- + Environment.NewLine + callstack
-#endif
-;
-            return nstring + ": " + mstring
-#if CALLSTACKTOSTRING
- + Environment.NewLine + callstack
-#endif
-;
+                return mstring;
+            return nstring + ": " + mstring;
         }
 
         [DoNotEnumerate]

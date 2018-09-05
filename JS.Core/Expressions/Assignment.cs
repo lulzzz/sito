@@ -191,7 +191,7 @@ namespace JS.Core.Expressions
                         && (opts & Options.SuppressUselessExpressionsElimination) == 0
                         && (_codeContext & CodeContext.InLoop) == 0)
                     {
-                        if ((owner._body._strict || variable._descriptor.owner != owner || !owner._functionInfo.ContainsArguments)) // аргументы это одна сущность с двумя именами
+                        if ((owner.Body._strict || variable._descriptor.owner != owner || !owner.FunctionInfo.ContainsArguments)) // аргументы это одна сущность с двумя именами
                         {
                             bool last = true;
                             for (var i = 0; last && i < variable._descriptor.references.Count; i++)

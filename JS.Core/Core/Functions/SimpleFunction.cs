@@ -21,7 +21,7 @@ namespace JS.Core.Core.Functions
 
             notExists._valueType = JSValueType.NotExists;
 
-            if (_functionDefinition.parameters.Length == arguments.Length // из-за необходимости иметь возможность построить аргументы, если они потребуются
+            if (_functionDefinition.Parameters.Length == arguments.Length // из-за необходимости иметь возможность построить аргументы, если они потребуются
                 && arguments.Length < 9)
             {
                 return fastInvoke(targetObject, arguments, initiator);
@@ -32,7 +32,7 @@ namespace JS.Core.Core.Functions
 
         private JSValue fastInvoke(JSValue targetObject, Expression[] arguments, Context initiator)
         {
-            var body = _functionDefinition._body;
+            var body = _functionDefinition.Body;
             targetObject = correctTargetObject(targetObject, body._strict);
             if (_functionDefinition.recursionDepth > _functionDefinition.parametersStored) // рекурсивный вызов.
             {
@@ -47,7 +47,7 @@ namespace JS.Core.Core.Functions
             {
                 var internalContext = new Context(_initialContext, false, this)
                 {
-                    _thisBind = _functionDefinition.kind == FunctionKind.Arrow
+                    _thisBind = _functionDefinition.Kind == FunctionKind.Arrow
                         ? _initialContext._thisBind
                         : targetObject
                 };
@@ -109,7 +109,7 @@ namespace JS.Core.Core.Functions
                     a7 = null; // Вместо кучи, выделяем память на стеке
 
             var argumentsCount = arguments.Length;
-            if (_functionDefinition.parameters.Length != argumentsCount)
+            if (_functionDefinition.Parameters.Length != argumentsCount)
                 throw new ArgumentException("Invalid arguments count");
             if (argumentsCount > 8)
                 throw new ArgumentException("To many arguments");
@@ -189,22 +189,22 @@ namespace JS.Core.Core.Functions
 
         private void setParamValue(int index, JSValue value, Context context)
         {
-            if (_functionDefinition.parameters[index].assignments != null)
+            if (_functionDefinition.Parameters[index].assignments != null)
             {
                 value = value.CloneImpl(false);
                 value._attributes |= JSValueAttributesInternal.Argument;
             }
             else
                 value._attributes &= ~JSValueAttributesInternal.Cloned;
-            if (!value.Defined && _functionDefinition.parameters.Length > index && _functionDefinition.parameters[index].initializer != null)
-                value.Assign(_functionDefinition.parameters[index].initializer.Evaluate(context));
-            _functionDefinition.parameters[index].cacheRes = value;
-            _functionDefinition.parameters[index].cacheContext = context;
-            if (_functionDefinition.parameters[index].captured)
+            if (!value.Defined && _functionDefinition.Parameters.Length > index && _functionDefinition.Parameters[index].initializer != null)
+                value.Assign(_functionDefinition.Parameters[index].initializer.Evaluate(context));
+            _functionDefinition.Parameters[index].cacheRes = value;
+            _functionDefinition.Parameters[index].cacheContext = context;
+            if (_functionDefinition.Parameters[index].captured)
             {
                 if (context._variables == null)
                     context._variables = getFieldsContainer();
-                context._variables[_functionDefinition.parameters[index].name] = value;
+                context._variables[_functionDefinition.Parameters[index].name] = value;
             }
         }
     }

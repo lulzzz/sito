@@ -1338,8 +1338,6 @@ namespace NiL.JS.BaseLibrary
             return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
         }
 
-        #region Do not remove
-
         [Hidden]
         public override bool Equals(object obj)
         {
@@ -1351,7 +1349,5 @@ namespace NiL.JS.BaseLibrary
         {
             return base.GetHashCode();
         }
-
-        #endregion
     }
 }

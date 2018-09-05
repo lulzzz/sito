@@ -73,29 +73,12 @@ namespace NiL.JS.BaseLibrary
             _attributes |= JSValueAttributesInternal.SystemObject;
         }
 
-#if INLINE
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
         [Hidden]
-        public static implicit operator Boolean(bool value)
-        {
-#if DEBUG
-            if (True._iValue != 1)
-                Debugger.Break();
-            if (False._iValue != 0)
-                Debugger.Break();
-#endif
-            return value ? True : False;
-            //var res = value ? Boolean.True : Boolean.False;
-            //res.iValue = value ? 1 : 0;
-            //return res;
-        }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Boolean(bool value) => value ? True : False;
 
         [Hidden]
-        public static implicit operator bool(Boolean value)
-        {
-            return value != null && value._iValue != 0;
-        }
+        public static implicit operator bool(Boolean value) => value != null && value._iValue != 0;
 
         [DoNotEnumerate]
         [InstanceMember]

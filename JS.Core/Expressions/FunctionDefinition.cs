@@ -78,18 +78,13 @@ namespace JS.Core.Expressions
         internal int recursionDepth;
         #endregion
 
-        internal readonly FunctionInfo _functionInfo;
-        internal ParameterDescriptor[] parameters;
-        internal CodeBlock _body;
-        internal FunctionKind kind;
-#if DEBUG
-        internal bool trace;
-#endif
+        internal readonly FunctionInfo FunctionInfo;
 
-        public CodeBlock Body => _body;
-        public ReadOnlyCollection<ParameterDescriptor> Parameters => new ReadOnlyCollection<ParameterDescriptor>(parameters);
+        public ParameterDescriptor[] Parameters { get; internal set; }
 
-        protected internal override bool NeedDecompose => _functionInfo.NeedDecompose;
+        public CodeBlock Body { get; internal set; }
+
+        protected internal override bool NeedDecompose => FunctionInfo.NeedDecompose;
 
         protected internal override bool ContextIndependent => false;
 
@@ -97,32 +92,32 @@ namespace JS.Core.Expressions
 
         protected internal override PredictedType ResultType => PredictedType.Function;
 
-        public override bool Hoist => kind != FunctionKind.Arrow
-                                      && kind != FunctionKind.AsyncArrow;
+        public override bool Hoist => Kind != FunctionKind.Arrow
+                                      && Kind != FunctionKind.AsyncArrow;
 
-        public FunctionKind Kind => kind;
+        public FunctionKind Kind { get; internal set; }
 
         public bool Strict
         {
-            get => _body?.Strict ?? false;
+            get => Body?.Strict ?? false;
             internal set
             {
-                if (_body != null)
-                    _body._strict = value;
+                if (Body != null)
+                    Body._strict = value;
             }
         }
 
         private FunctionDefinition(string name)
             : base(name)
         {
-            _functionInfo = new FunctionInfo();
+            FunctionInfo = new FunctionInfo();
         }
 
         internal FunctionDefinition()
             : this("anonymous")
         {
-            parameters = new ParameterDescriptor[0];
-            _body = new CodeBlock(new CodeNode[0])
+            Parameters = new ParameterDescriptor[0];
+            Body = new CodeBlock(new CodeNode[0])
             {
                 _strict = true,
                 _variables = new VariableDescriptor[0]
@@ -443,12 +438,11 @@ namespace JS.Core.Expressions
 
             var func = new FunctionDefinition(name)
             {
-                parameters = parameters.ToArray(),
-                _body = body,
-                kind = kind,
+                Parameters = parameters.ToArray(),
+                Body = body,
+                Kind = kind,
                 Position = index,
                 Length = position - index,
-                trace = body.directives?.Contains("debug trace") ?? false
             };
 
             if (!string.IsNullOrEmpty(name))
@@ -500,16 +494,6 @@ namespace JS.Core.Expressions
             }
 
             if ((state.CodeContext & CodeContext.InExpression) == 0 && kind == FunctionKind.Function)
-            // Позволяет делать вызов сразу при объявлении функции
-            // (в таком случае функция не добавляется в контекст).
-            // Если убрать проверку, то в тех сулчаях,
-            // когда определение и вызов стоят внутри выражения,
-            // будет выдано исключение, потому,
-            // что тогда это уже не определение и вызов функции,
-            // а часть выражения, которые не могут начинаться со слова "function".
-            // За красивыми словами "может/не может" кроется другая хрень: если бы это было выражение,
-            // то прямо тут надо было бы разбирать тот оператор, который стоит после определения функции,
-            // что не разумно
             {
                 var tindex = position;
                 while (position < code.Length && Tools.IsWhiteSpace(code[position]) && !Tools.IsLineTerminator(code[position]))
@@ -573,10 +557,10 @@ namespace JS.Core.Expressions
 
         protected internal override CodeNode[] GetChildsImpl()
         {
-            var res = new CodeNode[1 + parameters.Length + (Reference != null ? 1 : 0)];
-            for (var i = 0; i < parameters.Length; i++)
-                res[i] = parameters[i].references[0];
-            res[parameters.Length] = _body;
+            var res = new CodeNode[1 + Parameters.Length + (Reference != null ? 1 : 0)];
+            for (var i = 0; i < Parameters.Length; i++)
+                res[i] = Parameters[i].references[0];
+            res[Parameters.Length] = Body;
 
             if (Reference != null)
                 res[res.Length - 1] = Reference;
@@ -584,49 +568,39 @@ namespace JS.Core.Expressions
             return res;
         }
 
-        /// <summary>
-        /// Создаёт функцию, описанную выбранным выражением в контексте указанного сценария.
-        /// </summary>
-        /// <param name="script">Сценарий, контекст которого будет родительским для контекста выполнения функции.</param>
-        /// <returns></returns>
         public Function MakeFunction(Module script)
         {
             return MakeFunction(script.Context);
         }
 
-        /// <summary>
-        /// Создаёт функцию, описанную выбранным выражением в контексте указанного сценария.
-        /// </summary>
-        /// <param name="script">Сценарий, контекст которого будет родительским для контекста выполнения функции.</param>
-        /// <returns></returns>
         public Function MakeFunction(Context context)
         {
-            if (kind == FunctionKind.Generator || kind == FunctionKind.MethodGenerator || kind == FunctionKind.AnonymousGenerator)
+            if (Kind == FunctionKind.Generator || Kind == FunctionKind.MethodGenerator || Kind == FunctionKind.AnonymousGenerator)
                 return new GeneratorFunction(context, this);
 
-            if (kind == FunctionKind.AsyncFunction || kind == FunctionKind.AsyncAnonymousFunction || kind == FunctionKind.AsyncArrow)
+            if (Kind == FunctionKind.AsyncFunction || Kind == FunctionKind.AsyncAnonymousFunction || Kind == FunctionKind.AsyncArrow)
                 return new AsyncFunction(context, this);
 
-            if (_body != null)
+            if (Body != null)
             {
-                if (_body._lines.Length == 0)
+                if (Body._lines.Length == 0)
                 {
                     return new ConstantFunction(JSValue.notExists, this);
                 }
 
-                if (_body._lines.Length == 1)
+                if (Body._lines.Length == 1)
                 {
-                    if (_body._lines[0] is Return ret && (ret.Value == null || ret.Value.ContextIndependent))
+                    if (Body._lines[0] is Return ret && (ret.Value == null || ret.Value.ContextIndependent))
                     {
                         return new ConstantFunction(ret.Value?.Evaluate(null) ?? JSValue.undefined, this);
                     }
                 }
             }
 
-            if (!_functionInfo.ContainsArguments
-                && !_functionInfo.ContainsRestParameters
-                && !_functionInfo.ContainsEval
-                && !_functionInfo.ContainsWith)
+            if (!FunctionInfo.ContainsArguments
+                && !FunctionInfo.ContainsRestParameters
+                && !FunctionInfo.ContainsEval
+                && !FunctionInfo.ContainsWith)
             {
                 return new SimpleFunction(context, this);
             }
@@ -636,7 +610,7 @@ namespace JS.Core.Expressions
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)
         {
-            if (_body.built)
+            if (Body.built)
                 return false;
 
             if (stats != null)
@@ -660,9 +634,9 @@ namespace JS.Core.Expressions
                 variables[Name] = Reference._descriptor;
             }
 
-            _functionInfo.ContainsRestParameters = parameters.Length > 0 && parameters[parameters.Length - 1].IsRest;
+            FunctionInfo.ContainsRestParameters = Parameters.Length > 0 && Parameters[Parameters.Length - 1].IsRest;
 
-            var bodyCode = _body as CodeNode;
+            var bodyCode = Body as CodeNode;
             bodyCode.Build(
                 ref bodyCode,
                 0,
@@ -672,34 +646,34 @@ namespace JS.Core.Expressions
                               | CodeContext.InEval)
                             | CodeContext.InFunction,
                 message,
-                _functionInfo,
+                FunctionInfo,
                 opts);
-            _body = bodyCode as CodeBlock;
+            Body = bodyCode as CodeBlock;
 
             if (message != null)
             {
-                for (var i = parameters.Length; i-- > 0;)
+                for (var i = Parameters.Length; i-- > 0;)
                 {
-                    if (parameters[i].ReferenceCount == 1)
-                        message(MessageLevel.Recomendation, parameters[i].references[0].Position, 0, "Unused parameter \"" + parameters[i].name + "\"");
+                    if (Parameters[i].ReferenceCount == 1)
+                        message(MessageLevel.Recomendation, Parameters[i].references[0].Position, 0, "Unused parameter \"" + Parameters[i].name + "\"");
                     else
                         break;
                 }
             }
 
-            _body._suppressScopeIsolation = SuppressScopeIsolationMode.Suppress;
+            Body._suppressScopeIsolation = SuppressScopeIsolationMode.Suppress;
             checkUsings();
             if (stats != null)
             {
-                stats.ContainsDebugger |= _functionInfo.ContainsDebugger;
-                stats.ContainsEval |= _functionInfo.ContainsEval;
+                stats.ContainsDebugger |= FunctionInfo.ContainsDebugger;
+                stats.ContainsEval |= FunctionInfo.ContainsEval;
                 stats.ContainsInnerEntities = true;
-                stats.ContainsTry |= _functionInfo.ContainsTry;
-                stats.ContainsWith |= _functionInfo.ContainsWith;
-                stats.NeedDecompose |= _functionInfo.NeedDecompose;
-                stats.UseCall |= _functionInfo.UseCall;
-                stats.UseGetMember |= _functionInfo.UseGetMember;
-                stats.ContainsThis |= _functionInfo.ContainsThis;
+                stats.ContainsTry |= FunctionInfo.ContainsTry;
+                stats.ContainsWith |= FunctionInfo.ContainsWith;
+                stats.NeedDecompose |= FunctionInfo.NeedDecompose;
+                stats.UseCall |= FunctionInfo.UseCall;
+                stats.UseGetMember |= FunctionInfo.UseGetMember;
+                stats.ContainsThis |= FunctionInfo.ContainsThis;
             }
 
             if (descriptorToRestore != null)
@@ -727,55 +701,55 @@ namespace JS.Core.Expressions
 
         public override void Optimize(ref CodeNode _this, FunctionDefinition owner, InternalCompilerMessageCallback message, Options opts, FunctionInfo stats)
         {
-            var bd = _body as CodeNode;
-            var oldScopeIsolation = _body._suppressScopeIsolation;
-            _body._suppressScopeIsolation = SuppressScopeIsolationMode.DoNotSuppress;
-            _body.Optimize(ref bd, this, message, opts, _functionInfo);
-            _body._suppressScopeIsolation = oldScopeIsolation;
+            var bd = Body as CodeNode;
+            var oldScopeIsolation = Body._suppressScopeIsolation;
+            Body._suppressScopeIsolation = SuppressScopeIsolationMode.DoNotSuppress;
+            Body.Optimize(ref bd, this, message, opts, FunctionInfo);
+            Body._suppressScopeIsolation = oldScopeIsolation;
 
-            if (_functionInfo.Returns.Count > 0)
+            if (FunctionInfo.Returns.Count > 0)
             {
-                _functionInfo.ResultType = _functionInfo.Returns[0].ResultType;
-                for (var i = 1; i < _functionInfo.Returns.Count; i++)
+                FunctionInfo.ResultType = FunctionInfo.Returns[0].ResultType;
+                for (var i = 1; i < FunctionInfo.Returns.Count; i++)
                 {
-                    if (_functionInfo.ResultType != _functionInfo.Returns[i].ResultType)
+                    if (FunctionInfo.ResultType != FunctionInfo.Returns[i].ResultType)
                     {
-                        _functionInfo.ResultType = PredictedType.Ambiguous;
+                        FunctionInfo.ResultType = PredictedType.Ambiguous;
                         if (message != null
-                            && _functionInfo.ResultType >= PredictedType.Undefined
-                            && _functionInfo.Returns[i].ResultType >= PredictedType.Undefined)
-                            message(MessageLevel.Warning, parameters[i].references[0].Position, 0, "Type of return value is ambiguous");
+                            && FunctionInfo.ResultType >= PredictedType.Undefined
+                            && FunctionInfo.Returns[i].ResultType >= PredictedType.Undefined)
+                            message(MessageLevel.Warning, Parameters[i].references[0].Position, 0, "Type of return value is ambiguous");
                         break;
                     }
                 }
             }
             else
-                _functionInfo.ResultType = PredictedType.Undefined;
+                FunctionInfo.ResultType = PredictedType.Undefined;
         }
 
         private void checkUsings()
         {
-            if (_body?._lines == null || _body._lines.Length == 0)
+            if (Body?._lines == null || Body._lines.Length == 0)
                 return;
 
-            if (_body._variables == null) return;
+            if (Body._variables == null) return;
 
-            var containsEntities = _functionInfo.ContainsInnerEntities;
+            var containsEntities = FunctionInfo.ContainsInnerEntities;
             if (!containsEntities)
             {
-                for (var i = 0; !containsEntities && i < _body._variables.Length; i++)
-                    containsEntities |= _body._variables[i].initializer != null;
-                _functionInfo.ContainsInnerEntities = containsEntities;
+                for (var i = 0; !containsEntities && i < Body._variables.Length; i++)
+                    containsEntities |= Body._variables[i].initializer != null;
+                FunctionInfo.ContainsInnerEntities = containsEntities;
             }
-            foreach (var variable in _body._variables)
+            foreach (var variable in Body._variables)
             {
-                _functionInfo.ContainsArguments |= variable.name == "arguments";
+                FunctionInfo.ContainsArguments |= variable.name == "arguments";
             }
         }
 
         internal override System.Linq.Expressions.Expression TryCompile(bool selfCompile, bool forAssign, Type expectedType, List<CodeNode> dynamicValues)
         {
-            _body.TryCompile(true, false, null, new List<CodeNode>());
+            Body.TryCompile(true, false, null, new List<CodeNode>());
             return null;
         }
 
@@ -786,18 +760,18 @@ namespace JS.Core.Expressions
 
         public override void Decompose(ref Expression self, IList<CodeNode> result)
         {
-            CodeNode cn = _body;
+            CodeNode cn = Body;
             cn.Decompose(ref cn);
-            _body = (CodeBlock)cn;
+            Body = (CodeBlock)cn;
         }
 
         public override void RebuildScope(FunctionInfo functionInfo, Dictionary<string, VariableDescriptor> transferedVariables, int scopeBias)
         {
             base.RebuildScope(functionInfo, null, scopeBias);
 
-            var tempVariables = _functionInfo.WithLexicalEnvironment ? null : new Dictionary<string, VariableDescriptor>();
-            _body.RebuildScope(_functionInfo, tempVariables, scopeBias + (_body._variables == null || _body._variables.Length == 0 || !_functionInfo.WithLexicalEnvironment ? 1 : 0));
-            if (tempVariables != null && _body is CodeBlock block)
+            var tempVariables = FunctionInfo.WithLexicalEnvironment ? null : new Dictionary<string, VariableDescriptor>();
+            Body.RebuildScope(FunctionInfo, tempVariables, scopeBias + (Body._variables == null || Body._variables.Length == 0 || !FunctionInfo.WithLexicalEnvironment ? 1 : 0));
+            if (tempVariables != null && Body is CodeBlock block)
                 block._variables = tempVariables.Values.Where(x => !(x is ParameterDescriptor)).ToArray();
         }
 
@@ -809,7 +783,7 @@ namespace JS.Core.Expressions
         internal string ToString(bool headerOnly)
         {
             StringBuilder code = new StringBuilder();
-            switch (kind)
+            switch (Kind)
             {
                 case FunctionKind.Generator:
                     {
@@ -849,25 +823,25 @@ namespace JS.Core.Expressions
             code.Append(Name)
                 .Append("(");
 
-            if (parameters != null)
-                for (int i = 0; i < parameters.Length;)
-                    code.Append(parameters[i])
-                        .Append(++i < parameters.Length ? "," : "");
+            if (Parameters != null)
+                for (int i = 0; i < Parameters.Length;)
+                    code.Append(Parameters[i])
+                        .Append(++i < Parameters.Length ? "," : "");
 
             code.Append(")");
 
             if (!headerOnly)
             {
                 code.Append(" ");
-                if (kind == FunctionKind.Arrow)
+                if (Kind == FunctionKind.Arrow)
                     code.Append("=> ");
 
-                if (kind == FunctionKind.Arrow
-                    && _body._lines.Length == 1
-                    && _body.Position == _body._lines[0].Position)
-                    code.Append(_body._lines[0].Childs[0]);
+                if (Kind == FunctionKind.Arrow
+                    && Body._lines.Length == 1
+                    && Body.Position == Body._lines[0].Position)
+                    code.Append(Body._lines[0].Childs[0]);
                 else
-                    code.Append((object)_body ?? "{ [native code] }");
+                    code.Append((object)Body ?? "{ [native code] }");
             }
 
             return code.ToString();

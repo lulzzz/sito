@@ -77,7 +77,7 @@ namespace JS.Core.Core.Functions
             if (construct)
                 ExceptionHelper.ThrowTypeError("Async function cannot be invoked as a constructor");
 
-            var body = _functionDefinition._body;
+            var body = _functionDefinition.Body;
             if (body._lines.Length == 0)
             {
                 notExists._valueType = JSValueType.NotExists;
@@ -120,7 +120,7 @@ namespace JS.Core.Core.Functions
         private JSValue run(Context internalContext)
         {
             internalContext.Activate();
-            JSValue result = null;
+            JSValue result;
             try
             {
                 result = evaluateBody(internalContext);

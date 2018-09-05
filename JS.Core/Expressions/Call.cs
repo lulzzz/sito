@@ -35,7 +35,7 @@ namespace JS.Core.Expressions
                 {
                     var desc = reference._descriptor;
                     if (desc.initializer is FunctionDefinition fe)
-                        return fe._functionInfo.ResultType; // для рекурсивных функций будет Unknown
+                        return fe.FunctionInfo.ResultType; // для рекурсивных функций будет Unknown
                 }
 
                 return PredictedType.Unknown;
@@ -137,9 +137,9 @@ namespace JS.Core.Expressions
 
             if (allowTCO
                 && _callMode == 0
-                && (func._functionDefinition.kind != FunctionKind.Generator)
-                && (func._functionDefinition.kind != FunctionKind.MethodGenerator)
-                && (func._functionDefinition.kind != FunctionKind.AnonymousGenerator)
+                && (func._functionDefinition.Kind != FunctionKind.Generator)
+                && (func._functionDefinition.Kind != FunctionKind.MethodGenerator)
+                && (func._functionDefinition.Kind != FunctionKind.AnonymousGenerator)
                 && context._owner != null
                 && func == context._owner._oValue)
             {
@@ -243,14 +243,14 @@ namespace JS.Core.Expressions
                 VariableDescriptor f = null;
                 if (variables.TryGetValue(name, out f) && f.initializer is FunctionDefinition func)
                 {
-                    for (var i = 0; i < func.parameters.Length; i++)
+                    for (var i = 0; i < func.Parameters.Length; i++)
                     {
                         if (i >= Arguments.Length)
                             break;
-                        if (func.parameters[i].lastPredictedType == PredictedType.Unknown)
-                            func.parameters[i].lastPredictedType = Arguments[i].ResultType;
-                        else if (Tools.CompareWithMask(func.parameters[i].lastPredictedType, Arguments[i].ResultType, PredictedType.Group) != 0)
-                            func.parameters[i].lastPredictedType = PredictedType.Ambiguous;
+                        if (func.Parameters[i].lastPredictedType == PredictedType.Unknown)
+                            func.Parameters[i].lastPredictedType = Arguments[i].ResultType;
+                        else if (Tools.CompareWithMask(func.Parameters[i].lastPredictedType, Arguments[i].ResultType, PredictedType.Group) != 0)
+                            func.Parameters[i].lastPredictedType = PredictedType.Ambiguous;
                     }
                 }
             }

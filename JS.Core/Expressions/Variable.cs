@@ -24,7 +24,7 @@ namespace JS.Core.Expressions
 
         protected internal override JSValue EvaluateForWrite(Context context)
         {
-            if (context._owner._functionDefinition.kind == FunctionKind.Arrow)
+            if (context._owner._functionDefinition.Kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -38,7 +38,7 @@ namespace JS.Core.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            if (context._owner._functionDefinition.kind == FunctionKind.Arrow)
+            if (context._owner._functionDefinition.Kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -83,7 +83,7 @@ namespace JS.Core.Expressions
                     }
                     else
                     {
-                        var code = context.RootContext._owner?._functionDefinition?._body?.Code ?? context._module?.Code;
+                        var code = context.RootContext._owner?._functionDefinition?.Body?.Code ?? context._module?.Code;
 
                         ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code ?? "", Position, Length, this);
                     }
@@ -114,7 +114,7 @@ namespace JS.Core.Expressions
                             }
                             else
                             {
-                                var code = context.RootContext._owner?._functionDefinition?._body?.Code ?? context._module?.Code;
+                                var code = context.RootContext._owner?._functionDefinition?.Body?.Code ?? context._module?.Code;
 
                                 ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code, Position, Length, this);
                             }
@@ -211,7 +211,7 @@ namespace JS.Core.Expressions
                 && _descriptor.isDefined
                 && !stats.ContainsWith
                 && !stats.ContainsEval
-                && (_descriptor.owner != owner || !owner._functionInfo.ContainsArguments))
+                && (_descriptor.owner != owner || !owner.FunctionInfo.ContainsArguments))
             {
                 var assigns = _descriptor.assignments;
                 if (assigns != null && assigns.Count > 0)

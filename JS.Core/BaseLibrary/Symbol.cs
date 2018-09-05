@@ -17,7 +17,7 @@ namespace NiL.JS.BaseLibrary
         public static readonly Symbol toStringTag = new Symbol("toStringTag");
 
         [Hidden]
-        public string Description { get; private set; }
+        public string Description { get; }
 
         public Symbol()
             : this("")

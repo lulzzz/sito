@@ -2,9 +2,7 @@
 
 namespace JS.Core.Core.Interop
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     [AttributeUsage(
           AttributeTargets.Field
         | AttributeTargets.Property
