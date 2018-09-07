@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Core", "Maddalena
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Web", "AspNetCore2CoreUI-2.0\src\CoreUI.Web\CoreUI.Web.csproj", "{41024AB9-10A4-45A7-89DE-544439C428B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miniblog.Core", "C:\Users\mf185129\Desktop\Miniblog.Core-master\src\Miniblog.Core.csproj", "{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{41024AB9-10A4-45A7-89DE-544439C428B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
