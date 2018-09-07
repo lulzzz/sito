@@ -1,14 +1,7 @@
-﻿using Maddalena.Numl.Supervised.NeuralNetwork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Maddalena.Core.Numl.Math;
 
-using System.Reflection;
-using Maddalena.Numl.Math;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>
     /// Network Training Properties class.

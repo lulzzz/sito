@@ -1,16 +1,17 @@
 ﻿// file:	Math\LinearAlgebra\Matrix.cs
 //
 // summary:	Implements the matrix class
-using System;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Globalization;
-using Maddalena.Numl.Math.Probability;
-using System.Collections.Generic;
-using Maddalena.Numl.Serialization;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Serialization;
+
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A matrix.</summary>
     public partial class Matrix

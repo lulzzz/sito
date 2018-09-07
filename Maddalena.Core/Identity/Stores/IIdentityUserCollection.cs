@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using bwets.NetCore.Identity.Model;
+using Maddalena.Core.Identity.Model;
 
-namespace bwets.NetCore.Identity.Stores
+namespace Maddalena.Core.Identity.Stores
 {
-	public interface IIdentityUserCollection<TUser> : IIdentityObjectCollection<TUser> where TUser : IdentityUser
+	public interface IIdentityUserCollection<TUser> : IIdentityObjectCollection<TUser> where TUser : MongoUser
 	{
 		Task<TUser> FindByEmailAsync(string normalizedEmail);
 		Task<TUser> FindByUserNameAsync(string username);

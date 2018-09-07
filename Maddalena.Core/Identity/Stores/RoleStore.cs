@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using bwets.NetCore.Identity.Model;
+using Maddalena.Core.Identity.Model;
 using Microsoft.AspNetCore.Identity;
 
-namespace bwets.NetCore.Identity.Stores
+namespace Maddalena.Core.Identity.Stores
 {
-	public class RoleStore<TRole> : IQueryableRoleStore<TRole> where TRole : IdentityRole
+	public class RoleStore<TRole> : IQueryableRoleStore<TRole> where TRole : MongoRole
 	{
 		private readonly IIdentityRoleCollection<TRole> _collection;
 
@@ -67,8 +67,7 @@ namespace bwets.NetCore.Identity.Stores
 
 		async Task<TRole> IRoleStore<TRole>.FindByIdAsync(string roleId, CancellationToken cancellationToken)
 		{
-			if (!Guid.TryParse(roleId, out var id)) throw new ApplicationException("Invalid role Id");
-			return await _collection.FindByIdAsync(id);
+			return await _collection.FindByIdAsync(roleId);
 		}
 
 		async Task<TRole> IRoleStore<TRole>.FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)

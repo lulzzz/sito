@@ -1,12 +1,10 @@
 ﻿// file:	Math\Kernels\IKernel.cs
 //
 // summary:	Declares the IKernel interface
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Kernels
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Kernels
 {
     /// <summary>
     /// In machine learning there is something called the Kernel Trick. In essence it allows for the

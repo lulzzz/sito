@@ -1,4 +1,4 @@
-﻿namespace Maddalena.ML.MachineLearning.Numl.Genetic.Metrics
+﻿namespace Maddalena.Core.Numl.Genetic.Metrics
 {
     /// <summary>
     /// IFitnessMetric interface.

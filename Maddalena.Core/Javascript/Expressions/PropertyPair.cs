@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using JS.Core.Core;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     [Serializable]
     public sealed class PropertyPair : Expression

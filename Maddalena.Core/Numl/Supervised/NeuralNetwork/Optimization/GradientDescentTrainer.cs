@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Optimization
+﻿namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization
 {
     public class GradientDescentTrainer : INetworkTrainer
     {

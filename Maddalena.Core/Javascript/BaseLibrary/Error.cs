@@ -1,10 +1,10 @@
 ﻿//#define CALLSTACKTOSTRING
 
 using System;
-using JS.Core.Core;
-using JS.Core.Core.Interop;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     [Serializable]
     public class Error

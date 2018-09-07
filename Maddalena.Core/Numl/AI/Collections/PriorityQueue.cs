@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
+namespace Maddalena.Core.Numl.AI.Collections
 {
     /// <summary>
     /// A priority queue.

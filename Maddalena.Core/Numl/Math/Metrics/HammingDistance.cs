@@ -1,10 +1,11 @@
 // file:	Math\Metrics\HammingDistance.cs
 //
 // summary:	Implements the hamming distance class
-using System;
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using System;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A hamming distance.</summary>
     public sealed class HammingDistance : IDistance

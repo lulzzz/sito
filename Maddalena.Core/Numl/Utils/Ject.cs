@@ -1,19 +1,18 @@
 ﻿// file:	Utils\Ject.cs
 //
 // summary:	Implements the ject class
-using System;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Collections;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Globalization;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Serialization;
 
-namespace Maddalena.Numl.Utils
+using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using Maddalena.Core.Numl.Serialization;
+
+namespace Maddalena.Core.Numl.Utils
 {
     /// <summary>This class is used for fast reflection over types.</summary>
     public static class Ject

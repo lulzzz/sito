@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.AI;
-using Maddalena.Numl.Math.Discretization;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math;
-using Action = Maddalena.ML.MachineLearning.Numl.AI.Action;
+using Maddalena.Core.Numl.AI;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Discretization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Action = Maddalena.Core.Numl.AI.Action;
 
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement.States
 {
     /// <summary>
     /// Converter class for generating Markov Decision Processes.

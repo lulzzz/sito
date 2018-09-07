@@ -1,7 +1,7 @@
 using System.Linq;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI.Search
+namespace Maddalena.Core.Numl.AI.Search
 {
     /// <summary>
     /// Class AdversarialSearch.

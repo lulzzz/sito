@@ -1,10 +1,10 @@
 // file:	Math\Functions\Function.cs
 //
 // summary:	Implements the function class
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Functions
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>A function.</summary>
     public abstract class Function : IFunction

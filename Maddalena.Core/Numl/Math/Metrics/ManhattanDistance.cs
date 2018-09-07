@@ -1,9 +1,10 @@
 // file:	Math\Metrics\ManhattanDistance.cs
 //
 // summary:	Implements the manhattan distance class
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A manhattan distance.</summary>
     public sealed class ManhattanDistance : IDistance

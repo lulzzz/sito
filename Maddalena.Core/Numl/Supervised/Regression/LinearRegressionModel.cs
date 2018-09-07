@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.Regression
+namespace Maddalena.Core.Numl.Supervised.Regression
 {
     /// <summary>
     /// Linear Regression model

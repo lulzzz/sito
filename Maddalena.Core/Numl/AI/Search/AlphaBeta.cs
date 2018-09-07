@@ -1,4 +1,4 @@
-﻿namespace Maddalena.ML.MachineLearning.Numl.AI.Search
+﻿namespace Maddalena.Core.Numl.AI.Search
 {
     /// <summary>
     /// Class AlphaBeta.

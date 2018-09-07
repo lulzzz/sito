@@ -2,7 +2,7 @@
 //
 // summary:	Implements the rectified linear class
 
-namespace Maddalena.Numl.Math.Functions
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>A clipped rectified linear function.</summary>
     public class ClippedRectifiedLinear : Function

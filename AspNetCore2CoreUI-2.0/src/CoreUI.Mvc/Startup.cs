@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CoreUI.Mvc.Data;
+using Maddalena.Core.Identity.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using bwets.NetCore.Identity.MongoDb;
+
+using Maddalena.Core.Identity.Mongo;
 
 namespace CoreUI.Mvc
 {
@@ -36,8 +30,7 @@ namespace CoreUI.Mvc
             });
 
 
-            bwets.NetCore.Identity.MongoDb.Extensions.AddIdentityMongoDbProvider
-            services.AddMongoIdentityProvider<ApplicationUser, ApplicationRole>(options =>
+            services.AddIdentityMongoDbProvider<MongoUser, MongoRole>(options =>
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
@@ -45,20 +38,15 @@ namespace CoreUI.Mvc
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
 
-            }, dbOptions => {
-                dbOptions.ConnectionString = "mongodb://localhost/yourDatabase";
+            }, dbOptions =>
+            {
+                dbOptions.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
                 dbOptions.UsersCollection = "Users"; // this is the default value;
                 dbOptions.RolesCollection = "Roles"; // this is the default value;
 
             });
 
-
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<Maddalena.Core.Identity.Model.MongoUser>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

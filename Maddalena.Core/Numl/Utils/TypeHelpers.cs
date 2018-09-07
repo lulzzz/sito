@@ -1,14 +1,15 @@
 ﻿// file:	Utils\TypeHelpers.cs
 //
 // summary:	Implements the type helpers class
+
 using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Maddalena.Core.Numl.Model;
 
-namespace Maddalena.Numl.Utils
+namespace Maddalena.Core.Numl.Utils
 {
 	/// <summary>A type helpers.</summary>
 	public static class TypeHelpers

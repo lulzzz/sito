@@ -1,12 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Globalization;
-using System.Collections.Generic;
-using Maddalena.Numl.Utils;
-using System.Collections;
-namespace Maddalena.Numl.Serialization
+﻿namespace Maddalena.Core.Numl.Serialization
 {
     /// <summary>
     /// JsonProperty structure.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Collections.Generic;
-
-namespace Maddalena.Numl.Serialization
+﻿namespace Maddalena.Core.Numl.Serialization
 {
     internal static class JsonConstants
     {

@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
 using Math = System.Math;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     public sealed class RopeString : IEnumerable<char>, IEnumerable, IEquatable<string>
     {

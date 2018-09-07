@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CoreUI.Web.Data;
-using CoreUI.Web.Models;
 using CoreUI.Web.Services;
+using Maddalena.Core.Blog.Services;
+using Maddalena.Core.Identity;
+using Maddalena.Core.Identity.Model;
+using Maddalena.Core.Identity.Mongo;
 
 namespace CoreUI.Web
 {
@@ -26,13 +22,26 @@ namespace CoreUI.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentityMongoDbProvider<MaddalenaUser, MongoRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            }, dbOptions =>
+            {
+                dbOptions.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+                dbOptions.UsersCollection = "Users"; // this is the default value;
+                dbOptions.RolesCollection = "Roles"; // this is the default value;
 
+            });
+
+            services.AddAntiforgery();
+
+            services.AddTransient<IBlogService, MongoBlogService>(provider => new MongoBlogService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IBlogSettings, BlogSettings>();
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 

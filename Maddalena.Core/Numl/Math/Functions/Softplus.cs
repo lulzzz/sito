@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Maddalena.Numl.Math.Functions
+﻿namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>
     /// Softplus function

@@ -1,12 +1,10 @@
 ﻿// file:	Supervised\DecisionTree\Node.cs
 //
 // summary:	Implements the node class
-using System;
-using Maddalena.Numl.Math;
-using System.Runtime.Serialization;
-using Maddalena.ML.MachineLearning.Numl.Data;
 
-namespace Maddalena.Numl.Supervised.DecisionTree
+using Maddalena.Core.Numl.Data;
+
+namespace Maddalena.Core.Numl.Supervised.DecisionTree
 {
     public class Node : IVertex
     {

@@ -1,13 +1,13 @@
 ﻿// file:	Math\Linkers\AverageLinker.cs
 //
 // summary:	Implements the average linker class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Metrics;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Linkers
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+
+namespace Maddalena.Core.Numl.Math.Linkers
 {
     /// <summary>An average linker.</summary>
     public class AverageLinker : ILinker

@@ -1,4 +1,4 @@
-﻿namespace Maddalena.ML.MachineLearning.Numl.AI.Functions
+﻿namespace Maddalena.Core.Numl.AI.Functions
 {
     /// <summary>
     /// ITransitionFunction interface.

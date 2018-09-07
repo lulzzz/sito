@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using JS.Core.Core;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
 
-namespace JS.Core.Extensions
+namespace Maddalena.Core.Javascript.Extensions
 {
     public static class JSValueExtensions
     {

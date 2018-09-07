@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using JS.Core.Core;
+using Maddalena.Core.Javascript.Core;
 
 #if NET40
 using NiL.JS.Backward;
 #endif
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
 #if !(PORTABLE)
     [Serializable]

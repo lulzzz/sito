@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
 
-namespace JS.Core.Core.Functions
+namespace Maddalena.Core.Javascript.Core.Functions
 {
     internal sealed class EvalFunction : Function
     {

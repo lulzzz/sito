@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace JS.Core.Core.JIT
+namespace Maddalena.Core.Javascript.Core.JIT
 {
     internal sealed class TreeBuildingState
     {

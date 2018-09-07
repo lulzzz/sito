@@ -6,16 +6,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using JS.Core.Core.Functions;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
+using Boolean = Maddalena.Core.Javascript.BaseLibrary.Boolean;
 using Math = System.Math;
-using String = NiL.JS.BaseLibrary.String;
+using String = Maddalena.Core.Javascript.BaseLibrary.String;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Serializable]
     public enum PropertyScope

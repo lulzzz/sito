@@ -1,11 +1,9 @@
 using System;
-using Maddalena.Numl.Supervised;
-using System.Reflection;
-using Maddalena.Numl.Math.Kernels;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Supervised.Perceptron;
+using Maddalena.Core.Numl.Math.Kernels;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Serialization.Supervised
+namespace Maddalena.Core.Numl.Supervised.Perceptron
 {
     public class KernelPerceptronSerializer : ModelSerializer
     {

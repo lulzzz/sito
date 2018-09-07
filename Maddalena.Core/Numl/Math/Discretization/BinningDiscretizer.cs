@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Utils;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Utils;
-
-namespace Maddalena.Numl.Math.Discretization
+namespace Maddalena.Core.Numl.Math.Discretization
 {
     /// <summary>
     /// Feature binning discretizer.

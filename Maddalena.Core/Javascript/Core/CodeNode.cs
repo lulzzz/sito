@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using JS.Core.Core.JIT;
-using JS.Core.Expressions;
-using NiL.JS;
+using Maddalena.Core.Javascript.Core.JIT;
+using Maddalena.Core.Javascript.Expressions;
 using Expression = System.Linq.Expressions.Expression;
 
 #if !(PORTABLE)
 
 #endif
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Flags]
     public enum CodeContext

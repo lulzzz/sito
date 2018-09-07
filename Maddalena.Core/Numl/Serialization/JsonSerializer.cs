@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Maddalena.Numl.Serialization
+namespace Maddalena.Core.Numl.Serialization
 {
     /// <summary>
     /// An abstract JsonSerializer class.

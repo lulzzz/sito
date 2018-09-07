@@ -1,6 +1,6 @@
-﻿using JS.Core.Core;
+﻿using Maddalena.Core.Javascript.Core;
 
-namespace NiL.JS
+namespace Maddalena.Core.Javascript
 {
     public enum MessageLevel
     {

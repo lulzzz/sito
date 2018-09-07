@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
 
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Encoders
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Encoders
 {
     /// <summary>
     /// An autoencoding node.

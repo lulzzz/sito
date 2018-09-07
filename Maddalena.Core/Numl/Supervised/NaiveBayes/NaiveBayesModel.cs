@@ -1,12 +1,11 @@
 ﻿// file:	Supervised\NaiveBayes\NaiveBayesModel.cs
 //
 // summary:	Implements the naive bayes model class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Supervised.NaiveBayes
+using System;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     /// <summary>A data Model for the naive bayes.</summary>
     public class NaiveBayesModel : Model

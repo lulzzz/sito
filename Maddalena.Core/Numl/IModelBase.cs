@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Model;
 
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Math;
-
-namespace Maddalena.Numl
+namespace Maddalena.Core.Numl
 {
     /// <summary>
     /// IModelBase interface.

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Optimization.Methods.GradientDescent
+namespace Maddalena.Core.Numl.Math.Optimization.Methods.GradientDescent
 {
     /// <summary>
     /// A Stochastic Gradient Descent method.

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Maddalena.Numl.Serialization;
-using System.Reflection;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math.Functions;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Serialization;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Serializer
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Serializer
 {
     /// <summary>
     /// Neural Network serializer.

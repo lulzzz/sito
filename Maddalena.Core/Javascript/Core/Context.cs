@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
-using JS.Core.Core.Functions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Statements;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Statements;
 using Debugger = System.Diagnostics.Debugger;
-using Module = NiL.JS.Module;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Serializable]
     public enum ExecutionMode

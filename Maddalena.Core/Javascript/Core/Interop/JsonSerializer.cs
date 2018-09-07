@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using NiL.JS.Backward;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     public class JsonSerializer
     {

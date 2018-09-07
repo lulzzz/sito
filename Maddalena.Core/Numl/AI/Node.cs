@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// Class Node.

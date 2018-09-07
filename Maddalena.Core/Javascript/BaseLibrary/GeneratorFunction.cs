@@ -1,8 +1,8 @@
-﻿using JS.Core.Core;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
+﻿using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     [Prototype(typeof(Function), true)]
     internal sealed class GeneratorFunction : Function

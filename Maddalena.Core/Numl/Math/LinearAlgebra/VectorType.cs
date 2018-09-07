@@ -1,9 +1,8 @@
 // file:	Math\LinearAlgebra\VectorType.cs
 //
 // summary:	Implements the vector type class
-using System;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>Values that represent VectorType.</summary>
     public enum VectorType

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     /// <summary>
     /// Служит для передачи в среду выполнения скрипта информации о количестве ожидаемых параметров метода.

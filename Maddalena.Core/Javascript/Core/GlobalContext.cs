@@ -5,17 +5,16 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using JS.Core.Core.Functions;
-using JS.Core.Core.Interop;
-using JS.Core.Extensions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Array = NiL.JS.BaseLibrary.Array;
-using Boolean = NiL.JS.BaseLibrary.Boolean;
-using Math = NiL.JS.BaseLibrary.Math;
-using String = NiL.JS.BaseLibrary.String;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Extensions;
+using Array = Maddalena.Core.Javascript.BaseLibrary.Array;
+using Boolean = Maddalena.Core.Javascript.BaseLibrary.Boolean;
+using Math = Maddalena.Core.Javascript.BaseLibrary.Math;
+using String = Maddalena.Core.Javascript.BaseLibrary.String;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     public enum IndexersSupport
     {

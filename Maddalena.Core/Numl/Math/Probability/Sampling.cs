@@ -1,12 +1,11 @@
 ﻿// file:	Math\Probability\Sampling.cs
 //
 // summary:	Implements the sampling class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.Numl.Utils;
 
-namespace Maddalena.Numl.Math.Probability
+using System;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Math.Probability
 {
     /// <summary>
     /// SimpleRNG is a simple random number generator based on George Marsaglia's MWC (multiply with

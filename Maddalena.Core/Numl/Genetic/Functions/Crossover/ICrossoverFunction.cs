@@ -1,4 +1,4 @@
-﻿namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Crossover
+﻿namespace Maddalena.Core.Numl.Genetic.Functions.Crossover
 {
     /// <summary>
     /// ICrossoverFunction interface.

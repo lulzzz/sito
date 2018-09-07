@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace bwets.NetCore.Identity.Model
+namespace Maddalena.Core.Identity.Model
 {
 	public class IdentityUserClaim
 	{

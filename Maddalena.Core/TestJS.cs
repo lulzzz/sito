@@ -2,12 +2,12 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using JS.Core.Core;
-using JS.Core.Extensions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Extensions;
 
-namespace JsCore
+namespace Maddalena.Core
 {
     class TestJS
     {

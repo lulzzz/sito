@@ -1,11 +1,11 @@
 // file:	Supervised\NaiveBayes\Measure.cs
 //
 // summary:	Implements the measure class
+
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Supervised.NaiveBayes
+namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     /// <summary>A measure.</summary>
     public class Measure

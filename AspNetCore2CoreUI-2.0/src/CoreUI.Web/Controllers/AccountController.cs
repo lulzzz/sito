@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using CoreUI.Web.Models;
 using CoreUI.Web.Models.AccountViewModels;
 using CoreUI.Web.Services;
+using Maddalena.Core.Identity;
+using Maddalena.Core.Identity.Model;
 
 namespace CoreUI.Web.Controllers
 {
@@ -20,14 +22,14 @@ namespace CoreUI.Web.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<MaddalenaUser> _userManager;
+        private readonly SignInManager<MaddalenaUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<MaddalenaUser> userManager,
+            SignInManager<MaddalenaUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -220,7 +222,7 @@ namespace CoreUI.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new MaddalenaUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -310,7 +312,7 @@ namespace CoreUI.Web.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new MaddalenaUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math
+namespace Maddalena.Core.Numl.Math
 {
     /// <summary>
     /// Summary class.

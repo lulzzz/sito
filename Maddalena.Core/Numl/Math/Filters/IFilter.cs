@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-
-namespace Maddalena.Numl.Math.Filters
+namespace Maddalena.Core.Numl.Math.Filters
 {
     /// <summary>
     /// IFilter interface.

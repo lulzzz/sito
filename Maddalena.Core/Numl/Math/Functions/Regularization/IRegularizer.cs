@@ -1,6 +1,6 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Functions.Regularization
+namespace Maddalena.Core.Numl.Math.Functions.Regularization
 {
     /// <summary>
     /// Regularization function

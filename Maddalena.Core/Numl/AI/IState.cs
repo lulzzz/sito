@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
+using Maddalena.Core.Numl.Data;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// Interface IState

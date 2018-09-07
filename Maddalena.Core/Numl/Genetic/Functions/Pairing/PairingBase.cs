@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Maddalena.Numl.Math.Probability;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Pairing
+namespace Maddalena.Core.Numl.Genetic.Functions.Pairing
 {
     /// <summary>
     /// PairingBase abstract class.

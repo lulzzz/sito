@@ -4,10 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using bwets.NetCore.Identity.Model;
+using Maddalena.Core.Identity.Model;
 using Microsoft.AspNetCore.Identity;
 
-namespace bwets.NetCore.Identity.Stores
+namespace Maddalena.Core.Identity.Stores
 {
 	public class UserStore<TUser, TRole> :
 		IUserClaimStore<TUser>,
@@ -22,8 +22,8 @@ namespace bwets.NetCore.Identity.Stores
 		IUserLockoutStore<TUser>,
 		IUserAuthenticatorKeyStore<TUser>,
 		IUserAuthenticationTokenStore<TUser>,
-		IUserTwoFactorRecoveryCodeStore<TUser> where TUser : IdentityUser
-		where TRole : IdentityRole
+		IUserTwoFactorRecoveryCodeStore<TUser> where TUser : MongoUser
+		where TRole : MongoRole
 	{
 		private readonly IIdentityRoleCollection<TRole> _roleCollection;
 
@@ -107,8 +107,7 @@ namespace bwets.NetCore.Identity.Stores
 
 		public Task<TUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
 		{
-			if (!Guid.TryParse(userId, out var id)) throw new ApplicationException("Invalid user Id");
-			return _userCollection.FindByIdAsync(id);
+			return _userCollection.FindByIdAsync(userId);
 		}
 
 		public Task<TUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)

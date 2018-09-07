@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Recurrent
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Recurrent
 {
     /// <summary>
     /// Gated Recurrent Neural Network model.

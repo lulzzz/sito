@@ -1,9 +1,10 @@
 ﻿// file:	Math\Metrics\ISimilarity.cs
 //
 // summary:	Declares the ISimilarity interface
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>Interface for similarity.</summary>
     public interface ISimilarity

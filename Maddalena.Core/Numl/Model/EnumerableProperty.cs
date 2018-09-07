@@ -1,13 +1,13 @@
 ﻿// file:	Model\EnumerableProperty.cs
 //
 // summary:	Implements the enumerable property class
+
 using System;
-using Maddalena.Numl.Utils;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
     /// <summary>Enumerable property. Expanded feature.</summary>
     public class EnumerableProperty : Property

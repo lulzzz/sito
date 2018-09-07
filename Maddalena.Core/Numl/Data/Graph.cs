@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.ML.MachineLearning.Numl.Data
+namespace Maddalena.Core.Numl.Data
 {
     /// <summary>
     /// Graph class.

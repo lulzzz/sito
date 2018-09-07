@@ -1,9 +1,10 @@
 // file:	Math\Metrics\CosineSimilarity.cs
 //
 // summary:	Implements the cosine similarity class
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A cosine similarity.</summary>
     public sealed class CosineSimilarity : ISimilarity

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Crossover;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Pairing;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Selection;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Metrics;
-using Maddalena.Numl.Math.Probability;
+using Maddalena.Core.Numl.Genetic.Functions.Crossover;
+using Maddalena.Core.Numl.Genetic.Functions.Mutation;
+using Maddalena.Core.Numl.Genetic.Functions.Pairing;
+using Maddalena.Core.Numl.Genetic.Functions.Selection;
+using Maddalena.Core.Numl.Genetic.Metrics;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Algorithms
+namespace Maddalena.Core.Numl.Genetic.Algorithms
 {
     /// <summary>
     /// GeneticAlgorithm class.

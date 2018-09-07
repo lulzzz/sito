@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Array = NiL.JS.BaseLibrary.Array;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
+using Array = Maddalena.Core.Javascript.BaseLibrary.Array;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Serializable]
     public class JSObject : JSValue

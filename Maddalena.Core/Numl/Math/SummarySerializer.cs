@@ -1,11 +1,8 @@
 ﻿using System;
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Serialization;
-using System.Reflection;
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Serialization;
 
-
-namespace Maddalena.Numl.Serialization.Supervised
+namespace Maddalena.Core.Numl.Math
 {
     /// <summary>
     /// Implements a Summary object serializer.

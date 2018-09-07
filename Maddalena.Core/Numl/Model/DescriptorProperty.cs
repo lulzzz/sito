@@ -1,18 +1,12 @@
 // file:	Model\DescriptorProperty.cs
 //
 // summary:	Implements the descriptor property class
-using System;
-using System.IO;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using System.Reflection;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Text;
-using System.Linq.Expressions;
-using System.Collections;
 
-namespace Maddalena.Numl.Model
+using System;
+using System.Collections.Generic;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Model
 {
 	/// <summary>
 	/// Fluent API addition for simplifying the process of adding features and labels to a descriptor.

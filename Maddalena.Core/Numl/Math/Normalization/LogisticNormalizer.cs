@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
-namespace Maddalena.Numl.Math.Normalization
+namespace Maddalena.Core.Numl.Math.Normalization
 {
     /// <summary>
     /// Logistic Feature normalizer using sigmoid function to scale features to be between 0 and 1.
@@ -30,7 +27,7 @@ namespace Maddalena.Numl.Math.Normalization
         /// <param name="row"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        public Vector Normalize(Vector row, Maddalena.Numl.Math.Summary properties)
+        public Vector Normalize(Vector row, Summary properties)
         {
             if (row == null)
             {

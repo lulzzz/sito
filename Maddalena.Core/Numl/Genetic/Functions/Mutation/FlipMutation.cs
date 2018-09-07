@@ -1,4 +1,4 @@
-﻿namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation
+﻿namespace Maddalena.Core.Numl.Genetic.Functions.Mutation
 {
     /// <summary>
     /// Random flip mutation function.

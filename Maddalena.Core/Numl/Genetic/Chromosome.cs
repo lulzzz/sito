@@ -1,6 +1,6 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic
+namespace Maddalena.Core.Numl.Genetic
 {
     /// <summary>
     /// Chromosome.

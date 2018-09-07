@@ -1,8 +1,7 @@
 ﻿using System;
-using JS.Core.Core;
-using NiL.JS;
+using Maddalena.Core.Javascript.Core;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     [Serializable]
     public class Less : Expression

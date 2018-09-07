@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Maddalena.csproj", "{81BEEDFC-6299-48DC-8ABD-7B9706D49045}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Mvc", "AspNetCore2CoreUI-2.0\src\CoreUI.Mvc\CoreUI.Mvc.csproj", "{44479B96-74F4-4864-8F33-9C6484F97038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Core", "Maddalena.Core\Maddalena.Core.csproj", "{E97C59DB-65DF-4B1A-A927-F095E186AB82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maddalena.Core", "Maddalena.Core\Maddalena.Core.csproj", "{E97C59DB-65DF-4B1A-A927-F095E186AB82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Web", "AspNetCore2CoreUI-2.0\src\CoreUI.Web\CoreUI.Web.csproj", "{41024AB9-10A4-45A7-89DE-544439C428B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miniblog.Core", "C:\Users\mf185129\Desktop\Miniblog.Core-master\src\Miniblog.Core.csproj", "{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44479B96-74F4-4864-8F33-9C6484F97038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44479B96-74F4-4864-8F33-9C6484F97038}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44479B96-74F4-4864-8F33-9C6484F97038}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44479B96-74F4-4864-8F33-9C6484F97038}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41024AB9-10A4-45A7-89DE-544439C428B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41024AB9-10A4-45A7-89DE-544439C428B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B61BDAC6-04EA-4005-AA61-F6AD128DB7D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

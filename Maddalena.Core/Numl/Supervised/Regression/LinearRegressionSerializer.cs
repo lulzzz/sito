@@ -1,10 +1,8 @@
 ﻿using System;
-using Maddalena.Numl.Supervised;
-using System.Reflection;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Supervised.Regression;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Serialization.Supervised
+namespace Maddalena.Core.Numl.Supervised.Regression
 {
     public class LinearRegressionSerializer : ModelSerializer
     {

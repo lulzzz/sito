@@ -1,12 +1,6 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>
     /// Implements a Sequence model.

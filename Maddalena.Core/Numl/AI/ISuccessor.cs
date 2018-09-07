@@ -1,4 +1,4 @@
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// Interface ISuccessor

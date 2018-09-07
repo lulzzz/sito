@@ -1,12 +1,13 @@
 ﻿// file:	Math\LinearAlgebra\VectorExtensions.cs
 //
 // summary:	Implements the vector extensions class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.Probability;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.Probability;
+
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A vector extensions.</summary>
     public static class VectorExtensions

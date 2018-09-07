@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.Functions.Loss;
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.Functions.Loss;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Recurrent
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Recurrent
 {
     /// <summary>
     /// A Gated Recurrent Unit neural network generator.
@@ -123,10 +119,10 @@ namespace Maddalena.Numl.Supervised.NeuralNetwork.Recurrent
                 {
                     network.ResetStates(properties);
 
-                    for (int i = 0; i < items.Count(); i++)
+                    for (int i = 0; i < Enumerable.Count<Tuple<Vector, Vector>>(items); i++)
                     {
                         properties[RecurrentNeuron.TimeStepLabel] = i;
-                        network.Forward(items.ElementAt(i).Item1);
+                        network.Forward(Enumerable.ElementAt<Tuple<Vector, Vector>>(items, i).Item1);
 
                         foreach (RecurrentNeuron node in network.GetVertices().OfType<RecurrentNeuron>())
                             if (node.IsHidden || node.IsOutput) node.State(properties);
@@ -134,10 +130,10 @@ namespace Maddalena.Numl.Supervised.NeuralNetwork.Recurrent
                         Yt[idx + i] = network.Output();
                     }
 
-                    for (int i = items.Count() - 1; i >= 0; i--)
+                    for (int i = Enumerable.Count<Tuple<Vector, Vector>>(items) - 1; i >= 0; i--)
                     {
                         properties[RecurrentNeuron.TimeStepLabel] = i;
-                        network.Back(items.ElementAt(i).Item2, properties, trainer);
+                        network.Back(Enumerable.ElementAt<Tuple<Vector, Vector>>(items, i).Item2, properties, trainer);
 
                         loss[pass] += network.Cost;
                     }

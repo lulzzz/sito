@@ -1,13 +1,11 @@
 // file:	Supervised\Perceptron\KernelPerceptronModel.cs
 //
 // summary:	Implements the kernel perceptron model class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Kernels;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Supervised.Perceptron
+using Maddalena.Core.Numl.Math.Kernels;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.Perceptron
 {
     /// <summary>A data Model for the kernel perceptron.</summary>
     public class KernelPerceptronModel : Model

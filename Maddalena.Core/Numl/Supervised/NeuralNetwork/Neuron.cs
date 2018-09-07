@@ -1,15 +1,14 @@
 ﻿// file:	Supervised\NeuralNetwork\Neuron.cs
 //
 // summary:	Implements the neuron class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
-using Maddalena.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
+
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
 
     /// <summary>An Artifical Neuron.</summary>

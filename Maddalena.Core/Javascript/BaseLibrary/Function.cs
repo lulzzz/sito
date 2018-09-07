@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using JS.Core;
-using JS.Core.Core;
-using JS.Core.Core.Functions;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
-using NiL.JS.Statements;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
+using Maddalena.Core.Javascript.Statements;
+using Expression = Maddalena.Core.Javascript.Expressions.Expression;
 using linqEx = System.Linq.Expressions;
-using PropertyPair = JS.Core.Core.PropertyPair;
+using PropertyPair = Maddalena.Core.Javascript.Core.PropertyPair;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     /// <summary>
     /// Возможные типы функции в контексте использования.
@@ -95,7 +95,7 @@ namespace NiL.JS.BaseLibrary
         [Hidden]
         internal Number _length;
         [Field]
-        [global::JS.Core.Core.Interop.ReadOnly]
+        [global::Maddalena.Core.Javascript.Core.Interop.ReadOnlyAttribute]
         [DoNotDelete]
         [DoNotEnumerate]
         [NotConfigurable]

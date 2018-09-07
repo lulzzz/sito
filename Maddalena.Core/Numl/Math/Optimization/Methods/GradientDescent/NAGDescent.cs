@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Optimization.Methods.GradientDescent
+namespace Maddalena.Core.Numl.Math.Optimization.Methods.GradientDescent
 {
     /// <summary>
     /// A Nesterov Accelerated Gradient Descent method.
@@ -20,7 +17,7 @@ namespace Maddalena.Numl.Math.Optimization.Methods.GradientDescent
         /// </summary>
         /// <param name="properties">Properties for the optimization routine.</param>
         /// <returns></returns>
-        public override Vector UpdateTheta(Maddalena.Numl.Math.Optimization.OptimizerProperties properties)
+        public override Vector UpdateTheta(OptimizerProperties properties)
         {
             Vector v = (this.Momentum * properties.Theta) - (properties.LearningRate * properties.Gradient);
             return properties.Theta + this.Momentum * v - properties.LearningRate * properties.Gradient;

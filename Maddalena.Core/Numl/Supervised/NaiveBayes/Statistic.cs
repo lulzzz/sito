@@ -1,14 +1,10 @@
 ﻿// file:	Supervised\NaiveBayes\Statistic.cs
 //
 // summary:	Implements the statistic class
-using Maddalena.Numl.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 
-namespace Maddalena.Numl.Supervised.NaiveBayes
+using Maddalena.Core.Numl.Math;
+
+namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     /// <summary>A statistic.</summary>
     public class Statistic 

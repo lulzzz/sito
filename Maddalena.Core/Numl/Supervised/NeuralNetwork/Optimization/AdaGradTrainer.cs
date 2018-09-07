@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Maddalena.Core.Numl.Utils;
 
-using Maddalena.Numl.Utils;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Optimization
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization
 {
     /// <summary>
     /// AdaGrad Network Trainer.

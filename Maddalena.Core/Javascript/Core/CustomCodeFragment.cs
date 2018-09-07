@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class CustomCodeFragment : Attribute

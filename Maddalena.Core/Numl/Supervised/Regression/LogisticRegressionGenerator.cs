@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+﻿using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.Functions.Regularization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Optimization;
 
-namespace Maddalena.Numl.Supervised.Regression
+namespace Maddalena.Core.Numl.Supervised.Regression
 {
     /// <summary>A logistic regression generator.</summary>
     public class LogisticRegressionGenerator : Generator
@@ -69,14 +68,14 @@ namespace Maddalena.Numl.Supervised.Regression
             Vector theta = Vector.Rand(X.Cols);
 
             // run gradient descent
-            var optimizer = new Maddalena.Numl.Math.Optimization.Optimizer(theta, this.MaxIterations, this.LearningRate)
+            var optimizer = new Optimizer(theta, this.MaxIterations, this.LearningRate)
             {
-                CostFunction = new Maddalena.Numl.Math.Functions.Cost.LogisticCostFunction()
+                CostFunction = new LogisticCostFunction()
                 {
                     X = X,
                     Y = y,
                     Lambda = this.Lambda,
-                    Regularizer = new Maddalena.Numl.Math.Functions.Regularization.L2Regularizer(),
+                    Regularizer = new L2Regularizer(),
                     LogisticFunction = this.LogisticFunction
                 }
             };

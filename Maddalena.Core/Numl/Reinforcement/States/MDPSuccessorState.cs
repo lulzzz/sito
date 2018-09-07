@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.AI;
+﻿using Maddalena.Core.Numl.AI;
 
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement.States
 {
     /// <summary>
     /// MDPSuccessorState class.

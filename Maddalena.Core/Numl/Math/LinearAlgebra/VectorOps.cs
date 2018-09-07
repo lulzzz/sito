@@ -1,11 +1,11 @@
 ﻿// file:	Math\LinearAlgebra\VectorOps.cs
 //
 // summary:	Implements the vector ops class
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A vector.</summary>
     public partial class Vector

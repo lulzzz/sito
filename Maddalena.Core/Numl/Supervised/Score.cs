@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>
     /// Contains scoring statistics for a given model.
@@ -229,7 +227,7 @@ namespace Maddalena.Numl.Supervised
         /// <returns>Double.</returns>
         public static double ComputeCoefRMSE(Vector y1, Vector y2)
         {
-            return Maddalena.Numl.Supervised.Score.ComputeRMSE(y1, y2) / y1.Mean();
+            return Score.ComputeRMSE(y1, y2) / y1.Mean();
         }
 
         /// <summary>
@@ -240,7 +238,7 @@ namespace Maddalena.Numl.Supervised
         /// <returns>Double.</returns>
         public static double ComputeNormRMSE(Vector y1, Vector y2)
         {
-            return Maddalena.Numl.Supervised.Score.ComputeRMSE(y1, y2) / (y1.Max() - y1.Min());
+            return Score.ComputeRMSE(y1, y2) / (y1.Max() - y1.Min());
         }
 
         /// <summary>
@@ -316,7 +314,7 @@ namespace Maddalena.Numl.Supervised
         public static Score ScorePredictions(Vector predictions, Vector actual, 
                                             double truthLabel = Ject.DefaultTruthValue, double falseLabel = Ject.DefaultFalseValue)
         {
-            var score = new Maddalena.Numl.Supervised.Score()
+            var score = new Score()
             {
                 TotalPositives = actual.Where(w => w == truthLabel).Count(),
                 TotalNegatives = actual.Where(w => (w == falseLabel || w != truthLabel)).Count(),

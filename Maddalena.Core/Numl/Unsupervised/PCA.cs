@@ -1,13 +1,14 @@
 ﻿// file:	Unsupervised\PCA.cs
 //
 // summary:	Implements the pca class
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Unsupervised
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Unsupervised
 {
     /// <summary>A pca.</summary>
     public class PCA

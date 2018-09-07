@@ -1,4 +1,4 @@
-﻿namespace JS.Core
+﻿namespace Maddalena.Core.Javascript
 {
     class Messages
     {

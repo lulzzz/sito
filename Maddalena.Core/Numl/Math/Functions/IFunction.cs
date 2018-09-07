@@ -1,9 +1,10 @@
 ﻿// file:	Math\Functions\IFunction.cs
 //
 // summary:	Declares the IFunction interface
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Functions
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>Interface for function.</summary>
     public interface IFunction

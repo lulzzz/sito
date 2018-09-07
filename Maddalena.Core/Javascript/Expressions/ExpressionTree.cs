@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using JS.Core.Core;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
+using Boolean = Maddalena.Core.Javascript.BaseLibrary.Boolean;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     /*
      * Ты входишь в самый тёмный переулок всего проекта. Ходят слухи о страшных делах, происходящих в этом месте.

@@ -1,9 +1,10 @@
 // file:	Math\Metrics\TanimotoCoefficient.cs
 //
 // summary:	Implements the tanimoto coefficient class
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A tanimoto coefficient.</summary>
     public sealed class TanimotoCoefficient : ISimilarity

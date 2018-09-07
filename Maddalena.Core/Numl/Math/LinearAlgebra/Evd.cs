@@ -1,13 +1,12 @@
 ﻿// file:	Math\LinearAlgebra\Evd.cs
 //
 // summary:	Implements the evd class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>An evd.</summary>
     public class Evd

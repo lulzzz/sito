@@ -7,18 +7,17 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using JS.Core.Core.Functions;
-using JS.Core.Core.Interop;
-using JS.Core.Extensions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Array = NiL.JS.BaseLibrary.Array;
-using Expression = JS.Core.Expressions.Expression;
-using JSBool = NiL.JS.BaseLibrary.Boolean;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Extensions;
+using Array = Maddalena.Core.Javascript.BaseLibrary.Array;
+using Expression = Maddalena.Core.Javascript.Expressions.Expression;
+using JSBool = Maddalena.Core.Javascript.BaseLibrary.Boolean;
 using Math = System.Math;
-using String = NiL.JS.BaseLibrary.String;
+using String = Maddalena.Core.Javascript.BaseLibrary.String;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Flags]
     public enum ParseNumberOptions

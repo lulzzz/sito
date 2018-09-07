@@ -2,12 +2,11 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using JS.Core;
-using JS.Core.Core;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
 using Math = System.Math;
 
-namespace NiL.JS
+namespace Maddalena.Core.Javascript
 {
     internal static class ExceptionHelper
     {

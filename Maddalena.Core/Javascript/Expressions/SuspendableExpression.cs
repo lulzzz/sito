@@ -1,6 +1,6 @@
-﻿using JS.Core.Core;
+﻿using Maddalena.Core.Javascript.Core;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     public sealed class SuspendableExpression : Expression
     {

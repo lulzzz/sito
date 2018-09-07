@@ -1,6 +1,6 @@
 using System;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// Class StateEventArgs.

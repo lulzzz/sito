@@ -1,12 +1,12 @@
 // file:	Math\Information\Gini.cs
 //
 // summary:	Implements the gini class
+
 using System;
 using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Information
+namespace Maddalena.Core.Numl.Math.Information
 {
     /// <summary>
     /// This class calculates the Gini Index of any given vector. It inherits from

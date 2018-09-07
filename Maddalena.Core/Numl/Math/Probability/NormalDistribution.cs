@@ -1,13 +1,10 @@
 ﻿// file:	Math\Probability\NormalDistribution.cs
 //
 // summary:	Implements the normal distribution class
-using Maddalena.Numl.Math.LinearAlgebra;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Maddalena.Numl.Math.Probability
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Probability
 {
     /// <summary>A normal distribution.</summary>
     public class NormalDistribution

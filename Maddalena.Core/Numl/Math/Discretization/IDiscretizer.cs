@@ -1,6 +1,6 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Discretization
+namespace Maddalena.Core.Numl.Math.Discretization
 {
     /// <summary>
     /// IDiscretizer interface.

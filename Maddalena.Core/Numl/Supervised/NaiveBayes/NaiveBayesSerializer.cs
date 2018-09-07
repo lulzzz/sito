@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Reflection;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Supervised.NaiveBayes;
 using System.Linq;
-using Maddalena.Numl.Math;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Serialization.Supervised.NaiveBayes
+namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     public class NaiveBayesSerializer : ModelSerializer
     {

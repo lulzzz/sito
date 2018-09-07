@@ -1,6 +1,6 @@
-﻿using Maddalena.Numl.Utils;
+﻿using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// Action class.

@@ -1,12 +1,10 @@
 // file:	Math\Kernels\RBFKernel.cs
 //
 // summary:	Implements the rbf kernel class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Kernels
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Kernels
 {
     /// <summary>
     /// The Radial Basis Function (RBF) Kernel is a projection into infinite dimensional space and

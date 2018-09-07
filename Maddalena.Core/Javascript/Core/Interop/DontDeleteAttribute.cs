@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     /// <summary>
     /// Член, помеченный данным аттрибутом, не будет удаляться оператором "delete".

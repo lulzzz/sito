@@ -1,4 +1,4 @@
-﻿namespace JS.Core.Core
+﻿namespace Maddalena.Core.Javascript.Core
 {
     public enum CodeFragmentType
     {

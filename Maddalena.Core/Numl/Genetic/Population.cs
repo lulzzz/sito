@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Maddalena.ML.MachineLearning.Numl.AI.Collections;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Algorithms;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Metrics;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Probability;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.AI.Collections;
+using Maddalena.Core.Numl.Genetic.Algorithms;
+using Maddalena.Core.Numl.Genetic.Functions.Mutation;
+using Maddalena.Core.Numl.Genetic.Metrics;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic
+namespace Maddalena.Core.Numl.Genetic
 {
     /// <summary>
     /// Population object.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JS.Core.Core;
+using Maddalena.Core.Javascript.Core;
 
-namespace JS.Core.Extensions
+namespace Maddalena.Core.Javascript.Extensions
 {
     public static class IterationProtocolExtensions
     {

@@ -1,14 +1,12 @@
 // file:	Supervised\NeuralNetwork\Edge.cs
 //
 // summary:	Implements the edge class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Probability;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>An edge.</summary>
     public class Edge : IEdge

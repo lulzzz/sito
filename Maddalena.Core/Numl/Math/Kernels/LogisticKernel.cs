@@ -1,13 +1,11 @@
 // file:	Math\Kernels\RBFKernel.cs
 //
 // summary:	Implements the rbf kernel class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.Functions;
 
-namespace Maddalena.Numl.Math.Kernels
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Kernels
 {
     /// <summary>
     /// Logistic Kernel for computing the similarity between the inner product space.

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Encoders
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Encoders
 {
     /// <summary>
     /// An Autoencoding Network Generator.

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-
-namespace Maddalena.Numl.Supervised
+﻿namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>
     /// The Scoring metric to use for selecting models.

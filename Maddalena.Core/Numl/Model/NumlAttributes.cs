@@ -1,15 +1,14 @@
 ﻿// file:	Model\NumlAttributes.cs
 //
 // summary:	Implements the Maddalena.Numl attributes class
+
 using System;
+using System.Collections;
 using System.Linq;
 using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using Maddalena.Numl.Utils;
-using System.IO;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
 	/// <summary>Attribute for Maddalena.Numl.</summary>
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]

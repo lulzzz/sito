@@ -1,12 +1,12 @@
 // file:	Supervised\KNN\KNNModel.cs
 //
 // summary:	Implements the knn model class
+
 using System;
 using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.KNN
+namespace Maddalena.Core.Numl.Supervised.KNN
 {
     /// <summary>A data Model for the knn.</summary>
     public class KNNModel : Model

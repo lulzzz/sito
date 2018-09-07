@@ -1,18 +1,17 @@
 ﻿// file:	Supervised\DecisionTree\DecisionTreeGenerator.cs
 //
 // summary:	Implements the decision tree generator class
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using Maddalena.Numl.Math.Information;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math.Probability;
 
-namespace Maddalena.Numl.Supervised.DecisionTree
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.Information;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Supervised.DecisionTree
 {
     /// <summary>A decision tree generator.</summary>
     public class DecisionTreeGenerator : Generator

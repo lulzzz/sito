@@ -1,4 +1,4 @@
-namespace Maddalena.ML.MachineLearning.Numl.Data
+namespace Maddalena.Core.Numl.Data
 {
     /// <summary>
     /// IVertex interface.

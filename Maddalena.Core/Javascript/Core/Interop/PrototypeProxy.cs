@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     [Prototype(typeof(JSObject), true)]
     internal sealed class PrototypeProxy : Proxy

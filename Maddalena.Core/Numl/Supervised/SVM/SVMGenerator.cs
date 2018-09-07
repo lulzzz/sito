@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Maddalena.Numl.Math.Kernels;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+using Maddalena.Core.Numl.Math.Kernels;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.SVM.Selection;
 
-namespace Maddalena.Numl.Supervised.SVM
+namespace Maddalena.Core.Numl.Supervised.SVM
 {
     /// <summary>A Support Vector Machine (SVM) generator.</summary>
     public class SVMGenerator : Generator
@@ -39,7 +38,7 @@ namespace Maddalena.Numl.Supervised.SVM
         /// <summary>
         /// Gets or sets the Working Set Selection function for selecting new i, j support vectors.
         /// </summary>
-        public Maddalena.Numl.Supervised.SVM.Selection.ISelection SelectionFunction { get; set; }
+        public ISelection SelectionFunction { get; set; }
 
         /// <summary>
         /// Initialises a SVMGenerator object
@@ -54,7 +53,7 @@ namespace Maddalena.Numl.Supervised.SVM
             this.NormalizeFeatures = true;
 
             if (this.SelectionFunction == null)
-                this.SelectionFunction = new Maddalena.Numl.Supervised.SVM.Selection.WorkingSetSelection3();
+                this.SelectionFunction = new WorkingSetSelection3();
         }
 
         /// <summary>Generates a SVM model based on a set of examples.</summary>

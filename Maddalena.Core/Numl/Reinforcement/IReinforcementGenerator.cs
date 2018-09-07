@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Model;
-
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement
 {
     /// <summary>
     /// IReinforcementGenerator interface.

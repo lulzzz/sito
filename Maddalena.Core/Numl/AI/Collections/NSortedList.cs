@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI.Collections
+namespace Maddalena.Core.Numl.AI.Collections
 {
     /// <summary>
     /// Represents a limited collection of objects that is maintained in sorted order and allows duplicate elements.

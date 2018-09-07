@@ -1,12 +1,6 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Maddalena.Numl.Serialization
+namespace Maddalena.Core.Numl.Serialization
 {
     /// <summary>
     /// Interface ISerializer

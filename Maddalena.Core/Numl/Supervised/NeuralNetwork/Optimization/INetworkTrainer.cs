@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Optimization
+﻿namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization
 {
     /// <summary>
     /// INetworkTrainer interface.

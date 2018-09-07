@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using JS.Core.Core.JIT;
-using JS.Core.Expressions;
-using NiL.JS;
-using Expression = JS.Core.Expressions.Expression;
+using Maddalena.Core.Javascript.Core.JIT;
+using Maddalena.Core.Javascript.Expressions;
+using Expression = Maddalena.Core.Javascript.Expressions.Expression;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     [Serializable]
-    public sealed class CompiledNode : Expression
+    public sealed class CompiledNode : Expressions.Expression
     {
         private static readonly MethodInfo WrapMethod = typeof(JITHelpers).GetMethod("wrap", BindingFlags.Static | BindingFlags.NonPublic);
 

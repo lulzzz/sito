@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Optimization
+namespace Maddalena.Core.Numl.Math.Optimization
 {
     /// <summary>
     /// Optimisation Properties for use in Optimization.

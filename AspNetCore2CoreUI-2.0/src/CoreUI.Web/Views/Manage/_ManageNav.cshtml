@@ -1,7 +1,7 @@
 ﻿@using CoreUI.Web.Models
 @using CoreUI.Web.Views.Manage
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<MaddalenaUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

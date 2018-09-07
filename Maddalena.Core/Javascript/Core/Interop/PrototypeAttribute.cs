@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     /// <summary>
     /// Указывает, какой тип необходимо представить в цепочке прототипов объекта-прослойки для помеченного типа.

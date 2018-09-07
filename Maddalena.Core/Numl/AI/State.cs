@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Maddalena.ML.MachineLearning.Numl.Data;
+using Maddalena.Core.Numl.Data;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// State class.

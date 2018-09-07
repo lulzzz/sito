@@ -1,14 +1,14 @@
 // file:	Supervised\NaiveBayes\NaiveBayesGenerator.cs
 //
 // summary:	Implements the naive bayes generator class
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
 
-namespace Maddalena.Numl.Supervised.NaiveBayes
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     /// <summary>A naive bayes generator.</summary>
     public class NaiveBayesGenerator : Generator

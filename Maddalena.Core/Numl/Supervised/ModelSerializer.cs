@@ -1,11 +1,10 @@
 ﻿using System;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Math.Normalization;
-using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Serialization;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>
     /// A generic Model serializer object.
@@ -32,8 +31,8 @@ namespace Maddalena.Numl.Supervised
             if (reader.IsNull()) return null;
             else
             {
-                var model = (Maddalena.Numl.Supervised.Model)Create();
-                model.Descriptor = (Maddalena.Numl.Model.Descriptor)reader.ReadProperty().Value;
+                var model = (Model)Create();
+                model.Descriptor = (Descriptor)reader.ReadProperty().Value;
                 model.NormalizeFeatures = (bool)reader.ReadProperty().Value;
 
                 var normalizer = Ject.FindType(reader.ReadProperty().Value.ToString());
@@ -56,7 +55,7 @@ namespace Maddalena.Numl.Supervised
             if (value == null) writer.WriteNull();
             else
             {
-                var model = (Maddalena.Numl.Supervised.Model)value;
+                var model = (Model)value;
                 writer.WriteProperty(nameof(model.Descriptor), model.Descriptor);
                 writer.WriteProperty(nameof(model.NormalizeFeatures), model.NormalizeFeatures);
                 writer.WriteProperty(nameof(model.FeatureNormalizer), model.FeatureNormalizer?.GetType().FullName);

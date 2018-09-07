@@ -1,4 +1,4 @@
-﻿namespace JS.Core.Expressions
+﻿namespace Maddalena.Core.Javascript.Expressions
 {
     public enum TemplateStringMode
     {

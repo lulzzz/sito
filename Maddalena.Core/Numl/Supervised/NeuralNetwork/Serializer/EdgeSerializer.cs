@@ -1,11 +1,6 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Supervised.NeuralNetwork;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Serializer
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Serializer
 {
     /// <summary>
     /// Edge serializer.

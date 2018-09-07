@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Maddalena.Numl.Math.Probability;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation
+namespace Maddalena.Core.Numl.Genetic.Functions.Mutation
 {
     /// <summary>
     /// Implements a chained mutation function.

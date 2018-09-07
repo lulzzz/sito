@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>
     /// ISequenceGenerator interface.

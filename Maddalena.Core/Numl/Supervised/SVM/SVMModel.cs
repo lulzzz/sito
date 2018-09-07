@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.Kernels;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Supervised.Classification;
-using Maddalena.Numl.Utils;
+﻿using Maddalena.Core.Numl.Math.Kernels;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.Classification;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.SVM
+namespace Maddalena.Core.Numl.Supervised.SVM
 {
     /// <summary>
     /// A SVM Model object

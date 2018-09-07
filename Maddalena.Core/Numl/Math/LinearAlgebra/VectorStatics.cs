@@ -1,11 +1,12 @@
 ﻿// file:	Math\LinearAlgebra\VectorStatics.cs
 //
 // summary:	Implements the vector statics class
+
 using System;
 using System.Linq;
-using Maddalena.Numl.Math.Probability;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A vector.</summary>
     public partial class Vector

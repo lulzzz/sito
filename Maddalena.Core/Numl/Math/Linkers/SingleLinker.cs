@@ -1,13 +1,14 @@
 ﻿// file:	Math\Linkers\SingleLinker.cs
 //
 // summary:	Implements the single linker class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Metrics;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Linkers
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+
+namespace Maddalena.Core.Numl.Math.Linkers
 {
     /// <summary>A single linker.</summary>
     public class SingleLinker : ILinker

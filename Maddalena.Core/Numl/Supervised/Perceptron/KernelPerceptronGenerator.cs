@@ -1,14 +1,11 @@
 ﻿// file:	Supervised\Perceptron\KernelPerceptronGenerator.cs
 //
 // summary:	Implements the kernel perceptron generator class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Kernels;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
 
-namespace Maddalena.Numl.Supervised.Perceptron
+using Maddalena.Core.Numl.Math.Kernels;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.Perceptron
 {
     /// <summary>A kernel perceptron generator.</summary>
     public class KernelPerceptronGenerator : Generator

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Supervised;
-
-namespace Maddalena.Numl.Math.Functions.Loss
+namespace Maddalena.Core.Numl.Math.Functions.Loss
 {
     public class L2Loss : ILossFunction
     {

@@ -1,10 +1,10 @@
 // file:	Math\Metrics\EuclidianDistance.cs
 //
 // summary:	Implements the euclidian distance class
-using Maddalena.Numl.Math.LinearAlgebra;
 
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>An euclidian distance.</summary>
     public sealed class EuclidianDistance : IDistance

@@ -1,9 +1,10 @@
 // file:	Math\Metrics\EuclidianSimilarity.cs
 //
 // summary:	Implements the euclidian similarity class
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>An euclidian similarity.</summary>
     public sealed class EuclidianSimilarity : ISimilarity

@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JS.Core.Core;
-using JS.Core.Expressions;
-using NiL.JS.BaseLibrary;
-using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Expressions;
+using Boolean = Maddalena.Core.Javascript.BaseLibrary.Boolean;
 using Expression = System.Linq.Expressions.Expression;
 using Math = System.Math;
 
-namespace NiL.JS.Statements
+namespace Maddalena.Core.Javascript.Statements
 {
     [Serializable]
     public enum SuppressScopeIsolationMode

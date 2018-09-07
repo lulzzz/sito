@@ -1,17 +1,18 @@
 // file:	Supervised\NeuralNetwork\Network.cs
 //
 // summary:	Implements the network class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Math.Functions.Loss;
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.Functions.Loss;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
+
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>A network.</summary>
     public class Network : Graph

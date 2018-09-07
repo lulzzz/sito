@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NiL.JS
+namespace Maddalena.Core.Javascript
 {
     public delegate void ResolveModuleHandler(Module sender, ResolveModuleEventArgs e);
 

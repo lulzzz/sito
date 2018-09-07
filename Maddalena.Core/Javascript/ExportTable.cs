@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JS.Core.Core;
+using Maddalena.Core.Javascript.Core;
 
-namespace NiL.JS
+namespace Maddalena.Core.Javascript
 {
     public sealed class ExportTable : IEnumerable<KeyValuePair<string, JSValue>>
     {

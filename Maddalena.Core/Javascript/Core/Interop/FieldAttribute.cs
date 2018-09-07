@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     [AttributeUsage(AttributeTargets.Property)]
     internal sealed class FieldAttribute : Attribute

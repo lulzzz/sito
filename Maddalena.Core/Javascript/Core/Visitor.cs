@@ -1,8 +1,8 @@
 ﻿using System;
-using JS.Core.Expressions;
-using NiL.JS.Statements;
+using Maddalena.Core.Javascript.Expressions;
+using Maddalena.Core.Javascript.Statements;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     /// <summary>
     /// AST nodes visitor.

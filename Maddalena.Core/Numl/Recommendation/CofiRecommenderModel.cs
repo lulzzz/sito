@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.Metrics;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Recommendation
+namespace Maddalena.Core.Numl.Recommendation
 {
     /// <summary>
     /// Type of the Item to be recommended

@@ -1,7 +1,7 @@
-using Maddalena.ML.MachineLearning.Numl.AI.Collections;
-using Maddalena.ML.MachineLearning.Numl.AI.Functions;
+using Maddalena.Core.Numl.AI.Collections;
+using Maddalena.Core.Numl.AI.Functions;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI.Search
+namespace Maddalena.Core.Numl.AI.Search
 {
     /// <summary>
     /// Class HeuristicSearch.

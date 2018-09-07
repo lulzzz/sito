@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Maddalena.Numl.Supervised.Classification
+﻿namespace Maddalena.Core.Numl.Supervised.Classification
 {
     /// <summary>
     /// Interface for Classifiers

@@ -1,13 +1,11 @@
 // file:	Model\DateTimeProperty.cs
 //
 // summary:	Implements the date time property class
-using Maddalena.Numl.Serialization;
+
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.IO;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
     /// <summary>Features available for the DateTime property.</summary>
     [Flags]

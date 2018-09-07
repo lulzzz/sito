@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Discretization
+namespace Maddalena.Core.Numl.Math.Discretization
 {
     /// <summary>
     /// Discretizer abstract class.

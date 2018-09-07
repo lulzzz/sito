@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using JS.Core.Expressions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Statements;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Expressions;
+using Maddalena.Core.Javascript.Statements;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     internal class Rule
     {

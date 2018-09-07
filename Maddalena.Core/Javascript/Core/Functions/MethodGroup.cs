@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using JS.Core.Core.Interop;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Interop;
 using Math = System.Math;
 
-namespace JS.Core.Core.Functions
+namespace Maddalena.Core.Javascript.Core.Functions
 {
     /// <remarks>
     /// Доступ к типу не предоставляется из скрипта. Атрибуты не нужны

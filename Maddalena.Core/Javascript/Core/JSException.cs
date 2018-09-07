@@ -1,7 +1,7 @@
 ﻿using System;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     /// <summary>
     /// Представляет ошибки, возникшие во время выполнения скрипта.

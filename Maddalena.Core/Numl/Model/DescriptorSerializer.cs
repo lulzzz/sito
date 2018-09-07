@@ -1,10 +1,8 @@
-﻿using System;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using Maddalena.Numl.Serialization;
-using System.Collections.Generic;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Serialization;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
     public class DescriptorSerializer : JsonSerializer<Descriptor>
     {

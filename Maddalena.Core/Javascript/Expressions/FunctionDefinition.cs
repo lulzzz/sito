@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using JS.Core.Core;
-using JS.Core.Core.Functions;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Statements;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Statements;
 using Array = System.Array;
 using Math = System.Math;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
 #if !(PORTABLE)
     [Serializable]

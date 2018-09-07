@@ -1,12 +1,10 @@
 // file:	Math\Kernels\PolyKernel.cs
 //
 // summary:	Implements the polygon kernel class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Kernels
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Kernels
 {
     /// <summary>Polynomial kernel of arbitrary dimension.</summary>
     public class PolyKernel : IKernel

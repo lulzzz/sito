@@ -1,8 +1,7 @@
 ﻿using System;
-using Maddalena.Numl.Serialization;
-using System.Reflection;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
     public class EnumerablePropertySerializer : PropertySerializer
     {

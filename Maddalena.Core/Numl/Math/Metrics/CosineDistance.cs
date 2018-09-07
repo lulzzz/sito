@@ -1,9 +1,10 @@
 // file:	Math\Metrics\CosineDistance.cs
 //
 // summary:	Implements the cosine distance class
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A cosine distance.</summary>
     public sealed class CosineDistance : IDistance

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.AI;
-using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.AI;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement.States
 {
     /// <summary>
     /// IMDPState interface.

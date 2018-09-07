@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.AI;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Utils;
+﻿using System.Linq;
+using Maddalena.Core.Numl.AI;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Reinforcement.States;
 
-namespace Maddalena.Numl.Reinforcement.QLearning
+namespace Maddalena.Core.Numl.Reinforcement.QLearning
 {
     /// <summary>
     /// Q-Learner generator.

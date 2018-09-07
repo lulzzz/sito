@@ -1,12 +1,13 @@
 ﻿// file:	Utils\StringHelpers.cs
 //
 // summary:	Implements the string helpers class
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.Numl.Model;
 
-namespace Maddalena.Numl.Utils
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Utils
 {
 	/// <summary>A string helpers.</summary>
 	public static class StringHelpers

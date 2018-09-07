@@ -1,14 +1,12 @@
 // file:	Supervised\IGenerator.cs
 //
 // summary:	Declares the IGenerator interface
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised
+using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>Interface for generator.</summary>
     public interface IGenerator : IModelBase

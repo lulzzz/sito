@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.Optimization.Methods;
-using Maddalena.Numl.Math.Functions.Cost;
-namespace Maddalena.Numl.Math.Optimization
+﻿using System.Threading.Tasks;
+using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Optimization.Methods;
+using Maddalena.Core.Numl.Math.Optimization.Methods.GradientDescent;
+
+namespace Maddalena.Core.Numl.Math.Optimization
 {
     /// <summary>
     /// Optimizer.
@@ -49,9 +48,9 @@ namespace Maddalena.Numl.Math.Optimization
             {
                 switch (optimizationMethod)
                 {
-                    case OptimizationMethods.FastGradientDescent: optimizer = new Maddalena.Numl.Math.Optimization.Methods.GradientDescent.FastGradientDescent() { Momentum = momentum }; break;
-                    case OptimizationMethods.StochasticGradientDescent: optimizer = new Maddalena.Numl.Math.Optimization.Methods.GradientDescent.StochasticGradientDescent(); break;
-                    case OptimizationMethods.NAGDescent: optimizer = new Maddalena.Numl.Math.Optimization.Methods.GradientDescent.NAGDescent() { Momentum = momentum }; break;
+                    case OptimizationMethods.FastGradientDescent: optimizer = new FastGradientDescent() { Momentum = momentum }; break;
+                    case OptimizationMethods.StochasticGradientDescent: optimizer = new StochasticGradientDescent(); break;
+                    case OptimizationMethods.NAGDescent: optimizer = new NAGDescent() { Momentum = momentum }; break;
                 }
             }
 

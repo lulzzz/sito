@@ -1,11 +1,8 @@
 ﻿using System;
-using Maddalena.Numl.Supervised;
-using System.Reflection;
-using Maddalena.ML.MachineLearning.Numl.Data;
-using Maddalena.Numl.Supervised.DecisionTree;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Serialization;
 
-
-namespace Maddalena.Numl.Serialization.Supervised
+namespace Maddalena.Core.Numl.Supervised.DecisionTree
 {
     public class DecisionTreeSerializer : ModelSerializer
     {

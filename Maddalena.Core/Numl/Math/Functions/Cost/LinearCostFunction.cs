@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Functions.Cost
+namespace Maddalena.Core.Numl.Math.Functions.Cost
 {
     /// <summary>
     /// A Linear Cost Function.

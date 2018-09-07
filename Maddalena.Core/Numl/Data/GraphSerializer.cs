@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Maddalena.Numl.Serialization;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.ML.MachineLearning.Numl.Data
+namespace Maddalena.Core.Numl.Data
 {
     public class GraphSerializer : JsonSerializer<Graph>
     {

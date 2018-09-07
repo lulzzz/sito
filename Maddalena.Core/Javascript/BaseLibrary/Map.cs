@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JS.Core.Core;
-using JS.Core.Core.Interop;
-using JS.Core.Extensions;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Extensions;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     [RequireNewKeyword]
     public sealed class Map : IIterable

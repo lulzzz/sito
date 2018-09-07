@@ -1,14 +1,10 @@
 ﻿// file:	Supervised\KNN\KNNGenerator.cs
 //
 // summary:	Implements the knn generator class
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
 
-namespace Maddalena.Numl.Supervised.KNN
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.KNN
 {
     /// <summary>A knn generator.</summary>
     public class KNNGenerator : Generator

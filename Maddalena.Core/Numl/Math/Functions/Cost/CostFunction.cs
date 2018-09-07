@@ -1,7 +1,7 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions.Regularization;
+﻿using Maddalena.Core.Numl.Math.Functions.Regularization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Functions.Cost
+namespace Maddalena.Core.Numl.Math.Functions.Cost
 {
     /// <summary>
     /// Implements a CostFunction when overridden in a derived class.

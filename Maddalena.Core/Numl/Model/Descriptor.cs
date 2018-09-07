@@ -1,19 +1,19 @@
 ﻿// file:	Model\Descriptor.cs
 //
 // summary:	Implements the descriptor class
-using System;
-using System.IO;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Collections;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using Maddalena.Numl.Serialization;
 
-namespace Maddalena.Numl.Model
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Text;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Model
 {
 	/// <summary>
 	/// This class is designed to describe the underlying types that will be used in the machine

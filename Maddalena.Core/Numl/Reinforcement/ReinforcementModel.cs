@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Math.Discretization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Model;
 
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Utils;
-
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement
 {
     /// <summary>
     /// Reinforcement model.
@@ -25,7 +18,7 @@ namespace Maddalena.Numl.Reinforcement
         /// <summary>
         /// Gets or sets the feature discretizer to use for reducing each item.
         /// </summary>
-        public Maddalena.Numl.Math.Discretization.IDiscretizer FeatureDiscretizer { get; set; }
+        public IDiscretizer FeatureDiscretizer { get; set; }
 
         /// <summary>
         /// Reinforces the model from the new item and reward.

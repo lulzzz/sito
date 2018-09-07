@@ -1,16 +1,16 @@
 ﻿// file:	Unsupervised\KMeans.cs
 //
 // summary:	Implements the means class
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using Maddalena.Numl.Math.Metrics;
-using Maddalena.Numl.Math.Probability;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Unsupervised
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Unsupervised
 {
     /// <summary>A means.</summary>
     public class KMeans

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using JS.Core.Core;
-using NiL.JS;
-using NiL.JS.Statements;
-using Array = NiL.JS.BaseLibrary.Array;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Statements;
+using Array = Maddalena.Core.Javascript.BaseLibrary.Array;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
 #if !(PORTABLE)
     [Serializable]

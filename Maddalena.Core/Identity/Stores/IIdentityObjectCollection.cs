@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using bwets.NetCore.Identity.Model;
+using Maddalena.Core.Identity.Model;
+using Maddalena.Core.Mongo;
 
-namespace bwets.NetCore.Identity.Stores
+namespace Maddalena.Core.Identity.Stores
 {
-	public interface IIdentityObjectCollection<TItem> where TItem : IdentityObject
+	public interface IIdentityObjectCollection<TItem> where TItem : MongoObject
 	{
 		Task<IEnumerable<TItem>> GetAll();
 		Task<TItem> CreateAsync(TItem obj);
 		Task UpdateAsync(TItem obj);
 		Task DeleteAsync(TItem obj);
-		Task<TItem> FindByIdAsync(Guid itemId);
+		Task<TItem> FindByIdAsync(string itemId);
 	}
 }

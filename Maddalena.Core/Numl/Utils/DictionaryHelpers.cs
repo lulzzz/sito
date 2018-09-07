@@ -1,10 +1,11 @@
 ﻿// file:	Utils\DictionaryHelpers.cs
 //
 // summary:	Implements the dictionary helpers class
+
 using System;
 using System.Collections.Generic;
 
-namespace Maddalena.Numl.Utils
+namespace Maddalena.Core.Numl.Utils
 {
 	/// <summary>A dictionary helpers.</summary>
 	public static class DictionaryHelpers

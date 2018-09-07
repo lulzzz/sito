@@ -1,19 +1,18 @@
 ﻿// file:	Supervised\Model.cs
 //
 // summary:	Implements the model class
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Utils;
+
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Serialization;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>A model.</summary>
     public abstract class Model : IModel, IModelBase

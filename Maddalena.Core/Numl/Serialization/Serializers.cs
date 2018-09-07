@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Serialization
+namespace Maddalena.Core.Numl.Serialization
 {
 	public static class Serializers
 	{

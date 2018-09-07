@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Metrics;
-using Maddalena.Numl.Math.Filters;
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Genetic.Metrics;
+using Maddalena.Core.Numl.Math.Filters;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Selection
+namespace Maddalena.Core.Numl.Genetic.Functions.Selection
 {
     /// <summary>
     /// RouletteSelection class.

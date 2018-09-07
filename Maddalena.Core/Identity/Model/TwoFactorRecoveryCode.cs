@@ -1,4 +1,4 @@
-﻿namespace bwets.NetCore.Identity.Model
+﻿namespace Maddalena.Core.Identity.Model
 {
 	public class TwoFactorRecoveryCode
 	{

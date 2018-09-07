@@ -1,14 +1,15 @@
 ﻿// file:	Unsupervised\HClusterModel.cs
 //
 // summary:	Implements the cluster model class
-using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-using Maddalena.Numl.Math.Linkers;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Unsupervised
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Linkers;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Unsupervised
 {
     /// <summary>A data Model for the cluster.</summary>
     public class HClusterModel

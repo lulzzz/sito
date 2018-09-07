@@ -1,11 +1,12 @@
 ﻿// file:	Math\LinearAlgebra\MatrixExtensions.cs
 //
 // summary:	Implements the matrix extensions class
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A matrix extensions.</summary>
     public static class MatrixExtensions

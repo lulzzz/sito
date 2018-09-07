@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Pairing
+namespace Maddalena.Core.Numl.Genetic.Functions.Pairing
 {
     /// <summary>
     /// IPairingFunction interface.

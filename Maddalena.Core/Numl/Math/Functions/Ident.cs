@@ -1,7 +1,7 @@
 // file:	Math\Functions\Ident.cs
 //
 // summary:	Implements the identifier class
-namespace Maddalena.Numl.Math.Functions
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>An identifier / linear function.</summary>
     public class Ident : Function

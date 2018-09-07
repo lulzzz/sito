@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using JS.Core.Core;
-using JS.Core.Core.Interop;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
 
-namespace NiL.JS
+namespace Maddalena.Core.Javascript
 {
     /// <summary>
     /// Provides access to a CLR-namespace

@@ -1,13 +1,12 @@
 ﻿// file:	Math\Linkers\CentroidLinker.cs
 //
 // summary:	Implements the centroid linker class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.Metrics;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Linkers
+using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+
+namespace Maddalena.Core.Numl.Math.Linkers
 {
     /// <summary>A centroid linker.</summary>
     public class CentroidLinker : ILinker

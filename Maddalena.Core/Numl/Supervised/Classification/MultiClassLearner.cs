@@ -1,20 +1,13 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Probability;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Maddalena.Numl.Supervised.Classification;
 using System.Threading.Tasks;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Utils;
 
-using System.Threading;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-
-namespace Maddalena.Numl
+namespace Maddalena.Core.Numl.Supervised.Classification
 {
     /// <summary>
     /// Primary class for running classification models. It is designed to abstract the separation of

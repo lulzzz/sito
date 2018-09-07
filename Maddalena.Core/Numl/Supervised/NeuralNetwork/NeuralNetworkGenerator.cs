@@ -1,17 +1,14 @@
 ﻿// file:	Supervised\NeuralNetwork\NeuralNetworkGenerator.cs
 //
 // summary:	Implements the neural network generator class
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Supervised.NeuralNetwork.Optimization;
-using Maddalena.Numl.Math;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+using System;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Optimization;
+
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>A neural network generator.</summary>
     public class NeuralNetworkGenerator : Generator, ISequenceGenerator

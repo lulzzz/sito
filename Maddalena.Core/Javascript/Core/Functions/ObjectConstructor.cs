@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using JS.Core.Core.Interop;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Interop;
 
-namespace JS.Core.Core.Functions
+namespace Maddalena.Core.Javascript.Core.Functions
 {
 #if !(PORTABLE)
     [Serializable]

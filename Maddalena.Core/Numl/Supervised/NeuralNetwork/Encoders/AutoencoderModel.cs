@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Serialization;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Encoders
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Encoders
 {
     /// <summary>
     /// An Autoencoder model.

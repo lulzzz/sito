@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Probability;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.SVM.Selection
+namespace Maddalena.Core.Numl.Supervised.SVM.Selection
 {
     /// <summary>
     /// Implements Working Set Selection 3 which uses second order information for selecting new pairs.

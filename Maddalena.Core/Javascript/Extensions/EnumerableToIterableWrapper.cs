@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using JS.Core.Core;
-using JS.Core.Core.Interop;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
 
-namespace JS.Core.Extensions
+namespace Maddalena.Core.Javascript.Extensions
 {
     internal sealed class EnumerableToIterableWrapper : IterableProtocolBase, IIterable
     {

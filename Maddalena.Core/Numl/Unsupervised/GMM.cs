@@ -1,15 +1,15 @@
 ﻿// file:	Unsupervised\GMM.cs
 //
 // summary:	Implements the gmm class
-using System;
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Model;
-using System.Linq;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Metrics;
 
-namespace Maddalena.Numl.Unsupervised
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Metrics;
+using Maddalena.Core.Numl.Model;
+
+namespace Maddalena.Core.Numl.Unsupervised
 {
     /// <summary>A Generative Mixture Model.</summary>
     public class GMM

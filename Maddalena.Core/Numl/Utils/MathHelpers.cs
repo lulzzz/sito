@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Maddalena.Numl.Utils
+﻿namespace Maddalena.Core.Numl.Utils
 {
     /// <summary>
     /// Extension methods for math and floating point operations.

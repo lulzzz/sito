@@ -1,13 +1,10 @@
 ﻿// file:	Supervised\Perceptron\PerceptronGenerator.cs
 //
 // summary:	Implements the perceptron generator class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
 
-namespace Maddalena.Numl.Supervised.Perceptron
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.Perceptron
 {
     /// <summary>A perceptron generator.</summary>
     public class PerceptronGenerator : Generator

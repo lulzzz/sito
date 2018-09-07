@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 #endif
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     /// <summary>
     /// Предоставляет реализацию бинарного дерева поиска.

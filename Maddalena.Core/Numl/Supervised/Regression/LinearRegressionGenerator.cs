@@ -1,13 +1,13 @@
 ﻿// file:	Supervised\Regression\LinearRegression.cs
 //
 // summary:	Implements the linear regression class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
 
-namespace Maddalena.Numl.Supervised.Regression
+using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.Functions.Regularization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Optimization;
+
+namespace Maddalena.Core.Numl.Supervised.Regression
 {
     /// <summary>A linear regression generator.</summary>
     public class LinearRegressionGenerator : Generator
@@ -56,14 +56,14 @@ namespace Maddalena.Numl.Supervised.Regression
             Vector theta = Vector.Rand(copy.Cols);
 
             // run gradient descent
-            var optimizer = new Maddalena.Numl.Math.Optimization.Optimizer(theta, this.MaxIterations, this.LearningRate)
+            var optimizer = new Optimizer(theta, this.MaxIterations, this.LearningRate)
             {
-                CostFunction = new Maddalena.Numl.Math.Functions.Cost.LinearCostFunction()
+                CostFunction = new LinearCostFunction()
                 {
                     X = copy,
                     Y = y,
                     Lambda = this.Lambda,
-                    Regularizer = new Maddalena.Numl.Math.Functions.Regularization.L2Regularizer()
+                    Regularizer = new L2Regularizer()
                 }
             };
 

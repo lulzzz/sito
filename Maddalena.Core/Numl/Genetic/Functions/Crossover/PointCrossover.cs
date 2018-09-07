@@ -1,6 +1,6 @@
-﻿using Maddalena.Numl.Math.Probability;
+﻿using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Crossover
+namespace Maddalena.Core.Numl.Genetic.Functions.Crossover
 {
     /// <summary>
     /// PointCrossover function.

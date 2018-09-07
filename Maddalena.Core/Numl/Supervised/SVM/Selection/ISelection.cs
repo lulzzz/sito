@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.SVM.Selection
+namespace Maddalena.Core.Numl.Supervised.SVM.Selection
 {
     /// <summary>
     /// Interface for working set selection routines for Support Vector Machines.

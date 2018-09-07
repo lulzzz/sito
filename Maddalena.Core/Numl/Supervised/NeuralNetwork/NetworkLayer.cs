@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Maddalena.Core.Numl.Math.Functions;
 
-using Maddalena.Numl.Math.Functions;
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>
     /// An independent Neural Network layer for use in constructing deep neural networks with ensembles, etc.

@@ -1,12 +1,12 @@
 // file:	Math\Information\Error.cs
 //
 // summary:	Implements the error class
+
 using System;
 using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Information
+namespace Maddalena.Core.Numl.Math.Information
 {
     /// <summary>
     /// This class calculates the Classification Error of any given vector. It inherits from

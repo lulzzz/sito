@@ -1,9 +1,10 @@
 ﻿// file:	Math\Metrics\IDistance.cs
 //
 // summary:	Declares the IDistance interface
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>Interface for distance.</summary>
     public interface IDistance

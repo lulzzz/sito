@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using JS.Core.Expressions;
-using NiL.JS;
+using Maddalena.Core.Javascript.Expressions;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     public sealed class ParseInfo
     {

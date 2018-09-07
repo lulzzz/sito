@@ -1,7 +1,7 @@
 ﻿
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Normalization
+namespace Maddalena.Core.Numl.Math.Normalization
 {
     /// <summary>
     /// Interface for feature normalizer
@@ -14,6 +14,6 @@ namespace Maddalena.Numl.Math.Normalization
         /// <param name="row">Single record to normalize</param>
         /// <param name="properties">Feature properties based on the original set</param>
         /// <returns></returns>
-        Vector Normalize(Vector row, Maddalena.Numl.Math.Summary properties);
+        Vector Normalize(Vector row, Summary properties);
     }
 }

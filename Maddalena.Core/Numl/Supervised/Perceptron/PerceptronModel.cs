@@ -1,12 +1,10 @@
 // file:	Supervised\Perceptron\PerceptronModel.cs
 //
 // summary:	Implements the perceptron model class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Supervised.Perceptron
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.Perceptron
 {
     /// <summary>A data Model for the perceptron.</summary>
     public class PerceptronModel : Model

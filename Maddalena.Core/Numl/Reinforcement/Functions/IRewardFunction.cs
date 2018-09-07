@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.AI;
+﻿using Maddalena.Core.Numl.AI;
 
-namespace Maddalena.Numl.Reinforcement.Functions
+namespace Maddalena.Core.Numl.Reinforcement.Functions
 {
     /// <summary>
     /// IRewardFunction interface.

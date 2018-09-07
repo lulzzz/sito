@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using JS.Core.Core.Interop;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using Array = NiL.JS.BaseLibrary.Array;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core.Interop;
+using Array = Maddalena.Core.Javascript.BaseLibrary.Array;
 using Math = System.Math;
 
-namespace JS.Core.Core.Functions
+namespace Maddalena.Core.Javascript.Core.Functions
 {
 #if !(PORTABLE)
     [Serializable]

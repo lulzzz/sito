@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Supervised;
+﻿using Maddalena.Core.Numl.Supervised;
 
-
-namespace Maddalena.Numl
+namespace Maddalena.Core.Numl
 {
     /// <summary>Structure to hold generator, model, and accuracy information.</summary>
     public class LearningModel

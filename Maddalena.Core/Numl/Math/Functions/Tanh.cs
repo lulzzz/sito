@@ -2,7 +2,7 @@
 //
 // summary:	Implements the hyperbolic tangent class
 
-namespace Maddalena.Numl.Math.Functions
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>A hyperbolic tangent.</summary>
     public class Tanh : Function

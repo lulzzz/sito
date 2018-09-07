@@ -1,14 +1,14 @@
 // file:	Supervised\DecisionTree\DecisionTreeModel.cs
 //
 // summary:	Implements the decision tree model class
+
 using System;
 using System.Linq;
 using System.Text;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Data;
+using Maddalena.Core.Numl.Data;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Supervised.DecisionTree
+namespace Maddalena.Core.Numl.Supervised.DecisionTree
 {
     /// <summary>A data Model for the decision tree.</summary>
     public class DecisionTreeModel : Model

@@ -1,15 +1,9 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Supervised.NeuralNetwork;
-using Maddalena.Numl.Supervised.NeuralNetwork.Recurrent;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Serialization;
+using Maddalena.Core.Numl.Supervised.NeuralNetwork.Recurrent;
+using Maddalena.Core.Numl.Utils;
 
-
-namespace Maddalena.Numl.Supervised.NeuralNetwork.Serializer.Recurrent
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork.Serializer.Recurrent
 {
     /// <summary>
     /// Recurrent Node serializer.

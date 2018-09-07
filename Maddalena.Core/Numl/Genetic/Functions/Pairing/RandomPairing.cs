@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Pairing
+namespace Maddalena.Core.Numl.Genetic.Functions.Pairing
 {
     /// <summary>
     /// Random pairing.

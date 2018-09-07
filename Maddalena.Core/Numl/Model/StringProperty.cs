@@ -1,14 +1,15 @@
 // file:	Model\StringProperty.cs
 //
 // summary:	Implements the string property class
-using System;
-using System.IO;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
-namespace Maddalena.Numl.Model
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Model
 {
     /// <summary>Enumeration describing how to split a string property.</summary>
     public enum StringSplitType

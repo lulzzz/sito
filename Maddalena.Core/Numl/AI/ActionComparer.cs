@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Maddalena.ML.MachineLearning.Numl.AI
+namespace Maddalena.Core.Numl.AI
 {
     /// <summary>
     /// ActionComparer class.

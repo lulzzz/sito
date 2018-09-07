@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using JS.Core;
-using JS.Core.Core;
-using JS.Core.Expressions;
-using NiL.JS.BaseLibrary;
+using Maddalena.Core.Javascript.BaseLibrary;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Expressions;
 
-namespace NiL.JS.Statements
+namespace Maddalena.Core.Javascript.Statements
 {
     public sealed class ExportStatement : CodeNode
     {

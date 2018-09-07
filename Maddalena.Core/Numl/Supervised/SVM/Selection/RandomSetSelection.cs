@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Probability;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.Numl.Supervised.SVM.Selection
+namespace Maddalena.Core.Numl.Supervised.SVM.Selection
 {
     /// <summary>
     /// Implements a Random Set Selection function which randomly selects new pairs.

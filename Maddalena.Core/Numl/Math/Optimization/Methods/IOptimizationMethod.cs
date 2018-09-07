@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
+﻿using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Optimization.Methods
+namespace Maddalena.Core.Numl.Math.Optimization.Methods
 {
     /// <summary>
     /// Implements an optimization method.
@@ -23,7 +21,7 @@ namespace Maddalena.Numl.Math.Optimization.Methods
         /// <param name="costFunction">The cost function to optimize.</param>
         /// <param name="properties">Properties for the optimization routine.</param>
         /// <returns>Double</returns>
-        double UpdateCost(Maddalena.Numl.Math.Functions.Cost.ICostFunction costFunction, OptimizerProperties properties);
+        double UpdateCost(ICostFunction costFunction, OptimizerProperties properties);
 
         /// <summary>
         /// Update and return the Gradient.
@@ -31,7 +29,7 @@ namespace Maddalena.Numl.Math.Optimization.Methods
         /// <param name="costFunction">The cost function to optimize.</param>
         /// <param name="properties">Properties for the optimization routine.</param>
         /// <returns>Vector</returns>
-        Vector UpdateGradient(Maddalena.Numl.Math.Functions.Cost.ICostFunction costFunction, OptimizerProperties properties);
+        Vector UpdateGradient(ICostFunction costFunction, OptimizerProperties properties);
 
         /// <summary>
         /// Update and return the new Theta value.

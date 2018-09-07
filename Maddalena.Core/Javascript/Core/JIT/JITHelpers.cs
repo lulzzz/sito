@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace JS.Core.Core.JIT
+namespace Maddalena.Core.Javascript.Core.JIT
 {
 #if !NET35
     internal static class JITHelpers

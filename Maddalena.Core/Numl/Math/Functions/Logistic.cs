@@ -2,7 +2,7 @@
 //
 // summary:	Implements the logistic class
 
-namespace Maddalena.Numl.Math.Functions
+namespace Maddalena.Core.Numl.Math.Functions
 {
     /// <summary>A logistic.</summary>
     public class Logistic : Function

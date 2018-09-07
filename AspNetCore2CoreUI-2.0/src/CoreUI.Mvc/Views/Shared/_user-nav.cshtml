@@ -1,7 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Maddalena.Core.Identity.Model
+@using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<MongoUser> SignInManager
+@inject UserManager<MongoUser> UserManager
 
 
 <li class="nav-item dropdown">

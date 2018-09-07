@@ -1,11 +1,12 @@
 ﻿// file:	Math\LinearAlgebra\MatrixStatics.cs
 //
 // summary:	Implements the matrix statics class
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
 	/// <summary>A matrix.</summary>
 	public partial class Matrix

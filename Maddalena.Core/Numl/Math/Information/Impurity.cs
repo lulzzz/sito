@@ -1,12 +1,13 @@
 ﻿// file:	Math\Information\Impurity.cs
 //
 // summary:	Implements the impurity class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.Information
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Information
 {
     /// <summary>An impurity.</summary>
     public abstract class Impurity

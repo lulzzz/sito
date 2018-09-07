@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 
-namespace NiL.JS.Backward
+namespace Maddalena.Core.Javascript
 {
     internal static class Backward
     {

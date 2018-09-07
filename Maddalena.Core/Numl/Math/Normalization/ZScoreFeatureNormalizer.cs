@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.Numl.Math.Normalization;
-namespace Maddalena.Numl.Math.Normalization
+namespace Maddalena.Core.Numl.Math.Normalization
 {
     /// <summary>
     /// Z-Score Feature normalizer to scale features to be 0 mean centered (-1 to +1).
@@ -17,7 +14,7 @@ namespace Maddalena.Numl.Math.Normalization
         /// <param name="row"></param>
         /// <param name="properties"></param>
         /// <returns></returns>
-        public Vector Normalize(Vector row, Maddalena.Numl.Math.Summary properties)
+        public Vector Normalize(Vector row, Summary properties)
         {
             if (row == null)
             {

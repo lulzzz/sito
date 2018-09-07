@@ -1,13 +1,10 @@
 ﻿// file:	Model\DescriptorException.cs
 //
 // summary:	Implements the descriptor exception class
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
 
-namespace Maddalena.Numl.Model
+using System;
+
+namespace Maddalena.Core.Numl.Model
 {
     /// <summary>Descriptor Exception.</summary>
     public class DescriptorException : Exception

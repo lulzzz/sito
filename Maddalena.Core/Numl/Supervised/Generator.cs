@@ -1,18 +1,17 @@
 ﻿// file:	Supervised\Generator.cs
 //
 // summary:	Implements the generator class
+
 using System;
-using Maddalena.Numl.Model;
-using System.Linq;
-
-using Maddalena.Numl.Math.LinearAlgebra;
 using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Math;
+using System.Linq;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>A generator.</summary>
     public abstract class Generator : IGenerator
@@ -77,7 +76,7 @@ namespace Maddalena.Numl.Supervised
         public Generator()
         {
             this.NormalizeFeatures = false;
-            this.FeatureNormalizer = new Maddalena.Numl.Math.Normalization.MinMaxNormalizer();
+            this.FeatureNormalizer = new MinMaxNormalizer();
         }
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace Maddalena.Numl.Supervised
         /// <returns></returns>
         public virtual void Preprocess(Matrix X)
         {
-            this.FeatureProperties = new Maddalena.Numl.Math.Summary()
+            this.FeatureProperties = new Summary()
             {
                 Average = X.Mean(VectorType.Row),
                 StandardDeviation = X.StdDev(VectorType.Row),

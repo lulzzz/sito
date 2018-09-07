@@ -1,6 +1,6 @@
-﻿using JS.Core.Core.Interop;
+﻿using Maddalena.Core.Javascript.Core.Interop;
 
-namespace JS.Core.Extensions
+namespace Maddalena.Core.Javascript.Extensions
 {
     internal abstract class IterableProtocolBase
     {

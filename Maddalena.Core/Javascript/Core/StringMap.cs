@@ -5,9 +5,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
-using NiL.JS;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     internal sealed class StringMapDebugView<TValue>
     {

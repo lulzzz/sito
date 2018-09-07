@@ -1,6 +1,7 @@
-﻿using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions.Regularization;
-namespace Maddalena.Numl.Math.Functions.Cost
+﻿using Maddalena.Core.Numl.Math.Functions.Regularization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Functions.Cost
 {
     /// <summary>
     /// Cost function interface

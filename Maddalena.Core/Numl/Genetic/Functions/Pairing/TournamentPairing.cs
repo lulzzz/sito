@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Pairing
+namespace Maddalena.Core.Numl.Genetic.Functions.Pairing
 {
     /// <summary>
     /// Tournament selection (pairing).

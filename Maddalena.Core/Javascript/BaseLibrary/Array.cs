@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using JS.Core.Core;
-using JS.Core.Core.Interop;
-using JS.Core.Expressions;
-using JS.Core.Extensions;
-using PropertyPair = JS.Core.Core.PropertyPair;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Expressions;
+using Maddalena.Core.Javascript.Extensions;
+using PropertyPair = Maddalena.Core.Javascript.Core.PropertyPair;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     [Serializable]
     public sealed class Array : JSObject, IIterable

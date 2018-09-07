@@ -1,13 +1,13 @@
 using System;
-using System.IO;
-using Maddalena.Numl.Utils;
-using System.Reflection;
 using System.Collections;
-using Maddalena.Numl.Math.LinearAlgebra;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Text;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Serialization
+namespace Maddalena.Core.Numl.Serialization
 {
 	/// <summary>
 	/// JSON Writer object.
@@ -54,7 +54,7 @@ namespace Maddalena.Numl.Serialization
 		}
 
 		/// <summary>
-		/// Writes a simple type to the underlying stream (see <seealso cref="TypeHelpers.IsSimpleType(Type, Type[])"/>)
+		/// Writes a simple type to the underlying stream (see <seealso cref="TypeHelpers.IsSimpleType"/>)
 		/// </summary>
 		/// <param name="value"></param>
 		private void WriteSimpleType(object value)

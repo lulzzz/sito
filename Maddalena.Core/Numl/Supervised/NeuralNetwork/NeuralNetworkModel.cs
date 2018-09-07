@@ -1,14 +1,11 @@
 // file:	Supervised\NeuralNetwork\NeuralNetworkModel.cs
 //
 // summary:	Implements the neural network model class
-using System;
-using System.Linq;
-using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Supervised.NeuralNetwork
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Supervised.NeuralNetwork
 {
     /// <summary>A data Model for the neural network.</summary>
     public class NeuralNetworkModel : Model, ISequenceModel

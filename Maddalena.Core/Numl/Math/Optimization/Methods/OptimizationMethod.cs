@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Math.Functions.Cost;
-using System.Collections.Generic;
-namespace Maddalena.Numl.Math.Optimization.Methods
+﻿using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Optimization.Methods
 {
     /// <summary>
     /// Implements an optimization method when overridden in a derived class.

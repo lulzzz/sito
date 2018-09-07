@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using Maddalena.Numl.Math.Functions;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.Numl.Supervised.Classification;
-using Maddalena.Numl.Utils;
+﻿using Maddalena.Core.Numl.Math.Functions;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised.Classification;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Supervised.Regression
+namespace Maddalena.Core.Numl.Supervised.Regression
 {
     /// <summary>
     /// A Logistic Regression Model object

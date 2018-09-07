@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using JS.Core.Core;
+using Maddalena.Core.Javascript.Core;
 
-namespace NiL.JS.Statements
+namespace Maddalena.Core.Javascript.Statements
 {
 #if !(PORTABLE)
     [Serializable]

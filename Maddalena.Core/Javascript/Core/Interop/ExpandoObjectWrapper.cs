@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq;
 
-namespace JS.Core.Core.Interop
+namespace Maddalena.Core.Javascript.Core.Interop
 {
     internal sealed class ExpandoObjectWrapper : JSObject
     {

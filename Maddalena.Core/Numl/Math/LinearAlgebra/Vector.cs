@@ -1,16 +1,16 @@
 ﻿// file:	Math\LinearAlgebra\Vector.cs
 //
 // summary:	Implements the vector class
+
 using System;
-using System.Text;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using Maddalena.Numl.Utils;
 using System.IO;
-using Maddalena.Numl.Serialization;
+using System.Linq;
+using System.Text;
+using Maddalena.Core.Numl.Serialization;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A vector.</summary>
     public partial class Vector : IEnumerable<double>

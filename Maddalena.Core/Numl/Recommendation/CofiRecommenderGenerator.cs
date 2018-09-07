@@ -1,12 +1,12 @@
-﻿using System;
-using Maddalena.Numl.Math;
-using System.Linq;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+﻿using System.Linq;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Functions.Cost;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Math.Optimization;
+using Maddalena.Core.Numl.Supervised;
 
-namespace Maddalena.Numl.Recommendation
+namespace Maddalena.Core.Numl.Recommendation
 {
     /// <summary>
     /// Collaborative Filtering Recommender generator.
@@ -59,7 +59,7 @@ namespace Maddalena.Numl.Recommendation
             this.MaxIterations = 100;
             this.LearningRate = 0.1;
 
-            this.FeatureNormalizer = new Maddalena.Numl.Math.Normalization.ZeroMeanNormalizer();
+            this.FeatureNormalizer = new ZeroMeanNormalizer();
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Maddalena.Numl.Recommendation
             Matrix ThetaX = Matrix.Rand(entities, this.CollaborativeFeatures, -1d);
             Matrix ThetaY = Matrix.Rand(references, this.CollaborativeFeatures, -1d);
 
-            Maddalena.Numl.Math.Functions.Cost.ICostFunction costFunction = new Maddalena.Numl.Math.Functions.Cost.CofiCostFunction()
+            ICostFunction costFunction = new CofiCostFunction()
             {
                 CollaborativeFeatures = this.CollaborativeFeatures,
                 Lambda = this.Lambda,
@@ -111,7 +111,7 @@ namespace Maddalena.Numl.Recommendation
             // we're optimising two params so combine them
             Vector Theta = Vector.Combine(ThetaX.Unshape(), ThetaY.Unshape());
 
-            Maddalena.Numl.Math.Optimization.Optimizer optimizer = new Maddalena.Numl.Math.Optimization.Optimizer(Theta, this.MaxIterations, this.LearningRate)
+            Optimizer optimizer = new Optimizer(Theta, this.MaxIterations, this.LearningRate)
             {
                 CostFunction = costFunction
             };

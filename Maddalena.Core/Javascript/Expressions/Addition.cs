@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using JS.Core.Core;
-using JS.Core.Core.JIT;
-using NiL.JS;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.JIT;
 
 #if !PORTABLE
 
 #endif
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
 #if !(PORTABLE)
     [Serializable]

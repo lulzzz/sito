@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
-using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.Normalization;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Supervised;
+﻿using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Supervised;
 
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement
 {
     /// <summary>
     /// IReinforcementModel interface.

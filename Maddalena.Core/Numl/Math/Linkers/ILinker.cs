@@ -1,12 +1,11 @@
 ﻿// file:	Math\Linkers\ILinker.cs
 //
 // summary:	Declares the ILinker interface
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
+
 using System.Collections.Generic;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-
-namespace Maddalena.Numl.Math.Linkers
+namespace Maddalena.Core.Numl.Math.Linkers
 {
     /// <summary>Interface for linker.</summary>
     public interface ILinker

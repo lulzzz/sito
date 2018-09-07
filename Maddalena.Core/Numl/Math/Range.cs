@@ -1,13 +1,10 @@
 ﻿// file:	Math\Range.cs
 //
 // summary:	Implements the range class
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Math
+namespace Maddalena.Core.Numl.Math
 {
     /// <summary>A range.</summary>
     public class Range

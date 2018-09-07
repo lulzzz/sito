@@ -1,10 +1,11 @@
 // file:	Math\Metrics\PearsonCorrelation.cs
 //
 // summary:	Implements the pearson correlation class
-using System;
-using Maddalena.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.Numl.Math.Metrics
+using System;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Math.Metrics
 {
     /// <summary>A pearson correlation.</summary>
     public sealed class PearsonCorrelation : ISimilarity

@@ -34,8 +34,10 @@
         <link rel="stylesheet" href="~/css/style.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+  
+  @RenderSection("Head", required: false)
 
-    <!-- Styles required by this view -->
+  <!-- Styles required by this view -->
     @RenderSection("Styles", required: false)
 </head>
 <!-- BODY options, add following classes to body to change options

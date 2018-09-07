@@ -1,14 +1,12 @@
 // file:	Model\Property.cs
 //
 // summary:	Implements the property class
-using System;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using System.Reflection;
-using System.Collections.Generic;
-using Maddalena.Numl.Serialization;
 
-namespace Maddalena.Numl.Model
+using System;
+using System.Collections.Generic;
+using Maddalena.Core.Numl.Utils;
+
+namespace Maddalena.Core.Numl.Model
 {
     /// <summary>Concrete property. Used to convert any given data type to a number.</summary>
     public class Property

@@ -1,9 +1,10 @@
 ﻿// file:	Math\LinearAlgebra\SingularMatrixException.cs
 //
 // summary:	Implements the singular matrix exception class
+
 using System;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>Exception for signalling singular matrix errors.</summary>
     public class SingularMatrixException : Exception

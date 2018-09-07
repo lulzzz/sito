@@ -2,10 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Maddalena.Numl.Utils
+namespace Maddalena.Core.Numl.Utils
 {
     /// <summary>
     /// Extension methods for IEnumerable collections

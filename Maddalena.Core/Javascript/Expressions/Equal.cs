@@ -1,9 +1,8 @@
 ﻿using System;
-using JS.Core.Core;
-using NiL.JS;
-using Boolean = NiL.JS.BaseLibrary.Boolean;
+using Maddalena.Core.Javascript.Core;
+using Boolean = Maddalena.Core.Javascript.BaseLibrary.Boolean;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
 #if !(PORTABLE)
     [Serializable]

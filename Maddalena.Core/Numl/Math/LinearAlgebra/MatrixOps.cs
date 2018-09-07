@@ -1,10 +1,11 @@
 ﻿// file:	Math\LinearAlgebra\MatrixOps.cs
 //
 // summary:	Implements the matrix ops class
+
 using System;
 using System.Collections.Generic;
 
-namespace Maddalena.Numl.Math.LinearAlgebra
+namespace Maddalena.Core.Numl.Math.LinearAlgebra
 {
     /// <summary>A matrix.</summary>
     public partial class Matrix

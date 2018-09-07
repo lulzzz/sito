@@ -1,7 +1,7 @@
-﻿using Maddalena.Numl.Math;
-using Maddalena.Numl.Math.Probability;
+﻿using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Probability;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Functions.Mutation
+namespace Maddalena.Core.Numl.Genetic.Functions.Mutation
 {
     /// <summary>
     /// Random replacement mutation.

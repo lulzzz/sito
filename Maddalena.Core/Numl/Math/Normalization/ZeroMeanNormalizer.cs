@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Maddalena.Numl.Utils;
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-using Maddalena.Numl.Math;
-
-namespace Maddalena.Numl.Math.Normalization
+namespace Maddalena.Core.Numl.Math.Normalization
 {
     /// <summary>
     /// Zero-Mean Feature normalizer to scale features to be zero centered.

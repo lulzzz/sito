@@ -3,12 +3,12 @@ using System.Collections;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using JS.Core.Core;
-using JS.Core.Core.Functions;
-using JS.Core.Core.Interop;
-using JS.Core.Extensions;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.Functions;
+using Maddalena.Core.Javascript.Core.Interop;
+using Maddalena.Core.Javascript.Extensions;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     public enum PromiseState
     {

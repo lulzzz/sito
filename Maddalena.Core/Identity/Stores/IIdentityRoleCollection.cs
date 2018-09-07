@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using bwets.NetCore.Identity.Model;
+using Maddalena.Core.Identity.Model;
 
-namespace bwets.NetCore.Identity.Stores
+namespace Maddalena.Core.Identity.Stores
 {
-	public interface IIdentityRoleCollection<TRole> : IIdentityObjectCollection<TRole> where TRole : IdentityRole
+	public interface IIdentityRoleCollection<TRole> : IIdentityObjectCollection<TRole> where TRole : MongoRole
 	{
 		Task<TRole> FindByNameAsync(string normalizedName);
 	}

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using JS.Core.Expressions;
+using Maddalena.Core.Javascript.Expressions;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     public enum PredictedType
     {

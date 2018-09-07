@@ -1,13 +1,7 @@
-﻿using Maddalena.Numl.Serialization;
-using Maddalena.Numl.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl
+namespace Maddalena.Core.Numl
 {
     public static class Register
     {

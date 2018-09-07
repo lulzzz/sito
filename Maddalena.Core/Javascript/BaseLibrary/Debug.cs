@@ -1,6 +1,6 @@
-﻿using JS.Core.Core;
+﻿using Maddalena.Core.Javascript.Core;
 
-namespace NiL.JS.BaseLibrary
+namespace Maddalena.Core.Javascript.BaseLibrary
 {
     public static class Debug
     {

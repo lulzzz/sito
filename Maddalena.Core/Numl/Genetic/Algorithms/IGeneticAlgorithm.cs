@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Genetic.Metrics;
+using Maddalena.Core.Numl.Genetic.Metrics;
 
-namespace Maddalena.ML.MachineLearning.Numl.Genetic.Algorithms
+namespace Maddalena.Core.Numl.Genetic.Algorithms
 {
     /// <summary>
     /// IGeneticAlgorithm interface.

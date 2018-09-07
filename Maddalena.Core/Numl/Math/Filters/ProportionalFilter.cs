@@ -1,12 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
 
-using Maddalena.Numl.Math.Probability;
-using Maddalena.Numl.Math.LinearAlgebra;
-
-namespace Maddalena.Numl.Math.Filters
+namespace Maddalena.Core.Numl.Math.Filters
 {
     /// <summary>
     /// A Proportional Sampling filter, otherwise known as Roulette Wheel sampling.

@@ -2,10 +2,9 @@
 //
 // summary:	Declares the IModel interface
 
-using Maddalena.Numl;
-using Maddalena.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
 
-namespace Maddalena.ML.MachineLearning.Numl.Supervised
+namespace Maddalena.Core.Numl.Supervised
 {
     /// <summary>Interface for model.</summary>
     public interface IModel : IModelBase

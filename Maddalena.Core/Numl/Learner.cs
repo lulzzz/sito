@@ -1,18 +1,16 @@
 ﻿// file:	Learner.cs
 //
 // summary:	Implements the learner class
+
 using System;
-using Maddalena.Numl.Utils;
-using System.Linq;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Math.Probability;
-using System.Threading.Tasks;
-using Maddalena.Numl.Math.LinearAlgebra;
 using System.Collections.Generic;
-using Maddalena.ML.MachineLearning.Numl.Supervised;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Probability;
+using Maddalena.Core.Numl.Supervised;
+using Maddalena.Core.Numl.Utils;
 
-
-namespace Maddalena.Numl
+namespace Maddalena.Core.Numl
 {
     /// <summary>
     /// Primary class for running model generators. It is designed to abstract the separation of

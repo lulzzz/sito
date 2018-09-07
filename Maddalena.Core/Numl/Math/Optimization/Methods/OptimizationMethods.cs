@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Maddalena.Numl.Math.Optimization.Methods
+﻿namespace Maddalena.Core.Numl.Math.Optimization.Methods
 {
     /// <summary>
     /// Lists available builtin optimizers

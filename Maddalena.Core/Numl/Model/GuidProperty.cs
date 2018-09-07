@@ -1,9 +1,9 @@
-﻿using Maddalena.Numl.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Model
+namespace Maddalena.Core.Numl.Model
 {
 	/// <summary>Represents a guid property.</summary>
 	public class GuidProperty : Property

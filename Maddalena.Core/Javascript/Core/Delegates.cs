@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JS.Core.Core
+namespace Maddalena.Core.Javascript.Core
 {
     public delegate CodeNode ParseDelegate(ParseInfo state, ref int position);
 

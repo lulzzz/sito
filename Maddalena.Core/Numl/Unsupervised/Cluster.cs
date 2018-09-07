@@ -1,12 +1,13 @@
 ﻿// file:	Unsupervised\Cluster.cs
 //
 // summary:	Implements the cluster class
-using System;
-using System.Linq;
-using Maddalena.Numl.Math.LinearAlgebra;
-using System.Collections.Generic;
 
-namespace Maddalena.Numl.Unsupervised
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+
+namespace Maddalena.Core.Numl.Unsupervised
 {
     /// <summary>A cluster.</summary>
     public class Cluster

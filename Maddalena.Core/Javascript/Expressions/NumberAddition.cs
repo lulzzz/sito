@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using JS.Core.Core;
-using JS.Core.Core.JIT;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Core.JIT;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     [Serializable]
     public sealed class NumberAddition : Expression

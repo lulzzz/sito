@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JS.Core.Core;
-using JS.Core.Extensions;
-using NiL.JS;
+using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Javascript.Extensions;
 
-namespace JS.Core.Expressions
+namespace Maddalena.Core.Javascript.Expressions
 {
     [Serializable]
     public sealed class Spread : Expression

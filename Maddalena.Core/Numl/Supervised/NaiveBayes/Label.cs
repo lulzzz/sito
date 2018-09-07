@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Maddalena.Numl.Supervised.NaiveBayes
+﻿namespace Maddalena.Core.Numl.Supervised.NaiveBayes
 {
     public class Label 
     {

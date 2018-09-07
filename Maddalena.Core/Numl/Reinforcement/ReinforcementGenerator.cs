@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maddalena.Numl.Model;
-using Maddalena.Numl.Math.LinearAlgebra;
-using Maddalena.Numl.Supervised;
-using Maddalena.Numl.Utils;
+using Maddalena.Core.Numl.Math;
+using Maddalena.Core.Numl.Math.Discretization;
+using Maddalena.Core.Numl.Math.LinearAlgebra;
+using Maddalena.Core.Numl.Math.Normalization;
+using Maddalena.Core.Numl.Model;
+using Maddalena.Core.Numl.Supervised;
+using Maddalena.Core.Numl.Utils;
 
-namespace Maddalena.Numl.Reinforcement
+namespace Maddalena.Core.Numl.Reinforcement
 {
     /// <summary>
     /// ReinforcementGenerator base class.
@@ -49,17 +50,17 @@ namespace Maddalena.Numl.Reinforcement
         /// <summary>
         /// Gets or sets the feature normalizer to use for each item.
         /// </summary>
-        public Maddalena.Numl.Math.Normalization.INormalizer FeatureNormalizer { get; set; }
+        public INormalizer FeatureNormalizer { get; set; }
 
         /// <summary>
         /// Gets or sets the feature discretizer to use for reducing each item.
         /// </summary>
-        public Maddalena.Numl.Math.Discretization.IDiscretizer FeatureDiscretizer { get; set; }
+        public IDiscretizer FeatureDiscretizer { get; set; }
 
         /// <summary>
         /// Gets or sets the Feature properties from the original training set.
         /// </summary>
-        public Maddalena.Numl.Math.Summary FeatureProperties { get; set; }
+        public Summary FeatureProperties { get; set; }
 
         /// <summary>
         /// Initializes a new ReinforcementGenerator instance.
@@ -67,7 +68,7 @@ namespace Maddalena.Numl.Reinforcement
         public ReinforcementGenerator()
         {
             this.NormalizeFeatures = false;
-            this.FeatureNormalizer = new Maddalena.Numl.Math.Normalization.MinMaxNormalizer();
+            this.FeatureNormalizer = new MinMaxNormalizer();
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Maddalena.Numl.Reinforcement
         /// <returns></returns>
         public virtual void Preprocess(Matrix X1, Vector y, Matrix X2, Vector r)
         {
-            this.FeatureProperties = Maddalena.Numl.Math.Summary.Summarize(X1);
+            this.FeatureProperties = Summary.Summarize(X1);
 
             if (this.NormalizeFeatures)
             {
@@ -107,7 +108,7 @@ namespace Maddalena.Numl.Reinforcement
                 for (int x = 0; x < X1.Cols; x++)
                     bins[x] = temp[x, VectorType.Col].Distinct().Count();
 
-                this.FeatureDiscretizer = new Maddalena.Numl.Math.Discretization.BinningDiscretizer(bins.ToVector());
+                this.FeatureDiscretizer = new BinningDiscretizer(bins.ToVector());
                 this.FeatureDiscretizer.Initialize(X1, this.FeatureProperties);
             }
         }
