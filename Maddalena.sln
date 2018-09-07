@@ -5,21 +5,9 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Maddalena.csproj", "{81BEEDFC-6299-48DC-8ABD-7B9706D49045}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsCore", "JsCore\JsCore\JsCore.csproj", "{191E0B59-B935-4838-9F96-347970C10703}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.ML", "Maddalena.ML\Maddalena.ML\Maddalena.ML.csproj", "{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JS.Core", "JS.Core\JS.Core.csproj", "{5955F42D-84BD-4AFF-9B39-28553C9DE5AB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Mvc", "AspNetCore2CoreUI-2.0\src\CoreUI.Mvc\CoreUI.Mvc.csproj", "{44479B96-74F4-4864-8F33-9C6484F97038}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bwets.NetCore.Identity", "bwets.NetCore.Identity.MongoDb\bwets.NetCore.Identity\bwets.NetCore.Identity.csproj", "{DFCF96D7-B037-4B23-ADA5-EF0BB41009A1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bwets.NetCore.Identity.MongoDb", "bwets.NetCore.Identity.MongoDb\bwets.NetCore.Identity.MongoDb\bwets.NetCore.Identity.MongoDb.csproj", "{1716051D-2303-40CE-8029-51758BEA9789}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bwets.NetCore.Identity.Service", "bwets.NetCore.Identity.MongoDb\bwets.NetCore.Identity.Service\bwets.NetCore.Identity.Service.csproj", "{DAAD704D-EC82-4C61-867B-EF95C46444EB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bwets.NetCore.Identity.ServiceProxy", "bwets.NetCore.Identity.MongoDb\bwets.NetCore.Identity.ServiceProxy\bwets.NetCore.Identity.ServiceProxy.csproj", "{20C187CA-9851-48F4-AED8-006C9DFF12A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maddalena.Core", "Maddalena.Core\Maddalena.Core.csproj", "{E97C59DB-65DF-4B1A-A927-F095E186AB82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,38 +19,14 @@ Global
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81BEEDFC-6299-48DC-8ABD-7B9706D49045}.Release|Any CPU.Build.0 = Release|Any CPU
-		{191E0B59-B935-4838-9F96-347970C10703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{191E0B59-B935-4838-9F96-347970C10703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{191E0B59-B935-4838-9F96-347970C10703}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5561BEBA-FA20-4F64-83D1-2B19CBD9FACC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5955F42D-84BD-4AFF-9B39-28553C9DE5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5955F42D-84BD-4AFF-9B39-28553C9DE5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5955F42D-84BD-4AFF-9B39-28553C9DE5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5955F42D-84BD-4AFF-9B39-28553C9DE5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44479B96-74F4-4864-8F33-9C6484F97038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44479B96-74F4-4864-8F33-9C6484F97038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44479B96-74F4-4864-8F33-9C6484F97038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44479B96-74F4-4864-8F33-9C6484F97038}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFCF96D7-B037-4B23-ADA5-EF0BB41009A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFCF96D7-B037-4B23-ADA5-EF0BB41009A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFCF96D7-B037-4B23-ADA5-EF0BB41009A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFCF96D7-B037-4B23-ADA5-EF0BB41009A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1716051D-2303-40CE-8029-51758BEA9789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1716051D-2303-40CE-8029-51758BEA9789}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1716051D-2303-40CE-8029-51758BEA9789}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1716051D-2303-40CE-8029-51758BEA9789}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAAD704D-EC82-4C61-867B-EF95C46444EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAAD704D-EC82-4C61-867B-EF95C46444EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAAD704D-EC82-4C61-867B-EF95C46444EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAAD704D-EC82-4C61-867B-EF95C46444EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20C187CA-9851-48F4-AED8-006C9DFF12A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20C187CA-9851-48F4-AED8-006C9DFF12A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20C187CA-9851-48F4-AED8-006C9DFF12A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20C187CA-9851-48F4-AED8-006C9DFF12A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
