@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using CoreUI.Mvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using bwets.NetCore.Identity.MongoDb;
 
 namespace CoreUI.Mvc
 {
@@ -33,6 +34,25 @@ namespace CoreUI.Mvc
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+
+            bwets.NetCore.Identity.MongoDb.Extensions.AddIdentityMongoDbProvider
+            services.AddMongoIdentityProvider<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+
+            }, dbOptions => {
+                dbOptions.ConnectionString = "mongodb://localhost/yourDatabase";
+                dbOptions.UsersCollection = "Users"; // this is the default value;
+                dbOptions.RolesCollection = "Roles"; // this is the default value;
+
+            });
+
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
