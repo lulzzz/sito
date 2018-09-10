@@ -14,7 +14,7 @@
             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
         </li>
         <li class="nav-item px-3">
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyNuget">My Nuget</a>
         </li>
         <li class="nav-item px-3">
             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
@@ -24,12 +24,5 @@
     <ul class="nav navbar-nav ml-auto">
         @Html.Partial("_UserNav")
     </ul>
-
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <button class="navbar-toggler aside-menu-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    }
 </header>
 <!-- /*APP-HEADER* -->

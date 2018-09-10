@@ -2,7 +2,6 @@ D:\PROGETTI\sito\Maddalena.Core\bin\Debug\netcoreapp2.1\test.js
 D:\PROGETTI\sito\Maddalena.Core\bin\Debug\netcoreapp2.1\Maddalena.Core.deps.json
 D:\PROGETTI\sito\Maddalena.Core\bin\Debug\netcoreapp2.1\Maddalena.Core.dll
 D:\PROGETTI\sito\Maddalena.Core\bin\Debug\netcoreapp2.1\Maddalena.Core.pdb
-D:\PROGETTI\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.csprojAssemblyReference.cache
 D:\PROGETTI\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.csproj.CoreCompileInputs.cache
 D:\PROGETTI\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.AssemblyInfoInputs.cache
 D:\PROGETTI\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.AssemblyInfo.cs

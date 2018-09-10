@@ -1,0 +1,283 @@
+﻿@using ServerSideAnalytics
+@using ServerSideAnalytics.Extensions
+@inject IAnalyticStore _store
+
+@{
+  var from = DateTime.MinValue;
+  var to = DateTime.MaxValue;
+}
+
+<section>
+  <h2>Server side analytics</h2>
+  <div class="row">
+    <div class="col-12">
+      <p>
+        This is a simple demo of my <a href="https://www.nuget.org/packages/ServerSideAnalytics/">nuget package</a>.
+        The system assign automatically an identity to every not registered user based on AspNet Core cookie system and connection id.
+      </p>
+      <p>
+        Discover more on how It works <a href="/read/server-side-analytics">here</a> 
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="row">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">
+            @{
+              var total = await _store.CountAsync(from, to);
+            }
+            @total
+          </h4>
+          <p>Requests served</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">
+            @await _store.CountUniqueIndentitiesAsync(from, to)
+          </h4>
+          <p>Unique visitors</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">
+            @((await _store.DailyAverage(from, to)).ToString("0,0"))
+          </h4>
+          <p>Daily average</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">
+            @await _store.CountAsync(DateTime.Now - TimeSpan.FromDays(1), DateTime.Now)
+          </h4>
+          <p>Served today</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+
+
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0">Request served by day</h4>
+        </div>
+      </div>
+      <div class="chart-wrapper" style="height: 300px; margin-top: 40px;">
+        <canvas id="canvasByDay" class="chart" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0">Request served by hour</h4>
+        </div>
+      </div>
+      <div class="chart-wrapper" style="height: 300px; margin-top: 40px;">
+        <canvas id="canvasByHour" class="chart" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!--/.row-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Requests by URL
+        </div>
+        <div class="card-body">
+          @{
+            var urlServed = await _store.UrlServed(from, to);
+          }
+
+          <div class="row">
+            <div class="col-4">
+              <b>Url</b>
+            </div>
+            <div class="col-2">
+              <b>Requests served</b>
+            </div>
+            <div class="col-2">
+              <b>Percentage</b>
+            </div>
+            <div class="col-4">
+            </div>
+          </div>
+
+          @foreach (var served in urlServed)
+          {
+            var percentage = (served.Served * 100) / total;
+
+            if (percentage >= 5)
+            {
+              <div class="row">
+                <div class="col-4">
+                  @served.Url
+                </div>
+                <div class="col-2">
+                  @served.Served
+                </div>
+                <div class="col-2">
+                  @percentage%
+                </div>
+                <div class="col-4">
+                  <div class="bars">
+                    <div class="progress ">
+                      <div class="progress-bar bg-info" role="progressbar" style="width: @percentage%" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+
+  <!--/.row-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Requests by URL
+        </div>
+        <div class="card-body">
+          @{
+            var servedByCountry = await _store.ServedByCountry(from, to);
+          }
+
+          <div class="row">
+            <div class="col-4">
+              <b>Country</b>
+            </div>
+            <div class="col-2">
+              <b>Requests served</b>
+            </div>
+            <div class="col-2">
+              <b>Percentage</b>
+            </div>
+            <div class="col-4">
+            </div>
+          </div>
+
+          @foreach (var served in servedByCountry)
+          {
+            var percentage = (served.Served * 100) / total;
+
+            if (percentage >= 5)
+            {
+              <div class="row">
+                <div class="col-4">
+                  @{
+                    var country = $"{served.Country}.png";
+                  }
+                  <img src="/img/flags/@country" alt="@country" style="height: 24px;">
+                  @served.Country
+                </div>
+                <div class="col-2">
+                  @served.Served
+                </div>
+                <div class="col-2">
+                  @percentage%
+                </div>
+                <div class="col-4">
+                  <div class="bars">
+                    <div class="progress ">
+                      <div class="progress-bar bg-info" role="progressbar" style="width: @percentage%" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+@{
+
+      var daily = (await _store.DailyServed(from, to)).OrderBy(x => x.Day);
+      var hourly = (await _store.HourlyServed(from, to)).OrderBy(x => x.Hour);
+
+      var dayPoints = string.Join(',', daily.Select(x => x.Served.ToString()));
+      var dayLabels = string.Join(',', daily.Select(x => "'" + x.Day.ToString("dd/MM") + "'"));
+
+      var hourPoints = string.Join(',', hourly.Select(x => x.Served.ToString()));
+      var hourLabels = string.Join(',', hourly.Select(x => "'" + x.Hour.ToString() + "'"));
+    }
+
+<script>
+            function getConfig(labels, points, description)
+    {
+      return {
+        type: 'line',
+                    data: {
+          labels: labels,
+                        datasets: [{
+            label: description,
+                                data: points,
+                                fill: true,
+                                cubicInterpolationMode: 'monotone'
+                            }]
+                        },
+                        options: {
+          responsive: true,
+                            tooltips: {
+            mode: 'index'
+                            },
+                            scales: {
+            xAxes: [{
+              display: true,
+                                    scaleLabel: {
+                display: true
+                                    }
+            }],
+                                yAxes: [{
+              display: true,
+                                    scaleLabel: {
+                display: true,
+                                        labelString: 'Value'
+                                    }
+            }]
+                            }
+        }
+      }
+    }
+
+    window.onload = function ()
+    {
+      var ctxDay = document.getElementById('canvasByDay').getContext('2d');
+      window.dayLine = new Chart(ctxDay, getConfig([@Html.Raw(dayLabels)], [@dayPoints], 'Number of request served by day'));
+
+      var ctxHour = document.getElementById('canvasByHour').getContext('2d');
+      window.hourLine = new Chart(ctxHour, getConfig([@Html.Raw(hourLabels)], [@hourPoints], 'Number of request served by hour'));
+    };
+</script>

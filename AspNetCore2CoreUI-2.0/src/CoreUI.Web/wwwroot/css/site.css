@@ -41,3 +41,8 @@ h2 {
 .nav-pills .nav-link.active > a {
     color: whitesmoke !important;
 }
+
+section 
+{
+    margin-top:32px;
+}

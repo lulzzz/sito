@@ -7,10 +7,17 @@
 
 
   <ItemGroup>
+    <PackageReference Include="HardwareProviders.Board.Standard" Version="2.0.1" />
+    <PackageReference Include="HardwareProviders.CPU.Standard" Version="2.0.1" />
+    <PackageReference Include="HardwareProviders.HDD.Standard" Version="2.0.1" />
+    <PackageReference Include="HardwareProviders.Standard" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="ServerSideAnalytics" Version="4.6.6" />
+    <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
+    <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,16 +47,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Blog\Comments.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Blog\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Blog\Index.cshtml">
+    <Content Update="Views\Blog\Post.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Blog\Post.cshtml">
+    <Content Update="Views\Home\Stat.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

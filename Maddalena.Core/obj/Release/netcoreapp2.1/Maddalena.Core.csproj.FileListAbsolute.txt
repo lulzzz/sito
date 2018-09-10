@@ -1,0 +1,10 @@
+D:\PROGETTI\sito\Maddalena.Core\bin\Release\netcoreapp2.1\test.js
+D:\PROGETTI\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.deps.json
+D:\PROGETTI\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.dll
+D:\PROGETTI\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.pdb
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.csprojAssemblyReference.cache
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.AssemblyInfoInputs.cache
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.AssemblyInfo.cs
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.dll
+D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.pdb

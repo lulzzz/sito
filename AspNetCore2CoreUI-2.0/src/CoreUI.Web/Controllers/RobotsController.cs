@@ -54,7 +54,7 @@ namespace Miniblog.Core.Controllers
                     var lastMod = new[] { post.PubDate, post.LastModified };
 
                     xml.WriteStartElement("url");
-                    xml.WriteElementString("loc", host + post.GetLink());
+                    xml.WriteElementString("loc", $"{host}/read/{post.Slug}");
                     xml.WriteElementString("lastmod", lastMod.Max().ToString("yyyy-MM-ddThh:mmzzz"));
                     xml.WriteEndElement();
                 }
@@ -114,7 +114,7 @@ namespace Miniblog.Core.Controllers
                     {
                         Title = post.Title,
                         Description = post.Content,
-                        Id = host + post.GetLink(),
+                        Id = $"{host}/read/{post.Slug}",
                         Published = post.PubDate,
                         LastUpdated = post.LastModified,
                         ContentType = "html",

@@ -7,6 +7,10 @@ using Maddalena.Core.Blog.Services;
 using Maddalena.Core.Identity;
 using Maddalena.Core.Identity.Model;
 using Maddalena.Core.Identity.Mongo;
+using ServerSideAnalytics.Mongo;
+using ServerSideAnalytics;
+using ServerSideAnalytics.Extensions;
+using System.Net;
 
 namespace CoreUI.Web
 {
@@ -18,6 +22,12 @@ namespace CoreUI.Web
         }
 
         public IConfiguration Configuration { get; }
+
+        public MongoAnalyticStore GetAnalyticStore()
+        {
+            var store = (new MongoAnalyticStore("mongodb://localhost/"));
+            return store;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -38,8 +48,10 @@ namespace CoreUI.Web
 
             });
 
-            services.AddAntiforgery();
 
+            services.AddAntiforgery(); 
+
+            services.AddTransient<IAnalyticStore, MongoAnalyticStore>(provider => GetAnalyticStore());
             services.AddTransient<IBlogService, MongoBlogService>(provider => new MongoBlogService(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IBlogSettings, BlogSettings>();
             // Add application services.
@@ -61,6 +73,19 @@ namespace CoreUI.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseServerSideAnalytics(GetAnalyticStore()
+                           .UseIpStackFailOver("IpStackAPIKey")
+                           .UseIpApiFailOver()
+                           .UseIpInfoFailOver())
+
+               .ExcludePath("/js", "/lib", "/css")
+               .ExcludeExtension(".jpg", ".ico", "robots.txt", "sitemap.xml")
+
+                .Exclude(x => x.UserIdentity() == "matteo")
+                .ExcludeIp(IPAddress.Parse("192.168.0.1"))
+                .ExcludeLoopBack();
+
 
             app.UseStaticFiles();
 

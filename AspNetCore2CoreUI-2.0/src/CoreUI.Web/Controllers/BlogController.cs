@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -6,6 +8,7 @@ using System.Xml;
 using Maddalena.Core.Blog.Models;
 using Maddalena.Core.Blog.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreUI.Web.Controllers
@@ -21,16 +24,14 @@ namespace CoreUI.Web.Controllers
             _settings = settings;
         }
 
-        /*[Route("/{page:int?}")]
-        public async Task<IActionResult> Index([FromRoute]int page = 0)
+        [Route("/blog/upload")]
+        public ActionResult TinyMceUpload()
         {
-            var posts = await _blog.GetPosts(_settings.PostsPerPage, _settings.PostsPerPage * page);
-            ViewData["Title"] = _settings.Name;
-            ViewData["Description"] = _settings.Description;
-            ViewData["prev"] = $"/{page + 1}/";
-            ViewData["next"] = $"/{(page <= 1 ? null : page - 1 + "/")}";
-            return View("~/Views/Blog/Index.cshtml", posts);
-        }*/
+            var file = Request.Form.Files[0];
+
+            return Json(new { location = $"culo.jpg" });
+        }
+
 
         [Route("/blog/category/{category}/{page:int?}")]
         public async Task<IActionResult> Category(string category, int page = 0)
@@ -99,7 +100,7 @@ namespace CoreUI.Web.Controllers
 
             existing.Categories = categories.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim().ToLowerInvariant()).ToList();
             existing.Title = post.Title.Trim();
-            existing.Slug = !string.IsNullOrWhiteSpace(post.Slug) ? post.Slug.Trim() : Maddalena.Core.Blog.Models.Post.CreateSlug(post.Title);
+            existing.Slug = post.Slug;
             existing.IsPublished = post.IsPublished;
             existing.Content = post.Content.Trim();
             existing.Excerpt = post.Excerpt.Trim();
@@ -108,7 +109,7 @@ namespace CoreUI.Web.Controllers
 
             await SaveFilesToDisk(existing);
 
-            return Redirect(post.GetLink());
+            return Redirect($"/read/{post.Slug}");
         }
 
         private async Task SaveFilesToDisk(Post post)
@@ -154,62 +155,6 @@ namespace CoreUI.Web.Controllers
             }
 
             return NotFound();
-        }
-
-        [Route("/blog/comment/{postId}")]
-        [HttpPost]
-        public async Task<IActionResult> AddComment(string postId, Comment comment)
-        {
-            var post = await _blog.GetPostById(postId);
-
-            if (!ModelState.IsValid)
-            {
-                return View("Post", post);
-            }
-
-            if (post == null || !post.AreCommentsOpen(_settings.CommentsCloseAfterDays))
-            {
-                return NotFound();
-            }
-
-            comment.IsAdmin = User.Identity.IsAuthenticated;
-            comment.Content = comment.Content.Trim();
-            comment.Author = comment.Author.Trim();
-            comment.Email = comment.Email.Trim();
-
-            // the website form key should have been removed by javascript
-            // unless the comment was posted by a spam robot
-            if (!Request.Form.ContainsKey("website"))
-            {
-                post.Comments.Add(comment);
-                await _blog.SavePost(post);
-            }
-
-            return Redirect(post.GetLink() + "#" + comment.Id);
-        }
-
-        [Route("/blog/comment/{postId}/{commentId}")]
-        [Authorize]
-        public async Task<IActionResult> DeleteComment(string postId, string commentId)
-        {
-            var post = await _blog.GetPostById(postId);
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            var comment = post.Comments.FirstOrDefault(c => c.Id.Equals(commentId, StringComparison.OrdinalIgnoreCase));
-
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            post.Comments.Remove(comment);
-            await _blog.SavePost(post);
-
-            return Redirect(post.GetLink() + "#comments");
         }
     }
 }
