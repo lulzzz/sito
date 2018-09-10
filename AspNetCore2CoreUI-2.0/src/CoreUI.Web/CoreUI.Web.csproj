@@ -18,6 +18,7 @@
     <PackageReference Include="ServerSideAnalytics" Version="4.6.6" />
     <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
+    <PackageReference Include="YoutubeExplode" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>

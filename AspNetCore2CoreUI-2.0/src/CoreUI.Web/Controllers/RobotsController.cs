@@ -25,11 +25,10 @@ namespace CoreUI.Web.Controllers
         [Route("/robots.txt")]
         public string RobotsTxt()
         {
-            string host = Request.Scheme + "://" + Request.Host;
             var sb = new StringBuilder();
             sb.AppendLine("User-agent: *");
             sb.AppendLine("Disallow:");
-            sb.AppendLine($"sitemap: {host}/sitemap.xml");
+            sb.AppendLine($"sitemap: {Request.Scheme}://{Request.Host}/sitemap.xml");
 
             return sb.ToString();
         }
@@ -37,8 +36,6 @@ namespace CoreUI.Web.Controllers
         [Route("/sitemap.xml")]
         public async Task SitemapXml()
         {
-            string host = Request.Scheme + "://" + Request.Host;
-
             Response.ContentType = "application/xml";
 
             using (var xml = XmlWriter.Create(Response.Body, new XmlWriterSettings { Indent = true }))
@@ -53,7 +50,7 @@ namespace CoreUI.Web.Controllers
                     var lastMod = new[] { post.PubDate, post.LastModified };
 
                     xml.WriteStartElement("url");
-                    xml.WriteElementString("loc", $"{host}/read/{post.Slug}");
+                    xml.WriteElementString("loc", $"{Request.Scheme}://{Request.Host}/read/{post.Slug}");
                     xml.WriteElementString("lastmod", lastMod.Max().ToString("yyyy-MM-ddThh:mmzzz"));
                     xml.WriteEndElement();
                 }
@@ -65,8 +62,6 @@ namespace CoreUI.Web.Controllers
         [Route("/rsd.xml")]
         public void RsdXml()
         {
-            string host = Request.Scheme + "://" + Request.Host;
-
             Response.ContentType = "application/xml";
             Response.Headers["cache-control"] = "no-cache, no-store, must-revalidate";
 
@@ -80,13 +75,13 @@ namespace CoreUI.Web.Controllers
 
                 xml.WriteElementString("enginename", "Miniblog.Core");
                 xml.WriteElementString("enginelink", "http://github.com/madskristensen/Miniblog.Core/");
-                xml.WriteElementString("homepagelink", host);
+                xml.WriteElementString("homepagelink", $"{Request.Scheme}://{Request.Host}");
 
                 xml.WriteStartElement("apis");
                 xml.WriteStartElement("api");
                 xml.WriteAttributeString("name", "MetaWeblog");
                 xml.WriteAttributeString("preferred", "true");
-                xml.WriteAttributeString("apilink", host + "/metaweblog");
+                xml.WriteAttributeString("apilink",$"{Request.Scheme}://{Request.Host}/metaweblog");
                 xml.WriteAttributeString("blogid", "1");
 
                 xml.WriteEndElement(); // api
@@ -100,9 +95,8 @@ namespace CoreUI.Web.Controllers
         public async Task Rss(string type)
         {
             Response.ContentType = "application/xml";
-            string host = Request.Scheme + "://" + Request.Host;
 
-            using (XmlWriter xmlWriter = XmlWriter.Create(Response.Body, new XmlWriterSettings() { Async = true, Indent = true, Encoding = new UTF8Encoding(false) }))
+            using (var xmlWriter = XmlWriter.Create(Response.Body, new XmlWriterSettings() { Async = true, Indent = true, Encoding = new UTF8Encoding(false) }))
             {
                 var posts = await _blog.GetPosts(10);
                 var writer = await GetWriter(type, xmlWriter, posts.Max(p => p.PubDate));
@@ -113,7 +107,7 @@ namespace CoreUI.Web.Controllers
                     {
                         Title = post.Title,
                         Description = post.Content,
-                        Id = $"{host}/read/{post.Slug}",
+                        Id = $"{Request.Scheme}://{Request.Host}/read/{post.Slug}",
                         Published = post.PubDate,
                         LastUpdated = post.LastModified,
                         ContentType = "html",
@@ -134,21 +128,19 @@ namespace CoreUI.Web.Controllers
 
         private async Task<ISyndicationFeedWriter> GetWriter(string type, XmlWriter xmlWriter, DateTime updated)
         {
-            string host = Request.Scheme + "://" + Request.Host + "/";
-
             if (type.Equals("rss", StringComparison.OrdinalIgnoreCase))
             {
                 var rss = new RssFeedWriter(xmlWriter);
                 await rss.WriteTitle(_settings.Name);
                 await rss.WriteDescription(_settings.Description);
                 await rss.WriteGenerator("Miniblog.Core");
-                await rss.WriteValue("link", host);
+                await rss.WriteValue("link", $"{Request.Scheme}://{Request.Host}");
                 return rss;
             }
 
             var atom = new AtomFeedWriter(xmlWriter);
             await atom.WriteTitle(_settings.Name);
-            await atom.WriteId(host);
+            await atom.WriteId($"{Request.Scheme}://{Request.Host}");
             await atom.WriteSubtitle(_settings.Description);
             await atom.WriteGenerator("Miniblog.Core", "https://github.com/madskristensen/Miniblog.Core", "1.0");
             await atom.WriteValue("updated", updated.ToString("yyyy-MM-ddTHH:mm:ssZ"));
