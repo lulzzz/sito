@@ -1,40 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreUI.Web.Models;
-using HardwareProviders.CPU;
-using HardwareProviders.Board;
-using HardwareProviders.HDD;
-using Maddalena.Core.Blog.Services;
-using HardwareProviders;
-using System.Security.Permissions;
+using Maddalena.Core.GridFs;
+using Microsoft.Net.Http.Headers;
 
 namespace CoreUI.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private static readonly Mainboard mainboard = new Mainboard();
-        private static Cpu[] cpus;
-        private static readonly HardDrive[] hdd = HardDrive.Discover();
+        private IGridFileSystem _grid;
 
-        
-        static HomeController()
+        public HomeController(IGridFileSystem grid)
         {
-            Load();
+            _grid = grid;
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
-        static void Load()
+        [Route("/download/{gridName}")]
+        public async Task<IActionResult> Download(string gridName)
         {
-            Ring0.Open();
-            HardwareProviders.Opcode.Open();
-            Console.WriteLine(Ring0.IsOpen);
+            if (!await _grid.IsAllowed(gridName, User)) return NotFound();
 
-            cpus = Cpu.Discover();
+            var meta = await _grid.GetMetadata(gridName);
+
+            return File(await _grid.Download(gridName), meta.MimeType, meta.FileName, meta.LastModified, EntityTagHeaderValue.Any);
         }
+
 
         public IActionResult Index()
         {
@@ -44,25 +36,6 @@ namespace CoreUI.Web.Controllers
         public IActionResult Stat()
         {
             return View();
-        }
-
-        public ActionResult Identity(string id)
-        {
-            return View(id as object);
-        }
-
-        public IActionResult Hardware()
-        {
-            foreach (var item in cpus)
-            {
-                item.Update();
-            }
-            return View(new HardwareInfo
-                {
-                    Cpu = cpus,
-                    Hdd = hdd,
-                    Mainboard = mainboard
-                });
         }
 
         public IActionResult About()

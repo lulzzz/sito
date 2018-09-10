@@ -41,6 +41,16 @@
         </datalist>
         <br />
       </div>
+      
+      <div class="form-group">
+        <h5>Excerpt</h5>
+        <textarea asp-for="@Model.Excerpt" class="form-control" rows="3" placeholder="Short description of blog post" aria-describedby="desc_excerpt">@Model.Excerpt</textarea>
+      </div>
+
+      <div class="form-group">
+        <input asp-for="@Model.IsPublished" />
+        <label asp-for="@Model.IsPublished">Is published</label>
+      </div>
 
       <div class="form-group" style="margin-top:25px">
         <textarea asp-for="@Model.Content" rows="20" aria-label="Content">@Model.Content</textarea>
@@ -48,14 +58,8 @@
         <input type="submit" value="Save" title="Save the post" />
       </div>
 
-      <div class="form-group">
-        <h5>Excerpt</h5>
-        <textarea asp-for="@Model.Excerpt" class="form-control" rows="3" placeholder="Short description of blog post" aria-describedby="desc_excerpt">@Model.Excerpt</textarea>
-      </div>
 
 
-      <input asp-for="@Model.IsPublished" />
-      <label asp-for="@Model.IsPublished">Is published</label>
 
       @if (!isNew)
       {
@@ -88,7 +92,8 @@
           relative_urls: false,
           convert_urls: false,
           branding: false,
-          images_upload_url: "/blog/upload"
+          images_upload_url: "/blog/upload",
+          images_upload_base_path: '/download/'
         });
 
     </script>

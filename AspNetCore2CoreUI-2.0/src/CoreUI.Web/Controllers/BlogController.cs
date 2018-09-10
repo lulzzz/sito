@@ -1,59 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
 using Maddalena.Core.Blog.Models;
 using Maddalena.Core.Blog.Services;
+using Maddalena.Core.GridFs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreUI.Web.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
         private readonly IBlogService _blog;
-        private readonly IBlogSettings _settings;
+        private readonly IGridFileSystem _gridFs;
 
-        public BlogController(IBlogService blog, IBlogSettings settings)
+        public BlogController(IBlogService blog, IGridFileSystem gridFs, IBlogSettings settings)
         {
             _blog = blog;
-            _settings = settings;
+            _gridFs = gridFs;
         }
 
         [Route("/blog/upload")]
-        public ActionResult TinyMceUpload()
+        public async Task<ActionResult> BlogUpload()
         {
             var file = Request.Form.Files[0];
+            var gridName = await _gridFs.Upload(file.FileName, file.OpenReadStream());
 
-            return Json(new { location = $"culo.jpg" });
+            await _gridFs.SetOwner(gridName,User.Identity.Name);
+            await _gridFs.MakePublic(gridName);
+
+            return Json(new { location = gridName });
         }
 
-
-        [Route("/blog/category/{category}/{page:int?}")]
-        public async Task<IActionResult> Category(string category, int page = 0)
-        {
-            var posts = (await _blog.GetPostsByCategory(category)).Skip(_settings.PostsPerPage * page).Take(_settings.PostsPerPage);
-            ViewData["Title"] = _settings.Name + " " + category;
-            ViewData["Description"] = $"Articles posted in the {category} category";
-            ViewData["prev"] = $"/blog/category/{category}/{page + 1}/";
-            ViewData["next"] = $"/blog/category/{category}/{(page <= 1 ? null : page - 1 + "/")}";
-            return View("~/Views/Blog/Index.cshtml", posts);
-        }
-
-        // This is for redirecting potential existing URLs from the old Miniblog URL format
-        [Route("/post/{slug}")]
-        [HttpGet]
-        public IActionResult Redirects(string slug)
-        {
-            return LocalRedirectPermanent($"/blog/{slug}");
-        }
-
-        [Route("/blog/{slug?}")]
-        public async Task<IActionResult> Post(string slug)
+        [AllowAnonymous]
+        [Route("/read/{slug?}")]
+        public async Task<IActionResult> Read(string slug)
         {
             var post = await _blog.GetPostBySlug(slug);
 
@@ -65,8 +47,8 @@ namespace CoreUI.Web.Controllers
             return NotFound();
         }
 
+        [HttpGet]
         [Route("/blog/edit/{id?}")]
-        [HttpGet, Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             ViewData["AllCats"] = (await _blog.GetCategories()).ToList();
@@ -87,7 +69,7 @@ namespace CoreUI.Web.Controllers
         }
 
         [Route("/blog/{slug?}")]
-        [HttpPost, Authorize, AutoValidateAntiforgeryToken]
+        [HttpPost, AutoValidateAntiforgeryToken]
         public async Task<IActionResult> UpdatePost(Post post)
         {
             if (!ModelState.IsValid)
@@ -107,43 +89,11 @@ namespace CoreUI.Web.Controllers
 
             await _blog.SavePost(existing);
 
-            await SaveFilesToDisk(existing);
-
             return Redirect($"/read/{post.Slug}");
         }
 
-        private async Task SaveFilesToDisk(Post post)
-        {
-            var imgRegex = new Regex("<img[^>].+ />", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            var base64Regex = new Regex("data:[^/]+/(?<ext>[a-z]+);base64,(?<base64>.+)", RegexOptions.IgnoreCase);
-
-            foreach (Match match in imgRegex.Matches(post.Content))
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml("<root>" + match.Value + "</root>");
-
-                var img = doc.FirstChild.FirstChild;
-                var srcNode = img.Attributes["src"];
-                var fileNameNode = img.Attributes["data-filename"];
-
-                // The HTML editor creates base64 DataURIs which we'll have to convert to image files on disk
-                if (srcNode != null && fileNameNode != null)
-                {
-                    var base64Match = base64Regex.Match(srcNode.Value);
-                    if (base64Match.Success)
-                    {
-                        byte[] bytes = Convert.FromBase64String(base64Match.Groups["base64"].Value);
-                        srcNode.Value = await _blog.SaveFile(bytes, fileNameNode.Value).ConfigureAwait(false);
-
-                        img.Attributes.Remove(fileNameNode);
-                        post.Content = post.Content.Replace(match.Value, img.OuterXml);
-                    }
-                }
-            }
-        }
-
         [Route("/blog/deletepost/{id}")]
-        [HttpPost, Authorize, AutoValidateAntiforgeryToken]
+        [HttpPost, AutoValidateAntiforgeryToken]
         public async Task<IActionResult> DeletePost(string id)
         {
             var existing = await _blog.GetPostById(id);

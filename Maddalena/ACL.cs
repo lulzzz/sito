@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace Maddalena
 {
-    public class ACL
+    public class Acl
     {
         public bool Public { get; set; }
 
@@ -24,9 +24,7 @@ namespace Maddalena
 
             if (AllowUsers.Contains(claim.Identity.Name)) return true;
 
-            if (DenyRoles.Any(x => claim.IsInRole(x))) return false;
-
-            return AllowRoles.Any(x => claim.IsInRole(x));
+            return !DenyRoles.Any(claim.IsInRole) && AllowRoles.Any(claim.IsInRole);
         }
     }
 }

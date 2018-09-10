@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 using System.Xml;
 using Maddalena.Core.Blog.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;
 
-namespace Miniblog.Core.Controllers
+namespace CoreUI.Web.Controllers
 {
     public class RobotsController : Controller
     {

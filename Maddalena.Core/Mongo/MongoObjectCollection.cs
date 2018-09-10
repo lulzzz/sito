@@ -28,7 +28,7 @@ namespace Maddalena.Core.Mongo
 			}
 		}
 
-		private IMongoCollection<TItem> MongoCollection { get; }
+		public IMongoCollection<TItem> MongoCollection { get; }
 
 		public async Task<TItem> FindByIdAsync(string itemId)
 		{

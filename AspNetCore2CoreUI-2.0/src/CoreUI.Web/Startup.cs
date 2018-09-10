@@ -11,6 +11,7 @@ using ServerSideAnalytics.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Extensions;
 using System.Net;
+using Maddalena.Core.GridFs;
 
 namespace CoreUI.Web
 {
@@ -49,9 +50,13 @@ namespace CoreUI.Web
             });
 
 
-            services.AddAntiforgery(); 
+            services.AddAntiforgery();
+
+            services.AddTransient<IGridFileSystem, GridFileSystem>(provider =>
+                new GridFileSystem(Configuration.GetConnectionString("DefaultConnection"), "gridFsTable"));
 
             services.AddTransient<IAnalyticStore, MongoAnalyticStore>(provider => GetAnalyticStore());
+
             services.AddTransient<IBlogService, MongoBlogService>(provider => new MongoBlogService(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IBlogSettings, BlogSettings>();
             // Add application services.

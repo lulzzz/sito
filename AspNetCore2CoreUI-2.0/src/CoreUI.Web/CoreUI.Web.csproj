@@ -50,7 +50,7 @@
     <Content Update="Views\Blog\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Blog\Post.cshtml">
+    <Content Update="Views\Blog\Read.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Home\Stat.cshtml">
