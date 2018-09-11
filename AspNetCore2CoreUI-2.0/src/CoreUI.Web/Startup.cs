@@ -10,6 +10,7 @@ using ServerSideAnalytics.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Extensions;
 using System.Net;
+using Maddalena.Core;
 using Maddalena.Core.Blog;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;

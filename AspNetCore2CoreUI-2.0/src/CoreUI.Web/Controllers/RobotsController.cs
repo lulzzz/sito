@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Maddalena.Core;
 using Maddalena.Core.Blog;
 using Maddalena.Core.Identity;
 using Maddalena.Core.Settings;

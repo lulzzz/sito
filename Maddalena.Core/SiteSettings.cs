@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Maddalena.Core.Identity
+﻿namespace Maddalena.Core
 {
     public class SiteSettings
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Owner { get; set; }
+        public string Name { get; set; } = "Matteo Fabbri";
+        public string Description { get; set; } = "In Italian nerd in Prague";
+        public string Owner { get; set; } = "Matteo Fabbri";
 
-        public string GoogleClientId { get; set; }
-        public string GoogleClientSecret { get; set; }
+        public string GoogleClientId { get; set; } = "";
+        public string GoogleClientSecret { get; set; } = "";
 
-        public string TwitterConsumerKey { get; set; }
-        public string TwitterConsumerSecret { get; set; }
+        public string TwitterConsumerKey { get; set; } = "";
+        public string TwitterConsumerSecret { get; set; } = "";
     }
 }

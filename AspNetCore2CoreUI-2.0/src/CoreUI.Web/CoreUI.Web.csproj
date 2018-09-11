@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-CoreUI.Web-6682341B-F32F-461F-A70E-AEA280C8A402</UserSecretsId>
+    <RootNamespace>Maddalena</RootNamespace>
   </PropertyGroup>
 
 

@@ -3,6 +3,6 @@
     public interface ISettingsService
     {
         void Save<T>(T obj);
-        T Get<T>();
+        T Get<T>() where T : new();
     }
 }

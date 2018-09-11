@@ -29,12 +29,15 @@ namespace Maddalena.Core.Settings
             });
         }
 
-        public T Get<T>()
+        public T Get<T>() where T : new()
         {
             var name = typeof(T).FullName;
             var obj = _collection.FirstOrDefault(x => x.Type == name);
 
-            if (obj == null) return default(T);
+            if (obj == null)
+            {
+                return new T();
+            }
 
             return BsonSerializer.Deserialize<T>(obj.Document);
         }
