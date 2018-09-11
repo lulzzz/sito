@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CoreUI.Web.Services;
-using Maddalena.Core.Blog.Services;
 using Maddalena.Core.Identity;
 using Maddalena.Core.Identity.Model;
 using Maddalena.Core.Identity.Mongo;
@@ -11,7 +10,9 @@ using ServerSideAnalytics.Mongo;
 using ServerSideAnalytics;
 using ServerSideAnalytics.Extensions;
 using System.Net;
+using Maddalena.Core.Blog;
 using Maddalena.Core.GridFs;
+using Maddalena.Core.Settings;
 
 namespace CoreUI.Web
 {
@@ -55,10 +56,26 @@ namespace CoreUI.Web
             services.AddTransient<IGridFileSystem, GridFileSystem>(provider =>
                 new GridFileSystem(Configuration.GetConnectionString("DefaultConnection"), "gridFsTable"));
 
+            var settings = new SettingsService(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddSingleton<ISettingsService>(settings);
+
+            var webSiteSetting = settings.Get<SiteSettings>();
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = webSiteSetting.GoogleClientId;
+                googleOptions.ClientSecret = webSiteSetting.GoogleClientSecret;
+            });
+
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = webSiteSetting.TwitterConsumerKey;
+                twitterOptions.ConsumerSecret = webSiteSetting.TwitterConsumerKey;
+            });
+
             services.AddTransient<IAnalyticStore, MongoAnalyticStore>(provider => GetAnalyticStore());
 
             services.AddTransient<IBlogService, MongoBlogService>(provider => new MongoBlogService(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IBlogSettings, BlogSettings>();
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 

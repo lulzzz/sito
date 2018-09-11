@@ -37,13 +37,15 @@ namespace Maddalena
             });
 
             services.AddMongoIdentityProvider<ApplicationUser,ApplicationRole>("mongodb://localhost/maddalena", options =>
-             {
+            {
                  options.Password.RequiredLength = 6;
                  options.Password.RequireLowercase = false;
                  options.Password.RequireUppercase = false;
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireDigit = false;
              });
+
+            var settings = new SettingsService();
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {

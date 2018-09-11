@@ -1,6 +1,6 @@
-﻿@using Maddalena.Core.Blog.Services
-@model Maddalena.Core.Blog.Models.Post
-@inject IBlogSettings settings
+﻿@using Maddalena.Core.Blog
+@using Maddalena.Core.Settings
+@model Maddalena.Core.Blog.BlogPost
 @{
     ViewData["Title"] = Model.Title;
     ViewData["Description"] = Model.Excerpt;
@@ -46,7 +46,6 @@
     <div class="row">
       <div class="col-12">
         <footer>
-          <meta itemprop="author" content="@settings.Owner" />
           <meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
           <meta itemprop="mainEntityOfPage" content="@link" />
         </footer>

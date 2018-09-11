@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Maddalena.Core.Mongo;
 
-namespace Maddalena.Core.Blog.Models
+namespace Maddalena.Core.Blog
 {
-    public class Post : MongoObject
+    public class BlogPost : MongoObject
     {
+        public BlogPostLanguage Language { get; set; }
+
         [Required]
         public string Title { get; set; }
 
@@ -24,6 +25,6 @@ namespace Maddalena.Core.Blog.Models
 
         public bool IsPublished { get; set; } = true;
 
-        public IList<string> Categories { get; set; } = new List<string>();
+        public string Category { get; set; }
     }
 }

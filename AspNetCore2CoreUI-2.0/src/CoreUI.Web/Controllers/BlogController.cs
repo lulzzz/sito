@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Maddalena.Core.Blog.Models;
-using Maddalena.Core.Blog.Services;
+using Maddalena.Core.Blog;
 using Maddalena.Core.GridFs;
+using Maddalena.Core.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,7 @@ namespace CoreUI.Web.Controllers
         private readonly IBlogService _blog;
         private readonly IGridFileSystem _gridFs;
 
-        public BlogController(IBlogService blog, IGridFileSystem gridFs, IBlogSettings settings)
+        public BlogController(IBlogService blog, IGridFileSystem gridFs, ISettingsService settings)
         {
             _blog = blog;
             _gridFs = gridFs;
@@ -55,7 +55,7 @@ namespace CoreUI.Web.Controllers
 
             if (string.IsNullOrEmpty(id))
             {
-                return View(new Post());
+                return View(new BlogPost());
             }
 
             var post = await _blog.GetPostById(id);
@@ -70,7 +70,7 @@ namespace CoreUI.Web.Controllers
 
         [Route("/blog/{slug?}")]
         [HttpPost, AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> UpdatePost(Post post)
+        public async Task<IActionResult> UpdatePost(BlogPost post)
         {
             if (!ModelState.IsValid)
             {
@@ -78,9 +78,8 @@ namespace CoreUI.Web.Controllers
             }
 
             var existing = await _blog.GetPostById(post.Id) ?? post;
-            string categories = Request.Form["categories"];
 
-            existing.Categories = categories.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim().ToLowerInvariant()).ToList();
+            existing.Category = post.Category;
             existing.Title = post.Title.Trim();
             existing.Slug = post.Slug;
             existing.IsPublished = post.IsPublished;

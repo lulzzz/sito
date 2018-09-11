@@ -11,14 +11,14 @@
     <PackageReference Include="HardwareProviders.CPU.Standard" Version="2.0.1" />
     <PackageReference Include="HardwareProviders.HDD.Standard" Version="2.0.1" />
     <PackageReference Include="HardwareProviders.Standard" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.3" PrivateAssets="All" />
     <PackageReference Include="ServerSideAnalytics" Version="4.6.6" />
     <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
     <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
-    <PackageReference Include="YoutubeExplode" Version="4.3.1" />
+    <PackageReference Include="YoutubeExplode" Version="4.3.2" />
   </ItemGroup>
 
   <ItemGroup>

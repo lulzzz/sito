@@ -1,13 +1,11 @@
-﻿using Maddalena.Core.Mongo;
+﻿using System.Collections.Generic;
+using Maddalena.Core.Mongo;
+using Maddalena.Core.Settings;
 
-namespace Maddalena.Core.Blog.Services
+namespace Maddalena.Core.Blog
 {
-    public class BlogSettings : MongoObject, IBlogSettings
+    public class BlogSettings
     {
-        public int CommentsCloseAfterDays { get; set; }
-        public int PostsPerPage { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Owner { get; set; }
+        public List<string> BlogCategories { get; set; } = new List<string>();
     }
 }

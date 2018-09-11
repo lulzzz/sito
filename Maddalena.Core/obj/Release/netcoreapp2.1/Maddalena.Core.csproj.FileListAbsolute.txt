@@ -8,3 +8,13 @@ D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.Assembl
 D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.AssemblyInfo.cs
 D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.dll
 D:\PROGETTI\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.pdb
+D:\Maddalena\sito\Maddalena.Core\bin\Release\netcoreapp2.1\test.js
+D:\Maddalena\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.deps.json
+D:\Maddalena\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.dll
+D:\Maddalena\sito\Maddalena.Core\bin\Release\netcoreapp2.1\Maddalena.Core.pdb
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.csprojAssemblyReference.cache
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.csproj.CoreCompileInputs.cache
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.AssemblyInfoInputs.cache
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.AssemblyInfo.cs
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.dll
+D:\Maddalena\sito\Maddalena.Core\obj\Release\netcoreapp2.1\Maddalena.Core.pdb

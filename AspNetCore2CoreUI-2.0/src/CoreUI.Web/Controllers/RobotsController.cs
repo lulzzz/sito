@@ -3,7 +3,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Maddalena.Core.Blog.Services;
+using Maddalena.Core.Blog;
+using Maddalena.Core.Identity;
+using Maddalena.Core.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
@@ -14,13 +16,15 @@ namespace CoreUI.Web.Controllers
     public class RobotsController : Controller
     {
         private readonly IBlogService _blog;
-        private readonly IBlogSettings _settings;
+        private readonly ISettingsService _settings;
 
-        public RobotsController(IBlogService blog, IBlogSettings settings)
+        public RobotsController(IBlogService blog, ISettingsService settings)
         {
             _blog = blog;
             _settings = settings;
         }
+
+        private SiteSettings SiteSettings => _settings.Get<SiteSettings>();
 
         [Route("/robots.txt")]
         public string RobotsTxt()
@@ -113,12 +117,9 @@ namespace CoreUI.Web.Controllers
                         ContentType = "html",
                     };
 
-                    foreach (string category in post.Categories)
-                    {
-                        item.AddCategory(new SyndicationCategory(category));
-                    }
+                    item.AddCategory(new SyndicationCategory(post.Category));
 
-                    item.AddContributor(new SyndicationPerson("test@example.com", _settings.Owner));
+                    item.AddContributor(new SyndicationPerson("test@example.com", SiteSettings.Owner));
                     item.AddLink(new SyndicationLink(new Uri(item.Id)));
 
                     await writer.Write(item);
@@ -131,17 +132,17 @@ namespace CoreUI.Web.Controllers
             if (type.Equals("rss", StringComparison.OrdinalIgnoreCase))
             {
                 var rss = new RssFeedWriter(xmlWriter);
-                await rss.WriteTitle(_settings.Name);
-                await rss.WriteDescription(_settings.Description);
+                await rss.WriteTitle(SiteSettings.Name);
+                await rss.WriteDescription(SiteSettings.Description);
                 await rss.WriteGenerator("Miniblog.Core");
                 await rss.WriteValue("link", $"{Request.Scheme}://{Request.Host}");
                 return rss;
             }
 
             var atom = new AtomFeedWriter(xmlWriter);
-            await atom.WriteTitle(_settings.Name);
+            await atom.WriteTitle(SiteSettings.Name);
             await atom.WriteId($"{Request.Scheme}://{Request.Host}");
-            await atom.WriteSubtitle(_settings.Description);
+            await atom.WriteSubtitle(SiteSettings.Description);
             await atom.WriteGenerator("Miniblog.Core", "https://github.com/madskristensen/Miniblog.Core", "1.0");
             await atom.WriteValue("updated", updated.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             return atom;

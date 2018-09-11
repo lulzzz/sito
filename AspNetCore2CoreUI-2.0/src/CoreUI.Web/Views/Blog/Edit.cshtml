@@ -1,5 +1,5 @@
-﻿@using Maddalena.Core.Blog.Models
-@model Maddalena.Core.Blog.Models.Post
+﻿@using Maddalena.Core.Blog
+@model Maddalena.Core.Blog.BlogPost
 @{
     bool isNew = string.IsNullOrEmpty(Model.Title);
     ViewData["Title"] = "Edit " + (Model.Title ?? "new post");
@@ -30,9 +30,8 @@
       </dvi>
 
       <div class="form-group" style="margin-top:25px">
-        <h5>Tags</h5>
-        <input type="text" class="form-control" name="selecttag" id="selecttag" aria-describedby="desc_categories" list="taglist" placeholder="@string.Join(", ", Model.Categories)" />
-        <input type="text" class="form-control" name="categories" id="categories" value="@string.Join(", ", Model.Categories)" hidden />
+        <h5>Category</h5>
+        <input type="text" class="form-control" name="category" id="category" aria-describedby="desc_categories" list="taglist" />
         <datalist id="taglist">
           @foreach (var cat in allCats)
           {
@@ -57,9 +56,6 @@
 
         <input type="submit" value="Save" title="Save the post" />
       </div>
-
-
-
 
       @if (!isNew)
       {

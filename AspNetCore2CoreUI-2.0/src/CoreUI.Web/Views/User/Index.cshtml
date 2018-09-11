@@ -1,51 +1,76 @@
 ﻿@model IEnumerable<Maddalena.Core.Identity.MaddalenaUser>
 
 @{
-    ViewData["Title"] = "Index";
+  ViewData["Title"] = "Index";
 }
 
-<h2>User list</h2>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home">Users</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel">
+    <table class="table table-striped">
+      <thead>
+      <tr>
         <th>
           @Html.DisplayNameFor(model => model.DisplayName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+          @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+          @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+          @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
+      </tr>
+      </thead>
+      <tbody>
+      @foreach (var item in Model)
+      {
         <tr>
-            <td>
-              @Html.DisplayNameFor(model => model.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <a href="/user/edit/@item.UserName" class="btn btn-sm btn-outline-primary">Edit</a>
-            </td>
-            <td>
-                <a href="/user/delete/@item.UserName" class="btn btn-sm btn-outline-danger">Delete</a>
-            </td>
+          <td>
+            @Html.DisplayNameFor(model => model.DisplayName)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Email)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+          </td>
+          <td>
+            <a href="/user/edit/@item.UserName" class="btn btn-sm btn-outline-primary">Edit</a>
+          </td>
+          <td>
+            <form method="post" action="/user/delete">
+              @Html.AntiForgeryToken()
+              <input type="hidden" name="id" value="@item.Id" />
+              <input type="submit" class="btn btn-danger" value="Delete" />
+            </form>
+          </td>
         </tr>
-    }
-    </tbody>
-</table>
+      }
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane" id="profile" role="tabpanel">
+    2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+  <div class="tab-pane" id="messages" role="tabpanel">
+    3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>

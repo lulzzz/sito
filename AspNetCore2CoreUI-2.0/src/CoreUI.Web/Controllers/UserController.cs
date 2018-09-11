@@ -28,21 +28,20 @@ namespace Maddalena.Controllers
 
         public ActionResult Index(string id) => View(_userManager.Users);
 
-        public async Task<ActionResult> AddToRole(string role, string user)
+        public async Task<ActionResult> AddToRole(string roleName, string userId)
         {
-            var u = await _userManager.FindByNameAsync(user);
+            var u = await _userManager.FindByNameAsync(userId);
 
-            if (!await _roleManager.RoleExistsAsync(role))
-                await _roleManager.CreateAsync(new MongoRole(role));
+            if (!await _roleManager.RoleExistsAsync(roleName))
+                await _roleManager.CreateAsync(new MongoRole(roleName));
 
             if (u == null) return NotFound();
 
-            await _userManager.AddToRoleAsync(u, role);
+            await _userManager.AddToRoleAsync(u, roleName);
 
-            return RedirectToAction(nameof(Index));
+            return Redirect($"/user/edit/{userId}");
         }
 
-        // GET: User/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
             var user = await _userManager.FindByNameAsync(id);
@@ -52,48 +51,22 @@ namespace Maddalena.Controllers
             return View(user);
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, MaddalenaUser user)
+        public async Task<ActionResult> Edit(MaddalenaUser user)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Delete/5
-        public async Task<ActionResult> Delete(string id)
-        {
-            var user = await _userManager.FindByNameAsync(id);
-
-            if (user == null) return NotFound();
-
-            return View(user);
+            await _userCollection.UpdateAsync(user);
+            return Redirect("/user");
         }
 
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var user = await _userCollection.FindByIdAsync(id);
+            await _userCollection.DeleteAsync(user);
+            return Redirect("/user");
         }
     }
 }
