@@ -15,15 +15,20 @@
       <li class="nav-item">
         <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
       </li>
-      
+
     }
 
     <li class="nav-title">
       Running code
     </li>
     <li class="nav-item">
-      <a class="nav-link" asp-controller="Home" asp-action="Stat" asp-route-view="components-buttons">
+      <a class="nav-link" asp-controller="Home" asp-action="Stat">
         <i class="icon-puzzle"></i> Web analytics
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" asp-controller="Youtube" asp-action="Index">
+        <i class="icon-puzzle"></i> Youtube
       </a>
     </li>
   </ul>

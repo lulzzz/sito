@@ -42,14 +42,19 @@ namespace Maddalena.Core.Identity.Mongo
 				.AddRoleStore<RoleStore<TRole>>()
 				.AddUserStore<UserStore<TUser, TRole>>()
 				.AddDefaultTokenProviders();
+
 			var dbOptions = new DatabaseOptions();
 			setupDatabaseAction(dbOptions);
+
 			var userCollection = new IdentityUserCollection<TUser>(dbOptions.ConnectionString, dbOptions.UsersCollection);
 			var roleCollection = new IdentityRoleCollection<TRole>(dbOptions.ConnectionString, dbOptions.RolesCollection);
 
+            services.AddTransient<IIdentityUserCollection<TUser>>(x => userCollection);
+            services.AddTransient<IIdentityRoleCollection<TRole>>(x => roleCollection);
 
-			// Identity Services
-			services.AddTransient<IUserStore<TUser>>(x => new UserStore<TUser, TRole>(userCollection, roleCollection));
+
+            // Identity Services
+            services.AddTransient<IUserStore<TUser>>(x => new UserStore<TUser, TRole>(userCollection, roleCollection));
 			services.AddTransient<IRoleStore<TRole>>(x => new RoleStore<TRole>(roleCollection));
 			return services;
 		}

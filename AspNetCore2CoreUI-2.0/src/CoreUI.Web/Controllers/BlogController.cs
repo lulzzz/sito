@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreUI.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "blog")]
     public class BlogController : Controller
     {
         private readonly IBlogService _blog;

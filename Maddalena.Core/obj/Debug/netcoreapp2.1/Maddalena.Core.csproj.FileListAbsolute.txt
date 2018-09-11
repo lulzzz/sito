@@ -17,3 +17,4 @@ D:\Maddalena\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.Assembly
 D:\Maddalena\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.AssemblyInfo.cs
 D:\Maddalena\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.dll
 D:\Maddalena\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.pdb
+D:\PROGETTI\sito\Maddalena.Core\obj\Debug\netcoreapp2.1\Maddalena.Core.csprojAssemblyReference.cache
