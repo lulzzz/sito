@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using Maddalena.Core.Mongo;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
+﻿using Maddalena.Core.Mongo;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace Maddalena.Core.Settings
 {
@@ -24,7 +22,7 @@ namespace Maddalena.Core.Settings
 
             _collection.InsertOne(new SettingSlot
             {
-                Document = BsonDocument.Create(obj),
+                Document = JsonConvert.SerializeObject(obj),
                 Type = typeof(T).FullName
             });
         }
@@ -39,7 +37,7 @@ namespace Maddalena.Core.Settings
                 return new T();
             }
 
-            return BsonSerializer.Deserialize<T>(obj.Document);
+            return JsonConvert.DeserializeObject<T>(obj.Document);
         }
     }
 }

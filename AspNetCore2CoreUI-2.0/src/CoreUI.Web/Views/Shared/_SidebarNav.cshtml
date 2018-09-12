@@ -10,14 +10,24 @@
         <i class="fa fa-home"></i> Home
       </a>
     </li>
-    @foreach (var item in await _blog.GetPosts(5))
+    <li class="nav-title">
+      English
+    </li>
+    @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.English, 5))
     {
       <li class="nav-item">
         <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
       </li>
-
     }
-
+    <li class="nav-title">
+      Italian
+    </li>
+    @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.Italian, 5))
+    {
+      <li class="nav-item">
+        <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
+      </li>
+    }
     <li class="nav-title">
       Running code
     </li>

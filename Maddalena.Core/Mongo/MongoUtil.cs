@@ -24,6 +24,14 @@ namespace Maddalena.Core.Mongo
                 .GetCollection<TItem>(collectionName ?? type.Name.ToLowerInvariant());
         }
 
+        public static async Task<IEnumerable<TItem>> TakeAsync<TItem>(this IMongoCollection<TItem> collection, int count, int skip = 0)
+        {
+            return await (await collection.FindAsync(x => true, new FindOptions<TItem, TItem>()
+            {
+                Skip = skip,
+                Limit = count
+            })).ToListAsync();
+        }
 
         public static TItem FirstOrDefault<TItem>(this IMongoCollection<TItem> mongoCollection)
         {

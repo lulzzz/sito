@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Maddalena.Core.Mongo;
+using MongoDB.Driver;
 
 namespace Maddalena.Core.Blog
 {
     public class MongoBlogService : IBlogService
     {
-        private readonly MongoObjectCollection<BlogPost> _post;
+        private readonly IMongoCollection<BlogPost> _post;
 
         public MongoBlogService(string connectionString)
         {
-            _post = new MongoObjectCollection<BlogPost>(connectionString, "blog");
+            _post = MongoUtil.FromConnectionString<BlogPost>(connectionString, "blog");
         }
 
         public Task<IEnumerable<BlogPost>> GetPosts(int count, int skip = 0) => _post.TakeAsync(count, skip);
@@ -23,8 +24,17 @@ namespace Maddalena.Core.Blog
 
         public Task<IEnumerable<string>> GetCategories() => Task.FromResult(new[] {"Code"} as IEnumerable<string>);
 
-        public Task SavePost(BlogPost post) => _post.CreateAsync(post);
+        public Task SavePost(BlogPost post) => _post.InsertOneAsync(post);
 
-        public Task DeletePost(BlogPost post) => _post.DeleteAsync(post);
+        public Task DeletePost(BlogPost post) => _post.DeleteOneAsync(x => x.Id == post.Id);
+
+        public async Task<IEnumerable<BlogPost>> GetByLanguage(BlogPostLanguage lang, int n, int skip = 0)
+        {
+            return await (await _post.FindAsync(x => x.Language == lang, new FindOptions<BlogPost, BlogPost>
+            {
+                Limit = n,
+                Skip = skip
+            })).ToListAsync();
+        }
     }
 }

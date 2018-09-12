@@ -14,6 +14,7 @@ using Maddalena.Core;
 using Maddalena.Core.Blog;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;
+using Maddalena.Core.Youtube;
 
 namespace CoreUI.Web
 {
@@ -51,28 +52,37 @@ namespace CoreUI.Web
 
             });
 
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddAntiforgery();
 
-            services.AddTransient<IGridFileSystem, GridFileSystem>(provider =>
-                new GridFileSystem(Configuration.GetConnectionString("DefaultConnection"), "gridFsTable"));
+            services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
+            services.AddSingleton<IGridFileSystem>(new GridFileSystem(connectionString, "gridFsTable"));
 
-            var settings = new SettingsService(Configuration.GetConnectionString("DefaultConnection"));
+            var settings = new SettingsService(connectionString);
             services.AddSingleton<ISettingsService>(settings);
 
             var webSiteSetting = settings.Get<SiteSettings>();
 
-            services.AddAuthentication().AddGoogle(googleOptions =>
+            if (!string.IsNullOrWhiteSpace(webSiteSetting.GoogleClientId) &&
+                !string.IsNullOrWhiteSpace(webSiteSetting.GoogleClientSecret))
             {
-                googleOptions.ClientId = webSiteSetting.GoogleClientId;
-                googleOptions.ClientSecret = webSiteSetting.GoogleClientSecret;
-            });
+                services.AddAuthentication().AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = webSiteSetting.GoogleClientId;
+                    googleOptions.ClientSecret = webSiteSetting.GoogleClientSecret;
+                });
+            }
 
-            services.AddAuthentication().AddTwitter(twitterOptions =>
+            if (!string.IsNullOrWhiteSpace(webSiteSetting.TwitterConsumerKey) &&
+                !string.IsNullOrWhiteSpace(webSiteSetting.TwitterConsumerKey))
             {
-                twitterOptions.ConsumerKey = webSiteSetting.TwitterConsumerKey;
-                twitterOptions.ConsumerSecret = webSiteSetting.TwitterConsumerKey;
-            });
+                services.AddAuthentication().AddTwitter(twitterOptions =>
+                {
+                    twitterOptions.ConsumerKey = webSiteSetting.TwitterConsumerKey;
+                    twitterOptions.ConsumerSecret = webSiteSetting.TwitterConsumerKey;
+                });
+            }
 
             services.AddTransient<IAnalyticStore, MongoAnalyticStore>(provider => GetAnalyticStore());
 

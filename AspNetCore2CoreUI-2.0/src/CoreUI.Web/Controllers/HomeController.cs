@@ -10,7 +10,7 @@ namespace CoreUI.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IGridFileSystem _grid;
+        private readonly IGridFileSystem _grid;
 
         public HomeController(IGridFileSystem grid)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Maddalena.Core.Blog
@@ -18,5 +19,7 @@ namespace Maddalena.Core.Blog
         Task SavePost(BlogPost post);
 
         Task DeletePost(BlogPost post);
+
+        Task<IEnumerable<BlogPost>> GetByLanguage(BlogPostLanguage lang, int n, int skip=0);
     }
 }

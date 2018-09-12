@@ -13,19 +13,25 @@
     <link rel="stylesheet" href="~/css/admin.scss" />
 }
 
-    <form method="post" id="edit" class="container" asp-controller="Blog" asp-action="UpdatePost" onsubmit = "return upload(this);" >
+    <form method="post" id="edit" class="container" asp-controller="Blog" asp-action="UpdatePost" onsubmit="return upload(this);">
       <div asp-validation-summary="All"></div>
       <input type="hidden" asp-for="@Model.Id" />
 
+      <div class="form-group">
+        <h5>Language</h5>
+        <input type="radio" name="language" value="italian" checked> Italian<br>
+        <input type="radio" name="language" value="english"> English<br>
+      </div>
+
       <div class="form-group" style="margin-top:25px">
         <h5>Title</h5>
-        <input asp-for="@Model.Title"  class="form-control" required placeholder="Title of blog post" aria-describedby="desc_title" />
+        <input asp-for="@Model.Title" class="form-control" required placeholder="Title of blog post" aria-describedby="desc_title" />
         <br />
       </div>
 
       <dvi class="form-group" style="margin-top:25px">
         <h5>Slug</h5>
-        <input asp-for="@Model.Slug"  class="form-control" placeholder="The URL name" aria-describedby="desc_slug" />
+        <input asp-for="@Model.Slug" class="form-control" placeholder="The URL name" aria-describedby="desc_slug" />
         <br />
       </dvi>
 
@@ -40,7 +46,7 @@
         </datalist>
         <br />
       </div>
-      
+
       <div class="form-group">
         <h5>Excerpt</h5>
         <textarea asp-for="@Model.Excerpt" class="form-control" rows="3" placeholder="Short description of blog post" aria-describedby="desc_excerpt">@Model.Excerpt</textarea>

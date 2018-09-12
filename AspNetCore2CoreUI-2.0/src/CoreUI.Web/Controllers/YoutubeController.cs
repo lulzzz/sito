@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Maddalena.Core.Youtube;
 using Microsoft.AspNetCore.Mvc;
 using YoutubeExplode;
 using YoutubeExplode.Models;
@@ -9,6 +10,18 @@ namespace CoreUI.Web.Controllers
 {
     public class YoutubeController : Controller
     {
+        public static IYoutubeService Service;
+
+        public YoutubeController(IYoutubeService service)
+        {
+            Service = service;
+
+            if (Service.Count() == 0)
+            {
+                Task.Run(async () => await Service.LoadChannel("UC4V3oCikXeSqYQr0hBMARwg"));
+            }
+        }
+
         public async Task<ActionResult> Index(string url)
         {
             if (url == null) return View();

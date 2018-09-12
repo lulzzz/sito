@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Maddalena.Core.Mongo;
-using MongoDB.Bson;
+﻿using Maddalena.Core.Mongo;
 
 namespace Maddalena.Core.Settings
 {
@@ -10,6 +6,6 @@ namespace Maddalena.Core.Settings
     {
         public string Type { get; set; }
 
-        public BsonDocument Document { get; set; }
+        public string Document { get; set; }
     }
 }

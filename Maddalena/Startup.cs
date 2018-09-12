@@ -45,8 +45,6 @@ namespace Maddalena
                  options.Password.RequireDigit = false;
              });
 
-            var settings = new SettingsService();
-
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Program.Configuration["GoogleClientId"];
