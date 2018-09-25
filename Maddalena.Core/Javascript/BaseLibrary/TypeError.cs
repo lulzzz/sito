@@ -5,9 +5,7 @@ using Maddalena.Core.Javascript.Core.Interop;
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
     [Prototype(typeof(Error))]
-#if !(PORTABLE)
     [Serializable]
-#endif
     public sealed class TypeError : Error
     {
         [DoNotEnumerate]

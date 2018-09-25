@@ -383,10 +383,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                     s.AppendLine();
 
                 s.Append(owner.name);
-                if (owner._functionDefinition != null)
+                if (owner.FunctionDefinition != null)
                 {
-                    if (owner._functionDefinition.Length > 0)
-                        s.Append(" @" + owner._functionDefinition.Position);
+                    if (owner.FunctionDefinition.Length > 0)
+                        s.Append(" @" + owner.FunctionDefinition.Position);
                 }
 
                 c = c._parent;

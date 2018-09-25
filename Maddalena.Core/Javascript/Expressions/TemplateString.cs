@@ -56,7 +56,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
                 var tempStr = state.Code.Substring(startPos, pos - startPos);
                 if (mode == TemplateStringMode.Regular)
-                    tempStr = Tools.Unescape(tempStr, state.strict);
+                    tempStr = Tools.Unescape(tempStr, state.Strict);
                 strings.Add(tempStr);
 
                 if (state.Code[pos] == '$')

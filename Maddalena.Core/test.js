@@ -14,8 +14,11 @@ function fibonacci(n)
     return array[0] + array[1];
 }
 
-/*for (var i = 0; i < 1000; i++) {
-    alert(fibonacci(i));
+function* sequence()
+{
+    for (var i = 0; i < 1000; i++) {
+        yield (fibonacci(i));
+    }
 }
-*/
-alert(fibonacci);
+
+alert(sequence());

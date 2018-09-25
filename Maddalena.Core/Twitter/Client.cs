@@ -41,7 +41,7 @@ namespace Maddalena.Core.Twitter
 
     class Program
     {
-        static void Main()
+        static void TestTwitter()
         {
             Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
 

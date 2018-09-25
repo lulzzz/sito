@@ -46,7 +46,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
         }
 
         public BindedFunction(Function proto, Arguments args)
-            : base(proto.Context, proto._functionDefinition)
+            : base(proto.Context, proto.FunctionDefinition)
         {
             if (_length == null)
                 _length = new Number(0);

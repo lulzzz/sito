@@ -171,8 +171,8 @@ namespace Maddalena.Core.Javascript.Expressions
 
                     i = s;
                     var fieldName = "";
-                    if (Parser.ValidateName(state.Code, ref i, false, true, state.strict))
-                        fieldName = Tools.Unescape(state.Code.Substring(s, i - s), state.strict);
+                    if (Parser.ValidateName(state.Code, ref i, false, true, state.Strict))
+                        fieldName = Tools.Unescape(state.Code.Substring(s, i - s), state.Strict);
                     else if (Parser.ValidateValue(state.Code, ref i))
                     {
                         if (state.Code[s] == '-')
@@ -182,7 +182,7 @@ namespace Maddalena.Core.Javascript.Expressions
                         if (Tools.ParseNumber(state.Code, ref n, out d))
                             fieldName = Tools.DoubleToString(d);
                         else if (state.Code[s] == '\'' || state.Code[s] == '"')
-                            fieldName = Tools.Unescape(state.Code.Substring(s + 1, i - s - 2), state.strict);
+                            fieldName = Tools.Unescape(state.Code.Substring(s + 1, i - s - 2), state.Strict);
                         else if (flds.Count != 0)
                             ExceptionHelper.Throw((new SyntaxError("Invalid field name at " + CodeCoordinates.FromTextPosition(state.Code, s, i - s))));
                         else
@@ -212,10 +212,10 @@ namespace Maddalena.Core.Javascript.Expressions
                         Expression aei = null;
                         if (flds.TryGetValue(fieldName, out aei))
                         {
-                            if (state.strict ? (!(aei is Constant) || (aei as Constant).value != JSValue.undefined) : aei is PropertyPair)
+                            if (state.Strict ? (!(aei is Constant) || (aei as Constant).value != JSValue.undefined) : aei is PropertyPair)
                                 ExceptionHelper.ThrowSyntaxError("Try to redefine field \"" + fieldName + "\"", state.Code, s, i - s);
 
-                            state.message?.Invoke(MessageLevel.Warning, i, 0, "Duplicate key \"" + fieldName + "\"");
+                            state.Message?.Invoke(MessageLevel.Warning, i, 0, "Duplicate key \"" + fieldName + "\"");
                         }
 
                         if (state.Code[i] == ',' || state.Code[i] == '}')
@@ -223,7 +223,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             if (!Parser.ValidateName(fieldName, 0))
                                 ExceptionHelper.ThrowSyntaxError("Invalid variable name", state.Code, i);
 
-                            initializer = new Variable(fieldName, state.lexicalScopeLevel);
+                            initializer = new Variable(fieldName, state.LexicalScopeLevel);
                         }
                         else
                         {

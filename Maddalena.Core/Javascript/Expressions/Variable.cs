@@ -23,7 +23,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
         protected internal override JSValue EvaluateForWrite(Context context)
         {
-            if (context._owner._functionDefinition.Kind == FunctionKind.Arrow)
+            if (context._owner.FunctionDefinition.Kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -37,7 +37,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            if (context._owner._functionDefinition.Kind == FunctionKind.Arrow)
+            if (context._owner.FunctionDefinition.Kind == FunctionKind.Arrow)
                 context = context._parent;
             if (context._arguments == null)
                 context._owner.BuildArgumentsObject();
@@ -82,7 +82,7 @@ namespace Maddalena.Core.Javascript.Expressions
                     }
                     else
                     {
-                        var code = context.RootContext._owner?._functionDefinition?.Body?.Code ?? context._module?.Code;
+                        var code = context.RootContext._owner?.FunctionDefinition?.Body?.Code ?? context._module?.Code;
 
                         ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code ?? "", Position, Length, this);
                     }
@@ -113,7 +113,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             }
                             else
                             {
-                                var code = context.RootContext._owner?._functionDefinition?.Body?.Code ?? context._module?.Code;
+                                var code = context.RootContext._owner?.FunctionDefinition?.Body?.Code ?? context._module?.Code;
 
                                 ExceptionHelper.ThrowVariableIsNotDefined(_variableName, code, Position, Length, this);
                             }

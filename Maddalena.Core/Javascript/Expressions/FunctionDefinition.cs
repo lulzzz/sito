@@ -66,9 +66,7 @@ namespace Maddalena.Core.Javascript.Expressions
         }
     }
 
-#if !(PORTABLE)
     [Serializable]
-#endif
     public sealed class FunctionDefinition : EntityDefinition
     {
         #region Runtime
@@ -219,12 +217,12 @@ namespace Maddalena.Core.Javascript.Expressions
                 if (code[position] != '(')
                 {
                     nameStartPos = position;
-                    if (Parser.ValidateName(code, ref position, false, true, state.strict))
-                        name = Tools.Unescape(code.Substring(nameStartPos, position - nameStartPos), state.strict);
+                    if (Parser.ValidateName(code, ref position, false, true, state.Strict))
+                        name = Tools.Unescape(code.Substring(nameStartPos, position - nameStartPos), state.Strict);
                     else if ((kind == FunctionKind.Getter || kind == FunctionKind.Setter) && Parser.ValidateString(code, ref position, false))
-                        name = Tools.Unescape(code.Substring(nameStartPos + 1, position - nameStartPos - 2), state.strict);
+                        name = Tools.Unescape(code.Substring(nameStartPos + 1, position - nameStartPos - 2), state.Strict);
                     else if ((kind == FunctionKind.Getter || kind == FunctionKind.Setter) && Parser.ValidateNumber(code, ref position))
-                        name = Tools.Unescape(code.Substring(nameStartPos, position - nameStartPos), state.strict);
+                        name = Tools.Unescape(code.Substring(nameStartPos, position - nameStartPos), state.Strict);
                     else
                         ExceptionHelper.ThrowSyntaxError("Invalid function name", code, nameStartPos, position - nameStartPos);
 
@@ -263,7 +261,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
                 Expression destructor = null;
                 int n = position;
-                if (!Parser.ValidateName(code, ref position, state.strict))
+                if (!Parser.ValidateName(code, ref position, state.Strict))
                 {
                     if (code[position] == '{')
                         destructor = (Expression)ObjectDefinition.Parse(state, ref position);
@@ -276,8 +274,8 @@ namespace Maddalena.Core.Javascript.Expressions
                     containsDestructuringPrms = true;
                 }
 
-                var pname = Tools.Unescape(code.Substring(n, position - n), state.strict);
-                var reference = new ParameterReference(pname, rest, state.lexicalScopeLevel + 1)
+                var pname = Tools.Unescape(code.Substring(n, position - n), state.Strict);
+                var reference = new ParameterReference(pname, rest, state.LexicalScopeLevel + 1)
                                     {
                                         Position = n,
                                         Length = position - n
@@ -337,8 +335,8 @@ namespace Maddalena.Core.Javascript.Expressions
 
             if (code[position] != '{')
             {
-                var oldFunctionScopeLevel = state.functionScopeLevel;
-                state.functionScopeLevel = ++state.lexicalScopeLevel;
+                var oldFunctionScopeLevel = state.FunctionScopeLevel;
+                state.FunctionScopeLevel = ++state.LexicalScopeLevel;
 
                 try
                 {
@@ -360,8 +358,8 @@ namespace Maddalena.Core.Javascript.Expressions
                 }
                 finally
                 {
-                    state.functionScopeLevel = oldFunctionScopeLevel;
-                    state.lexicalScopeLevel--;
+                    state.FunctionScopeLevel = oldFunctionScopeLevel;
+                    state.LexicalScopeLevel--;
                 }
             }
             else
@@ -392,7 +390,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             if (parameter.Destructor == null) continue;
 
                             var targets = parameter.Destructor.GetTargetVariables();
-                            destructuringTargets.AddRange(targets.Select(t => new VariableDescriptor(t.Name, state.functionScopeLevel)));
+                            destructuringTargets.AddRange(targets.Select(t => new VariableDescriptor(t.Name, state.FunctionScopeLevel)));
 
                             assignments.Add(new Assignment(parameter.Destructor, parameter.references[0]));
                         }
@@ -445,7 +443,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
             if (!string.IsNullOrEmpty(name))
             {
-                func.Reference.ScopeLevel = state.lexicalScopeLevel;
+                func.Reference.ScopeLevel = state.LexicalScopeLevel;
                 func.Reference.Position = nameStartPos;
                 func.Reference.Length = name.Length;
 
@@ -536,7 +534,7 @@ namespace Maddalena.Core.Javascript.Expressions
                     ExceptionHelper.ThrowSyntaxError("Function must have name", state.Code, index);
                 }
 
-                if (state.strict && state.functionScopeLevel != state.lexicalScopeLevel)
+                if (state.Strict && state.FunctionScopeLevel != state.LexicalScopeLevel)
                 {
                     ExceptionHelper.ThrowSyntaxError("In strict mode code, functions can only be declared at top level or immediately within other function.", state.Code, index);
                 }

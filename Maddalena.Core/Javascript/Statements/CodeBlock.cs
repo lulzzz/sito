@@ -86,10 +86,10 @@ namespace Maddalena.Core.Javascript.Statements
             HashSet<string> directives = null;
             state.AllowDirectives = false;
 
-            var oldFunctionScopeLevel = state.functionScopeLevel;
-            state.lexicalScopeLevel++;
+            var oldFunctionScopeLevel = state.FunctionScopeLevel;
+            state.LexicalScopeLevel++;
             if (allowDirectives)
-                state.functionScopeLevel = state.lexicalScopeLevel;
+                state.FunctionScopeLevel = state.LexicalScopeLevel;
 
             var oldVariablesCount = state.Variables.Count;
             VariableDescriptor[] variables = null;
@@ -119,9 +119,9 @@ namespace Maddalena.Core.Javascript.Statements
                             if (Parser.ValidateString(state.Code, ref t, true))
                             {
                                 var str = state.Code.Substring(s + 1, t - s - 2);
-                                if (!strictSwitch && str == "use strict" && !state.strict)
+                                if (!strictSwitch && str == "use strict" && !state.Strict)
                                 {
-                                    state.strict = true;
+                                    state.Strict = true;
                                     strictSwitch = true;
                                 }
                                 if (directives == null)
@@ -150,7 +150,7 @@ namespace Maddalena.Core.Javascript.Statements
                 }
 
                 for (var j = body.Count; j-- > 0;)
-                    (body[j] as Constant).value._oValue = Tools.Unescape((body[j] as Constant).value._oValue.ToString(), state.strict);
+                    (body[j] as Constant).value._oValue = Tools.Unescape((body[j] as Constant).value._oValue.ToString(), state.Strict);
 
                 bool expectSemicolon = false;
                 while ((sroot && position < state.Code.Length) || (!sroot && state.Code[position] != '}'))
@@ -165,8 +165,8 @@ namespace Maddalena.Core.Javascript.Statements
 
                             if ((state.Code[position] == ';' || state.Code[position] == ','))
                             {
-                                if (state.message != null && !expectSemicolon)
-                                    state.message(MessageLevel.Warning, position, 1, "Unnecessary semicolon.");
+                                if (state.Message != null && !expectSemicolon)
+                                    state.Message(MessageLevel.Warning, position, 1, "Unnecessary semicolon.");
 
                                 position++;
                             }
@@ -189,8 +189,8 @@ namespace Maddalena.Core.Javascript.Statements
                     variables = extractVariables(state, oldVariablesCount);
                 }
 
-                state.functionScopeLevel = oldFunctionScopeLevel;
-                state.lexicalScopeLevel--;
+                state.FunctionScopeLevel = oldFunctionScopeLevel;
+                state.LexicalScopeLevel--;
             }
 
             if (!sroot)
@@ -200,7 +200,7 @@ namespace Maddalena.Core.Javascript.Statements
             index = position;
             return new CodeBlock(body.ToArray())
             {
-                _strict = (state.strict ^= strictSwitch) || strictSwitch,
+                _strict = (state.Strict ^= strictSwitch) || strictSwitch,
                 _variables = variables ?? emptyVariables,
                 Position = startPos,
                 code = state.SourceCode,
@@ -214,7 +214,7 @@ namespace Maddalena.Core.Javascript.Statements
             var count = 0;
             for (var i = oldVariablesCount; i < state.Variables.Count; i++)
             {
-                if (state.Variables[i].DefinitionScopeLevel == state.lexicalScopeLevel)
+                if (state.Variables[i].DefinitionScopeLevel == state.LexicalScopeLevel)
                     count++;
             }
 
@@ -222,12 +222,12 @@ namespace Maddalena.Core.Javascript.Statements
             {
                 variables = new VariableDescriptor[count];
                 HashSet<string> declaredVariables = null;
-                if (state.lexicalScopeLevel != state.functionScopeLevel)
+                if (state.LexicalScopeLevel != state.FunctionScopeLevel)
                     declaredVariables = new HashSet<string>();
 
                 for (int i = oldVariablesCount, targetIndex = 0; i < state.Variables.Count; i++)
                 {
-                    if (state.Variables[i].DefinitionScopeLevel == state.lexicalScopeLevel)
+                    if (state.Variables[i].DefinitionScopeLevel == state.LexicalScopeLevel)
                     {
                         variables[targetIndex] = state.Variables[i];
                         if (declaredVariables != null)
@@ -672,7 +672,7 @@ namespace Maddalena.Core.Javascript.Statements
 
         internal void initVariables(Context context)
         {
-            var stats = context._owner?._functionDefinition?.FunctionInfo;
+            var stats = context._owner?.FunctionDefinition?.FunctionInfo;
             var cew = stats == null || stats.ContainsEval || stats.ContainsWith || stats.NeedDecompose;
             for (var i = 0; i < _variables.Length; i++)
             {

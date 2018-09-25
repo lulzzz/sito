@@ -460,7 +460,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             {
                                 if (rollbackPos != i)
                                     goto default;
-                                if (state.strict)
+                                if (state.Strict)
                                 {
                                     if ((first is Variable)
                                         && ((first as Variable).Name == "arguments" || (first as Variable).Name == "eval"))
@@ -495,7 +495,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             {
                                 if (rollbackPos != i)
                                     goto default;
-                                if (state.strict)
+                                if (state.Strict)
                                 {
                                     if ((first is Variable)
                                         && ((first as Variable).Name == "arguments" || (first as Variable).Name == "eval"))
@@ -727,14 +727,14 @@ namespace Maddalena.Core.Javascript.Expressions
                             Tools.SkipSpaces(state.Code, ref i);
 
                             var s = i;
-                            if (!Parser.ValidateName(state.Code, ref i, false, true, state.strict))
+                            if (!Parser.ValidateName(state.Code, ref i, false, true, state.Strict))
                                 ExceptionHelper.Throw(new SyntaxError(string.Format(Messages.InvalidPropertyName, CodeCoordinates.FromTextPosition(state.Code, i, 0))));
 
                             string name = state.Code.Substring(s, i - s);
 
                             JSValue jsname = null;
-                            if (!state.stringConstants.TryGetValue(name, out jsname))
-                                state.stringConstants[name] = jsname = name;
+                            if (!state.StringConstants.TryGetValue(name, out jsname))
+                                state.StringConstants[name] = jsname = name;
                             else
                                 name = jsname._oValue.ToString();
 
@@ -771,7 +771,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             repeat = true;
                             canAsign = true;
 
-                            if (state.message != null)
+                            if (state.Message != null)
                             {
                                 startPos = 0;
                                 var cname = mname as Constant;
@@ -779,7 +779,7 @@ namespace Maddalena.Core.Javascript.Expressions
                                     && cname.value._valueType == JSValueType.String
                                     && Parser.ValidateName(cname.value._oValue.ToString(), ref startPos, false)
                                     && startPos == cname.value._oValue.ToString().Length)
-                                    state.message(MessageLevel.Recomendation, mname.Position, mname.Length, "[\"" + cname.value._oValue + "\"] is better written in dot notation.");
+                                    state.Message(MessageLevel.Recomendation, mname.Position, mname.Length, "[\"" + cname.value._oValue + "\"] is better written in dot notation.");
                             }
                             break;
                         }
@@ -911,7 +911,7 @@ namespace Maddalena.Core.Javascript.Expressions
             }
             while (repeat);
 
-            if (state.strict
+            if (state.Strict
                 && (first is Variable)
                 && ((first as Variable).Name == "arguments" || (first as Variable).Name == "eval"))
             {
@@ -1033,7 +1033,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 || Parser.Validate(state.Code, "super", ref i)
                 || Parser.Validate(state.Code, "new.target", ref i))
             {
-                var name = Tools.Unescape(state.Code.Substring(start, i - start), state.strict);
+                var name = Tools.Unescape(state.Code.Substring(start, i - start), state.Strict);
                 switch (name)
                 {
                     case "super":
@@ -1063,12 +1063,12 @@ namespace Maddalena.Core.Javascript.Expressions
                     default:
                         {
                             JSValue tempStr;
-                            if (state.stringConstants.TryGetValue(name, out tempStr))
+                            if (state.StringConstants.TryGetValue(name, out tempStr))
                                 name = tempStr._oValue.ToString();
                             else
-                                state.stringConstants[name] = name;
+                                state.StringConstants[name] = name;
 
-                            operand = new Variable(name, state.lexicalScopeLevel);
+                            operand = new Variable(name, state.LexicalScopeLevel);
                             break;
                         }
                 }
@@ -1089,9 +1089,9 @@ namespace Maddalena.Core.Javascript.Expressions
 
             if (operand == null)
             {
-                if (Parser.ValidateName(state.Code, ref i, state.strict))
+                if (Parser.ValidateName(state.Code, ref i, state.Strict))
                 {
-                    var name = Tools.Unescape(state.Code.Substring(start, i - start), state.strict);
+                    var name = Tools.Unescape(state.Code.Substring(start, i - start), state.Strict);
                     if (name == "undefined")
                     {
                         operand = new Constant(JSValue.undefined);
@@ -1099,12 +1099,12 @@ namespace Maddalena.Core.Javascript.Expressions
                     else
                     {
                         JSValue jsName = null;
-                        if (!state.stringConstants.TryGetValue(name, out jsName))
-                            state.stringConstants[name] = jsName = name;
+                        if (!state.StringConstants.TryGetValue(name, out jsName))
+                            state.StringConstants[name] = jsName = name;
                         else
                             name = jsName._oValue.ToString();
 
-                        operand = new Variable(name, state.lexicalScopeLevel);
+                        operand = new Variable(name, state.LexicalScopeLevel);
                     }
                 }
                 else if (Parser.ValidateValue(state.Code, ref i))
@@ -1112,10 +1112,10 @@ namespace Maddalena.Core.Javascript.Expressions
                     string value = state.Code.Substring(start, i - start);
                     if ((value[0] == '\'') || (value[0] == '"'))
                     {
-                        value = Tools.Unescape(value.Substring(1, value.Length - 2), state.strict);
+                        value = Tools.Unescape(value.Substring(1, value.Length - 2), state.Strict);
                         JSValue jsValue = null;
-                        if (!state.stringConstants.TryGetValue(value, out jsValue))
-                            state.stringConstants[value] = jsValue = value;
+                        if (!state.StringConstants.TryGetValue(value, out jsValue))
+                            state.StringConstants[value] = jsValue = value;
 
                         operand = new Constant(jsValue) { Position = start, Length = i - start };
                     }
@@ -1127,16 +1127,16 @@ namespace Maddalena.Core.Javascript.Expressions
                             operand = new Constant(b ? Boolean.True : Boolean.False) { Position = start, Length = i - start };
                         else
                         {
-                            if (Tools.ParseNumber(state.Code, ref start, out var d, 0, ParseNumberOptions.Default | (state.strict ? ParseNumberOptions.RaiseIfOctal : ParseNumberOptions.None)))
+                            if (Tools.ParseNumber(state.Code, ref start, out var d, 0, ParseNumberOptions.Default | (state.Strict ? ParseNumberOptions.RaiseIfOctal : ParseNumberOptions.None)))
                             {
                                 int n;
                                 if ((n = (int)d) == d && !double.IsNegativeInfinity(1.0 / d))
                                 {
-                                    operand = state.intConstants.ContainsKey(n) ? new Constant(state.intConstants[n]) { Position = start, Length = i - start } : new Constant(state.intConstants[n] = n) { Position = start, Length = i - start };
+                                    operand = state.IntConstants.ContainsKey(n) ? new Constant(state.IntConstants[n]) { Position = start, Length = i - start } : new Constant(state.IntConstants[n] = n) { Position = start, Length = i - start };
                                 }
                                 else
                                 {
-                                    operand = state.doubleConstants.ContainsKey(d) ? new Constant(state.doubleConstants[d]) { Position = start, Length = i - start } : new Constant(state.doubleConstants[d] = d) { Position = start, Length = i - start };
+                                    operand = state.DoubleConstants.ContainsKey(d) ? new Constant(state.DoubleConstants[d]) { Position = start, Length = i - start } : new Constant(state.DoubleConstants[d] = d) { Position = start, Length = i - start };
                                 }
                             }
                             else if (Parser.ValidateRegex(state.Code, ref start, true))
@@ -1174,7 +1174,7 @@ namespace Maddalena.Core.Javascript.Expressions
                                         ExceptionHelper.ThrowSyntaxError("Invalid prefix operation. ", state.Code, i);
                                     }
 
-                                    if (state.strict
+                                    if (state.Strict
                                         && (operand is Variable)
                                         && ((operand as Variable).Name == "arguments" || (operand as Variable).Name == "eval"))
                                     {
@@ -1210,7 +1210,7 @@ namespace Maddalena.Core.Javascript.Expressions
                                         ExceptionHelper.ThrowSyntaxError("Invalid prefix operation.", state.Code, i);
                                     }
 
-                                    if (state.strict
+                                    if (state.Strict
                                         && (operand is Variable)
                                         && ((operand as Variable).Name == "arguments" || (operand as Variable).Name == "eval"))
                                         ExceptionHelper.Throw(new SyntaxError("Can not decriment \"" + (operand as Variable).Name + "\" in strict mode."));

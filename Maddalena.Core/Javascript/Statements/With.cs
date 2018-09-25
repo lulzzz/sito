@@ -22,10 +22,10 @@ namespace Maddalena.Core.Javascript.Statements
             int i = index;
             if (!Parser.Validate(state.Code, "with (", ref i) && !Parser.Validate(state.Code, "with(", ref i))
                 return null;
-            if (state.strict)
+            if (state.Strict)
                 ExceptionHelper.Throw((new SyntaxError("WithStatement is not allowed in strict mode.")));
 
-            state.message?.Invoke(MessageLevel.CriticalWarning, index, 4, "Do not use \"with\".");
+            state.Message?.Invoke(MessageLevel.CriticalWarning, index, 4, "Do not use \"with\".");
 
             var obj = Parser.Parse(state, ref i, CodeFragmentType.Expression);
             while (Tools.IsWhiteSpace(state.Code[i]))
@@ -39,7 +39,7 @@ namespace Maddalena.Core.Javascript.Statements
             CodeNode body = null;
             VariableDescriptor[] vars = null;
             var oldVariablesCount = state.Variables.Count;
-            state.lexicalScopeLevel++;
+            state.LexicalScopeLevel++;
             var oldCodeContext = state.CodeContext;
             state.CodeContext |= CodeContext.InWith;
             try
@@ -55,7 +55,7 @@ namespace Maddalena.Core.Javascript.Statements
             }
             finally
             {
-                state.lexicalScopeLevel--;
+                state.LexicalScopeLevel--;
                 state.CodeContext = oldCodeContext;
             }
 

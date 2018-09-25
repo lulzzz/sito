@@ -4,18 +4,18 @@ using Maddalena.Core.Javascript.Core.Interop;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     public sealed class Int16Array : TypedArray
     {
         protected override JSValue this[int index]
         {
             get
             {
-                var res = new Element(this, index);
-                res._iValue = getValue(index);
-                res._valueType = JSValueType.Integer;
+                var res = new Element(this, index)
+                {
+                    _iValue = getValue(index),
+                    _valueType = JSValueType.Integer
+                };
                 return res;
             }
             set

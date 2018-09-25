@@ -6,9 +6,7 @@ using Maddalena.Core.Javascript.Core.Interop;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     public sealed class Number : JSObject
     {
         [ReadOnly]

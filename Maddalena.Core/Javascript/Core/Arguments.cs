@@ -109,7 +109,7 @@ namespace Maddalena.Core.Javascript.Core
             {
                 caller = callerContext._strict
                     && callerContext._owner != null
-                    && callerContext._owner._functionDefinition.Body._strict ? Function.propertiesDummySM : callerContext._owner;
+                    && callerContext._owner.FunctionDefinition.Body._strict ? Function.propertiesDummySM : callerContext._owner;
 
                 _objectPrototype = callerContext.GlobalContext._globalPrototype;
             }

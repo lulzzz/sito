@@ -39,7 +39,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 result = new New(result as Call) { Position = index, Length = i - index };
             else
             {
-                state.message?.Invoke(MessageLevel.Warning, index, 0, "Missed brackets in a constructor invocation.");
+                state.Message?.Invoke(MessageLevel.Warning, index, 0, "Missed brackets in a constructor invocation.");
                 result = new New(new Call(result, new Expression[0]) { Position = result.Position, Length = result.Length }) { Position = index, Length = i - index };
             }
             index = i;

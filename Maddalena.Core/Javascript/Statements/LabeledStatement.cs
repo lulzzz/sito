@@ -18,7 +18,7 @@ namespace Maddalena.Core.Javascript.Statements
         internal static CodeNode Parse(ParseInfo state, ref int index)
         {
             int i = index;
-            if (!Parser.ValidateName(state.Code, ref i, state.strict))
+            if (!Parser.ValidateName(state.Code, ref i, state.Strict))
                 return null;
             int l = i;
             if (i >= state.Code.Length || (!Parser.Validate(state.Code, " :", ref i) && state.Code[i++] != ':'))
@@ -33,7 +33,7 @@ namespace Maddalena.Core.Javascript.Statements
             state.LabelsCount = oldlc;
             if (stat is FunctionDefinition)
             {
-                state.message?.Invoke(MessageLevel.CriticalWarning, stat.Position, stat.Length, "Labeled function. Are you sure?");
+                state.Message?.Invoke(MessageLevel.CriticalWarning, stat.Position, stat.Length, "Labeled function. Are you sure?");
             }
             var pos = index;
             index = i;

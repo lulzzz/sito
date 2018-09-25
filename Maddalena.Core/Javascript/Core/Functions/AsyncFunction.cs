@@ -76,7 +76,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
             if (construct)
                 ExceptionHelper.ThrowTypeError("Async function cannot be invoked as a constructor");
 
-            var body = _functionDefinition.Body;
+            var body = FunctionDefinition.Body;
             if (body._lines.Length == 0)
             {
                 notExists._valueType = JSValueType.NotExists;
@@ -86,7 +86,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
             if (arguments == null)
                 arguments = new Arguments(Context.CurrentContext);
 
-            var internalContext = new Context(_initialContext, true, this);
+            var internalContext = new Context(Context, true, this);
             internalContext._definedVariables = Body._variables;
 
             initContext(targetObject, arguments, true, internalContext);

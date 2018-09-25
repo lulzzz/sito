@@ -55,7 +55,7 @@ namespace Maddalena.Core.Javascript.Statements
 
             VariableDescriptor[] vars = null;
             var oldVariablesCount = state.Variables.Count;
-            state.lexicalScopeLevel++;
+            state.LexicalScopeLevel++;
             try
             {
                 var vStart = i;
@@ -69,7 +69,7 @@ namespace Maddalena.Core.Javascript.Statements
 
                     int start = i;
                     string varName;
-                    if (!Parser.ValidateName(state.Code, ref i, state.strict))
+                    if (!Parser.ValidateName(state.Code, ref i, state.Strict))
                     {
                         if (Parser.ValidateValue(state.Code, ref i))
                         {
@@ -84,14 +84,14 @@ namespace Maddalena.Core.Javascript.Statements
                             return null;
                     }
 
-                    varName = Tools.Unescape(state.Code.Substring(start, i - start), state.strict);
-                    if (state.strict)
+                    varName = Tools.Unescape(state.Code.Substring(start, i - start), state.Strict);
+                    if (state.Strict)
                     {
                         if (varName == "arguments" || varName == "eval")
                             ExceptionHelper.ThrowSyntaxError("Parameters name may not be \"arguments\" or \"eval\" in strict mode at ", state.Code, start, i - start);
                     }
 
-                    result._variable = new Variable(varName, state.lexicalScopeLevel) { Position = start, Length = i - start, ScopeLevel = state.lexicalScopeLevel };
+                    result._variable = new Variable(varName, state.LexicalScopeLevel) { Position = start, Length = i - start, ScopeLevel = state.LexicalScopeLevel };
 
                     Tools.SkipSpaces(state.Code, ref i);
 
@@ -156,7 +156,7 @@ namespace Maddalena.Core.Javascript.Statements
             }
             finally
             {
-                state.lexicalScopeLevel--;
+                state.LexicalScopeLevel--;
             }
 
             return new CodeBlock(new[] { result }) { _variables = vars, Position = result.Position, Length = result.Length };

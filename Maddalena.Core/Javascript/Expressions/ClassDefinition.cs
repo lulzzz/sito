@@ -151,8 +151,8 @@ namespace Maddalena.Core.Javascript.Expressions
 
             FunctionDefinition ctor = null;
             ClassDefinition result = null;
-            var oldStrict = state.strict;
-            state.strict = true;
+            var oldStrict = state.Strict;
+            state.Strict = true;
             var flds = new Dictionary<string, MemberDescriptor>();
             var computedProperties = new List<MemberDescriptor>();
             var oldCodeContext = state.CodeContext;
@@ -279,8 +279,8 @@ namespace Maddalena.Core.Javascript.Expressions
                             while (Tools.IsWhiteSpace(code[i]));
                         }
 
-                        if (Parser.ValidateName(state.Code, ref i, false, true, state.strict))
-                            fieldName = Tools.Unescape(state.Code.Substring(s, i - s), state.strict);
+                        if (Parser.ValidateName(state.Code, ref i, false, true, state.Strict))
+                            fieldName = Tools.Unescape(state.Code.Substring(s, i - s), state.Strict);
                         else if (Parser.ValidateValue(state.Code, ref i))
                         {
                             double d = 0.0;
@@ -288,7 +288,7 @@ namespace Maddalena.Core.Javascript.Expressions
                             if (Tools.ParseNumber(state.Code, ref n, out d))
                                 fieldName = Tools.DoubleToString(d);
                             else if (state.Code[s] == '\'' || state.Code[s] == '"')
-                                fieldName = Tools.Unescape(state.Code.Substring(s + 1, i - s - 2), state.strict);
+                                fieldName = Tools.Unescape(state.Code.Substring(s + 1, i - s - 2), state.Strict);
                         }
 
                         if (fieldName == null)
@@ -347,7 +347,7 @@ namespace Maddalena.Core.Javascript.Expressions
                     ctor = (FunctionDefinition)FunctionDefinition.Parse(
                         new ParseInfo(ctorCode, ctorCode, null)
                         {
-                            strict = true,
+                            Strict = true,
                             CodeContext = CodeContext.InClassConstructor | CodeContext.InClassDefenition
                         },
                         ref ctorIndex,
@@ -362,7 +362,7 @@ namespace Maddalena.Core.Javascript.Expressions
                     {
                         ExceptionHelper.ThrowSyntaxError("Class must have name", state.Code, index);
                     }
-                    if (state.strict && state.functionScopeLevel != state.lexicalScopeLevel)
+                    if (state.Strict && state.FunctionScopeLevel != state.LexicalScopeLevel)
                     {
                         ExceptionHelper.ThrowSyntaxError("In strict mode code, class can only be declared at top level or immediately within other function.", state.Code, index);
                     }
@@ -373,7 +373,7 @@ namespace Maddalena.Core.Javascript.Expressions
             finally
             {
                 state.CodeContext = oldCodeContext;
-                state.strict = oldStrict;
+                state.Strict = oldStrict;
             }
             index = i + 1;
             return result;

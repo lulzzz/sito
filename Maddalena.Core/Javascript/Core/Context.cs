@@ -554,7 +554,7 @@ namespace Maddalena.Core.Javascript.Core
             string c = Parser.RemoveComments(code, 0);
             var ps = new ParseInfo(c, code, null)
             {
-                strict = _strict,
+                Strict = _strict,
                 AllowDirectives = true,
                 CodeContext = CodeContext.InEval
             };

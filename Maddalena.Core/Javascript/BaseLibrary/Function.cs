@@ -14,34 +14,6 @@ using PropertyPair = Maddalena.Core.Javascript.Core.PropertyPair;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-    /// <summary>
-    /// Возможные типы функции в контексте использования.
-    /// </summary>
-    [Serializable]
-    public enum FunctionKind
-    {
-        Function = 0,
-        Getter,
-        Setter,
-        AnonymousFunction,
-        AnonymousGenerator,
-        Generator,
-        Method,
-        MethodGenerator,
-        Arrow,
-        AsyncFunction,
-        AsyncAnonymousFunction,
-        AsyncArrow
-    }
-
-    [Serializable]
-    public enum RequireNewKeywordLevel
-    {
-        Both = 0,
-        WithNewOnly,
-        WithoutNewOnly
-    }
-
     [Serializable]
     public class Function : JSObject, ICallable
     {
@@ -68,18 +40,15 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         private Dictionary<Type, Delegate> _delegateCache;
 
-        internal readonly FunctionDefinition _functionDefinition;
-        [Hidden]
-        internal readonly Context _initialContext;
+        internal readonly FunctionDefinition FunctionDefinition;
+
         [Hidden]
         public Context Context
         {
             [Hidden]
-            get
-            {
-                return _initialContext;
-            }
+            get;
         }
+
         [Field]
         [DoNotDelete]
         [DoNotEnumerate]
@@ -88,17 +57,14 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition.Name;
+                return FunctionDefinition.Name;
             }
         }
 
         [Hidden]
         internal Number _length;
-        [Field]
-        [global::Maddalena.Core.Javascript.Core.Interop.ReadOnlyAttribute]
-        [DoNotDelete]
-        [DoNotEnumerate]
-        [NotConfigurable]
+
+        [Field, Core.Interop.ReadOnlyAttribute, DoNotDelete, DoNotEnumerate, NotConfigurable]
         public virtual JSValue length
         {
             [Hidden]
@@ -112,7 +78,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                         | JSValueAttributesInternal.DoNotDelete
                         | JSValueAttributesInternal.DoNotEnumerate
                         | JSValueAttributesInternal.NonConfigurable,
-                    _iValue = _functionDefinition.Parameters.Length
+                    _iValue = FunctionDefinition.Parameters.Length
                 };
 
                 return _length;
@@ -124,7 +90,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition?.Body._strict ?? true;
+                return FunctionDefinition?.Body._strict ?? true;
             }
         }
         [Hidden]
@@ -133,7 +99,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition?.Body;
+                return FunctionDefinition?.Body;
             }
         }
 
@@ -143,7 +109,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             [Hidden]
             get
             {
-                return _functionDefinition.Kind;
+                return FunctionDefinition.Kind;
             }
         }
 
@@ -233,10 +199,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 if (context == null)
                     return null;
 
-                if (_functionDefinition.Body._strict)
+                if (FunctionDefinition.Body._strict)
                     ExceptionHelper.Throw(new TypeError("Property \"arguments\" may not be accessed in strict mode."));
 
-                if (context._arguments == null && _functionDefinition.recursionDepth > 0)
+                if (context._arguments == null && FunctionDefinition.recursionDepth > 0)
                     BuildArgumentsObject();
 
                 return context._arguments;
@@ -248,7 +214,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 if (context == null)
                     return;
 
-                if (_functionDefinition.Body._strict)
+                if (FunctionDefinition.Body._strict)
                     ExceptionHelper.Throw(new TypeError("Property \"arguments\" may not be accessed in strict mode."));
 
                 context._arguments = value;
@@ -291,7 +257,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public Function()
         {
             _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
-            _functionDefinition = creatorDummy;
+            FunctionDefinition = creatorDummy;
             _valueType = JSValueType.Function;
             _oValue = this;
             RequireNewKeywordLevel = RequireNewKeywordLevel.WithoutNewOnly;
@@ -301,15 +267,15 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public Function(Context context)
             : this()
         {
-            _initialContext = context ?? throw new ArgumentNullException(nameof(context));
+            Context = context ?? throw new ArgumentNullException(nameof(context));
             RequireNewKeywordLevel = RequireNewKeywordLevel.Both;
         }
 
         [DoNotEnumerate]
         public Function(Arguments args)
         {
-            _initialContext = (Context.CurrentContext ?? Context.DefaultGlobalContext).RootContext;
-            if (_initialContext == Context._DefaultGlobalContext || _initialContext == null)
+            Context = (Context.CurrentContext ?? Context.DefaultGlobalContext).RootContext;
+            if (Context == Context._DefaultGlobalContext || Context == null)
                 throw new InvalidOperationException("Special Functions constructor can be called from javascript code only");
 
             _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
@@ -330,13 +296,13 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
             if (func != null && code.Length == index)
             {
-                Parser.Build(ref func, 0, new Dictionary<string, VariableDescriptor>(), _initialContext._strict ? CodeContext.Strict : CodeContext.None, null, null, Options.None);
+                Parser.Build(ref func, 0, new Dictionary<string, VariableDescriptor>(), Context._strict ? CodeContext.Strict : CodeContext.None, null, null, Options.None);
 
                 func.RebuildScope(null, null, 0);
                 func.Optimize(ref func, null, null, Options.None, null);
                 func.Decompose(ref func);
 
-                _functionDefinition = func as FunctionDefinition;
+                FunctionDefinition = func as FunctionDefinition;
             }
             else
                 ExceptionHelper.Throw(new SyntaxError("Unknown syntax error"));
@@ -349,8 +315,8 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         internal Function(Context context, FunctionDefinition functionDefinition)
         {
             _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
-            _initialContext = context;
-            _functionDefinition = functionDefinition;
+            Context = context;
+            FunctionDefinition = functionDefinition;
             _valueType = JSValueType.Function;
             _oValue = this;
         }
@@ -403,7 +369,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal virtual JSValue InternalInvoke(JSValue targetObject, Expression[] arguments, Context initiator, bool withSpread, bool construct)
         {
-            if (_functionDefinition.Body == null)
+            if (FunctionDefinition.Body == null)
                 return NotExists;
 
             Arguments argumentsObject = Tools.CreateArguments(arguments, initiator);
@@ -432,26 +398,26 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 ExceptionHelper.ThrowTypeError(string.Format(Messages.InvalidTryToCreateWithoutNew, name));
             }
 
-            targetObject = correctTargetObject(targetObject, _functionDefinition.Body._strict);
+            targetObject = correctTargetObject(targetObject, FunctionDefinition.Body._strict);
             return Invoke(false, targetObject, arguments);
         }
 
         protected internal virtual JSValue Invoke(bool construct, JSValue targetObject, Arguments arguments)
         {
             JSValue result;
-            var body = _functionDefinition.Body;
+            var body = FunctionDefinition.Body;
             if (body._lines.Length == 0)
             {
                 notExists._valueType = JSValueType.NotExists;
                 return notExists;
             }
 
-            var ceocw = _functionDefinition.FunctionInfo.ContainsEval || _functionDefinition.FunctionInfo.ContainsWith || _functionDefinition.FunctionInfo.NeedDecompose;
-            if (_functionDefinition.recursionDepth > _functionDefinition.parametersStored) // рекурсивный вызов.
+            var ceocw = FunctionDefinition.FunctionInfo.ContainsEval || FunctionDefinition.FunctionInfo.ContainsWith || FunctionDefinition.FunctionInfo.NeedDecompose;
+            if (FunctionDefinition.recursionDepth > FunctionDefinition.parametersStored) // рекурсивный вызов.
             {
                 if (!ceocw)
                     storeParameters();
-                _functionDefinition.parametersStored = _functionDefinition.recursionDepth;
+                FunctionDefinition.parametersStored = FunctionDefinition.recursionDepth;
             }
 
             if (arguments == null)
@@ -459,21 +425,21 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
             for (;;) // tail recursion catcher
             {
-                var internalContext = new Context(_initialContext, ceocw, this) {_definedVariables = body._variables};
+                var internalContext = new Context(Context, ceocw, this) {_definedVariables = body._variables};
                 internalContext.Activate();
 
                 try
                 {
                     initContext(targetObject, arguments, ceocw, internalContext);
                     initParameters(arguments, internalContext);
-                    _functionDefinition.recursionDepth++;
+                    FunctionDefinition.recursionDepth++;
                     result = evaluateBody(internalContext);
                 }
                 finally
                 {
-                    _functionDefinition.recursionDepth--;
-                    if (_functionDefinition.parametersStored > _functionDefinition.recursionDepth)
-                        _functionDefinition.parametersStored = _functionDefinition.recursionDepth;
+                    FunctionDefinition.recursionDepth--;
+                    if (FunctionDefinition.parametersStored > FunctionDefinition.recursionDepth)
+                        FunctionDefinition.parametersStored = FunctionDefinition.recursionDepth;
 
                     exit(internalContext);
                 }
@@ -490,7 +456,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal JSValue evaluateBody(Context internalContext)
         {
-            _functionDefinition.Body.Evaluate(internalContext);
+            FunctionDefinition.Body.Evaluate(internalContext);
             if (internalContext._executionMode == ExecutionMode.TailRecursion)
                 return null;
 
@@ -511,7 +477,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal void exit(Context internalContext)
         {
-            _functionDefinition?.Body?.clearVariablesCache();
+            FunctionDefinition?.Body?.clearVariablesCache();
             internalContext._executionMode = ExecutionMode.Return;
             internalContext.Deactivate();
         }
@@ -525,15 +491,15 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 {
                     caller = oldContext?._owner,
                     callee = this,
-                    length = _functionDefinition.Parameters.Length
+                    length = FunctionDefinition.Parameters.Length
                 };
 
-                for (var i = 0; i < _functionDefinition.Parameters.Length; i++)
+                for (var i = 0; i < FunctionDefinition.Parameters.Length; i++)
                 {
-                    if (_functionDefinition.Body._strict)
-                        args[i] = _functionDefinition.Parameters[i].cacheRes.CloneImpl(false);
+                    if (FunctionDefinition.Body._strict)
+                        args[i] = FunctionDefinition.Parameters[i].cacheRes.CloneImpl(false);
                     else
-                        args[i] = _functionDefinition.Parameters[i].cacheRes;
+                        args[i] = FunctionDefinition.Parameters[i].cacheRes;
                 }
 
                 context._arguments = args;
@@ -542,15 +508,15 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal void initContext(JSValue targetObject, Arguments arguments, bool storeArguments, Context internalContext)
         {
-            if (_functionDefinition.Reference._descriptor != null && _functionDefinition.Reference._descriptor.cacheRes == null)
+            if (FunctionDefinition.Reference._descriptor != null && FunctionDefinition.Reference._descriptor.cacheRes == null)
             {
-                _functionDefinition.Reference._descriptor.cacheContext = internalContext._parent;
-                _functionDefinition.Reference._descriptor.cacheRes = this;
+                FunctionDefinition.Reference._descriptor.cacheContext = internalContext._parent;
+                FunctionDefinition.Reference._descriptor.cacheRes = this;
             }
 
             internalContext._thisBind = targetObject;
-            internalContext._strict |= _functionDefinition.Body._strict;
-            if (_functionDefinition.Kind == FunctionKind.Arrow)
+            internalContext._strict |= FunctionDefinition.Body._strict;
+            if (FunctionDefinition.Kind == FunctionKind.Arrow)
             {
                 internalContext._arguments = internalContext._parent._arguments;
                 internalContext._thisBind = internalContext._parent._thisBind;
@@ -562,7 +528,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 if (storeArguments)
                     internalContext._variables["arguments"] = arguments;
 
-                if (_functionDefinition.Body._strict)
+                if (FunctionDefinition.Body._strict)
                 {
                     arguments._attributes |= JSValueAttributesInternal.ReadOnly;
                     arguments.callee = propertiesDummySM;
@@ -577,26 +543,26 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal void initParameters(Arguments args, Context internalContext)
         {
-            var ceaw = _functionDefinition.FunctionInfo.ContainsEval || _functionDefinition.FunctionInfo.ContainsArguments || _functionDefinition.FunctionInfo.ContainsWith;
-            int min = System.Math.Min(args.length, _functionDefinition.Parameters.Length - (_functionDefinition.FunctionInfo.ContainsRestParameters ? 1 : 0));
+            var ceaw = FunctionDefinition.FunctionInfo.ContainsEval || FunctionDefinition.FunctionInfo.ContainsArguments || FunctionDefinition.FunctionInfo.ContainsWith;
+            int min = System.Math.Min(args.length, FunctionDefinition.Parameters.Length - (FunctionDefinition.FunctionInfo.ContainsRestParameters ? 1 : 0));
 
             JSValue[] defaultValues = null;
             Array restArray = null;
-            if (_functionDefinition.FunctionInfo.ContainsRestParameters)
+            if (FunctionDefinition.FunctionInfo.ContainsRestParameters)
             {
                 restArray = new Array();
             }
 
-            for (var i = 0; i < _functionDefinition.Parameters.Length; i++)
+            for (var i = 0; i < FunctionDefinition.Parameters.Length; i++)
             {
                 JSValue t = args[i];
-                var prm = _functionDefinition.Parameters[i];
+                var prm = FunctionDefinition.Parameters[i];
                 if (!t.Defined)
                 {
                     if (prm.initializer != null)
                     {
                         if (defaultValues == null)
-                            defaultValues = new JSValue[_functionDefinition.Parameters.Length];
+                            defaultValues = new JSValue[FunctionDefinition.Parameters.Length];
                         defaultValues[i] = prm.initializer.Evaluate(internalContext);
                     }
                 }
@@ -605,7 +571,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             for (var i = 0; i < min; i++)
             {
                 JSValue t = args[i];
-                var prm = _functionDefinition.Parameters[i];
+                var prm = FunctionDefinition.Parameters[i];
                 if (!t.Defined)
                 {
                     if (prm.initializer != null)
@@ -614,7 +580,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                         t = undefined;
                 }
 
-                if (_functionDefinition.Body._strict)
+                if (FunctionDefinition.Body._strict)
                 {
                     if (ceaw)
                     {
@@ -658,9 +624,9 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 restArray?._data.Add(t);
             }
 
-            for (var i = min; i < _functionDefinition.Parameters.Length; i++)
+            for (var i = min; i < FunctionDefinition.Parameters.Length; i++)
             {
-                var parameter = _functionDefinition.Parameters[i];
+                var parameter = FunctionDefinition.Parameters[i];
                 if (parameter.initializer != null)
                 {
                     if (ceaw || parameter.assignments != null)
@@ -710,17 +676,17 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             if (thisBind == null)
             {
-                return strict ? undefined : _initialContext?.RootContext._thisBind;
+                return strict ? undefined : Context?.RootContext._thisBind;
             }
 
-            if (_initialContext != null)
+            if (Context != null)
             {
                 if (!strict) // Поправляем this
                 {
                     if (thisBind._valueType > JSValueType.Undefined && thisBind._valueType < JSValueType.Object)
                         return thisBind.ToObject();
                     if (thisBind._valueType <= JSValueType.Undefined || thisBind._oValue == null)
-                        return _initialContext.RootContext._thisBind;
+                        return Context.RootContext._thisBind;
                 }
                 else if (thisBind._valueType <= JSValueType.Undefined)
                     return undefined;
@@ -731,13 +697,13 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         internal void storeParameters()
         {
-            if (_functionDefinition.Parameters.Length == 0) return;
-            var context = _functionDefinition.Parameters[0].cacheContext;
+            if (FunctionDefinition.Parameters.Length == 0) return;
+            var context = FunctionDefinition.Parameters[0].cacheContext;
 
             if (context._variables == null)
                 context._variables = getFieldsContainer();
 
-            foreach (var parameter in _functionDefinition.Parameters)
+            foreach (var parameter in FunctionDefinition.Parameters)
                 context._variables[parameter.Name] = parameter.cacheRes;
         }
 
@@ -748,7 +714,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 string name = nameObj.ToString();
 
-                if (_functionDefinition.Body._strict && (name == "caller" || name == "arguments"))
+                if (FunctionDefinition.Body._strict && (name == "caller" || name == "arguments"))
                     return propertiesDummySM;
 
                 if ((!forWrite || (_attributes & JSValueAttributesInternal.ProxyPrototype) != 0) && name == "prototype")
@@ -780,7 +746,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         [Hidden]
         public virtual string ToString(bool headerOnly)
         {
-            return _functionDefinition.ToString(headerOnly);
+            return FunctionDefinition.ToString(headerOnly);
         }
 
         [Hidden]
@@ -841,7 +807,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 return this;
 
             var newThis = args[0];
-            var strict = (_functionDefinition.Body != null && _functionDefinition.Body._strict) || Context.CurrentContext._strict;
+            var strict = (FunctionDefinition.Body != null && FunctionDefinition.Body._strict) || Context.CurrentContext._strict;
             return new BindedFunction(this, args);
         }
 

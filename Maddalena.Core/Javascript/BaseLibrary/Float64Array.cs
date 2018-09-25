@@ -4,9 +4,8 @@ using Maddalena.Core.Javascript.Core.Interop;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-#if !(PORTABLE)
+
     [Serializable]
-#endif
     public sealed class Float64Array : TypedArray
     {
         protected override JSValue this[int index]

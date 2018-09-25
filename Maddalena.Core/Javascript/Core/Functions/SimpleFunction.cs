@@ -21,7 +21,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
 
             notExists._valueType = JSValueType.NotExists;
 
-            if (_functionDefinition.Parameters.Length == arguments.Length // из-за необходимости иметь возможность построить аргументы, если они потребуются
+            if (FunctionDefinition.Parameters.Length == arguments.Length // из-за необходимости иметь возможность построить аргументы, если они потребуются
                 && arguments.Length < 9)
             {
                 return fastInvoke(targetObject, arguments, initiator);
@@ -32,12 +32,12 @@ namespace Maddalena.Core.Javascript.Core.Functions
 
         private JSValue fastInvoke(JSValue targetObject, Expression[] arguments, Context initiator)
         {
-            var body = _functionDefinition.Body;
+            var body = FunctionDefinition.Body;
             targetObject = correctTargetObject(targetObject, body._strict);
-            if (_functionDefinition.recursionDepth > _functionDefinition.parametersStored) // рекурсивный вызов.
+            if (FunctionDefinition.recursionDepth > FunctionDefinition.parametersStored) // рекурсивный вызов.
             {
                 storeParameters();
-                _functionDefinition.parametersStored++;
+                FunctionDefinition.parametersStored++;
             }
 
             JSValue res = null;
@@ -45,10 +45,10 @@ namespace Maddalena.Core.Javascript.Core.Functions
             bool tailCall = false;
             for (;;)
             {
-                var internalContext = new Context(_initialContext, false, this)
+                var internalContext = new Context(Context, false, this)
                 {
-                    _thisBind = _functionDefinition.Kind == FunctionKind.Arrow
-                        ? _initialContext._thisBind
+                    _thisBind = FunctionDefinition.Kind == FunctionKind.Arrow
+                        ? Context._thisBind
                         : targetObject
                 };
 
@@ -59,12 +59,12 @@ namespace Maddalena.Core.Javascript.Core.Functions
                     initParametersFast(arguments, initiator, internalContext);
 
                 // Эта строка обязательно должна находиться после инициализации параметров
-                _functionDefinition.recursionDepth++;
+                FunctionDefinition.recursionDepth++;
 
-                if (_functionDefinition.Reference._descriptor != null && _functionDefinition.Reference._descriptor.cacheRes == null)
+                if (FunctionDefinition.Reference._descriptor != null && FunctionDefinition.Reference._descriptor.cacheRes == null)
                 {
-                    _functionDefinition.Reference._descriptor.cacheContext = internalContext._parent;
-                    _functionDefinition.Reference._descriptor.cacheRes = this;
+                    FunctionDefinition.Reference._descriptor.cacheContext = internalContext._parent;
+                    FunctionDefinition.Reference._descriptor.cacheRes = this;
                 }
 
                 internalContext._strict |= body._strict;
@@ -83,9 +83,9 @@ namespace Maddalena.Core.Javascript.Core.Functions
                 }
                 finally
                 {
-                    _functionDefinition.recursionDepth--;
-                    if (_functionDefinition.parametersStored > _functionDefinition.recursionDepth)
-                        _functionDefinition.parametersStored--;
+                    FunctionDefinition.recursionDepth--;
+                    if (FunctionDefinition.parametersStored > FunctionDefinition.recursionDepth)
+                        FunctionDefinition.parametersStored--;
                     exit(internalContext);
                 }
 
@@ -109,7 +109,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
                     a7 = null; // Вместо кучи, выделяем память на стеке
 
             var argumentsCount = arguments.Length;
-            if (_functionDefinition.Parameters.Length != argumentsCount)
+            if (FunctionDefinition.Parameters.Length != argumentsCount)
                 throw new ArgumentException("Invalid arguments count");
             if (argumentsCount > 8)
                 throw new ArgumentException("To many arguments");
@@ -189,22 +189,22 @@ namespace Maddalena.Core.Javascript.Core.Functions
 
         private void setParamValue(int index, JSValue value, Context context)
         {
-            if (_functionDefinition.Parameters[index].assignments != null)
+            if (FunctionDefinition.Parameters[index].assignments != null)
             {
                 value = value.CloneImpl(false);
                 value._attributes |= JSValueAttributesInternal.Argument;
             }
             else
                 value._attributes &= ~JSValueAttributesInternal.Cloned;
-            if (!value.Defined && _functionDefinition.Parameters.Length > index && _functionDefinition.Parameters[index].initializer != null)
-                value.Assign(_functionDefinition.Parameters[index].initializer.Evaluate(context));
-            _functionDefinition.Parameters[index].cacheRes = value;
-            _functionDefinition.Parameters[index].cacheContext = context;
-            if (_functionDefinition.Parameters[index].captured)
+            if (!value.Defined && FunctionDefinition.Parameters.Length > index && FunctionDefinition.Parameters[index].initializer != null)
+                value.Assign(FunctionDefinition.Parameters[index].initializer.Evaluate(context));
+            FunctionDefinition.Parameters[index].cacheRes = value;
+            FunctionDefinition.Parameters[index].cacheContext = context;
+            if (FunctionDefinition.Parameters[index].captured)
             {
                 if (context._variables == null)
                     context._variables = getFieldsContainer();
-                context._variables[_functionDefinition.Parameters[index].name] = value;
+                context._variables[FunctionDefinition.Parameters[index].name] = value;
             }
         }
     }

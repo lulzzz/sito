@@ -21,9 +21,9 @@ namespace Maddalena.Core.Javascript.Statements
                 i++;
             int sl = i;
             JSValue label = null;
-            if (Parser.ValidateName(state.Code, ref i, state.strict))
+            if (Parser.ValidateName(state.Code, ref i, state.Strict))
             {
-                label = Tools.Unescape(state.Code.Substring(sl, i - sl), state.strict);
+                label = Tools.Unescape(state.Code.Substring(sl, i - sl), state.Strict);
                 if (!state.Labels.Contains(label._oValue.ToString()))
                     ExceptionHelper.Throw((new SyntaxError("Try to break to undefined label.")));
             }
@@ -31,7 +31,7 @@ namespace Maddalena.Core.Javascript.Statements
                 ExceptionHelper.Throw((new SyntaxError("Invalid use of break statement")));
             var pos = index;
             index = i;
-            state.breaksCount++;
+            state.BreaksCount++;
             return new Break
             {
                 Label = label,

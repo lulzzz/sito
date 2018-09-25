@@ -44,11 +44,11 @@ namespace Maddalena.Core.Javascript.Statements
                 Tools.SkipSpaces(state.Code, ref i);
 
                 int s = i;
-                if (!Parser.ValidateName(state.Code, ref i, state.strict))
+                if (!Parser.ValidateName(state.Code, ref i, state.Strict))
                     ExceptionHelper.Throw((new SyntaxError("Catch block must contain variable name " + CodeCoordinates.FromTextPosition(state.Code, i, 0))));
 
-                exptn = Tools.Unescape(state.Code.Substring(s, i - s), state.strict);
-                if (state.strict)
+                exptn = Tools.Unescape(state.Code.Substring(s, i - s), state.Strict);
+                if (state.Strict)
                 {
                     if (exptn == "arguments" || exptn == "eval")
                         ExceptionHelper.Throw((new SyntaxError("Varible name can not be \"arguments\" or \"eval\" in strict mode at " + CodeCoordinates.FromTextPosition(state.Code, s, i - s))));
@@ -62,14 +62,14 @@ namespace Maddalena.Core.Javascript.Statements
                     i++;
                 if (state.Code[i] != '{')
                     ExceptionHelper.Throw((new SyntaxError("Invalid catch block statement definition at " + CodeCoordinates.FromTextPosition(state.Code, i, 0))));
-                state.lexicalScopeLevel++;
+                state.LexicalScopeLevel++;
                 try
                 {
                     cb = CodeBlock.Parse(state, ref i);
                 }
                 finally
                 {
-                    state.lexicalScopeLevel--;
+                    state.LexicalScopeLevel--;
                 }
                 while (i < state.Code.Length && Tools.IsWhiteSpace(state.Code[i]))
                     i++;
@@ -94,7 +94,7 @@ namespace Maddalena.Core.Javascript.Statements
                 body = (CodeBlock)b,
                 catchBody = (CodeBlock)cb,
                 finallyBody = (CodeBlock)f,
-                catchVariableDesc = new VariableDescriptor(exptn, state.lexicalScopeLevel + 1),
+                catchVariableDesc = new VariableDescriptor(exptn, state.LexicalScopeLevel + 1),
                 Position = pos,
                 Length = index - pos
             };

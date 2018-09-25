@@ -10,13 +10,7 @@ using Maddalena.Core.Javascript.Extensions;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-    public enum PromiseState
-    {
-        Pending,
-        Fulfilled,
-        Rejected
-    }
-
+    [Serializable]
     public sealed class Promise
     {
         private readonly object _sync = new object();
@@ -93,18 +87,17 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             var continuation = new Action<Task<JSValue>>(t =>
             {
-                if (t.Status == TaskStatus.RanToCompletion)
+                switch (t.Status)
                 {
-                    handlePromiseCascade(t.Result);
-                }
-                else if (t.Status == TaskStatus.Faulted)
-                {
-                    Task.Start();
-                    throw t.Exception.GetBaseException();
-                }
-                else
-                {
-                    Task.Start();
+                    case TaskStatus.RanToCompletion:
+                        handlePromiseCascade(t.Result);
+                        break;
+                    case TaskStatus.Faulted:
+                        Task.Start();
+                        throw t.Exception.GetBaseException();
+                    default:
+                        Task.Start();
+                        break;
                 }
             });
 
@@ -241,8 +234,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                     while (ex.InnerException != null)
                         ex = ex.InnerException;
 
-                    var jsException = ex as JSException;
-                    if (jsException != null)
+                    if (ex is JSException jsException)
                     {
                         return onRejection(jsException.Error);
                     }
@@ -266,7 +258,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             Task<JSValue> result = null;
             var task = new Task<Task<JSValue>>(() => result);
-            Action<Task<JSValue>> contination = t =>
+            void contination(Task<JSValue> t)
             {
                 lock (task)
                 {
@@ -276,11 +268,11 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                         task.Start();
                     }
                 }
-            };
+            }
 
-            for (var i = 0; i < tasks.Length; i++)
+            foreach (var t in tasks)
             {
-                tasks[i].ContinueWith(contination, TaskContinuationOptions.OnlyOnRanToCompletion);
+                t.ContinueWith(contination, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             return task;
@@ -312,21 +304,19 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             var task = new Task<JSValue[]>(() => result);
             var count = tasks.Length - 1;
 
-            Action<Task<JSValue>> contination = t =>
+            void Contination(Task<JSValue> t)
             {
                 var index = System.Array.IndexOf(tasks, t);
-                if (t.IsCanceled)
-                    throw new OperationCanceledException();
+                if (t.IsCanceled) throw new OperationCanceledException();
 
                 result[index] = t.Result;
 
-                if (Interlocked.Decrement(ref count) == 0)
-                    task.Start();
-            };
+                if (Interlocked.Decrement(ref count) == 0) task.Start();
+            }
 
             for (var i = 0; i < tasks.Length; i++)
             {
-                tasks[i].ContinueWith(contination, TaskContinuationOptions.OnlyOnRanToCompletion);
+                tasks[i].ContinueWith(Contination, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             return task;
@@ -334,7 +324,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
         private static Task<JSValue> fromException(Exception exception)
         {
-            var task = new Task<JSValue>(() => { throw exception; });
+            var task = new Task<JSValue>(() => throw exception);
             task.Start();
             return task;
         }

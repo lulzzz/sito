@@ -21,17 +21,18 @@ namespace Maddalena.Core
             };
 
 
-            var @delegate = new Action<JSValue>(x=>
+            var @delegate = new Action<GeneratorIterator>(x=>
             {
-                var d = x.As<Function>();
+                for (int i = 0; i < 1000; i++)
+                {
+                    var empty = new Arguments();
+                    Console.WriteLine(x.next(empty).value.toString(empty));
+                }
 
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream("MyFile.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-                formatter.Serialize(stream, d);
+                formatter.Serialize(stream, x);
                 stream.Close();
-
-                var val = d.Call(new Arguments());
-                Console.WriteLine(x.ToString());
             });
             mainModule.Context.DefineVariable("alert").Assign(JSValue.Marshal(@delegate));
             mainModule.Context.DefineConstructor(typeof(TestJS));

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Maddalena.Core.Javascript.Expressions;
 
 namespace Maddalena.Core.Javascript.Core
 {
@@ -9,23 +8,23 @@ namespace Maddalena.Core.Javascript.Core
         public readonly Stack<bool> AllowBreak;
         public readonly Stack<bool> AllowContinue;
         public readonly List<VariableDescriptor> Variables;
-        public readonly Dictionary<string, JSValue> stringConstants;
-        public readonly Dictionary<int, JSValue> intConstants;
-        public readonly Dictionary<double, JSValue> doubleConstants;
+        public readonly Dictionary<string, JSValue> StringConstants;
+        public readonly Dictionary<int, JSValue> IntConstants;
+        public readonly Dictionary<double, JSValue> DoubleConstants;
 
         public List<string> Labels;
         public int LabelsCount;
         public int AllowReturn;
-        public int lexicalScopeLevel;
-        public int functionScopeLevel;
+        public int LexicalScopeLevel;
+        public int FunctionScopeLevel;
         public CodeContext CodeContext;
-        public bool strict;
+        public bool Strict;
         public string Code;
         public bool AllowDirectives;
-        public int breaksCount;
-        public int continiesCount;
+        public int BreaksCount;
+        public int ContiniesCount;
 
-        public readonly InternalCompilerMessageCallback message;
+        public readonly InternalCompilerMessageCallback Message;
 
         public ParseInfo(string code, string sourceCode, InternalCompilerMessageCallback message)
         {
@@ -37,41 +36,23 @@ namespace Maddalena.Core.Javascript.Core
             AllowBreak.Push(false);
             AllowContinue = new Stack<bool>();
             AllowContinue.Push(false);
-            this.message = message;
-            stringConstants = new Dictionary<string, JSValue>();
-            intConstants = new Dictionary<int, JSValue>();
-            doubleConstants = new Dictionary<double, JSValue>();
+            this.Message = message;
+            StringConstants = new Dictionary<string, JSValue>();
+            IntConstants = new Dictionary<int, JSValue>();
+            DoubleConstants = new Dictionary<double, JSValue>();
             Variables = new List<VariableDescriptor>();
         }
 
         internal JSValue GetCachedValue(int value)
         {
-            if (!intConstants.ContainsKey(value))
+            if (!IntConstants.ContainsKey(value))
             {
                 JSValue jsvalue = value;
-                intConstants[value] = jsvalue;
+                IntConstants[value] = jsvalue;
                 return jsvalue;
             }
 
-            return intConstants[value];
+            return IntConstants[value];
         }
-    }
-
-    public sealed class FunctionInfo
-    {
-        public bool UseGetMember;
-        public bool UseCall;
-        public bool WithLexicalEnvironment;
-        public bool ContainsArguments;
-        public bool ContainsRestParameters;
-        public bool ContainsEval;
-        public bool ContainsWith;
-        public bool NeedDecompose;
-        public bool ContainsInnerEntities;
-        public bool ContainsThis;
-        public bool ContainsDebugger;
-        public bool ContainsTry;
-        public readonly List<Expression> Returns = new List<Expression>();
-        public PredictedType ResultType;
     }
 }

@@ -84,7 +84,7 @@ namespace Maddalena.Core.Javascript.Statements
             var labelsCount = state.LabelsCount;
             var oldVariablesCount = state.Variables.Count;
             state.LabelsCount = 0;
-            state.lexicalScopeLevel++;
+            state.LexicalScopeLevel++;
             try
             {
                 init = VariableDefinition.Parse(state, ref i, true) ?? ExpressionTree.Parse(state, ref i, forForLoop: true);
@@ -125,7 +125,7 @@ namespace Maddalena.Core.Javascript.Statements
                             ExceptionHelper.ThrowSyntaxError("Block scope variables can not be declared in for-loop directly", state.Code, body.Position);
                         }
 
-                        state.message?.Invoke(MessageLevel.Warning, body.Position, body.Length, "Do not declare variables in for-loop directly");
+                        state.Message?.Invoke(MessageLevel.Warning, body.Position, body.Length, "Do not declare variables in for-loop directly");
                     }
                 }
                 finally
@@ -153,7 +153,7 @@ namespace Maddalena.Core.Javascript.Statements
             }
             finally
             {
-                state.lexicalScopeLevel--;
+                state.LexicalScopeLevel--;
             }
 
             return result;

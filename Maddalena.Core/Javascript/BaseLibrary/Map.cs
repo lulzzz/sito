@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Maddalena.Core.Javascript.Core;
 using Maddalena.Core.Javascript.Core.Interop;
@@ -6,7 +7,7 @@ using Maddalena.Core.Javascript.Extensions;
 
 namespace Maddalena.Core.Javascript.BaseLibrary
 {
-    [RequireNewKeyword]
+    [RequireNewKeyword,Serializable]
     public sealed class Map : IIterable
     {
         private readonly Dictionary<object, object> _storage;

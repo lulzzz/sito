@@ -43,14 +43,14 @@ namespace Maddalena.Core.Javascript.Statements
                 i++;
             state.AllowBreak.Push(true);
             state.AllowContinue.Push(true);
-            int ccs = state.continiesCount;
-            int cbs = state.breaksCount;
+            int ccs = state.ContiniesCount;
+            int cbs = state.BreaksCount;
             var body = Parser.Parse(state, ref i, 0);
             if (body is FunctionDefinition)
             {
-                if (state.strict)
+                if (state.Strict)
                     ExceptionHelper.Throw((new SyntaxError("In strict mode code, functions can only be declared at top level or immediately within another function.")));
-                state.message?.Invoke(MessageLevel.CriticalWarning, body.Position, body.Length, "Do not declare function in nested blocks.");
+                state.Message?.Invoke(MessageLevel.CriticalWarning, body.Position, body.Length, "Do not declare function in nested blocks.");
                 body = new CodeBlock(new[] { body }); // для того, чтобы не дублировать код по декларации функции, 
                 // она оборачивается в блок, который сделает самовыпил на втором этапе, но перед этим корректно объявит функцию.
             }
@@ -81,7 +81,7 @@ namespace Maddalena.Core.Javascript.Statements
             index = i;
             return new DoWhile
             {
-                allowRemove = ccs == state.continiesCount && cbs == state.breaksCount,
+                allowRemove = ccs == state.ContiniesCount && cbs == state.BreaksCount,
                 body = body,
                 condition = condition,
                 labels = state.Labels.GetRange(state.Labels.Count - labelsCount, labelsCount).ToArray(),

@@ -136,9 +136,9 @@ namespace Maddalena.Core.Javascript.Expressions
 
             if (allowTCO
                 && _callMode == 0
-                && (func._functionDefinition.Kind != FunctionKind.Generator)
-                && (func._functionDefinition.Kind != FunctionKind.MethodGenerator)
-                && (func._functionDefinition.Kind != FunctionKind.AnonymousGenerator)
+                && (func.FunctionDefinition.Kind != FunctionKind.Generator)
+                && (func.FunctionDefinition.Kind != FunctionKind.MethodGenerator)
+                && (func.FunctionDefinition.Kind != FunctionKind.AnonymousGenerator)
                 && context._owner != null
                 && func == context._owner._oValue)
             {

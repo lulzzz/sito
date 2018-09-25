@@ -43,7 +43,7 @@ namespace Maddalena.Core.Javascript.Expressions
             }
             catch (Exception e)
             {
-                state.message?.Invoke(MessageLevel.Error, i - value.Length, value.Length, string.Format(Messages.InvalidRegExp, value));
+                state.Message?.Invoke(MessageLevel.Error, i - value.Length, value.Length, string.Format(Messages.InvalidRegExp, value));
                 return new ExpressionWrapper(new Throw(e));
             }
         }
