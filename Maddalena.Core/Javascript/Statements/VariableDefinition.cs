@@ -213,7 +213,7 @@ namespace Maddalena.Core.Javascript.Statements
                     _variables[i].cacheContext = context;
 
                     if (Kind == VariableKind.ConstantInLexicalScope)
-                        f._attributes |= JSValueAttributesInternal.ReadOnly;
+                        f._attributes |= JsValueAttributesInternal.ReadOnly;
                 }
 
                 _initializers[i].Evaluate(context);

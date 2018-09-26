@@ -13,7 +13,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            if (context._thisBind != null && (context._thisBind._attributes & JSValueAttributesInternal.ConstructingObject) != 0)
+            if (context._thisBind != null && (context._thisBind._attributes & JsValueAttributesInternal.ConstructingObject) != 0)
             {
                 var stack = Context.GetCurrectContextStack();
 

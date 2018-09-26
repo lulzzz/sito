@@ -1,0 +1,14 @@
+        
+		https://stackoverflow.com/questions/15035786/download-source-from-npm-without-installing-it
+		
+		public static async Task<object> MetadataAsync(string package)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient.GetStringAsync($"https://registry.npmjs.org/{package}/");
+
+                return JsonConvert.DeserializeObject(json);
+            }
+        }
+		
+		<!------------------- IMMAGINE DIG INTO NPM -------------->

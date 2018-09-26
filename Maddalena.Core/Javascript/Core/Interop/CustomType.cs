@@ -17,7 +17,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
         {
             _valueType = JSValueType.Object;
             _oValue = this;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
        
@@ -40,7 +40,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
         {
             if (_fields != null)
                 foreach (var r in _fields)
-                    if (r.Value.Exists && (!hideNonEnum || (r.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                    if (r.Value.Exists && (!hideNonEnum || (r.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                         yield return r;
         }
     }

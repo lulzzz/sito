@@ -25,7 +25,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 this.index = index;
                 _iValue = parent.data[index];
                 data = parent.data;
-                _attributes |= JSValueAttributesInternal.Reassign;
+                _attributes |= JsValueAttributesInternal.Reassign;
             }
 
             public override void Assign(JSValue value)
@@ -69,7 +69,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             if (data == null)
                 throw new ArgumentNullException();
             this.data = data;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         public int byteLength

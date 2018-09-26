@@ -56,7 +56,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
 
             _length = new Number(len)
             {
-                _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate
+                _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate
             };
         }
 

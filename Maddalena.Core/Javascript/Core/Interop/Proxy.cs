@@ -46,13 +46,13 @@ namespace Maddalena.Core.Javascript.Core.Interop
                                 _prototypeInstance = CreateObject();
                                 _prototypeInstance._objectPrototype = @null;
                                 _prototypeInstance._fields = _fields;
-                                _prototypeInstance._attributes |= JSValueAttributesInternal.ProxyPrototype;
+                                _prototypeInstance._attributes |= JsValueAttributesInternal.ProxyPrototype;
                             }
                             else if (typeof(JSObject).IsAssignableFrom(_hostedType))
                             {
                                 _prototypeInstance = _instanceCtor.Invoke(null) as JSObject;
                                 _prototypeInstance._objectPrototype = __proto__;
-                                _prototypeInstance._attributes |= JSValueAttributesInternal.ProxyPrototype;
+                                _prototypeInstance._attributes |= JsValueAttributesInternal.ProxyPrototype;
                                 _prototypeInstance._fields = _fields;
                                 //_prototypeInstance.valueType = (JSValueType)System.Math.Max((int)JSValueType.Object, (int)_prototypeInstance.valueType);
                                 _valueType = (JSValueType)Math.Max((int)JSValueType.Object, (int)_prototypeInstance._valueType);
@@ -62,7 +62,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
                                 var instance = _instanceCtor.Invoke(null);
                                 _prototypeInstance = new ObjectWrapper(instance, this)
                                 {
-                                    _attributes = _attributes | JSValueAttributesInternal.ProxyPrototype,
+                                    _attributes = _attributes | JsValueAttributesInternal.ProxyPrototype,
                                     _fields = _fields,
                                     _objectPrototype = _context.GlobalContext._globalPrototype
                                 };
@@ -88,7 +88,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             _indexersSupported = indexersSupport;
             _valueType = JSValueType.Object;
             _oValue = this;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.DoNotEnumerate;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.DoNotEnumerate;
             _fields = getFieldsContainer();
 
             _context = context;
@@ -332,7 +332,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             if (memberScope == PropertyScope.Super || key._valueType == JSValueType.Symbol)
                 return base.GetProperty(key, forWrite, memberScope);
 
-            forWrite &= (_attributes & JSValueAttributesInternal.Immutable) == 0;
+            forWrite &= (_attributes & JsValueAttributesInternal.Immutable) == 0;
 
             string name = key.ToString();
             JSValue r = null;
@@ -369,8 +369,8 @@ namespace Maddalena.Core.Javascript.Core.Interop
                 if (property.Exists)
                 {
                     if (forWrite && (property._attributes &
-                                     (JSValueAttributesInternal.SystemObject & JSValueAttributesInternal.ReadOnly)) ==
-                        JSValueAttributesInternal.SystemObject)
+                                     (JsValueAttributesInternal.SystemObject & JsValueAttributesInternal.ReadOnly)) ==
+                        JsValueAttributesInternal.SystemObject)
                         property = protoInstanceAsJs != null
                             ? protoInstanceAsJs.GetProperty(key, true, memberScope)
                             : base.GetProperty(key, true, memberScope);
@@ -426,7 +426,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
                         {
                             var method = (MethodInfo)m[0];
                             r = new MethodProxy(_context, method);
-                            r._attributes &= ~(JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.DoNotEnumerate);
+                            r._attributes &= ~(JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.DoNotEnumerate);
                             break;
                         }
                     case MemberTypes.Field:
@@ -436,7 +436,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
                                 && (field.Attributes & FieldAttributes.Static) != 0)
                             {
                                 r = _context.ProxyValue(field.GetValue(null));
-                                r._attributes |= JSValueAttributesInternal.ReadOnly;
+                                r._attributes |= JsValueAttributesInternal.ReadOnly;
                             }
                             else
                             {
@@ -454,9 +454,9 @@ namespace Maddalena.Core.Javascript.Core.Interop
                                     )
                                 };
 
-                                r._attributes = JSValueAttributesInternal.Immutable | JSValueAttributesInternal.Field;
+                                r._attributes = JsValueAttributesInternal.Immutable | JsValueAttributesInternal.Field;
                                 if ((r._oValue as PropertyPair).setter == null)
-                                    r._attributes |= JSValueAttributesInternal.ReadOnly;
+                                    r._attributes |= JsValueAttributesInternal.ReadOnly;
 
                             }
                             break;
@@ -479,13 +479,13 @@ namespace Maddalena.Core.Javascript.Core.Interop
 )
                             };
 
-                            r._attributes = JSValueAttributesInternal.Immutable;
+                            r._attributes = JsValueAttributesInternal.Immutable;
 
                             if ((r._oValue as PropertyPair).setter == null)
-                                r._attributes |= JSValueAttributesInternal.ReadOnly;
+                                r._attributes |= JsValueAttributesInternal.ReadOnly;
 
                             if (pinfo.IsDefined(typeof(FieldAttribute), false))
-                                r._attributes |= JSValueAttributesInternal.Field;
+                                r._attributes |= JsValueAttributesInternal.Field;
 
                             break;
                         }
@@ -526,7 +526,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             }
 
             if (m[0].IsDefined(typeof(DoNotEnumerateAttribute), false))
-                r._attributes |= JSValueAttributesInternal.DoNotEnumerate;
+                r._attributes |= JsValueAttributesInternal.DoNotEnumerate;
 
             if (forWrite && r.NeedClone)
                 r = r.CloneImpl(false);
@@ -534,13 +534,13 @@ namespace Maddalena.Core.Javascript.Core.Interop
             for (var i = m.Count; i-- > 0;)
             {
                 if (!m[i].IsDefined(typeof(DoNotEnumerateAttribute), false))
-                    r._attributes &= ~JSValueAttributesInternal.DoNotEnumerate;
+                    r._attributes &= ~JsValueAttributesInternal.DoNotEnumerate;
                 if (m[i].IsDefined(typeof(ReadOnlyAttribute), false))
-                    r._attributes |= JSValueAttributesInternal.ReadOnly;
+                    r._attributes |= JsValueAttributesInternal.ReadOnly;
                 if (m[i].IsDefined(typeof(NotConfigurable), false))
-                    r._attributes |= JSValueAttributesInternal.NonConfigurable;
+                    r._attributes |= JsValueAttributesInternal.NonConfigurable;
                 if (m[i].IsDefined(typeof(DoNotDeleteAttribute), false))
-                    r._attributes |= JSValueAttributesInternal.DoNotDelete;
+                    r._attributes |= JsValueAttributesInternal.DoNotDelete;
             }
 
             return r;
@@ -555,9 +555,9 @@ namespace Maddalena.Core.Javascript.Core.Interop
             JSValue field = null;
             if (_fields != null
                 && _fields.TryGetValue(stringName = name.ToString(), out field)
-                && (!field.Exists || (field._attributes & JSValueAttributesInternal.DoNotDelete) == 0))
+                && (!field.Exists || (field._attributes & JsValueAttributesInternal.DoNotDelete) == 0))
             {
-                if ((field._attributes & JSValueAttributesInternal.SystemObject) == 0)
+                if ((field._attributes & JsValueAttributesInternal.SystemObject) == 0)
                     field._valueType = JSValueType.NotExistsInObject;
                 return _fields.Remove(stringName) | _members.Remove(stringName); // it's not mistake
             }
@@ -585,7 +585,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             var name = args[0].ToString();
             JSValue temp;
             if (_fields != null && _fields.TryGetValue(name, out temp))
-                return temp.Exists && (temp._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0;
+                return temp.Exists && (temp._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0;
             IList<MemberInfo> m = null;
             if (_members.TryGetValue(name, out m))
             {
@@ -612,7 +612,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             {
                 foreach (var f in _fields)
                 {
-                    if (!hideNonEnumerable || (f.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0)
+                    if (!hideNonEnumerable || (f.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0)
                         yield return f;
                 }
             }

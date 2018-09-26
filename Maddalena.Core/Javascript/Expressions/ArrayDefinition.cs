@@ -112,7 +112,7 @@ namespace Maddalena.Core.Javascript.Expressions
                     else
                     {
                         if (writableNotExists == null)
-                            writableNotExists = new JSValue { _valueType = JSValueType.NotExistsInObject, _attributes = JSValueAttributesInternal.SystemObject };
+                            writableNotExists = new JSValue { _valueType = JSValueType.NotExistsInObject, _attributes = JsValueAttributesInternal.SystemObject };
                         res._data[targetIndex] = writableNotExists;
                     }
                 }

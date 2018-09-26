@@ -38,11 +38,11 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         [DoNotEnumerate]
         static Number()
         {
-            POSITIVE_INFINITY._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject;
-            NEGATIVE_INFINITY._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject;
-            MAX_VALUE._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject;
-            MIN_VALUE._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject;
-            NaN._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject;
+            POSITIVE_INFINITY._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject;
+            NEGATIVE_INFINITY._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject;
+            MAX_VALUE._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject;
+            MIN_VALUE._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject;
+            NaN._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject;
         }
 
         [DoNotEnumerate]
@@ -50,7 +50,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Integer;
             _iValue = 0;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [DoNotEnumerate]
@@ -59,7 +59,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Integer;
             _iValue = value;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [Hidden]
@@ -75,7 +75,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 _valueType = JSValueType.Double;
                 _dValue = value;
             }
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [DoNotEnumerate]
@@ -84,7 +84,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Double;
             _dValue = value;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [DoNotEnumerate]
@@ -99,7 +99,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             int i = 0;
             if (value.Length != 0 && Tools.ParseNumber(value, ref i, out d, 0, ParseNumberOptions.Default | (Context.CurrentContext._strict ? ParseNumberOptions.RaiseIfOctal : 0)) && i == value.Length)
                 _dValue = d;
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [DoNotEnumerate]
@@ -107,7 +107,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Double;
             _dValue = Tools.JSObjectToDouble(obj[0]);
-            _attributes |= JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly;
+            _attributes |= JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly;
         }
 
         [DoNotEnumerate]

@@ -97,7 +97,7 @@ namespace Maddalena.Core.Javascript.Core
                 }
 
                 if ((!forWrite && IsDefined)
-                    || (res._attributes & JSValueAttributesInternal.SystemObject) == 0)
+                    || (res._attributes & JsValueAttributesInternal.SystemObject) == 0)
                 {
                     cacheContext = context;
                     cacheRes = res;

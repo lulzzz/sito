@@ -26,10 +26,10 @@ namespace Maddalena.Core.Javascript.Core
             this.instance = instance;
             _valueType = instance is Date ? JSValueType.Date : JSValueType.Object;
             _oValue = this;
-            _attributes = JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.SystemObject;
             if (proto != null)
             {
-                _attributes |= proto._attributes & JSValueAttributesInternal.Immutable;
+                _attributes |= proto._attributes & JsValueAttributesInternal.Immutable;
                 _objectPrototype = proto;
             }
         }

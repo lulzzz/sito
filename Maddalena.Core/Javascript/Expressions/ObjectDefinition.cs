@@ -264,7 +264,7 @@ namespace Maddalena.Core.Javascript.Expressions
             {
                 var val = Values[i].Evaluate(context);
                 val = val.CloneImpl(false);
-                val._attributes = JSValueAttributesInternal.None;
+                val._attributes = JsValueAttributesInternal.None;
                 if (FieldNames[i] == "__proto__")
                     res.__proto__ = val._oValue as JSObject;
                 else

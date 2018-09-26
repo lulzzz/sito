@@ -344,14 +344,14 @@ namespace Maddalena.Core.Javascript.Statements
                         throw new ApplicationException("notExists has been rewitten");
                 if (Boolean.False._valueType != JSValueType.Boolean
                     || Boolean.False._iValue != 0
-                    || Boolean.False._attributes != JSValueAttributesInternal.SystemObject)
+                    || Boolean.False._attributes != JsValueAttributesInternal.SystemObject)
                     if (System.Diagnostics.Debugger.IsAttached)
                         System.Diagnostics.Debugger.Break();
                     else
                         throw new ApplicationException("Boolean.False has been rewitten");
                 if (Boolean.True._valueType != JSValueType.Boolean
                     || Boolean.True._iValue != 1
-                    || Boolean.True._attributes != JSValueAttributesInternal.SystemObject)
+                    || Boolean.True._attributes != JsValueAttributesInternal.SystemObject)
                     if (System.Diagnostics.Debugger.IsAttached)
                         System.Diagnostics.Debugger.Break();
                     else
@@ -695,7 +695,7 @@ namespace Maddalena.Core.Javascript.Statements
                 var f = new JSValue
                 {
                     _valueType = JSValueType.Undefined,
-                    _attributes = JSValueAttributesInternal.DoNotDelete
+                    _attributes = JsValueAttributesInternal.DoNotDelete
                 };
                 v.cacheRes = f;
                 v.cacheContext = context;
@@ -704,7 +704,7 @@ namespace Maddalena.Core.Javascript.Statements
                 if (v.initializer != null)
                     f.Assign(v.initializer.Evaluate(context));
                 if (v.isReadOnly)
-                    f._attributes |= JSValueAttributesInternal.ReadOnly;
+                    f._attributes |= JsValueAttributesInternal.ReadOnly;
 
                 if (isArg)
                     context._arguments = f;

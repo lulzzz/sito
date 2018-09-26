@@ -72,7 +72,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
             }
 
             if (_length == null)
-                _length = new Number(0) { _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
+                _length = new Number(0) { _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject };
 
             if (methodBase.IsDefined(typeof(ArgumentsCountAttribute), false))
             {

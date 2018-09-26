@@ -14,7 +14,7 @@ namespace Maddalena.Core.Javascript.Core
 
         public GlobalObject(Context context)
         {
-            _attributes = JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.SystemObject;
             _context = context;
             _fields = context._variables;
             _valueType = JSValueType.Object;
@@ -37,11 +37,11 @@ namespace Maddalena.Core.Javascript.Core
         protected internal override IEnumerator<KeyValuePair<string, JSValue>> GetEnumerator(bool hideNonEnumerable, EnumerationMode enumerationMode)
         {
             foreach (var i in _context._variables)
-                if (i.Value.Exists && (!hideNonEnumerable || (i.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                if (i.Value.Exists && (!hideNonEnumerable || (i.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                     yield return i;
 
             foreach (var i in _context.GlobalContext._variables)
-                if (i.Value.Exists && (!hideNonEnumerable || (i.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                if (i.Value.Exists && (!hideNonEnumerable || (i.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                     yield return i;
         }
 

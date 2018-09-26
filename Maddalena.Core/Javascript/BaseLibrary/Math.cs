@@ -218,7 +218,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue exp(JSValue value)
         {
             var res = System.Math.Exp(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -251,7 +251,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             else
                 res = System.Math.Exp(x) - 1.0;
 
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -278,7 +278,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             var a = Tools.JSObjectToDouble(value);
             if (a == 0.0)
             {
-                if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
                 {
                     value._valueType = JSValueType.Integer;
                     value._iValue = 0;
@@ -308,7 +308,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 }
 
                 var r = (long)shr(m, e) * s;
-                if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
                 {
                     if ((r & uint.MaxValue) == r)
                     {
@@ -327,7 +327,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 return r;
             }
 
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = a;
@@ -354,7 +354,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             double res = 0.0;
             for (int i = 0; i < args.Length; i++)
             {
-                if (reso == null && (args[i]._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if (reso == null && (args[i]._attributes & JsValueAttributesInternal.Cloned) != 0)
                     reso = args[i];
 
                 var t = Tools.JSObjectToDouble(args[i]);
@@ -393,7 +393,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue log(JSValue value)
         {
             var res = System.Math.Log(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -425,7 +425,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
             res = System.Math.Log(x + 1.0);
 
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -440,7 +440,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue log10(JSValue value)
         {
             var res = System.Math.Log10(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -456,7 +456,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             // 1.442... = 1 / ln(2)
             var res = System.Math.Log(Tools.JSObjectToDouble(value)) * 1.4426950408889634073599246810019d;
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -475,7 +475,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             double res = double.NegativeInfinity;
             for (int i = 0; i < args.Length; i++)
             {
-                if (reso == null && (args[i]._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if (reso == null && (args[i]._attributes & JsValueAttributesInternal.Cloned) != 0)
                     reso = args[i];
 
                 var t = Tools.JSObjectToDouble(args[i]);
@@ -504,7 +504,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             double res = double.PositiveInfinity;
             for (int i = 0; i < args.Length; i++)
             {
-                if (reso == null && (args[i]._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if (reso == null && (args[i]._attributes & JsValueAttributesInternal.Cloned) != 0)
                     reso = args[i];
 
                 var t = Tools.JSObjectToDouble(args[i]);
@@ -560,7 +560,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             var a = Tools.JSObjectToDouble(value);
             if (a == 0.0)
             {
-                if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
                 {
                     value._valueType = JSValueType.Integer;
                     value._iValue = 0;
@@ -593,7 +593,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 }
 
                 var r = ((long)shr(m, e) + ((long)shr(m, (e - 1)) & 1) * s) * s;
-                if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+                if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
                 {
                     if ((r & uint.MaxValue) == r)
                     {
@@ -612,7 +612,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 return r;
             }
 
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = a;
@@ -630,7 +630,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             if (!double.IsNaN(res))
                 res = System.Math.Sign(res);
 
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -645,7 +645,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue sin(JSValue value)
         {
             var res = System.Math.Sin(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -660,7 +660,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue sinh(JSValue value)
         {
             var res = System.Math.Sinh(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -675,7 +675,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue sqrt(JSValue value)
         {
             var res = System.Math.Sqrt(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -690,7 +690,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue tan(JSValue value)
         {
             var res = System.Math.Tan(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -705,7 +705,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue tanh(JSValue value)
         {
             var res = System.Math.Tanh(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;
@@ -720,7 +720,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         public static JSValue trunc(JSValue value)
         {
             var res = System.Math.Truncate(Tools.JSObjectToDouble(value));
-            if ((value._attributes & JSValueAttributesInternal.Cloned) != 0)
+            if ((value._attributes & JsValueAttributesInternal.Cloned) != 0)
             {
                 value._valueType = JSValueType.Double;
                 value._dValue = res;

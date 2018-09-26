@@ -21,7 +21,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
         public override JSValue Evaluate(Context context)
         {
-            var a = _tempContainer ?? new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+            var a = _tempContainer ?? new JSValue { _attributes = JsValueAttributesInternal.Temporary };
             _tempContainer = null;
             a.Assign(_left.Evaluate(context));
             var c = _right.Evaluate(context);

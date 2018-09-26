@@ -113,7 +113,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 }
                 else
                 {
-                    if ((target._attributes & JSValueAttributesInternal.ReadOnly) != 0 && _context._strict)
+                    if ((target._attributes & JsValueAttributesInternal.ReadOnly) != 0 && _context._strict)
                         ExceptionHelper.ThrowTypeError(string.Format(Messages.CannotAssignReadOnly, value));
 
                     target.Assign(value);

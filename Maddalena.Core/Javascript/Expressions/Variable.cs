@@ -90,7 +90,7 @@ namespace Maddalena.Core.Javascript.Expressions
 
                 if (context._strict)
                 {
-                    if ((result._attributes & JSValueAttributesInternal.Argument) != 0)
+                    if ((result._attributes & JsValueAttributesInternal.Argument) != 0)
                         context._owner.BuildArgumentsObject();
                 }
             }

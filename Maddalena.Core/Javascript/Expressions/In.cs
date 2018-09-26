@@ -24,7 +24,7 @@ namespace Maddalena.Core.Javascript.Expressions
         {
             bool res;
             if (_tempContainer == null)
-                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                _tempContainer = new JSValue { _attributes = JsValueAttributesInternal.Temporary };
             _tempContainer.Assign(_left.Evaluate(context));
             var temp = _tempContainer;
             _tempContainer = null;

@@ -173,7 +173,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 case JSValueType.Object:
                     {
                         if (_tempContainer == null)
-                            _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                            _tempContainer = new JSValue { _attributes = JsValueAttributesInternal.Temporary };
                         _tempContainer.Assign(temp);
                         temp = _tempContainer;
 

@@ -51,7 +51,7 @@ namespace Maddalena.Core.Javascript.Expressions
             _left = first;
             _right = second;
             if (createTempContainer)
-                _tempContainer = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                _tempContainer = new JSValue { _attributes = JsValueAttributesInternal.Temporary };
         }
 
         public override bool Build(ref CodeNode _this, int expressionDepth, Dictionary<string, VariableDescriptor> variables, CodeContext codeContext, InternalCompilerMessageCallback message, FunctionInfo stats, Options opts)

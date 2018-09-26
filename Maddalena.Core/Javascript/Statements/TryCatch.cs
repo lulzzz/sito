@@ -208,7 +208,7 @@ namespace Maddalena.Core.Javascript.Statements
                 cvar = e is JSException ? (e as JSException).Error.CloneImpl(false) : context.GlobalContext.ProxyValue(e);
             }
 
-            cvar._attributes |= JSValueAttributesInternal.DoNotDelete;
+            cvar._attributes |= JsValueAttributesInternal.DoNotDelete;
             var catchContext = new CatchContext(cvar, context, catchVariableDesc.name);
 #if DEBUG
             if (!(e is JSException))

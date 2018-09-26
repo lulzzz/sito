@@ -22,10 +22,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         private static readonly Function TTEProxy = new MethodProxy(new Context(null, false, Empty), typeof(Function)
             .GetMethod("ThrowTypeError", BindingFlags.Static | BindingFlags.NonPublic))
         {
-            _attributes = JSValueAttributesInternal.DoNotDelete
-                | JSValueAttributesInternal.Immutable
-                | JSValueAttributesInternal.DoNotEnumerate
-                | JSValueAttributesInternal.ReadOnly
+            _attributes = JsValueAttributesInternal.DoNotDelete
+                | JsValueAttributesInternal.Immutable
+                | JsValueAttributesInternal.DoNotEnumerate
+                | JsValueAttributesInternal.ReadOnly
         };
         protected static void ThrowTypeError()
         {
@@ -35,7 +35,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Property,
             _oValue = new PropertyPair { getter = TTEProxy, setter = TTEProxy },
-            _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.Immutable | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable
+            _attributes = JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.Immutable | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable
         };
 
         private Dictionary<Type, Delegate> _delegateCache;
@@ -74,10 +74,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 _length = new Number(0)
                 {
                     _attributes =
-                        JSValueAttributesInternal.ReadOnly
-                        | JSValueAttributesInternal.DoNotDelete
-                        | JSValueAttributesInternal.DoNotEnumerate
-                        | JSValueAttributesInternal.NonConfigurable,
+                        JsValueAttributesInternal.ReadOnly
+                        | JsValueAttributesInternal.DoNotDelete
+                        | JsValueAttributesInternal.DoNotEnumerate
+                        | JsValueAttributesInternal.NonConfigurable,
                     _iValue = FunctionDefinition.Parameters.Length
                 };
 
@@ -136,19 +136,19 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 if (_prototype == null)
                 {
-                    if ((_attributes & JSValueAttributesInternal.ProxyPrototype) != 0)
+                    if ((_attributes & JsValueAttributesInternal.ProxyPrototype) != 0)
                     {
                         // Вызывается в случае Function.prototype.prototype
                         // выдавать тут константу undefined нельзя, иначе будет падать на вызове defineProperty
                         // присваивание нужно для простановки атрибутов
                         prototype = new JSObject();
-                        _prototype._attributes = JSValueAttributesInternal.None;
+                        _prototype._attributes = JsValueAttributesInternal.None;
                     }
                     else
                     {
                         var res = CreateObject(true);
-                        res._attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.NonConfigurable;
-                        (res._fields["constructor"] = CloneImpl(false))._attributes = JSValueAttributesInternal.DoNotEnumerate;
+                        res._attributes = JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.NonConfigurable;
+                        (res._fields["constructor"] = CloneImpl(false))._attributes = JsValueAttributesInternal.DoNotEnumerate;
                         _prototype = res;
                     }
                 }
@@ -173,10 +173,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 if (oldValue == null)
                 {
                     _prototype._attributes =
-                        JSValueAttributesInternal.Field
-                        | JSValueAttributesInternal.DoNotDelete
-                        | JSValueAttributesInternal.DoNotEnumerate
-                        | JSValueAttributesInternal.NonConfigurable;
+                        JsValueAttributesInternal.Field
+                        | JsValueAttributesInternal.DoNotDelete
+                        | JsValueAttributesInternal.DoNotEnumerate
+                        | JsValueAttributesInternal.NonConfigurable;
                 }
                 else
                 {
@@ -256,7 +256,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         [DoNotEnumerate]
         public Function()
         {
-            _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject;
             FunctionDefinition = creatorDummy;
             _valueType = JSValueType.Function;
             _oValue = this;
@@ -278,7 +278,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             if (Context == Context._DefaultGlobalContext || Context == null)
                 throw new InvalidOperationException("Special Functions constructor can be called from javascript code only");
 
-            _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject;
 
             var index = 0;
             int len = args.Length - 1;
@@ -314,7 +314,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         [Hidden]
         internal Function(Context context, FunctionDefinition functionDefinition)
         {
-            _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject;
             Context = context;
             FunctionDefinition = functionDefinition;
             _valueType = JSValueType.Function;
@@ -330,7 +330,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             }
 
             JSValue targetObject = ConstructObject();
-            targetObject._attributes |= JSValueAttributesInternal.ConstructingObject;
+            targetObject._attributes |= JsValueAttributesInternal.ConstructingObject;
             JSValue result;
             try
             {
@@ -338,7 +338,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             }
             finally
             {
-                targetObject._attributes &= ~JSValueAttributesInternal.ConstructingObject;
+                targetObject._attributes &= ~JsValueAttributesInternal.ConstructingObject;
             }
             return result;
         }
@@ -472,7 +472,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 return undefined;
             }
 
-            return (ai._attributes & JSValueAttributesInternal.SystemObject) == 0 ? ai.CloneImpl(false) : ai;
+            return (ai._attributes & JsValueAttributesInternal.SystemObject) == 0 ? ai.CloneImpl(false) : ai;
         }
 
         internal void exit(Context internalContext)
@@ -530,7 +530,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
                 if (FunctionDefinition.Body._strict)
                 {
-                    arguments._attributes |= JSValueAttributesInternal.ReadOnly;
+                    arguments._attributes |= JsValueAttributesInternal.ReadOnly;
                     arguments.callee = propertiesDummySM;
                     arguments.caller = propertiesDummySM;
                 }
@@ -597,15 +597,15 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 {
                     if (prm.assignments != null
                         || ceaw
-                        || (t._attributes & JSValueAttributesInternal.Temporary) != 0)
+                        || (t._attributes & JsValueAttributesInternal.Temporary) != 0)
                     {
                         t = t.CloneImpl(false);
                         args[i] = t;
-                        t._attributes |= JSValueAttributesInternal.Argument;
+                        t._attributes |= JsValueAttributesInternal.Argument;
                     }
                 }
 
-                t._attributes &= ~JSValueAttributesInternal.Cloned;
+                t._attributes &= ~JsValueAttributesInternal.Cloned;
                 if (prm.captured || ceaw)
                     (internalContext._variables ?? (internalContext._variables = getFieldsContainer()))[prm.Name] = t;
                 prm.cacheContext = internalContext;
@@ -619,7 +619,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 var t = args[i];
                 if (ceaw)
                     args[i] = t = t.CloneImpl(false);
-                t._attributes |= JSValueAttributesInternal.Argument;
+                t._attributes |= JsValueAttributesInternal.Argument;
 
                 restArray?._data.Add(t);
             }
@@ -648,7 +648,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                             parameter.cacheRes = restArray.CloneImpl(false);
                         else
                             parameter.cacheRes = new JSValue { _valueType = JSValueType.Undefined };
-                        parameter.cacheRes._attributes = JSValueAttributesInternal.Argument;
+                        parameter.cacheRes._attributes = JsValueAttributesInternal.Argument;
                     }
                     else
                     {
@@ -717,7 +717,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 if (FunctionDefinition.Body._strict && (name == "caller" || name == "arguments"))
                     return propertiesDummySM;
 
-                if ((!forWrite || (_attributes & JSValueAttributesInternal.ProxyPrototype) != 0) && name == "prototype")
+                if ((!forWrite || (_attributes & JsValueAttributesInternal.ProxyPrototype) != 0) && name == "prototype")
                 {
                     return prototype;
                 }

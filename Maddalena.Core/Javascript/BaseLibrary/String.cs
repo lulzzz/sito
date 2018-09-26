@@ -73,7 +73,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _oValue = s ?? "null";
             _valueType = JSValueType.String;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [Hidden]
@@ -84,7 +84,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 if ((pos < 0) || (pos >= _oValue.ToString().Length))
                     return notExists;
-                return new JSValue { _valueType = JSValueType.String, _oValue = (_oValue.ToString())[pos].ToString(), _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.DoNotDelete };
+                return new JSValue { _valueType = JSValueType.String, _oValue = (_oValue.ToString())[pos].ToString(), _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.DoNotDelete };
             }
         }
 
@@ -891,7 +891,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 var len = _oValue.ToString().Length;
                 if (_length == null)
-                    _length = new Number(len) { _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.NonConfigurable };
+                    _length = new Number(len) { _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.NonConfigurable };
                 else
                     _length._iValue = len;
                 return _length;
@@ -965,7 +965,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 foreach (var f in _fields)
                 {
-                    if (f.Value.Exists && (!hideNonEnum || (f.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                    if (f.Value.Exists && (!hideNonEnum || (f.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                         yield return f;
                 }
 

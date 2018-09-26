@@ -214,7 +214,7 @@ namespace Maddalena.Core.Javascript.Expressions
             var temp = _tempContainer;
             _tempContainer = null;
             if (temp == null)
-                temp = new JSValue { _attributes = JSValueAttributesInternal.Temporary };
+                temp = new JSValue { _attributes = JsValueAttributesInternal.Temporary };
             temp._valueType = f._valueType;
             temp._iValue = f._iValue;
             temp._dValue = f._dValue;

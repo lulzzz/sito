@@ -20,7 +20,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 this.owner = owner;
                 this.index = index;
-                _attributes |= JSValueAttributesInternal.Reassign;
+                _attributes |= JsValueAttributesInternal.Reassign;
             }
 
             public override void Assign(JSValue value)

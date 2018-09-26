@@ -41,7 +41,7 @@ namespace Maddalena.Core.Javascript.Core
             [Hidden]
             set
             {
-                if ((_attributes & JSValueAttributesInternal.Immutable) != 0)
+                if ((_attributes & JsValueAttributesInternal.Immutable) != 0)
                     return;
                 if (_valueType < JSValueType.Object)
                     return;
@@ -93,7 +93,7 @@ namespace Maddalena.Core.Javascript.Core
             };
 
             t._oValue = t;
-            t._attributes = (JSValueAttributesInternal) attributes;
+            t._attributes = (JsValueAttributesInternal) attributes;
 
             if (createFields)
                 t._fields = getFieldsContainer();
@@ -123,7 +123,7 @@ namespace Maddalena.Core.Javascript.Core
                 {
                     res = proto.GetProperty(key, false, propertyScope > 0 ? propertyScope - 1 : 0);
                     if (propertyScope == PropertyScope.Own &&
-                        ((res._attributes & JSValueAttributesInternal.Field) == 0 ||
+                        ((res._attributes & JsValueAttributesInternal.Field) == 0 ||
                          res._valueType != JSValueType.Property)
                         || res._valueType < JSValueType.Undefined)
                         res = null;
@@ -131,7 +131,7 @@ namespace Maddalena.Core.Javascript.Core
 
                 if (res == null)
                 {
-                    if (!forWrite || (_attributes & JSValueAttributesInternal.Immutable) != 0)
+                    if (!forWrite || (_attributes & JsValueAttributesInternal.Immutable) != 0)
                     {
                         if (propertyScope != PropertyScope.Own && string.CompareOrdinal(name, "__proto__") == 0)
                             return proto;
@@ -145,8 +145,8 @@ namespace Maddalena.Core.Javascript.Core
                 }
                 else if (forWrite)
                 {
-                    if ((res._attributes & JSValueAttributesInternal.SystemObject) != 0 || fromProto)
-                        if ((res._attributes & JSValueAttributesInternal.ReadOnly) == 0
+                    if ((res._attributes & JsValueAttributesInternal.SystemObject) != 0 || fromProto)
+                        if ((res._attributes & JsValueAttributesInternal.ReadOnly) == 0
                             && (res._valueType != JSValueType.Property || propertyScope == PropertyScope.Own))
                         {
                             res = res.CloneImpl(false);
@@ -174,7 +174,7 @@ namespace Maddalena.Core.Javascript.Core
             if (fromProto)
             {
                 res = proto.GetProperty(key, false, memberScope);
-                if (memberScope == PropertyScope.Own && ((res._attributes & JSValueAttributesInternal.Field) == 0 ||
+                if (memberScope == PropertyScope.Own && ((res._attributes & JsValueAttributesInternal.Field) == 0 ||
                                                          res._valueType != JSValueType.Property) ||
                     res._valueType < JSValueType.Undefined)
                     res = null;
@@ -182,7 +182,7 @@ namespace Maddalena.Core.Javascript.Core
 
             if (res == null)
             {
-                if (!forWrite || (_attributes & JSValueAttributesInternal.Immutable) != 0)
+                if (!forWrite || (_attributes & JsValueAttributesInternal.Immutable) != 0)
                     return notExists;
 
                 res = new JSValue {_valueType = JSValueType.NotExistsInObject};
@@ -192,8 +192,8 @@ namespace Maddalena.Core.Javascript.Core
             }
             else if (forWrite)
             {
-                if ((res._attributes & JSValueAttributesInternal.SystemObject) != 0 || fromProto)
-                    if ((res._attributes & JSValueAttributesInternal.ReadOnly) == 0
+                if ((res._attributes & JsValueAttributesInternal.SystemObject) != 0 || fromProto)
+                    if ((res._attributes & JsValueAttributesInternal.ReadOnly) == 0
                         && (res._valueType != JSValueType.Property || memberScope == PropertyScope.Own))
                     {
                         res = res.CloneImpl(false);
@@ -232,7 +232,7 @@ namespace Maddalena.Core.Javascript.Core
                 else if (throwOnError)
                     ExceptionHelper.Throw(new TypeError("Can not assign value to readonly property \"" + key + "\""));
             }
-            else if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0)
+            else if ((field._attributes & JsValueAttributesInternal.ReadOnly) != 0)
             {
                 if (throwOnError)
                     ExceptionHelper.Throw(new TypeError("Can not assign value to readonly property \"" + key + "\""));
@@ -259,9 +259,9 @@ namespace Maddalena.Core.Javascript.Core
             string tname = null;
             if (_fields != null
                 && _fields.TryGetValue(tname = key.ToString(), out field)
-                && (!field.Exists || (field._attributes & JSValueAttributesInternal.DoNotDelete) == 0))
+                && (!field.Exists || (field._attributes & JsValueAttributesInternal.DoNotDelete) == 0))
             {
-                if ((field._attributes & JSValueAttributesInternal.SystemObject) == 0)
+                if ((field._attributes & JsValueAttributesInternal.SystemObject) == 0)
                     field._valueType = JSValueType.NotExistsInObject;
 
                 return _fields.Remove(tname);
@@ -271,10 +271,10 @@ namespace Maddalena.Core.Javascript.Core
             if (!field.Exists)
                 return true;
 
-            if ((field._attributes & JSValueAttributesInternal.SystemObject) != 0)
+            if ((field._attributes & JsValueAttributesInternal.SystemObject) != 0)
                 field = GetProperty(key, true, PropertyScope.Own);
 
-            if ((field._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+            if ((field._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
             {
                 field._valueType = JSValueType.NotExistsInObject;
                 field._oValue = null;
@@ -291,20 +291,20 @@ namespace Maddalena.Core.Javascript.Core
             if (_fields != null)
                 foreach (var f in _fields)
                     if (f.Value.Exists && (!hideNonEnum ||
-                                           (f.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                                           (f.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                         yield return f;
 
             if (_objectPrototype != null)
                 for (var e = _objectPrototype.GetEnumerator(hideNonEnum, EnumerationMode.RequireValues); e.MoveNext();)
                     if (e.Current.Value._valueType >= JSValueType.Undefined
-                        && (e.Current.Value._attributes & JSValueAttributesInternal.Field) != 0)
+                        && (e.Current.Value._attributes & JsValueAttributesInternal.Field) != 0)
                         yield return e.Current;
         }
 
         [Hidden]
         public sealed override void Assign(JSValue value)
         {
-            if ((_attributes & JSValueAttributesInternal.ReadOnly) == 0)
+            if ((_attributes & JsValueAttributesInternal.ReadOnly) == 0)
             {
                 if (this is GlobalObject)
                     ExceptionHelper.Throw(new ReferenceError("Invalid left-hand side"));
@@ -393,15 +393,15 @@ namespace Maddalena.Core.Javascript.Core
                     var obj = new JSValue {_valueType = JSValueType.Undefined};
                     res._fields[item.Key] = obj;
                     obj._attributes |=
-                        JSValueAttributesInternal.DoNotEnumerate
-                        | JSValueAttributesInternal.NonConfigurable
-                        | JSValueAttributesInternal.DoNotDelete
-                        | JSValueAttributesInternal.ReadOnly;
+                        JsValueAttributesInternal.DoNotEnumerate
+                        | JsValueAttributesInternal.NonConfigurable
+                        | JsValueAttributesInternal.DoNotDelete
+                        | JsValueAttributesInternal.ReadOnly;
                     if ((bool) enumerable)
-                        obj._attributes &= ~JSValueAttributesInternal.DoNotEnumerate;
+                        obj._attributes &= ~JsValueAttributesInternal.DoNotEnumerate;
                     if ((bool) configurable)
-                        obj._attributes &= ~(JSValueAttributesInternal.NonConfigurable |
-                                             JSValueAttributesInternal.DoNotDelete);
+                        obj._attributes &= ~(JsValueAttributesInternal.NonConfigurable |
+                                             JsValueAttributesInternal.DoNotDelete);
                     if (value.Exists)
                     {
                         var atr = obj._attributes;
@@ -409,7 +409,7 @@ namespace Maddalena.Core.Javascript.Core
                         obj.Assign(value);
                         obj._attributes = atr;
                         if ((bool) writable)
-                            obj._attributes &= ~JSValueAttributesInternal.ReadOnly;
+                            obj._attributes &= ~JsValueAttributesInternal.ReadOnly;
                     }
                     else if (get.Exists || set.Exists)
                     {
@@ -429,7 +429,7 @@ namespace Maddalena.Core.Javascript.Core
                     }
                     else if ((bool) writable)
                     {
-                        obj._attributes &= ~JSValueAttributesInternal.ReadOnly;
+                        obj._attributes &= ~JsValueAttributesInternal.ReadOnly;
                     }
                 }
 
@@ -533,18 +533,18 @@ namespace Maddalena.Core.Javascript.Core
 
             JSValue obj = null;
             obj = target.DefineProperty(memberName);
-            if ((obj._attributes & JSValueAttributesInternal.Argument) != 0 && (set.Exists || get.Exists))
+            if ((obj._attributes & JsValueAttributesInternal.Argument) != 0 && (set.Exists || get.Exists))
             {
                 if (target is Arguments arguments &&
                     int.TryParse(memberName, NumberStyles.Integer, CultureInfo.InvariantCulture, out var ti) && ti >= 0 &&
                     ti < 16)
-                    arguments[ti] = obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject);
+                    arguments[ti] = obj = obj.CloneImpl(JsValueAttributesInternal.SystemObject);
                 else
-                    target._fields[memberName] = obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject);
-                obj._attributes &= ~JSValueAttributesInternal.Argument;
+                    target._fields[memberName] = obj = obj.CloneImpl(JsValueAttributesInternal.SystemObject);
+                obj._attributes &= ~JsValueAttributesInternal.Argument;
             }
 
-            if ((obj._attributes & JSValueAttributesInternal.SystemObject) != 0)
+            if ((obj._attributes & JsValueAttributesInternal.SystemObject) != 0)
                 ExceptionHelper.Throw(
                     new TypeError("Can not define property \"" + memberName + "\". Object immutable."));
 
@@ -559,7 +559,7 @@ namespace Maddalena.Core.Javascript.Core
                             if (double.IsNaN(nlenD) || double.IsInfinity(nlenD) || nlen != nlenD)
                                 ExceptionHelper.Throw(new RangeError("Invalid array length"));
 
-                            if ((obj._attributes & JSValueAttributesInternal.ReadOnly) != 0
+                            if ((obj._attributes & JsValueAttributesInternal.ReadOnly) != 0
                                 && (obj._valueType == JSValueType.Double && nlenD != obj._dValue
                                     || obj._valueType == JSValueType.Integer && nlen != obj._iValue))
                                 ExceptionHelper.Throw(new TypeError("Cannot change length of fixed size array"));
@@ -574,20 +574,20 @@ namespace Maddalena.Core.Javascript.Core
                     finally
                     {
                         if (writable.Exists && !(bool) writable)
-                            obj._attributes |= JSValueAttributesInternal.ReadOnly;
+                            obj._attributes |= JsValueAttributesInternal.ReadOnly;
                     }
 
             var newProp = obj._valueType < JSValueType.Undefined;
-            var config = (obj._attributes & JSValueAttributesInternal.NonConfigurable) == 0 || newProp;
+            var config = (obj._attributes & JsValueAttributesInternal.NonConfigurable) == 0 || newProp;
 
             if (!config)
             {
-                if (enumerable.Exists && (obj._attributes & JSValueAttributesInternal.DoNotEnumerate) != 0 ==
+                if (enumerable.Exists && (obj._attributes & JsValueAttributesInternal.DoNotEnumerate) != 0 ==
                     (bool) enumerable)
                     ExceptionHelper.Throw(
                         new TypeError("Cannot change enumerable attribute for non configurable property."));
 
-                if (writable.Exists && (obj._attributes & JSValueAttributesInternal.ReadOnly) != 0 && (bool) writable)
+                if (writable.Exists && (obj._attributes & JsValueAttributesInternal.ReadOnly) != 0 && (bool) writable)
                     ExceptionHelper.Throw(
                         new TypeError("Cannot change writable attribute for non configurable property."));
 
@@ -595,16 +595,16 @@ namespace Maddalena.Core.Javascript.Core
                     ExceptionHelper.Throw(new TypeError("Cannot set configurable attribute to true."));
 
                 if ((obj._valueType != JSValueType.Property ||
-                     (obj._attributes & JSValueAttributesInternal.Field) != 0) && (set.Exists || get.Exists))
+                     (obj._attributes & JsValueAttributesInternal.Field) != 0) && (set.Exists || get.Exists))
                     ExceptionHelper.Throw(new TypeError(
                         "Cannot redefine not configurable property from immediate value to accessor property"));
 
                 if (obj._valueType == JSValueType.Property &&
-                    (obj._attributes & JSValueAttributesInternal.Field) == 0 && value.Exists)
+                    (obj._attributes & JsValueAttributesInternal.Field) == 0 && value.Exists)
                     ExceptionHelper.Throw(new TypeError(
                         "Cannot redefine not configurable property from accessor property to immediate value"));
 
-                if (obj._valueType == JSValueType.Property && (obj._attributes & JSValueAttributesInternal.Field) == 0
+                if (obj._valueType == JSValueType.Property && (obj._attributes & JsValueAttributesInternal.Field) == 0
                                                            && set.Exists
                                                            && ((obj._oValue as PropertyPair).setter != null &&
                                                                (obj._oValue as PropertyPair).setter._oValue !=
@@ -613,7 +613,7 @@ namespace Maddalena.Core.Javascript.Core
                                                                set.Defined))
                     ExceptionHelper.Throw(new TypeError("Cannot redefine setter of not configurable property."));
 
-                if (obj._valueType == JSValueType.Property && (obj._attributes & JSValueAttributesInternal.Field) == 0
+                if (obj._valueType == JSValueType.Property && (obj._attributes & JsValueAttributesInternal.Field) == 0
                                                            && get.Exists
                                                            && ((obj._oValue as PropertyPair).getter != null &&
                                                                (obj._oValue as PropertyPair).getter._oValue !=
@@ -626,7 +626,7 @@ namespace Maddalena.Core.Javascript.Core
             if (value.Exists)
             {
                 if (!config
-                    && (obj._attributes & JSValueAttributesInternal.ReadOnly) != 0
+                    && (obj._attributes & JsValueAttributesInternal.ReadOnly) != 0
                     && !(StrictEqual.Check(obj, value) &&
                          (obj._valueType == JSValueType.Undefined && value._valueType == JSValueType.Undefined ||
                           !obj.IsNumber || !value.IsNumber ||
@@ -668,46 +668,46 @@ namespace Maddalena.Core.Javascript.Core
             if (newProp)
             {
                 obj._attributes |=
-                    JSValueAttributesInternal.DoNotEnumerate
-                    | JSValueAttributesInternal.DoNotDelete
-                    | JSValueAttributesInternal.NonConfigurable
-                    | JSValueAttributesInternal.ReadOnly;
+                    JsValueAttributesInternal.DoNotEnumerate
+                    | JsValueAttributesInternal.DoNotDelete
+                    | JsValueAttributesInternal.NonConfigurable
+                    | JsValueAttributesInternal.ReadOnly;
             }
             else
             {
                 var atrbts = obj._attributes;
                 if (configurable.Exists && (config || !(bool) configurable))
-                    obj._attributes |= JSValueAttributesInternal.NonConfigurable |
-                                       JSValueAttributesInternal.DoNotDelete;
+                    obj._attributes |= JsValueAttributesInternal.NonConfigurable |
+                                       JsValueAttributesInternal.DoNotDelete;
                 if (enumerable.Exists && (config || !(bool) enumerable))
-                    obj._attributes |= JSValueAttributesInternal.DoNotEnumerate;
+                    obj._attributes |= JsValueAttributesInternal.DoNotEnumerate;
                 if (writable.Exists && (config || !(bool) writable))
-                    obj._attributes |= JSValueAttributesInternal.ReadOnly;
+                    obj._attributes |= JsValueAttributesInternal.ReadOnly;
 
-                if (obj._attributes != atrbts && (obj._attributes & JSValueAttributesInternal.Argument) != 0)
+                if (obj._attributes != atrbts && (obj._attributes & JsValueAttributesInternal.Argument) != 0)
                 {
                     var ti = 0;
                     if (target is Arguments &&
                         int.TryParse(memberName, NumberStyles.Integer, CultureInfo.InvariantCulture, out ti) &&
                         ti >= 0 && ti < 16)
                         (target as Arguments)[ti] =
-                            obj = obj.CloneImpl(JSValueAttributesInternal.SystemObject |
-                                                JSValueAttributesInternal.Argument);
+                            obj = obj.CloneImpl(JsValueAttributesInternal.SystemObject |
+                                                JsValueAttributesInternal.Argument);
                     else
                         target._fields[memberName] = obj =
-                            obj.CloneImpl(JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.Argument);
+                            obj.CloneImpl(JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.Argument);
                 }
             }
 
             if (config)
             {
                 if ((bool) enumerable)
-                    obj._attributes &= ~JSValueAttributesInternal.DoNotEnumerate;
+                    obj._attributes &= ~JsValueAttributesInternal.DoNotEnumerate;
                 if ((bool) configurable)
-                    obj._attributes &= ~(JSValueAttributesInternal.NonConfigurable |
-                                         JSValueAttributesInternal.DoNotDelete);
+                    obj._attributes &= ~(JsValueAttributesInternal.NonConfigurable |
+                                         JsValueAttributesInternal.DoNotDelete);
                 if ((bool) writable)
-                    obj._attributes &= ~JSValueAttributesInternal.ReadOnly;
+                    obj._attributes &= ~JsValueAttributesInternal.ReadOnly;
             }
 
             return target;
@@ -721,9 +721,9 @@ namespace Maddalena.Core.Javascript.Core
             if (args[1]._valueType != JSValueType.Function)
                 ExceptionHelper.Throw(new TypeError("Expecting function as second parameter"));
             var field = GetProperty(args[0], true, PropertyScope.Own);
-            if ((field._attributes & JSValueAttributesInternal.NonConfigurable) != 0)
+            if ((field._attributes & JsValueAttributesInternal.NonConfigurable) != 0)
                 ExceptionHelper.Throw(new TypeError("Cannot change value of not configurable peoperty."));
-            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0)
+            if ((field._attributes & JsValueAttributesInternal.ReadOnly) != 0)
                 ExceptionHelper.Throw(new TypeError("Cannot change value of readonly peoperty."));
 
             if (field._valueType == JSValueType.Property)
@@ -748,9 +748,9 @@ namespace Maddalena.Core.Javascript.Core
             if (args[1]._valueType != JSValueType.Function)
                 ExceptionHelper.Throw(new TypeError("Expecting function as second parameter"));
             var field = GetProperty(args[0], true, PropertyScope.Own);
-            if ((field._attributes & JSValueAttributesInternal.NonConfigurable) != 0)
+            if ((field._attributes & JsValueAttributesInternal.NonConfigurable) != 0)
                 ExceptionHelper.Throw(new TypeError("Cannot change value of not configurable peoperty."));
-            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0)
+            if ((field._attributes & JsValueAttributesInternal.ReadOnly) != 0)
                 ExceptionHelper.Throw(new TypeError("Cannot change value of readonly peoperty."));
             if (field._valueType == JSValueType.Property)
             {
@@ -792,13 +792,13 @@ namespace Maddalena.Core.Javascript.Core
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Object.freeze called on null."));
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            obj._attributes |= JSValueAttributesInternal.Immutable;
+            obj._attributes |= JsValueAttributesInternal.Immutable;
             for (var e = obj.GetEnumerator(false, EnumerationMode.RequireValuesForWrite); e.MoveNext();)
             {
                 var value = e.Current.Value;
-                if ((value._attributes & JSValueAttributesInternal.SystemObject) == 0)
-                    value._attributes |= JSValueAttributesInternal.NonConfigurable |
-                                         JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete;
+                if ((value._attributes & JsValueAttributesInternal.SystemObject) == 0)
+                    value._attributes |= JsValueAttributesInternal.NonConfigurable |
+                                         JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete;
             }
 
             return obj;
@@ -812,7 +812,7 @@ namespace Maddalena.Core.Javascript.Core
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Can not prevent extensions for null"));
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            obj._attributes |= JSValueAttributesInternal.Immutable;
+            obj._attributes |= JsValueAttributesInternal.Immutable;
             return obj;
         }
 
@@ -824,7 +824,7 @@ namespace Maddalena.Core.Javascript.Core
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Object.isExtensible called on null."));
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            return (obj._attributes & JSValueAttributesInternal.Immutable) == 0;
+            return (obj._attributes & JsValueAttributesInternal.Immutable) == 0;
         }
 
         [DoNotEnumerate]
@@ -835,7 +835,7 @@ namespace Maddalena.Core.Javascript.Core
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Object.isSealed called on null."));
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            if ((obj._attributes & JSValueAttributesInternal.Immutable) == 0)
+            if ((obj._attributes & JsValueAttributesInternal.Immutable) == 0)
                 return false;
             if (obj is Proxy)
                 return true;
@@ -844,12 +844,12 @@ namespace Maddalena.Core.Javascript.Core
                     if (node != null
                         && node.Exists
                         && node._valueType >= JSValueType.Object && node._oValue != null
-                        && (node._attributes & JSValueAttributesInternal.NonConfigurable) == 0)
+                        && (node._attributes & JsValueAttributesInternal.NonConfigurable) == 0)
                         return false;
             if (obj._fields != null)
                 foreach (var f in obj._fields)
                     if (f.Value._valueType >= JSValueType.Object && f.Value._oValue != null &&
-                        (f.Value._attributes & JSValueAttributesInternal.NonConfigurable) == 0)
+                        (f.Value._attributes & JsValueAttributesInternal.NonConfigurable) == 0)
                         return false;
             return true;
         }
@@ -862,13 +862,13 @@ namespace Maddalena.Core.Javascript.Core
             if (args[0]._oValue == null)
                 ExceptionHelper.Throw(new TypeError("Object.seal called on null."));
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            obj._attributes |= JSValueAttributesInternal.Immutable;
+            obj._attributes |= JsValueAttributesInternal.Immutable;
             for (var e = obj.GetEnumerator(false, EnumerationMode.RequireValuesForWrite); e.MoveNext();)
             {
                 var value = e.Current.Value;
-                if ((value._attributes & JSValueAttributesInternal.SystemObject) == 0)
-                    value._attributes |= JSValueAttributesInternal.NonConfigurable |
-                                         JSValueAttributesInternal.DoNotDelete;
+                if ((value._attributes & JsValueAttributesInternal.SystemObject) == 0)
+                    value._attributes |= JsValueAttributesInternal.NonConfigurable |
+                                         JsValueAttributesInternal.DoNotDelete;
             }
 
             return obj;
@@ -883,7 +883,7 @@ namespace Maddalena.Core.Javascript.Core
                 ExceptionHelper.Throw(new TypeError("Object.isFrozen called on null."));
 
             var obj = args[0].Value as JSObject ?? args[0]._oValue as JSObject;
-            if (obj != null && (obj._attributes & JSValueAttributesInternal.Immutable) == 0)
+            if (obj != null && (obj._attributes & JsValueAttributesInternal.Immutable) == 0)
                 return false;
 
             switch (obj)
@@ -893,24 +893,24 @@ namespace Maddalena.Core.Javascript.Core
                 case Array arr:
                     foreach (var node in arr._data.DirectOrder)
                         if (node.Value != null && node.Value.Exists &&
-                            ((node.Value._attributes & JSValueAttributesInternal.NonConfigurable) == 0
+                            ((node.Value._attributes & JsValueAttributesInternal.NonConfigurable) == 0
                              || node.Value._valueType != JSValueType.Property &&
-                             (node.Value._attributes & JSValueAttributesInternal.ReadOnly) == 0))
+                             (node.Value._attributes & JsValueAttributesInternal.ReadOnly) == 0))
                             return false;
                     break;
                 case Arguments _:
                     var arg = obj as Arguments;
                     for (var i = 0; i < 16; i++)
-                        if ((arg[i]._attributes & JSValueAttributesInternal.NonConfigurable) == 0
+                        if ((arg[i]._attributes & JsValueAttributesInternal.NonConfigurable) == 0
                             || arg[i]._valueType != JSValueType.Property &&
-                            (arg[i]._attributes & JSValueAttributesInternal.ReadOnly) == 0)
+                            (arg[i]._attributes & JsValueAttributesInternal.ReadOnly) == 0)
                             return false;
                     break;
             }
 
             return obj._fields == null ||
-                   obj._fields.All(f => (f.Value._attributes & JSValueAttributesInternal.NonConfigurable) != 0 
-                                        && (f.Value._valueType == JSValueType.Property || (f.Value._attributes & JSValueAttributesInternal.ReadOnly) != 0));
+                   obj._fields.All(f => (f.Value._attributes & JsValueAttributesInternal.NonConfigurable) != 0 
+                                        && (f.Value._valueType == JSValueType.Property || (f.Value._attributes & JsValueAttributesInternal.ReadOnly) != 0));
         }
 
         [DoNotEnumerate]
@@ -936,17 +936,17 @@ namespace Maddalena.Core.Javascript.Core
             var obj = source.GetProperty(args[1], false, PropertyScope.Own);
             if (obj._valueType < JSValueType.Undefined)
                 return undefined;
-            if ((obj._attributes & JSValueAttributesInternal.SystemObject) != 0)
+            if ((obj._attributes & JsValueAttributesInternal.SystemObject) != 0)
                 obj = source.GetProperty(args[1], true, PropertyScope.Own);
             var res = CreateObject();
-            if (obj._valueType != JSValueType.Property || (obj._attributes & JSValueAttributesInternal.Field) != 0)
+            if (obj._valueType != JSValueType.Property || (obj._attributes & JsValueAttributesInternal.Field) != 0)
             {
                 if (obj._valueType == JSValueType.Property)
                     res["value"] = (obj._oValue as PropertyPair)?.getter.Call(source, null);
                 else
                     res["value"] = obj;
                 res["writable"] = obj._valueType < JSValueType.Undefined ||
-                                  (obj._attributes & JSValueAttributesInternal.ReadOnly) == 0;
+                                  (obj._attributes & JsValueAttributesInternal.ReadOnly) == 0;
             }
             else
             {
@@ -954,9 +954,9 @@ namespace Maddalena.Core.Javascript.Core
                 res["get"] = (obj._oValue as PropertyPair)?.getter;
             }
 
-            res["configurable"] = (obj._attributes & JSValueAttributesInternal.NonConfigurable) == 0 ||
-                                  (obj._attributes & JSValueAttributesInternal.DoNotDelete) == 0;
-            res["enumerable"] = (obj._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0;
+            res["configurable"] = (obj._attributes & JsValueAttributesInternal.NonConfigurable) == 0 ||
+                                  (obj._attributes & JsValueAttributesInternal.DoNotDelete) == 0;
+            res["enumerable"] = (obj._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0;
             return res;
         }
 

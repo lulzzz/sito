@@ -17,7 +17,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             {
                 _owner = owner;
                 _key = key;
-                _attributes |= JSValueAttributesInternal.Reassign;
+                _attributes |= JsValueAttributesInternal.Reassign;
 
                 object value = null;
                 if ((owner._target as IDictionary<string, object>).TryGetValue(key, out value))

@@ -192,10 +192,10 @@ namespace Maddalena.Core.Javascript.Core.Functions
             if (FunctionDefinition.Parameters[index].assignments != null)
             {
                 value = value.CloneImpl(false);
-                value._attributes |= JSValueAttributesInternal.Argument;
+                value._attributes |= JsValueAttributesInternal.Argument;
             }
             else
-                value._attributes &= ~JSValueAttributesInternal.Cloned;
+                value._attributes &= ~JsValueAttributesInternal.Cloned;
             if (!value.Defined && FunctionDefinition.Parameters.Length > index && FunctionDefinition.Parameters[index].initializer != null)
                 value.Assign(FunctionDefinition.Parameters[index].initializer.Evaluate(context));
             FunctionDefinition.Parameters[index].cacheRes = value;

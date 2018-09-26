@@ -237,7 +237,7 @@ namespace Maddalena.Core.Javascript.Statements
                         if (processedKeys.Contains(key))
                             continue;
                         processedKeys.Add(key);
-                        if ((keys.Current.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) != 0)
+                        if ((keys.Current.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) != 0)
                             continue;
 
                         if (context.Debugging && !(_body is CodeBlock))

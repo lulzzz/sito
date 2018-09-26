@@ -13,16 +13,16 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         internal const string FalseString = "false";
 
         [Hidden]
-        internal static readonly Boolean True = new Boolean(true) { _attributes = JSValueAttributesInternal.SystemObject };
+        internal static readonly Boolean True = new Boolean(true) { _attributes = JsValueAttributesInternal.SystemObject };
         [Hidden]
-        internal static readonly Boolean False = new Boolean(false) { _attributes = JSValueAttributesInternal.SystemObject };
+        internal static readonly Boolean False = new Boolean(false) { _attributes = JsValueAttributesInternal.SystemObject };
 
         [DoNotEnumerate]
         public Boolean()
         {
             _valueType = JSValueType.Boolean;
             _iValue = 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [StrictConversion]
@@ -33,7 +33,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 throw new ArgumentNullException(nameof(obj));
             _valueType = JSValueType.Boolean;
             _iValue = (bool)obj[0] ? 1 : 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [StrictConversion]
@@ -42,7 +42,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Boolean;
             _iValue = value ? 1 : 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [StrictConversion]
@@ -51,7 +51,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Boolean;
             _iValue = value != 0 && !double.IsNaN(value) ? 1 : 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [StrictConversion]
@@ -60,7 +60,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Boolean;
             _iValue = value != 0 ? 1 : 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [StrictConversion]
@@ -69,7 +69,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
         {
             _valueType = JSValueType.Boolean;
             _iValue = !string.IsNullOrEmpty(value) ? 1 : 0;
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [Hidden]

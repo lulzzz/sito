@@ -17,43 +17,8 @@ using String = Maddalena.Core.Javascript.BaseLibrary.String;
 namespace Maddalena.Core.Javascript.Core
 {
     [Serializable]
-    public enum PropertyScope
-    {
-        Common = 0,
-        Own = 1,
-        Super = 2,
-        PrototypeOfSuperclass = 3
-    }
-
-    [Serializable]
-    public enum JSValueType
-    {
-        NotExists = 0,
-        NotExistsInObject = 1,
-        Undefined = 3,                          // 000000000011 // значение undefined говорит о том, что этот объект, вообще-то, определён, но вот его значение нет
-        Boolean = 4 | Undefined,                // 000000000111
-        Integer = 8 | Undefined,                // 000000001011
-        Double = 16 | Undefined,                // 000000010011
-        String = 32 | Undefined,                // 000000100011
-        Symbol = 64 | Undefined,                // 000001000011
-        Object = 128 | Undefined,               // 000010000011
-        Function = 256 | Undefined,             // 000100000011
-        Date = 512 | Undefined,                 // 001000000011
-        Property = 1024 | Undefined,            // 010000000011
-        SpreadOperatorResult = 2048 | Undefined // 100000000011
-    }
-
-    [Serializable]
-    public enum EnumerationMode
-    {
-        KeysOnly = 0,
-        RequireValues,
-        RequireValuesForWrite
-    }
-
-    [Serializable]
     [Flags]
-    internal enum JSValueAttributesInternal : uint
+    internal enum JsValueAttributesInternal : uint
     {
         None = 0,
         DoNotEnumerate = 1 << 0,
@@ -105,7 +70,7 @@ namespace Maddalena.Core.Javascript.Core
     [DebuggerDisplay("Value = {Value} ({ValueType})")]
     public class JSValue : IEnumerable<KeyValuePair<string, JSValue>>, IComparable<JSValue>, ICloneable, IConvertible
     {
-        internal const int publicAttributesMask = 0x1f | (int)JSValueAttributesInternal.Reassign;
+        internal const int publicAttributesMask = 0x1f | (int)JsValueAttributesInternal.Reassign;
 
         internal static readonly JSValue numberString = "number";
         internal static readonly JSValue undefinedString = "undefined";
@@ -115,10 +80,10 @@ namespace Maddalena.Core.Javascript.Core
         internal static readonly JSValue functionString = "function";
         internal static readonly JSValue objectString = "object";
 
-        internal static readonly JSValue undefined = new JSValue { _valueType = JSValueType.Undefined, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSValue notExists = new JSValue { _valueType = JSValueType.NotExists, _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSObject @null = new JSObject { _valueType = JSValueType.Object, _oValue = null, _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
-        internal static readonly JSValue nullString = new JSValue { _valueType = JSValueType.String, _oValue = "null", _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject };
+        internal static readonly JSValue undefined = new JSValue { _valueType = JSValueType.Undefined, _attributes = JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject };
+        internal static readonly JSValue notExists = new JSValue { _valueType = JSValueType.NotExists, _attributes = JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.SystemObject };
+        internal static readonly JSObject @null = new JSObject { _valueType = JSValueType.Object, _oValue = null, _attributes = JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject };
+        internal static readonly JSValue nullString = new JSValue { _valueType = JSValueType.String, _oValue = "null", _attributes = JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject };
 
         [Hidden]
         public static JSValue Undefined { [Hidden] get { return undefined; } }
@@ -160,7 +125,7 @@ namespace Maddalena.Core.Javascript.Core
             }
         }
 
-        internal JSValueAttributesInternal _attributes;
+        internal JsValueAttributesInternal _attributes;
         internal JSValueType _valueType;
         internal int _iValue;
         internal double _dValue;
@@ -260,13 +225,13 @@ namespace Maddalena.Core.Javascript.Core
 
         protected bool Reassign
         {
-            get => (_attributes & JSValueAttributesInternal.Reassign) != 0;
+            get => (_attributes & JsValueAttributesInternal.Reassign) != 0;
             set
             {
                 if (value)
-                    _attributes |= JSValueAttributesInternal.Reassign;
+                    _attributes |= JsValueAttributesInternal.Reassign;
                 else
-                    _attributes &= ~JSValueAttributesInternal.Reassign;
+                    _attributes &= ~JsValueAttributesInternal.Reassign;
             }
         }
 
@@ -292,7 +257,7 @@ namespace Maddalena.Core.Javascript.Core
             [Hidden]
             set
             {
-                if ((_attributes & JSValueAttributesInternal.Immutable) != 0)
+                if ((_attributes & JsValueAttributesInternal.Immutable) != 0)
                     return;
                 if (_valueType < JSValueType.Object)
                     return;
@@ -349,7 +314,7 @@ namespace Maddalena.Core.Javascript.Core
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return (_attributes & (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.SystemObject)) == JSValueAttributesInternal.SystemObject;
+                return (_attributes & (JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.SystemObject)) == JsValueAttributesInternal.SystemObject;
             }
         }
 
@@ -555,10 +520,7 @@ namespace Maddalena.Core.Javascript.Core
                 }
 
                 field = _oValue as JSObject;
-                if (field != null)
-                {
-                    field.SetProperty(name, value, propertyScope, throwOnError);
-                }
+                field?.SetProperty(name, value, propertyScope, throwOnError);
             }
             else if (_valueType <= JSValueType.Undefined)
             {
@@ -687,23 +649,23 @@ namespace Maddalena.Core.Javascript.Core
 
         internal JSValue CloneImpl(bool force)
         {
-            return CloneImpl(force, JSValueAttributesInternal.ReadOnly
-                | JSValueAttributesInternal.SystemObject
-                | JSValueAttributesInternal.Temporary
-                | JSValueAttributesInternal.Reassign
-                | JSValueAttributesInternal.ProxyPrototype);
+            return CloneImpl(force, JsValueAttributesInternal.ReadOnly
+                | JsValueAttributesInternal.SystemObject
+                | JsValueAttributesInternal.Temporary
+                | JsValueAttributesInternal.Reassign
+                | JsValueAttributesInternal.ProxyPrototype);
         }
 
-        internal virtual JSValue CloneImpl(JSValueAttributesInternal resetMask)
+        internal virtual JSValue CloneImpl(JsValueAttributesInternal resetMask)
         {
             return CloneImpl(true, resetMask);
         }
 
-        internal virtual JSValue CloneImpl(bool force, JSValueAttributesInternal resetMask)
+        internal virtual JSValue CloneImpl(bool force, JsValueAttributesInternal resetMask)
         {
-            if (!force && (_attributes & JSValueAttributesInternal.Cloned) != 0)
+            if (!force && (_attributes & JsValueAttributesInternal.Cloned) != 0)
             {
-                _attributes &= ~(JSValueAttributesInternal.Cloned | resetMask);
+                _attributes &= ~(JsValueAttributesInternal.Cloned | resetMask);
                 return this;
             }
 
@@ -758,7 +720,7 @@ namespace Maddalena.Core.Javascript.Core
         [Hidden]
         public virtual void Assign(JSValue value)
         {
-            if ((_attributes & (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.SystemObject)) != 0)
+            if ((_attributes & (JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.SystemObject)) != 0)
                 return;
             _valueType = value._valueType | JSValueType.Undefined;
             _iValue = value._iValue;
@@ -946,24 +908,16 @@ namespace Maddalena.Core.Javascript.Core
                             return $"[object {Tools.InvokeGetter(tag, self)}]";
                         }
 
-                        if (self._oValue is Proxy)
+                        if (self._oValue is Proxy proxy)
                         {
-                            var hostedType = (self._oValue as Proxy)._hostedType;
+                            var hostedType = proxy._hostedType;
 
-                            if (hostedType == typeof(JSObject))
-                            {
-                                return "[object Object]";
-                            }
-
-                            return $"[object {hostedType.Name}]";
+                            return hostedType == typeof(JSObject) ? "[object Object]" : $"[object {hostedType.Name}]";
                         }
 
-                        if (self.Value.GetType() == typeof(JSObject))
-                        {
-                            return "[object Object]";
-                        }
-
-                        return $"[object {self.Value.GetType().Name}]";
+                        return self.Value.GetType() == typeof(JSObject) 
+                                ?  "[object Object]" 
+                                : $"[object {self.Value.GetType().Name}]";
                     }
                 default:
                     throw new NotImplementedException();
@@ -1011,7 +965,7 @@ namespace Maddalena.Core.Javascript.Core
             var name = args[0];
             string n = name.ToString();
             var res = GetProperty(n, PropertyScope.Own);
-            res = (res.Exists) && ((res._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0);
+            res = (res.Exists) && ((res._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0);
             return res;
         }
 

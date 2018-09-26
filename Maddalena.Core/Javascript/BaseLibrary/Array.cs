@@ -26,7 +26,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             _oValue = this;
             _valueType = JSValueType.Object;
             _data = new SparseArray<JSValue>();
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [DoNotEnumerate]
@@ -43,7 +43,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             _oValue = this;
             _valueType = JSValueType.Object;
             _data = new SparseArray<JSValue>((int) System.Math.Min(100000, length));
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [DoNotEnumerate]
@@ -55,7 +55,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             _oValue = this;
             _valueType = JSValueType.Object;
             _data = new SparseArray<JSValue>();
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
 
             if (length > 0)
                 _data[(int) ((uint) length - 1)] = null;
@@ -66,7 +66,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             _oValue = this;
             _valueType = JSValueType.Object;
             _data = new SparseArray<JSValue>(data);
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [DoNotEnumerate]
@@ -78,7 +78,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             _oValue = this;
             _valueType = JSValueType.Object;
             _data = new SparseArray<JSValue>();
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
 
             for (var i = 0; i < args.length; i++)
                 _data[i] = args[i].CloneImpl(false);
@@ -111,7 +111,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 _data[index++] = (e as JSValue ?? Context.CurrentGlobalContext.ProxyValue(e)).CloneImpl(false);
             }
 
-            _attributes |= JSValueAttributesInternal.SystemObject;
+            _attributes |= JsValueAttributesInternal.SystemObject;
         }
 
         [Hidden]
@@ -155,7 +155,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             {
                 if (index >= _data.Length
                     && _lengthObj != null
-                    && (_lengthObj._attributes & JSValueAttributesInternal.ReadOnly) != 0)
+                    && (_lengthObj._attributes & JsValueAttributesInternal.ReadOnly) != 0)
                     return; // fixed size array. Item could not be added
 
                 var res = _data[index];
@@ -164,7 +164,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                     res = new JSValue {_valueType = JSValueType.NotExistsInObject};
                     _data[index] = res;
                 }
-                else if ((res._attributes & JSValueAttributesInternal.SystemObject) != 0)
+                else if ((res._attributes & JsValueAttributesInternal.SystemObject) != 0)
                 {
                     _data[index] = res = res.CloneImpl(false);
                 }
@@ -208,7 +208,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                         break;
                     if (element.Value != null
                         && element.Value.Exists
-                        && (element.Value._attributes & JSValueAttributesInternal.DoNotDelete) != 0)
+                        && (element.Value._attributes & JsValueAttributesInternal.DoNotDelete) != 0)
                     {
                         nlen = element.Key;
                         res = false;
@@ -1091,7 +1091,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 var res = tres._valueType == JSValueType.Property
                     ? ((tres._oValue as PropertyPair).getter ?? Function.Empty).Call(self, null)
                     : tres.CloneImpl(false);
-                if ((tres._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                if ((tres._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                 {
                     tres._oValue = null;
                     tres._valueType = JSValueType.NotExistsInObject;
@@ -1233,7 +1233,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 else
                 {
                     var t = self.GetProperty(i0, true, PropertyScope.Own);
-                    if ((t._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                    if ((t._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                     {
                         t._oValue = null;
                         t._valueType = JSValueType.NotExists;
@@ -1255,7 +1255,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 else
                 {
                     var t = self.GetProperty(i1, true, PropertyScope.Own);
-                    if ((t._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                    if ((t._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                     {
                         t._oValue = null;
                         t._valueType = JSValueType.NotExists;
@@ -1462,7 +1462,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 res = res._valueType == JSValueType.Property
                     ? Tools.InvokeGetter(res, self).CloneImpl(false)
                     : res.CloneImpl(false);
-                if ((t._attributes & (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete)) == 0)
+                if ((t._attributes & (JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete)) == 0)
                 {
                     t._oValue = null;
                     t._valueType = JSValueType.NotExists;
@@ -1501,7 +1501,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                     tjo._oValue = keysToRemove[i];
                     var to = self.GetProperty(tjo, true, PropertyScope.Common);
                     if ((to._attributes &
-                         (JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete)) == 0)
+                         (JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete)) == 0)
                     {
                         to._oValue = null;
                         to._valueType = JSValueType.NotExists;
@@ -1786,7 +1786,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
                         var src = self.GetProperty(tjo, true, PropertyScope.Common);
                         if (i >= _length + delta)
-                            if ((src._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                            if ((src._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                             {
                                 src._valueType = JSValueType.NotExists;
                                 src._oValue = null;
@@ -1829,7 +1829,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                             dst.Assign(src);
 
                         if (i >= _length + delta)
-                            if ((srcItem._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                            if ((srcItem._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                             {
                                 srcItem._valueType = JSValueType.NotExists;
                                 srcItem._oValue = null;
@@ -1966,7 +1966,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                     {
                         tjo._oValue = keysToRemove[i];
                         var t = self.GetProperty(tjo, true, PropertyScope.Common);
-                        if ((t._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+                        if ((t._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
                         {
                             t._oValue = null;
                             t._valueType = JSValueType.NotExists;
@@ -2055,13 +2055,13 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             foreach (var item in _data.DirectOrder)
                 if (item.Value != null
                     && item.Value.Exists
-                    && (!hideNonEnum || (item.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                    && (!hideNonEnum || (item.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 {
                     var value = item.Value;
                     if (enumeratorMode == EnumerationMode.RequireValuesForWrite &&
                         (value._attributes &
-                         (JSValueAttributesInternal.SystemObject | JSValueAttributesInternal.ReadOnly)) ==
-                        JSValueAttributesInternal.SystemObject)
+                         (JsValueAttributesInternal.SystemObject | JsValueAttributesInternal.ReadOnly)) ==
+                        JsValueAttributesInternal.SystemObject)
                         _data[item.Key] = value = value.CloneImpl(true);
 
                     yield return new KeyValuePair<string, JSValue>(((uint) item.Key).ToString(), value);
@@ -2072,13 +2072,13 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             if (_fields != null)
                 foreach (var f in _fields)
                     if (f.Value.Exists && (!hideNonEnum ||
-                                           (f.Value._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+                                           (f.Value._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                     {
                         var value = f.Value;
                         if (enumeratorMode == EnumerationMode.RequireValuesForWrite &&
-                            (value._attributes & (JSValueAttributesInternal.SystemObject |
-                                                  JSValueAttributesInternal.ReadOnly)) ==
-                            JSValueAttributesInternal.SystemObject) _fields[f.Key] = value = value.CloneImpl(true);
+                            (value._attributes & (JsValueAttributesInternal.SystemObject |
+                                                  JsValueAttributesInternal.ReadOnly)) ==
+                            JsValueAttributesInternal.SystemObject) _fields[f.Key] = value = value.CloneImpl(true);
 
                         yield return new KeyValuePair<string, JSValue>(f.Key, value);
                     }
@@ -2154,10 +2154,10 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
                 if (isIndex)
                 {
-                    forWrite &= (_attributes & JSValueAttributesInternal.Immutable) == 0;
+                    forWrite &= (_attributes & JsValueAttributesInternal.Immutable) == 0;
                     if (forWrite)
                     {
-                        if (_lengthObj != null && (_lengthObj._attributes & JSValueAttributesInternal.ReadOnly) != 0 &&
+                        if (_lengthObj != null && (_lengthObj._attributes & JsValueAttributesInternal.ReadOnly) != 0 &&
                             index >= _data.Length)
                         {
                             if (memberScope == PropertyScope.Own)
@@ -2171,7 +2171,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                             res = new JSValue {_valueType = JSValueType.NotExistsInObject};
                             _data[index] = res;
                         }
-                        else if ((res._attributes & JSValueAttributesInternal.SystemObject) != 0)
+                        else if ((res._attributes & JsValueAttributesInternal.SystemObject) != 0)
                         {
                             _data[index] = res = res.CloneImpl(false);
                         }
@@ -2335,8 +2335,8 @@ namespace Maddalena.Core.Javascript.BaseLibrary
 
             public LengthField(Array owner)
             {
-                _attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate |
-                               JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.Reassign;
+                _attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate |
+                               JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.Reassign;
                 array = owner;
                 if ((int) array._data.Length == array._data.Length)
                 {
@@ -2356,7 +2356,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 var nlen = (uint) nlenD;
                 if (double.IsNaN(nlenD) || double.IsInfinity(nlenD) || nlen != nlenD)
                     ExceptionHelper.Throw(new RangeError("Invalid array length"));
-                if ((_attributes & JSValueAttributesInternal.ReadOnly) != 0)
+                if ((_attributes & JsValueAttributesInternal.ReadOnly) != 0)
                     return;
                 array.SetLenght(nlen);
                 if ((int) array._data.Length == array._data.Length)

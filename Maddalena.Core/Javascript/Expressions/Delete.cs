@@ -26,14 +26,14 @@ namespace Maddalena.Core.Javascript.Expressions
             if (temp._valueType < JSValueType.Undefined)
                 return true;
 
-            if ((temp._attributes & JSValueAttributesInternal.Argument) != 0)
+            if ((temp._attributes & JsValueAttributesInternal.Argument) != 0)
             {
                 return false;
             }
 
-            if ((temp._attributes & JSValueAttributesInternal.DoNotDelete) == 0)
+            if ((temp._attributes & JsValueAttributesInternal.DoNotDelete) == 0)
             {
-                if ((temp._attributes & JSValueAttributesInternal.SystemObject) == 0)
+                if ((temp._attributes & JsValueAttributesInternal.SystemObject) == 0)
                 {
                     temp._valueType = JSValueType.NotExists;
                     temp._oValue = null;

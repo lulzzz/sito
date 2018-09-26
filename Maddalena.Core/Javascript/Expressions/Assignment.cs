@@ -23,11 +23,11 @@ namespace Maddalena.Core.Javascript.Expressions
                 return setProperty(context, field);
             }
 
-            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
+            if ((field._attributes & JsValueAttributesInternal.ReadOnly) != 0 && context._strict)
                 throwReadOnlyError();
             temp = _right.Evaluate(context);
             var oldAttributes = field._attributes;
-            field._attributes &= ~JSValueAttributesInternal.ReadOnly;
+            field._attributes &= ~JsValueAttributesInternal.ReadOnly;
             field.Assign(temp);
             field._attributes = oldAttributes;
             return temp;
@@ -63,7 +63,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 return setProperty(context, field);
             }
 
-            if ((field._attributes & JSValueAttributesInternal.ReadOnly) != 0 && context._strict)
+            if ((field._attributes & JsValueAttributesInternal.ReadOnly) != 0 && context._strict)
                 throwReadOnlyError();
 
             temp = _right.Evaluate(context);

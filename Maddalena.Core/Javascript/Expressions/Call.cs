@@ -156,7 +156,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 if (_callMode == CallMode.Construct)
                     targetObject = null;
 
-                if ((temp._attributes & JSValueAttributesInternal.Eval) != 0)
+                if ((temp._attributes & JsValueAttributesInternal.Eval) != 0)
                     return callEval(context);
 
                 return func.InternalInvoke(targetObject, Arguments, context, withSpread, _callMode != 0);

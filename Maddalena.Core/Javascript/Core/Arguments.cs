@@ -121,9 +121,9 @@ namespace Maddalena.Core.Javascript.Core
         {
             _valueType = JSValueType.Object;
             _oValue = this;
-            _attributes = JSValueAttributesInternal.DoNotDelete
-                | JSValueAttributesInternal.DoNotEnumerate
-                | JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.DoNotDelete
+                | JsValueAttributesInternal.DoNotEnumerate
+                | JsValueAttributesInternal.SystemObject;
         }
 
         public void Add(JSValue arg)
@@ -143,7 +143,7 @@ namespace Maddalena.Core.Javascript.Core
 
             if (memberScope < PropertyScope.Super && key._valueType != JSValueType.Symbol)
             {
-                forWrite &= (_attributes & JSValueAttributesInternal.Immutable) == 0;
+                forWrite &= (_attributes & JsValueAttributesInternal.Immutable) == 0;
                 if (key._valueType == JSValueType.Integer)
                 {
                     switch (key._iValue)
@@ -178,7 +178,7 @@ namespace Maddalena.Core.Javascript.Core
                         {
                             _valueType = JSValueType.Integer,
                             _iValue = length,
-                            _attributes = JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.Reassign
+                            _attributes = JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.Reassign
                         });
                     }
                     case "callee":
@@ -186,10 +186,10 @@ namespace Maddalena.Core.Javascript.Core
                             if (callee == null)
                                 callee = NotExistsInObject;
 
-                            if (forWrite && (callee._attributes & JSValueAttributesInternal.SystemObject) != 0)
+                            if (forWrite && (callee._attributes & JsValueAttributesInternal.SystemObject) != 0)
                             {
                                 callee = callee.CloneImpl(false);
-                                callee._attributes = JSValueAttributesInternal.DoNotEnumerate;
+                                callee._attributes = JsValueAttributesInternal.DoNotEnumerate;
                             }
                             return callee;
                         }
@@ -198,10 +198,10 @@ namespace Maddalena.Core.Javascript.Core
                             if (caller == null)
                                 caller = NotExistsInObject;
 
-                            if (forWrite && (caller._attributes & JSValueAttributesInternal.SystemObject) != 0)
+                            if (forWrite && (caller._attributes & JsValueAttributesInternal.SystemObject) != 0)
                             {
                                 caller = caller.CloneImpl(false);
-                                callee._attributes = JSValueAttributesInternal.DoNotEnumerate;
+                                callee._attributes = JsValueAttributesInternal.DoNotEnumerate;
                             }
                             return caller;
                         }
@@ -215,28 +215,28 @@ namespace Maddalena.Core.Javascript.Core
         {
             cloneValues();
 
-            if (a0 != null && a0.Exists && (!hideNonEnum || (a0._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (a0 != null && a0.Exists && (!hideNonEnum || (a0._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("0", a0);
 
-            if (a1 != null && a1.Exists && (!hideNonEnum || (a1._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (a1 != null && a1.Exists && (!hideNonEnum || (a1._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("1", a1);
 
-            if (a2 != null && a2.Exists && (!hideNonEnum || (a2._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (a2 != null && a2.Exists && (!hideNonEnum || (a2._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("2", a2);
 
-            if (a3 != null && a3.Exists && (!hideNonEnum || (a3._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (a3 != null && a3.Exists && (!hideNonEnum || (a3._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("3", a3);
 
-            if (a4 != null && a4.Exists && (!hideNonEnum || (a4._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (a4 != null && a4.Exists && (!hideNonEnum || (a4._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("4", a4);
 
-            if (callee != null && callee.Exists && (!hideNonEnum || (callee._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (callee != null && callee.Exists && (!hideNonEnum || (callee._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("callee", callee);
 
-            if (caller != null && caller.Exists && (!hideNonEnum || (caller._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (caller != null && caller.Exists && (!hideNonEnum || (caller._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("caller", caller);
 
-            if (_lengthContainer != null && _lengthContainer.Exists && (!hideNonEnum || (_lengthContainer._attributes & JSValueAttributesInternal.DoNotEnumerate) == 0))
+            if (_lengthContainer != null && _lengthContainer.Exists && (!hideNonEnum || (_lengthContainer._attributes & JsValueAttributesInternal.DoNotEnumerate) == 0))
                 yield return new KeyValuePair<string, JSValue>("length", _lengthContainer);
 
             var be = base.GetEnumerator(hideNonEnum, enumeratorMode);
@@ -250,14 +250,14 @@ namespace Maddalena.Core.Javascript.Core
                 return;
             suppressClone = true;
 
-            const JSValueAttributesInternal mask = JSValueAttributesInternal.ReadOnly
-                                                   | JSValueAttributesInternal.SystemObject
-                                                   | JSValueAttributesInternal.Temporary
-                                                   | JSValueAttributesInternal.Reassign
-                                                   | JSValueAttributesInternal.ProxyPrototype
-                                                   | JSValueAttributesInternal.DoNotEnumerate
-                                                   | JSValueAttributesInternal.NonConfigurable
-                                                   | JSValueAttributesInternal.DoNotDelete;
+            const JsValueAttributesInternal mask = JsValueAttributesInternal.ReadOnly
+                                                   | JsValueAttributesInternal.SystemObject
+                                                   | JsValueAttributesInternal.Temporary
+                                                   | JsValueAttributesInternal.Reassign
+                                                   | JsValueAttributesInternal.ProxyPrototype
+                                                   | JsValueAttributesInternal.DoNotEnumerate
+                                                   | JsValueAttributesInternal.NonConfigurable
+                                                   | JsValueAttributesInternal.DoNotDelete;
 
             for (var i = 0; i < length; i++)
             {
@@ -273,15 +273,15 @@ namespace Maddalena.Core.Javascript.Core
                 switch (name._iValue)
                 {
                     case 0:
-                        return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                        return a0 == null || ((a0._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                     case 1:
-                        return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                        return a1 == null || ((a1._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                     case 2:
-                        return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                        return a2 == null || ((a2._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                     case 3:
-                        return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                        return a3 == null || ((a3._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                     case 4:
-                        return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                        return a4 == null || ((a4._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                         //case 5:
                         //    return a5 == null || ((a5.attributes & JSObjectAttributesInternal.DoNotDelete) == 0) && (a5 = null) == null;
                         //case 6:
@@ -293,15 +293,15 @@ namespace Maddalena.Core.Javascript.Core
             switch (name.ToString())
             {
                 case "0":
-                    return a0 == null || ((a0._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                    return a0 == null || ((a0._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                 case "1":
-                    return a1 == null || ((a1._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                    return a1 == null || ((a1._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                 case "2":
-                    return a2 == null || ((a2._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                    return a2 == null || ((a2._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                 case "3":
-                    return a3 == null || ((a3._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                    return a3 == null || ((a3._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                 case "4":
-                    return a4 == null || ((a4._attributes & JSValueAttributesInternal.DoNotDelete) == 0);
+                    return a4 == null || ((a4._attributes & JsValueAttributesInternal.DoNotDelete) == 0);
                     //case "5":
                     //    return a5 == null || ((a5.attributes & JSObjectAttributesInternal.DoNotDelete) == 0) && (a5 = null) == null;
                     //case "6":
@@ -330,7 +330,7 @@ namespace Maddalena.Core.Javascript.Core
             _lengthContainer = null;
             _valueType = JSValueType.Object;
             _oValue = this;
-            _attributes = JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.SystemObject;
+            _attributes = JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.SystemObject;
         }
     }
 }

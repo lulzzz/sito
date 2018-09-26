@@ -16,6 +16,7 @@ using String = Maddalena.Core.Javascript.BaseLibrary.String;
 
 namespace Maddalena.Core.Javascript.Core
 {
+    [Serializable]
     public enum IndexersSupport
     {
         WithAttributeOnly = 0,
@@ -23,13 +24,14 @@ namespace Maddalena.Core.Javascript.Core
         ForceDisable
     }
 
+    [Serializable]
     public sealed class GlobalContext : Context
     {
         internal int _callDepth;
         internal JSObject _globalPrototype;
         private readonly Dictionary<Type, JSObject> _proxies;
 
-        public string Name { get; private set; }
+        public string Name { get; }
         public IndexersSupport IndexersSupport { get; set; }
         public JsonSerializersRegistry JsonSerializersRegistry { get; set; }
 
@@ -42,10 +44,7 @@ namespace Maddalena.Core.Javascript.Core
         public GlobalContext(string name)
             : base(null)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
 
             _proxies = new Dictionary<Type, JSObject>();
             JsonSerializersRegistry = new JsonSerializersRegistry();
@@ -61,17 +60,17 @@ namespace Maddalena.Core.Javascript.Core
             ActivateInCurrentThread();
             try
             {
-                if (_variables != null)
-                    _variables.Clear();
-                else
+                if (_variables == null)
                     _variables = JSObject.getFieldsContainer();
+                else
+                    _variables.Clear();
 
                 _proxies.Clear();
                 _globalPrototype = null;
 
                 var objectConstructor = GetConstructor(typeof(JSObject)) as Function;
                 _variables.Add("Object", objectConstructor);
-                objectConstructor._attributes |= JSValueAttributesInternal.DoNotDelete;
+                objectConstructor._attributes |= JsValueAttributesInternal.DoNotDelete;
 
                 _globalPrototype = objectConstructor.prototype as JSObject;
                 _globalPrototype._objectPrototype = JSValue.@null;
@@ -108,13 +107,10 @@ namespace Maddalena.Core.Javascript.Core
                 DefineConstructor(typeof(Set));
 
                 DefineConstructor(typeof(Debug));
-#if !PORTABLE
                 DefineVariable("console").Assign(JSValue.Marshal(new JSConsole()));
-#endif
 
-                #region Base Functions
                 DefineVariable("eval").Assign(new EvalFunction());
-                _variables["eval"]._attributes |= JSValueAttributesInternal.Eval;
+                _variables["eval"]._attributes |= JsValueAttributesInternal.Eval;
                 DefineVariable("isNaN").Assign(new ExternalFunction(GlobalFunctions.isNaN));
                 DefineVariable("unescape").Assign(new ExternalFunction(GlobalFunctions.unescape));
                 DefineVariable("escape").Assign(new ExternalFunction(GlobalFunctions.escape));
@@ -125,10 +121,10 @@ namespace Maddalena.Core.Javascript.Core
                 DefineVariable("isFinite").Assign(new ExternalFunction(GlobalFunctions.isFinite));
                 DefineVariable("parseFloat").Assign(new ExternalFunction(GlobalFunctions.parseFloat));
                 DefineVariable("parseInt").Assign(new ExternalFunction(GlobalFunctions.parseInt));
-                #endregion
-#if DEV
+
+
                 DefineVariable("__pinvoke").Assign(new ExternalFunction(GlobalFunctions.__pinvoke));
-#endif
+
                 #region Consts
                 _variables["undefined"] = JSValue.undefined;
                 _variables["Infinity"] = Number.POSITIVE_INFINITY;
@@ -137,7 +133,7 @@ namespace Maddalena.Core.Javascript.Core
                 #endregion
 
                 foreach (var v in _variables.Values)
-                    v._attributes |= JSValueAttributesInternal.DoNotEnumerate;
+                    v._attributes |= JsValueAttributesInternal.DoNotEnumerate;
             }
             finally
             {
@@ -170,75 +166,69 @@ namespace Maddalena.Core.Javascript.Core
 
         public JSObject GetConstructor(Type type)
         {
-            JSObject constructor = null;
-            if (!_proxies.TryGetValue(type, out constructor))
-            {
-                lock (_proxies)
-                {
-                    JSObject dynamicProxy = null;
+            if (_proxies.TryGetValue(type, out var constructor)) return constructor;
 
-                    if (type.GetTypeInfo().ContainsGenericParameters)
+            lock (_proxies)
+            {
+                JSObject dynamicProxy = null;
+
+                if (type.GetTypeInfo().ContainsGenericParameters)
+                {
+                    constructor = GetGenericTypeSelector(new[] { type });
+                }
+                else
+                {
+                    var indexerSupport = IndexersSupport == IndexersSupport.ForceEnable
+                                         || (IndexersSupport == IndexersSupport.WithAttributeOnly && type.GetTypeInfo().IsDefined(typeof(UseIndexersAttribute), false));
+
+                    var staticProxy = new StaticProxy(this, type, indexerSupport);
+                    if (type.GetTypeInfo().IsAbstract)
                     {
-                        constructor = GetGenericTypeSelector(new[] { type });
+                        _proxies[type] = staticProxy;
+                        return staticProxy;
+                    }
+
+                    JSObject parentPrototype = null;
+
+                    var pa = type.GetTypeInfo().GetCustomAttributes(typeof(PrototypeAttribute), true).ToArray();
+
+                    if (pa.Length != 0 && (pa[0] as PrototypeAttribute).PrototypeType != type)
+                    {
+                        var protoAtt = (PrototypeAttribute) pa[0];
+                        var parentType = protoAtt.PrototypeType;
+                        parentPrototype = (GetConstructor(parentType) as Function).prototype as JSObject;
+
+                        dynamicProxy = protoAtt.Replace && parentType.IsAssignableFrom(type)
+                            ? parentPrototype
+                            : new PrototypeProxy(this, type, indexerSupport)
+                            {
+                                _objectPrototype = parentPrototype
+                            };
                     }
                     else
                     {
-                        var indexerSupport = IndexersSupport == IndexersSupport.ForceEnable
-                            || (IndexersSupport == IndexersSupport.WithAttributeOnly && type.GetTypeInfo().IsDefined(typeof(UseIndexersAttribute), false));
-
-                        var staticProxy = new StaticProxy(this, type, indexerSupport);
-                        if (type.GetTypeInfo().IsAbstract)
-                        {
-                            _proxies[type] = staticProxy;
-                            return staticProxy;
-                        }
-
-                        JSObject parentPrototype = null;
-                        var pa = type.GetTypeInfo().GetCustomAttributes(typeof(PrototypeAttribute), true).ToArray();
-                        if (pa.Length != 0 && (pa[0] as PrototypeAttribute).PrototypeType != type)
-                        {
-                            var parentType = (pa[0] as PrototypeAttribute).PrototypeType;
-                            parentPrototype = (GetConstructor(parentType) as Function).prototype as JSObject;
-
-                            if ((pa[0] as PrototypeAttribute).Replace && parentType.IsAssignableFrom(type))
-                            {
-                                dynamicProxy = parentPrototype;
-                            }
-                            else
-                            {
-                                dynamicProxy = new PrototypeProxy(this, type, indexerSupport)
-                                {
-                                    _objectPrototype = parentPrototype
-                                };
-                            }
-                        }
-                        else
-                        {
-                            dynamicProxy = new PrototypeProxy(this, type, indexerSupport);
-                        }
-
-                        constructor = type == typeof(JSObject) ? new ObjectConstructor(this, staticProxy, dynamicProxy) : new ConstructorProxy(this, staticProxy, dynamicProxy);
-
-                        if (type.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false))
-                            dynamicProxy._attributes |= JSValueAttributesInternal.Immutable;
-                        constructor._attributes = dynamicProxy._attributes;
-                        dynamicProxy._attributes |= JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate | JSValueAttributesInternal.NonConfigurable | JSValueAttributesInternal.ReadOnly;
-
-                        if (dynamicProxy != parentPrototype && type != typeof(ConstructorProxy))
-                        {
-                            dynamicProxy._fields["constructor"] = constructor;
-                        }
+                        dynamicProxy = new PrototypeProxy(this, type, indexerSupport);
                     }
 
-                    _proxies[type] = constructor;
+                    constructor = type == typeof(JSObject) ? new ObjectConstructor(this, staticProxy, dynamicProxy) : new ConstructorProxy(this, staticProxy, dynamicProxy);
 
-                    if (dynamicProxy != null && typeof(JSValue).IsAssignableFrom(type))
+                    if (type.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false))
+                        dynamicProxy._attributes |= JsValueAttributesInternal.Immutable;
+                    constructor._attributes = dynamicProxy._attributes;
+                    dynamicProxy._attributes |= JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate | JsValueAttributesInternal.NonConfigurable | JsValueAttributesInternal.ReadOnly;
+
+                    if (dynamicProxy != parentPrototype && type != typeof(ConstructorProxy))
                     {
-                        if (dynamicProxy._objectPrototype == null)
-                            dynamicProxy._objectPrototype = _globalPrototype ?? JSValue.@null;
-                        var fake = (dynamicProxy as PrototypeProxy).PrototypeInstance;
+                        dynamicProxy._fields["constructor"] = constructor;
                     }
                 }
+
+                _proxies[type] = constructor;
+
+                if (dynamicProxy == null || !typeof(JSValue).IsAssignableFrom(type)) return constructor;
+
+                if (dynamicProxy._objectPrototype == null)
+                    dynamicProxy._objectPrototype = _globalPrototype ?? JSValue.@null;
             }
 
             return constructor;
@@ -257,16 +247,7 @@ namespace Maddalena.Core.Javascript.Core
 
             return new ExternalFunction((_this, args) =>
             {
-                Type type = null;
-
-                for (var i = 0; i < types.Count; i++)
-                {
-                    if (types[i].GetGenericArguments().Length == args.length)
-                    {
-                        type = types[i];
-                        break;
-                    }
-                }
+                var type = types.FirstOrDefault(t => t.GetGenericArguments().Length == args.length);
 
                 if (type == null)
                     ExceptionHelper.ThrowTypeError("Invalid arguments count for generic constructor");
@@ -288,19 +269,11 @@ namespace Maddalena.Core.Javascript.Core
 
         public JSValue ProxyValue(object value)
         {
-            if (value == null)
-            {
-                return JSValue.NotExists;
-            }
+            if (value == null) return JSValue.NotExists;
 
-            var jsvalue = value as JSValue;
-            if (jsvalue != null)
-                return jsvalue;
-#if PORTABLE
-            switch (value.GetType().GetTypeCode())
-#else
+            if (value is JSValue jsvalue) return jsvalue;
+
             switch (Type.GetTypeCode(value.GetType()))
-#endif
             {
                 case TypeCode.Boolean:
                     {
@@ -441,51 +414,41 @@ namespace Maddalena.Core.Javascript.Core
                     }
                 default:
                 {
-                    if (value is Delegate)
-                        {
-                            if (value is ExternalFunctionDelegate)
-                                return new ExternalFunction(value as ExternalFunctionDelegate);
-                            return new MethodProxy(this, ((Delegate)value).GetMethodInfo(), ((Delegate)value).Target);
-                        }
-
-                    if (value is IList)
+                    switch (value)
                     {
-                        return new NativeList(value as IList);
+                        case Delegate @delegate:
+                            if (@delegate is ExternalFunctionDelegate)
+                                return new ExternalFunction(@delegate as ExternalFunctionDelegate);
+                            return new MethodProxy(this, @delegate.GetMethodInfo(), @delegate.Target);
+                        case IList list:
+                            return new NativeList(list);
+                        case ExpandoObject _:
+                            return new ExpandoObjectWrapper(value as ExpandoObject);
                     }
 
-                    if (value is ExpandoObject)
+                    if (!(value is Task)) return new ObjectWrapper(value);
+
+                    Task<JSValue> result;
+                    if (value.GetType().GetTypeInfo().IsGenericType && typeof(Task<>).IsAssignableFrom(value.GetType().GetGenericTypeDefinition()))
                     {
-                        return new ExpandoObjectWrapper(value as ExpandoObject);
+                        result = new Task<JSValue>(() => ProxyValue(value.GetType().GetMethod("get_Result", new Type[0]).Invoke(value, null)));
+                    }
+                    else
+                    {
+                        result = new Task<JSValue>(() => JSValue.NotExists);
                     }
 
-                    if (value is Task)
-                    {
-                        Task<JSValue> result;
-                        if (value.GetType().GetTypeInfo().IsGenericType && typeof(Task<>).IsAssignableFrom(value.GetType().GetGenericTypeDefinition()))
-                        {
-                            result = new Task<JSValue>(() => ProxyValue(value.GetType().GetMethod("get_Result", new Type[0]).Invoke(value, null)));
-                        }
-                        else
-                        {
-                            result = new Task<JSValue>(() => JSValue.NotExists);
-                        }
+                    ((Task) value).ContinueWith(task => result.Start());
+                    return new ObjectWrapper(new Promise(result));
 
-                        (value as Task).ContinueWith(task => result.Start());
-                        return new ObjectWrapper(new Promise(result));
-                    }
-
-                    return new ObjectWrapper(value);
                 }
             }
         }
 
         public override string ToString()
         {
-            var result = "Global Context";
-            if (string.IsNullOrEmpty(Name))
-                return result;
-
-            return result + " \"" + Name + "\"";
+            const string result = "Global Context";
+            return string.IsNullOrEmpty(Name) ? result : $"{result} \"{Name}\"";
         }
     }
 }

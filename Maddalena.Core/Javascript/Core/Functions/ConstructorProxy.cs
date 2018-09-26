@@ -75,7 +75,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
                 RequireNewKeywordLevel = RequireNewKeywordLevel.WithoutNewOnly;
 
             if (_length == null)
-                _length = new Number(0) { _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate };
+                _length = new Number(0) { _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate };
 
 #if (PORTABLE)
             var ctors = System.Linq.Enumerable.ToArray(staticProxy._hostedType.GetTypeInfo().DeclaredConstructors);
@@ -129,7 +129,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
                     }
 
                     res = __proto__.GetProperty(key, forWrite, memberScope);
-                    if (memberScope == PropertyScope.Own && (res._valueType != JSValueType.Property || (res._attributes & JSValueAttributesInternal.Field) == 0))
+                    if (memberScope == PropertyScope.Own && (res._valueType != JSValueType.Property || (res._attributes & JsValueAttributesInternal.Field) == 0))
                         return notExists; // если для записи, то первая ветка всё разрулит и сюда выполнение не придёт
 
                     return res;
@@ -241,7 +241,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
                     {
                         objc.instance = obj;
 
-                        objc._attributes |= _staticProxy._hostedType.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false) ? JSValueAttributesInternal.Immutable : JSValueAttributesInternal.None;
+                        objc._attributes |= _staticProxy._hostedType.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false) ? JsValueAttributesInternal.Immutable : JsValueAttributesInternal.None;
                         if (obj.GetType() == typeof(Date))
                             objc._valueType = JSValueType.Date;
 
@@ -258,7 +258,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
 
                     res = res ?? new ObjectWrapper(obj)
                     {
-                        _attributes = JSValueAttributesInternal.SystemObject | (_staticProxy._hostedType.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false) ? JSValueAttributesInternal.Immutable : JSValueAttributesInternal.None)
+                        _attributes = JsValueAttributesInternal.SystemObject | (_staticProxy._hostedType.GetTypeInfo().IsDefined(typeof(ImmutableAttribute), false) ? JsValueAttributesInternal.Immutable : JsValueAttributesInternal.None)
                     };
                 }
 

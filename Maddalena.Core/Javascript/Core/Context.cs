@@ -377,7 +377,7 @@ namespace Maddalena.Core.Javascript.Core
                 _variables[name] = res;
 
                 if (!deletable)
-                    res._attributes = JSValueAttributesInternal.DoNotDelete;
+                    res._attributes = JsValueAttributesInternal.DoNotDelete;
             }
             else if (res.NeedClone)
             {
@@ -502,7 +502,7 @@ namespace Maddalena.Core.Javascript.Core
         {
             var ctor = GlobalContext.GetConstructor(type);
             _variables.Add(name, ctor);
-            ctor._attributes |= JSValueAttributesInternal.DoNotEnumerate;
+            ctor._attributes |= JsValueAttributesInternal.DoNotEnumerate;
         }
 
         public virtual bool DeleteVariable(string variableName)

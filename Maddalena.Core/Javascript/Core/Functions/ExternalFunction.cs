@@ -38,7 +38,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
         public ExternalFunction(ExternalFunctionDelegate @delegate)
         {
             if (_length == null)
-                _length = new Number(0) { _attributes = JSValueAttributesInternal.ReadOnly | JSValueAttributesInternal.DoNotDelete | JSValueAttributesInternal.DoNotEnumerate };
+                _length = new Number(0) { _attributes = JsValueAttributesInternal.ReadOnly | JsValueAttributesInternal.DoNotDelete | JsValueAttributesInternal.DoNotEnumerate };
 
 #if (PORTABLE)
             var paramCountAttrbt = @delegate.GetMethodInfo().GetCustomAttributes(typeof(ArgumentsCountAttribute), false).ToArray();

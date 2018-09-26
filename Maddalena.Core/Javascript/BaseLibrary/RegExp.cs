@@ -609,7 +609,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
             else
             {
                 _lastIndex = Tools.JSObjectToNumber(_lastIndex);
-                if ((_lastIndex._attributes & JSValueAttributesInternal.SystemObject) != 0)
+                if ((_lastIndex._attributes & JsValueAttributesInternal.SystemObject) != 0)
                     _lastIndex = _lastIndex.CloneImpl(false);
                 if (_lastIndex._valueType == JSValueType.Double)
                 {
@@ -651,7 +651,7 @@ namespace Maddalena.Core.Javascript.BaseLibrary
                 return _regex.IsMatch(input);
 
             _lastIndex = Tools.JSObjectToNumber(_lastIndex);
-            if ((_lastIndex._attributes & JSValueAttributesInternal.SystemObject) != 0)
+            if ((_lastIndex._attributes & JsValueAttributesInternal.SystemObject) != 0)
                 _lastIndex = _lastIndex.CloneImpl(false);
             if (_lastIndex._valueType == JSValueType.Double)
             {

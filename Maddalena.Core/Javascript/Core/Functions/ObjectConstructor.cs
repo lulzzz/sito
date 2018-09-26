@@ -22,7 +22,7 @@ namespace Maddalena.Core.Javascript.Core.Functions
         protected internal override JSValue Invoke(bool construct, JSValue targetObject, Arguments arguments)
         {
             JSValue nestedValue = targetObject;
-            if (nestedValue != null && (nestedValue._attributes & JSValueAttributesInternal.ConstructingObject) == 0)
+            if (nestedValue != null && (nestedValue._attributes & JsValueAttributesInternal.ConstructingObject) == 0)
                 nestedValue = null;
 
             if (arguments != null && arguments.length > 0)

@@ -1856,15 +1856,15 @@ namespace Maddalena.Core.Javascript.Core
 
             if (a._valueType != JSValueType.SpreadOperatorResult)
             {
-                a = a.CloneImpl(false, JSValueAttributesInternal.ReadOnly
-                    | JSValueAttributesInternal.SystemObject
-                    | JSValueAttributesInternal.Temporary
-                    | JSValueAttributesInternal.Reassign
-                    | JSValueAttributesInternal.ProxyPrototype
-                    | JSValueAttributesInternal.DoNotEnumerate
-                    | JSValueAttributesInternal.NonConfigurable
-                    | JSValueAttributesInternal.DoNotDelete);
-                a._attributes |= JSValueAttributesInternal.Cloned;
+                a = a.CloneImpl(false, JsValueAttributesInternal.ReadOnly
+                    | JsValueAttributesInternal.SystemObject
+                    | JsValueAttributesInternal.Temporary
+                    | JsValueAttributesInternal.Reassign
+                    | JsValueAttributesInternal.ProxyPrototype
+                    | JsValueAttributesInternal.DoNotEnumerate
+                    | JsValueAttributesInternal.NonConfigurable
+                    | JsValueAttributesInternal.DoNotDelete);
+                a._attributes |= JsValueAttributesInternal.Cloned;
             }
 
             return a;

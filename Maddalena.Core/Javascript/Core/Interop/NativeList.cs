@@ -20,7 +20,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             {
                 this.owner = owner;
                 this.index = index;
-                _attributes |= JSValueAttributesInternal.Reassign;
+                _attributes |= JsValueAttributesInternal.Reassign;
                 var value = owner.data[index];
                 _valueType = JSValueType.Undefined;
                 if (value != null)
@@ -238,7 +238,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
         {
             if (memberScope < PropertyScope.Super && key._valueType != JSValueType.Symbol)
             {
-                forWrite &= (_attributes & JSValueAttributesInternal.Immutable) == 0;
+                forWrite &= (_attributes & JsValueAttributesInternal.Immutable) == 0;
                 if (key._valueType == JSValueType.String && string.CompareOrdinal("length", key._oValue.ToString()) == 0)
                 {
                     lenObj._iValue = data.Count;

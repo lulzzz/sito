@@ -70,9 +70,9 @@ namespace Maddalena.Core.Javascript.Expressions
                 if (context._strict && setter == null)
                     ExceptionHelper.ThrowIncrementPropertyWOSetter(_left);
                 args = new Arguments();
-                val = ppair.getter == null ? JSValue.undefined.CloneImpl(unchecked((JSValueAttributesInternal)(-1))) : ppair.getter.Call(context._objectSource, args).CloneImpl(unchecked((JSValueAttributesInternal)(-1)));
+                val = ppair.getter == null ? JSValue.undefined.CloneImpl(unchecked((JsValueAttributesInternal)(-1))) : ppair.getter.Call(context._objectSource, args).CloneImpl(unchecked((JsValueAttributesInternal)(-1)));
             }
-            else if ((val._attributes & JSValueAttributesInternal.ReadOnly) != 0)
+            else if ((val._attributes & JsValueAttributesInternal.ReadOnly) != 0)
             {
                 if (context._strict)
                     ExceptionHelper.ThrowIncrementReadonly(_left);
@@ -164,7 +164,7 @@ namespace Maddalena.Core.Javascript.Expressions
                 args[0] = val;
                 setter.Call(context._objectSource, args);
             }
-            else if ((val._attributes & JSValueAttributesInternal.Reassign) != 0)
+            else if ((val._attributes & JsValueAttributesInternal.Reassign) != 0)
                 val.Assign(val);
             return res;
         }

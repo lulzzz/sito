@@ -6,6 +6,7 @@ using Maddalena.Core.Javascript;
 using Maddalena.Core.Javascript.BaseLibrary;
 using Maddalena.Core.Javascript.Core;
 using Maddalena.Core.Javascript.Extensions;
+using Maddalena.Core.Npm;
 
 namespace Maddalena.Core
 {
@@ -13,6 +14,9 @@ namespace Maddalena.Core
     {
         static void Main(string[] args)
         {
+            var t = NpmClient.DownloadWithDependencies("express", @"D:\CULO");
+            t.Wait();
+
             var mainModule = new Module("fakedir/superscript.js", @"");
 
             Module.ResolveModule += (sender, e) =>
