@@ -7,6 +7,8 @@ using Maddalena.Core.Javascript.BaseLibrary;
 using Maddalena.Core.Javascript.Core;
 using Maddalena.Core.Javascript.Extensions;
 using Maddalena.Core.Npm;
+using Maddalena.Core.Npm.Converters;
+using Sprache;
 
 namespace Maddalena.Core
 {

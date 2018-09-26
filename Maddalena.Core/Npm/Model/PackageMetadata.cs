@@ -18,7 +18,7 @@ namespace Maddalena.Core.Npm.Model
         [JsonProperty(PropertyName = "dist-tags")]
         public Dictionary<string, string> DistibutionTags { get; set; }
 
-        public Dictionary<string,NpmPackageVersion> Versions { get; set; }
+        public NpmPackageVersionList Versions { get; set; }
 
         public NpmUser[] Maintainers { get; set; }
         public NpmUser Author { get; set; }

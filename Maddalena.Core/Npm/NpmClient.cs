@@ -27,7 +27,7 @@ namespace Maddalena.Core.Npm
         public static async Task<NpmPackageVersion> LatestVersion(string package)
         {
             var meta = await MetadataAsync(package);
-            return meta.Versions.OrderByDescending(x => x.Key).First().Value;
+            return meta.Versions.OrderByDescending(x => x.Version).First();
         }
 
         public static async Task DownloadWithDependencies(string package, string folder)
@@ -45,8 +45,7 @@ namespace Maddalena.Core.Npm
 
             foreach (var dep in version.Dependencies)
             {
-                var cleanVersion = dep.Value.Replace("~", "");
-                var meta = await MetadataAsync(dep.Key);
+                var meta = await MetadataAsync(dep.Name);
 
                 if (meta == null)
                 {
@@ -54,7 +53,7 @@ namespace Maddalena.Core.Npm
                 }
                 else
                 {
-                    await DownloadWithDependencies(meta.Versions[cleanVersion], folder);
+                    await DownloadWithDependencies(meta.Versions[dep.Version.ToString()], folder);
                 }
             }
         }

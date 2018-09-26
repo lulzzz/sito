@@ -8,15 +8,16 @@ namespace Maddalena.Core.Npm.Model
 {
     public class NpmDependecy
     {
-        private int[] v;
+        public string Name { get; internal set; }
 
-        public NpmDependecy(int[] v)
+        public string Version { get; internal set; }
+
+        public NpmDependecyType Type { get; internal set; }
+
+        internal NpmDependecy(string v, NpmDependecyType type)
         {
-            this.v = v;
+            Version = v;
+            Type = type;
         }
-
-        public string Name { get; set; }
-
-        public Version From { get; set; }
     }
 }

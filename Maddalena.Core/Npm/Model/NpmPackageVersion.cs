@@ -16,9 +16,9 @@ namespace Maddalena.Core.Npm.Model
 
         public NpmUser Author { get; set; }
 
-        public Dictionary<string, string> Dependencies { get; set; }
+        public NpmDependencyList Dependencies { get; set; }
 
-        public Dictionary<string, string> DevDependencies { get; set; }
+        public NpmDependencyList DevDependencies { get; set; }
 
         public NpmUser[] Contributors { get; set; }
 
