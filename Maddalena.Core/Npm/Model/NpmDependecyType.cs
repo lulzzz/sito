@@ -12,6 +12,7 @@ namespace Maddalena.Core.Npm.Model
         LowerOrEqual,
         Greater,
         GreaterOrEqual,
-        Any
+        Any,
+        Forbidden
     }
 }

@@ -20,7 +20,7 @@ namespace Maddalena.Core.Npm.Converters
 
             foreach (var prop in obj.Properties())
             {
-                list.AddRange(DependencyParser.FromString(prop.Value.ToString() , prop.Name));
+                list.AddRange(DependencyConstraintParser.FromString(prop.Value.ToString() , prop.Name));
             }
 
             return list;

@@ -7,11 +7,11 @@ using Sprache;
 
 namespace Maddalena.Core.Npm.Converters
 {
-    static class DependencyParser
+    static class DependencyConstraintParser
     {
-        public static Parser<string> version =
+        public static Parser<NpmVersionNumber> version =
             from str in Parse.Number.DelimitedBy(Parse.Char('.'))
-            select string.Join(".", str);
+            select new NpmVersionNumber(str.Select(int.Parse).ToArray());
 
         private static Parser<NpmDependecy> precise = 
             from w in Parse.WhiteSpace.Many().Optional()
@@ -21,6 +21,10 @@ namespace Maddalena.Core.Npm.Converters
         private static Parser<NpmDependecy> any = from s in Parse.Char('*')
             from w in Parse.WhiteSpace.Many().Optional()
             select new NpmDependecy(null, NpmDependecyType.Any);
+
+        private static Parser<NpmDependecy> forbidden = from s in Parse.Char('x')
+                from w in Parse.WhiteSpace.Many().Optional()
+                select new NpmDependecy(null, NpmDependecyType.Forbidden);
 
         private static Parser<NpmDependecy> around = from s in Parse.Char('~')
             from w in Parse.WhiteSpace.Many().Optional()
@@ -48,7 +52,11 @@ namespace Maddalena.Core.Npm.Converters
             select new NpmDependecy(v, NpmDependecyType.GreaterOrEqual);
 
         private static Parser<NpmDependecy[]> All =
-            any.Or(precise).Or(around.Or(lower).Or(greater).Or(lowerOrEqual).Or(greaterOrEqual))
+              any.Or(forbidden)
+              .Or(precise)
+              .Or(around)
+              .Or(lower.Or(lowerOrEqual))
+              .Or(greater.Or(greaterOrEqual))
                 .DelimitedBy(Parse.WhiteSpace)
                 .Select(x => x.ToArray());
 
