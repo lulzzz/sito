@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena", "Maddalena\Madd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maddalena.Core", "Maddalena.Core\Maddalena.Core.csproj", "{E97C59DB-65DF-4B1A-A927-F095E186AB82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Web", "AspNetCore2CoreUI-2.0\src\CoreUI.Web\CoreUI.Web.csproj", "{41024AB9-10A4-45A7-89DE-544439C428B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreUI.Web", "CoreUI.Web\CoreUI.Web.csproj", "{773D1A63-9455-49CD-9A88-993D03C15451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E97C59DB-65DF-4B1A-A927-F095E186AB82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41024AB9-10A4-45A7-89DE-544439C428B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41024AB9-10A4-45A7-89DE-544439C428B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41024AB9-10A4-45A7-89DE-544439C428B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{773D1A63-9455-49CD-9A88-993D03C15451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{773D1A63-9455-49CD-9A88-993D03C15451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{773D1A63-9455-49CD-9A88-993D03C15451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{773D1A63-9455-49CD-9A88-993D03C15451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

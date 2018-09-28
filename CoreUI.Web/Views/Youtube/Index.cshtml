@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+}
+
+@using YoutubeExplode.Models.MediaStreams
+@using Maddalena.Core.Extensions
+@model YoutubeExplode.Models.MediaStreams.MediaStreamInfoSet
+
+<section>
+  <section>
+    <div class="row">
+      <div class="col-12">
+        <h2>Youtube downloader</h2>
+        <p>
+          Many times I download stuff from Youtube: to edit, make gifs or simply saving a video that I care off.
+          <br />
+          But every Youtube downloading site is full of rubbish, banner and fake download buttons to give you shit.
+          <br />
+          Lucky for me, I'm developer so I made myself my own downloader using the great library 
+          <a href="https://github.com/Tyrrrz/YoutubeExplode" target="_blank">
+            YoutubeExplode
+          </a>.
+          If you want to discover more on does It works check out the source code <a href="" target="_blank">here</a>. 
+        </p>
+
+        <form action="/youtube" method="post">
+          <div class="form-group">
+            <label for="ytUrl">Youtube Url</label>
+            <input name="url" type="url" class="form-control" id="ytUrl" placeholder="https://www.youtube.com/watch?v=ERhbuYk9HEk">
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Retrieve" class="btn btn-lg btn-outline-primary"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  @if (Model != null)
+  {
+    <!--- MOBILE ---->
+  <section class="d-block d-sm-none d-md-none">
+    <div class="form-group">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="audioVideoDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Audio and video
+        </button>
+        <div class="dropdown-menu" aria-labelledby="audioVideoDropdown">
+          @foreach (var ad in Model.Muxed)
+          {
+            <a class="dropdown-item" href="@ad.Url" target="_blank">
+              @ad.VideoQualityLabel @ad.Size.ToByteSize()
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="audioDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Just audio
+        </button>
+        <div class="dropdown-menu" aria-labelledby="audioDropdown">
+          @foreach (var ad in Model.Audio)
+          {
+            <a class="dropdown-item" href="@ad.Url" target="_blank">
+              @ad.AudioEncoding @ad.Size.ToByteSize()
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="audioDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Just video
+        </button>
+        <div class="dropdown-menu" aria-labelledby="audioDropdown">
+          @foreach (var ad in Model.Video)
+          {
+            <a class="dropdown-item" href="@ad.Url" target="_blank">
+              @ad.VideoQualityLabel @ad.Size.ToByteSize()
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- DESKTOP---->
+    <section class="d-none d-sm-block">
+      <div class="row">
+        <div class="col-4">
+          <h3>Audio</h3>
+          @foreach (var ad in Model.Audio)
+          {
+            <section>
+              <table class="table table-striped table-bordered">
+                <tr>
+                  <td>Encoding</td>
+                  <td>@ad.AudioEncoding</td>
+                </tr>
+                <tr>
+                  <td>Bitrate</td>
+                  <td>@ad.Bitrate.ToBaud()</td>
+                </tr>
+                <tr>
+                  <td>Size</td>
+                  <td>@ad.Size.ToByteSize()</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-center">
+                    <a href="@ad.Url" class="btn btn-success" target="_blank">Donwload</a>
+                  </td>
+                </tr>
+              </table>
+            </section>
+
+          }
+        </div>
+        <div class="col-4">
+          <h3>Both</h3>
+          @foreach (var ad in Model.Muxed)
+          {
+              <section>
+                <table class="table table-striped table-bordered">
+                  <tr>
+                    <td>Encoding</td>
+                    <td>@ad.AudioEncoding - @ad.VideoEncoding</td>
+                  </tr>
+                  <tr>
+                    <td>Quality</td>
+                    <td>@ad.VideoQualityLabel</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>@ad.Size.ToByteSize()</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      <a href="@ad.Url" class="btn btn-success" target="_blank">Donwload</a>
+                    </td>
+                  </tr>
+                </table>
+              </section>
+          }
+        </div>
+        <div class="col-4">
+          <h3>Video</h3>
+          @foreach (var ad in Model.Video)
+          {
+              <section>
+                <table class="table table-striped table-bordered">
+                  <tr>
+                    <td>Encoding</td>
+                    <td>@ad.VideoEncoding</td>
+                  </tr>
+                  <tr>
+                    <td>Quality</td>
+                    <td>@ad.VideoQualityLabel</td>
+                  </tr>
+                  <tr>
+                    <td>Size</td>
+                    <td>@ad.Size.ToByteSize()</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      <a href="@ad.Url" class="btn btn-success" target="_blank">Donwload</a>
+                    </td>
+                  </tr>
+                </table>
+              </section>
+          }
+        </div>
+      </div>
+    </section>
+  }
+</section>
