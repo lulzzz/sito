@@ -5,10 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Maddalena.Core.Javascript;
 using Maddalena.Core.Javascript.BaseLibrary;
 using Maddalena.Core.Javascript.Core;
-using Maddalena.Core.Javascript.Extensions;
 using Maddalena.Core.Npm;
-using Maddalena.Core.Npm.Converters;
-using Sprache;
 
 namespace Maddalena.Core
 {
@@ -16,8 +13,17 @@ namespace Maddalena.Core
     {
         static void Main(string[] args)
         {
-            var t = NpmClient.DownloadWithDependencies("express", @"D:\CULO");
-            t.Wait();
+            var dd = NpmClient.LatestVersion("express");
+            dd.Wait();
+            var verTask = NpmClient.ResolveDependenciesCascade(dd.Result,async x => 
+            {
+                await NpmClient.Download(x, @"D:\NPM");
+
+            });
+            verTask.Wait();
+
+
+
 
             var mainModule = new Module("fakedir/superscript.js", @"");
 

@@ -2,6 +2,7 @@
 
 namespace Maddalena.Core.Javascript.Core.Interop
 {
+    [Serializable]
     [Prototype(typeof(JSObject), true)]
     internal sealed class PrototypeProxy : Proxy
     {

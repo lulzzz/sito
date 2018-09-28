@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Maddalena.Core.Npm.Model
 {
@@ -12,7 +11,7 @@ namespace Maddalena.Core.Npm.Model
 
         public string Description { get; set; }
 
-        public string Version { get; set; }
+        public NpmVersionNumber Version { get; set; }
 
         public NpmUser Author { get; set; }
 
@@ -49,5 +48,10 @@ namespace Maddalena.Core.Npm.Model
         public NpmVersionDistribution Distribution { get; set; }
 
         public string Deprecated { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} {Version}";
+        }
     }
 }

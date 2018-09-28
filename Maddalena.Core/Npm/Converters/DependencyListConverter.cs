@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Maddalena.Core.Npm.Converters
 {
-    public class DependencyListConverter: JsonConverter
+    class DependencyListConverter: JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -20,7 +20,7 @@ namespace Maddalena.Core.Npm.Converters
 
             foreach (var prop in obj.Properties())
             {
-                list.AddRange(DependencyConstraintParser.FromString(prop.Value.ToString() , prop.Name));
+                list.AddRange(DependencyConstraintParser.FromString(prop.Value.ToString(), prop.Name));
             }
 
             return list;

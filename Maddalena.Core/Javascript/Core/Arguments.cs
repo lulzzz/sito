@@ -6,12 +6,11 @@ using Maddalena.Core.Javascript.Core.Interop;
 
 namespace Maddalena.Core.Javascript.Core
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     [Prototype(typeof(JSObject), true)]
     public sealed class Arguments : JSObject, IEnumerable
     {
+        [Serializable]
         private sealed class _LengthContainer : JSValue
         {
             private readonly Arguments owner;

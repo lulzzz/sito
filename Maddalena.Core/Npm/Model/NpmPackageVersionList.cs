@@ -8,6 +8,14 @@ namespace Maddalena.Core.Npm.Model
     [JsonConverter(typeof(PackageVersionListConverter))]
     public class NpmPackageVersionList : List<NpmPackageVersion>
     {
-        public NpmPackageVersion this[string v] => this.FirstOrDefault(x => x.Version == v);
+        public NpmPackageVersion this[string v]
+        {
+            get
+            {
+                var n = new NpmVersionNumber(v);
+                return this.FirstOrDefault(x => x.Version == n);
+            }
+
+        }
     }
 }

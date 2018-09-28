@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace Maddalena.Core.Javascript.Core.Interop
 {
+    [Serializable]
     public class JsonSerializersRegistry
     {
         private readonly List<JsonSerializer> _serializers;

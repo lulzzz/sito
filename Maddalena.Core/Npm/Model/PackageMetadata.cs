@@ -23,7 +23,9 @@ namespace Maddalena.Core.Npm.Model
         public NpmUser[] Maintainers { get; set; }
         public NpmUser Author { get; set; }
         public Dictionary<string, DateTime> Time { get; set; }
-        public Dictionary<string, bool> Users { get; set; }
+
+        public NpmUserList Users { get; set; }
+
         public string Readme { get; set; }
         public string ReadmeFilename { get; set; }
         public string Homepage { get; set; }

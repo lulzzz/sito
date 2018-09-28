@@ -9,15 +9,12 @@ using Math = System.Math;
 
 namespace Maddalena.Core.Javascript.Core.Interop
 {
-#if !(PORTABLE)
     [Serializable]
-#endif
     internal abstract class Proxy : JSObject
     {
         internal Type _hostedType;
-#if !(PORTABLE)
+
         [NonSerialized]
-#endif
         internal StringMap<IList<MemberInfo>> _members;
         internal GlobalContext _context;
 
@@ -30,15 +27,10 @@ namespace Maddalena.Core.Javascript.Core.Interop
         {
             get
             {
-#if (PORTABLE)
-                if (_prototypeInstance == null && IsInstancePrototype && !_hostedType.GetTypeInfo().IsAbstract)
-                {
-#else
                 if (_prototypeInstance == null && IsInstancePrototype && !_hostedType.IsAbstract)
                 {
                     try
                     {
-#endif
                         if (_instanceCtor != null)
                         {
                             if (_hostedType == typeof(JSObject))
@@ -68,13 +60,11 @@ namespace Maddalena.Core.Javascript.Core.Interop
                                 };
                             }
                         }
-#if !(PORTABLE)
                     }
                     catch (COMException)
                     {
 
                     }
-#endif
                 }
 
                 return _prototypeInstance;
@@ -94,11 +84,7 @@ namespace Maddalena.Core.Javascript.Core.Interop
             _context = context;
             _hostedType = type;
 
-#if (PORTABLE)
-            _instanceCtor = _hostedType.GetTypeInfo().DeclaredConstructors.FirstOrDefault(x => x.GetParameters().Length == 0 && !x.IsStatic);
-#else
             _instanceCtor = _hostedType.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy, null, Type.EmptyTypes, null);
-#endif
         }
 
         private void fillMembers()
@@ -112,15 +98,9 @@ namespace Maddalena.Core.Javascript.Core.Interop
                 string prewName = null;
                 IList<MemberInfo> temp = null;
                 bool instanceAttribute = false;
-#if (PORTABLE)
-                    var members = _hostedType.GetTypeInfo().DeclaredMembers
-                         .Union(_hostedType.GetRuntimeMethods())
-                         .Union(_hostedType.GetRuntimeProperties())
-                         .Union(_hostedType.GetRuntimeFields())
-                         .Union(_hostedType.GetRuntimeEvents()).ToArray();
-#else
+
                 var members = _hostedType.GetMembers();
-#endif
+
                 for (int i = 0; i < members.Length; i++)
                 {
                     var member = members[i];

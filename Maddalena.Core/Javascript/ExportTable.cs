@@ -5,6 +5,7 @@ using Maddalena.Core.Javascript.Core;
 
 namespace Maddalena.Core.Javascript
 {
+    [Serializable]
     public sealed class ExportTable : IEnumerable<KeyValuePair<string, JSValue>>
     {
         private readonly Dictionary<string, JSValue> _items = new Dictionary<string, JSValue>();

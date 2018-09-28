@@ -23,6 +23,8 @@ namespace Maddalena.Core.Npm.Converters
                     return new NpmVariableObject(JObject.Load(reader));
                 case JsonToken.String:
                     return new NpmVariableObject(reader.Value.ToString());
+                case JsonToken.StartArray:
+                    return new NpmVariableObject(JArray.Load(reader));
                 default:
                     throw new Exception();
             }

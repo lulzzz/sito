@@ -7,12 +7,15 @@ namespace Maddalena.Core.Npm.Model
     public enum NpmDependecyType
     {
         Precise,
-        Around,
+        Minor,
         Lower,
         LowerOrEqual,
         Greater,
         GreaterOrEqual,
         Any,
-        Forbidden
+        Forbidden,
+        Major,
+        Latest,
+        WebReference
     }
 }

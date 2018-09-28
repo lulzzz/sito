@@ -23,6 +23,16 @@ namespace Maddalena.Core.Npm.Model
             _values = new Dictionary<string, string> { { "0", v } };
         }
 
+        public NpmVariableObject(JArray jArray)
+        {
+            _values = new Dictionary<string, string>();
+
+            for (int i = 0; i < jArray.Count; i++)
+            {
+                _values[i.ToString()] = jArray[i].ToString();
+            }
+        }
+
         public string[] Keys => _values.Keys.ToArray();
 
         public string[] Values => _values.Keys.ToArray();
