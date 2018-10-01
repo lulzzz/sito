@@ -1,36 +1,29 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="An Italian nerd in Prague">
-  <meta name="author" content="Matteo Fabbri">
-  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
-  <link rel="shortcut icon" href="img/favicon.png">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="An Italian nerd in Prague">
+    <meta name="author" content="Matteo Fabbri">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
+    <link rel="shortcut icon" href="img/favicon.png">
 
-  <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"]</title>
 
-  <!-- Icons -->
-  <link href="~/vendors/css/font-awesome.min.css" rel="stylesheet">
-  <link href="~/vendors/css/simple-line-icons.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="~/vendors/css/simple-line-icons.min.css" rel="stylesheet">
 
-  <!-- Main styles for this application -->
-  <environment include="Development">
+    <!-- Main styles for this application -->
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/site.css" />
-  </environment>
 
-  <environment exclude="Development">
-    <link rel="stylesheet" href="~/css/style.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-  </environment>
+    @RenderSection("Head", required: false)
+    @RenderSection("Preload", required: false)
 
-  @RenderSection("Head", required: false)
-  @RenderSection("Preload", required: false)
-
-  <!-- Styles required by this view -->
-  @RenderSection("Styles", required: false)
+    <!-- Styles required by this view -->
+    @RenderSection("Styles", required: false)
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">

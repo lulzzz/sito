@@ -34,9 +34,9 @@ namespace Maddalena.Controllers
 
         public ActionResult Index(string id) => View(_userManager.Users);
 
-        public async Task<ActionResult> AddToRole(string roleName, string userId)
+        public async Task<ActionResult> AddToRole(string roleName, string userName)
         {
-            var u = await _userManager.FindByNameAsync(userId);
+            var u = await _userManager.FindByNameAsync(userName);
 
             if (!await _roleManager.RoleExistsAsync(roleName))
                 await _roleManager.CreateAsync(new MongoRole(roleName));
@@ -45,7 +45,7 @@ namespace Maddalena.Controllers
 
             await _userManager.AddToRoleAsync(u, roleName);
 
-            return Redirect($"/user/edit/{userId}");
+            return Redirect($"/user/edit/{userName}");
         }
 
         public async Task<ActionResult> Edit(string id)

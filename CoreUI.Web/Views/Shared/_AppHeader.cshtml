@@ -29,17 +29,29 @@
               <i class="fa fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <div class="dropdown-header text-center">
-                <strong>Account</strong>
-              </div>
 
-              <a class="dropdown-item" href="/manage/Index">
-                <i class="fa fa-sliders-h"></i> Settings
-              </a>
+                @if (User.IsInRole("blog"))
+                {
+                    <a class="dropdown-item" href="/blog">
+                        <i class="fa fa-sliders-h"></i>Blog
+                    </a>
+                }
 
-              <form asp-area="" asp-controller="Account" asp-action="Logout">
-                <button type="submit" class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</button>
-              </form>
+
+                @if (User.IsInRole("user"))
+                {
+                    <a class="dropdown-item" href="/user">
+                        <i class="fa fa-sliders-h"></i>User management
+                    </a>
+                }
+
+                <a class="dropdown-item" href="/manage/Index">
+                    <i class="fa fa-sliders-h"></i>My Settings
+                </a>
+
+                <form asp-area="" asp-controller="Account" asp-action="Logout">
+                    <button type="submit" class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</button>
+                </form>
             </div>
           </li>
       }

@@ -20,7 +20,7 @@ namespace Maddalena.Core.Identity.Stores
 
 		async Task<IdentityResult> IRoleStore<TRole>.CreateAsync(TRole role, CancellationToken cancellationToken)
 		{
-			var found = _collection.FindByNameAsync(role.NormalizedName);
+			var found = await _collection.FindByNameAsync(role.NormalizedName);
 			if (found == null) await _collection.CreateAsync(role);
 			return IdentityResult.Success;
 		}

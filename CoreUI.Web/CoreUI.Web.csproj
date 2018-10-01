@@ -44,10 +44,11 @@
     <None Include="Views\CoreUI\pages-login.cshtml" />
     <None Include="Views\CoreUI\pages-register.cshtml" />
     <None Include="Views\CoreUI\widgets.cshtml" />
+    <None Include="wwwroot\Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Maddalena.Core\Maddalena.Core.csproj" />
+    <ProjectReference Include="..\Maddalena.Core\Maddalena.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

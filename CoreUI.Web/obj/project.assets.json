@@ -15862,8 +15862,8 @@
     },
     "Maddalena.Core/1.0.0": {
       "type": "project",
-      "path": "../../../Maddalena.Core/Maddalena.Core.csproj",
-      "msbuildProject": "../../../Maddalena.Core/Maddalena.Core.csproj"
+      "path": "../Maddalena.Core/Maddalena.Core.csproj",
+      "msbuildProject": "../Maddalena.Core/Maddalena.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -15891,11 +15891,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PROGETTI\\sito\\AspNetCore2CoreUI-2.0\\src\\CoreUI.Web\\CoreUI.Web.csproj",
+      "projectUniqueName": "D:\\PROGETTI\\sito\\CoreUI.Web\\CoreUI.Web.csproj",
       "projectName": "CoreUI.Web",
-      "projectPath": "D:\\PROGETTI\\sito\\AspNetCore2CoreUI-2.0\\src\\CoreUI.Web\\CoreUI.Web.csproj",
+      "projectPath": "D:\\PROGETTI\\sito\\CoreUI.Web\\CoreUI.Web.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\PROGETTI\\sito\\AspNetCore2CoreUI-2.0\\src\\CoreUI.Web\\obj\\",
+      "outputPath": "D:\\PROGETTI\\sito\\CoreUI.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

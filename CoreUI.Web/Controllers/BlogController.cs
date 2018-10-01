@@ -21,6 +21,8 @@ namespace CoreUI.Web.Controllers
             _gridFs = gridFs;
         }
 
+        public async Task<IActionResult> Index() => View(await _blog.GetPosts(200));
+
         [Route("/blog/upload")]
         public async Task<ActionResult> BlogUpload()
         {

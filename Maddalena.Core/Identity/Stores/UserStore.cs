@@ -163,9 +163,9 @@ namespace Maddalena.Core.Identity.Stores
 			return Task.FromResult(user.NormalizedUserName);
 		}
 
-		public async Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken)
+		public Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken)
 		{
-			return (await Task.FromResult(user.Id)).ToString();
+            return Task.FromResult(user?.Id);
 		}
 
 		public Task<string> GetUserNameAsync(TUser user, CancellationToken cancellationToken)
