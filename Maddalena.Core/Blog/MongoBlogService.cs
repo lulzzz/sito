@@ -24,7 +24,17 @@ namespace Maddalena.Core.Blog
 
         public Task<IEnumerable<string>> GetCategories() => Task.FromResult(new[] {"Code"} as IEnumerable<string>);
 
-        public Task SavePost(BlogPost post) => _post.InsertOneAsync(post);
+        public Task SavePost(BlogPost post)
+        {
+            if(string.IsNullOrWhiteSpace(post.Id))
+            {
+                return _post.InsertOneAsync(post);
+            }
+            else
+            {
+                return _post.ReplaceOneAsync(x => x.Id == post.Id, post);
+            }
+        }
 
         public Task DeletePost(BlogPost post) => _post.DeleteOneAsync(x => x.Id == post.Id);
 

@@ -1,7 +1,6 @@
 ﻿@using Maddalena.Core.Blog
 @model Maddalena.Core.Blog.BlogPost
 @{
-    bool isNew = string.IsNullOrEmpty(Model.Title);
     ViewData["Title"] = "Edit " + (Model.Title ?? "new post");
     var host = Context.Request.Host.ToString();
     List<string> allCats = ViewData["AllCats"] as List<string> ?? new List<string>();
@@ -13,61 +12,81 @@
     <link rel="stylesheet" href="~/css/admin.scss" />
 }
 
-    <form method="post" id="edit" class="container" asp-controller="Blog" asp-action="UpdatePost" onsubmit="return upload(this);">
-      <div asp-validation-summary="All"></div>
-      <input type="hidden" asp-for="@Model.Id" />
+    @if(!string.IsNullOrEmpty(Model.Id))
+    {
+        <section>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <form method="post" action="/blog/delete">
+                        @Html.AntiForgeryToken()
 
-      <div class="form-group">
-        <h5>Language</h5>
-        <input type="radio" name="language" value="italian" checked> Italian<br>
-        <input type="radio" name="language" value="english"> English<br>
-      </div>
+                        <input type="hidden" value="@Model.Id" name="id" />
+                        <input type="submit" value="Delete..." class="btn btn-danger" title="Delete the post" />
+                    </form>
+                </div>
+            </div>
+        </section>
 
-      <div class="form-group" style="margin-top:25px">
-        <h5>Title</h5>
-        <input asp-for="@Model.Title" class="form-control" required placeholder="Title of blog post" aria-describedby="desc_title" />
-        <br />
-      </div>
+    }
 
-      <dvi class="form-group" style="margin-top:25px">
-        <h5>Slug</h5>
-        <input asp-for="@Model.Slug" class="form-control" placeholder="The URL name" aria-describedby="desc_slug" />
-        <br />
-      </dvi>
+    <section>
+        <div class="row">
+            <div class="col-12">
 
-      <div class="form-group" style="margin-top:25px">
-        <h5>Category</h5>
-        <input type="text" class="form-control" name="category" id="category" aria-describedby="desc_categories" list="taglist" />
-        <datalist id="taglist">
-          @foreach (var cat in allCats)
-          {
-            <option value="@cat" />
-          }
-        </datalist>
-        <br />
-      </div>
+                <form method="post" id="edit" class="container" asp-controller="Blog" asp-action="UpdatePost" onsubmit="return upload(this);">
+                    <div asp-validation-summary="All"></div>
+                    <input type="hidden" asp-for="@Model.Id" />
 
-      <div class="form-group">
-        <h5>Excerpt</h5>
-        <textarea asp-for="@Model.Excerpt" class="form-control" rows="3" placeholder="Short description of blog post" aria-describedby="desc_excerpt">@Model.Excerpt</textarea>
-      </div>
+                    <div class="form-group">
+                        <h5>Language</h5>
+                        <input type="radio" name="language" value="italian" checked> Italian<br>
+                        <input type="radio" name="language" value="english"> English<br>
+                    </div>
 
-      <div class="form-group">
-        <input asp-for="@Model.IsPublished" />
-        <label asp-for="@Model.IsPublished">Is published</label>
-      </div>
+                    <div class="form-group" style="margin-top:25px">
+                        <h5>Title</h5>
+                        <input asp-for="@Model.Title" class="form-control" required placeholder="Title of blog post" aria-describedby="desc_title" />
+                        <br />
+                    </div>
 
-      <div class="form-group" style="margin-top:25px">
-        <textarea asp-for="@Model.Content" rows="20" aria-label="Content">@Model.Content</textarea>
+                    <dvi class="form-group" style="margin-top:25px">
+                        <h5>Slug</h5>
+                        <input asp-for="@Model.Slug" class="form-control" placeholder="The URL name" aria-describedby="desc_slug" />
+                        <br />
+                    </dvi>
 
-        <input type="submit" value="Save" title="Save the post" />
-      </div>
+                    <div class="form-group" style="margin-top:25px">
+                        <h5>Category</h5>
+                        <input type="text" class="form-control" name="category" id="category" aria-describedby="desc_categories" list="taglist" />
+                        <datalist id="taglist">
+                            @foreach (var cat in allCats)
+                            {
+                                <option value="@cat" />
+                            }
+                        </datalist>
+                        <br />
+                    </div>
 
-      @if (!isNew)
-      {
-        <input type="submit" value="Delete..." class="delete" title="Delete the post..." asp-action="DeletePost" asp-route-id="@Model.Id" />
-      }
-    </form>
+                    <div class="form-group">
+                        <h5>Excerpt</h5>
+                        <textarea asp-for="@Model.Excerpt" class="form-control" rows="3" placeholder="Short description of blog post" aria-describedby="desc_excerpt">@Model.Excerpt</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input asp-for="@Model.IsPublished" />
+                        <label asp-for="@Model.IsPublished">Is published</label>
+                    </div>
+
+                    <div class="form-group" style="margin-top:25px">
+                        <textarea asp-for="@Model.Content" rows="20" aria-label="Content">@Model.Content</textarea>
+
+                        <input type="submit" value="Save" title="Save the post" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
 
 @section Scripts {
     <script src="//@host/lib/tinymce/tinymce.min.js"></script> @*with enabled CDN tinymce is not able to find some files*@

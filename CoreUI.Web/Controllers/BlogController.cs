@@ -93,9 +93,9 @@ namespace CoreUI.Web.Controllers
             return Redirect($"/read/{post.Slug}");
         }
 
-        [Route("/blog/deletepost/{id}")]
+        [Route("/blog/delete")]
         [HttpPost, AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> DeletePost(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var existing = await _blog.GetPostById(id);
 
