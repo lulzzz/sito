@@ -32,9 +32,9 @@ namespace Maddalena.Core.Javascript.Core
 
     public sealed class CodeCoordinates
     {
-        public int Line { get; private set; }
-        public int Column { get; private set; }
-        public int Length { get; private set; }
+        public int Line { get; }
+        public int Column { get; }
+        public int Length { get; }
 
         public CodeCoordinates(int line, int column, int length)
         {

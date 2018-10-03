@@ -17,7 +17,7 @@ namespace Maddalena.Core.Javascript.Expressions
     public sealed class ParameterDescriptor : VariableDescriptor
     {
         public ObjectDesctructor Destructor { get; internal set; }
-        public bool IsRest { get; private set; }
+        public bool IsRest { get; }
 
         internal ParameterDescriptor(string name, bool rest, int depth)
             : base(name, depth)

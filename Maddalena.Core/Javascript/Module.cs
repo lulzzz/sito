@@ -17,9 +17,8 @@ namespace Maddalena.Core.Javascript
     /// <summary>
     /// Represents and manages JavaScript module
     /// </summary>
-#if !PORTABLE
+
     [Serializable]
-#endif
     public class Module
     {
         private static readonly char[] __pathSplitChars = { '\\', '/' };
@@ -55,12 +54,12 @@ namespace Maddalena.Core.Javascript
         /// <summary>
         /// JavaScript code, used for initialization
         /// </summary>
-        public string Code { get; private set; }
+        public string Code { get; }
 
         /// <summary>
         /// Root context of module
         /// </summary>
-        public Context Context { get; private set; }
+        public Context Context { get; }
 
         /// <summary>
         /// Path to file with script
@@ -250,8 +249,8 @@ namespace Maddalena.Core.Javascript
             else
                 pathTokens.RemoveLast();
 
-            for (var i = 0; i < requestedName.Length; i++)
-                pathTokens.AddLast(requestedName[i]);
+            foreach (var name in requestedName)
+                pathTokens.AddLast(name);
 
             for (var node = pathTokens.First; node != null;)
             {
@@ -280,8 +279,7 @@ namespace Maddalena.Core.Javascript
 
         private static void defaultModuleResolver(Module sender, ResolveModuleEventArgs e)
         {
-            Module result;
-            __modulesCache.TryGetValue(e.ModulePath, out result);
+            __modulesCache.TryGetValue(e.ModulePath, out var result);
             e.Module = result;
         }
 
@@ -301,7 +299,6 @@ namespace Maddalena.Core.Javascript
             }
         }
 
-#if !PORTABLE
         /// <summary>
         /// Returns module, which provides access to clr-namespace
         /// </summary>
@@ -331,6 +328,5 @@ namespace Maddalena.Core.Javascript
 
             return result;
         }
-#endif
     }
 }

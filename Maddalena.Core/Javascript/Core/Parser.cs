@@ -11,8 +11,8 @@ namespace Maddalena.Core.Javascript.Core
 {
     internal class Rule
     {
-        public ValidateDelegate Validate { get; private set; }
-        public ParseDelegate Parse { get; private set; }
+        public ValidateDelegate Validate { get; }
+        public ParseDelegate Parse { get; }
 
         public Rule(string token, ParseDelegate parseDel)
         {

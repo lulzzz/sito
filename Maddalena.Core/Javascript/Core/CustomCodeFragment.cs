@@ -5,8 +5,8 @@ namespace Maddalena.Core.Javascript.Core
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class CustomCodeFragment : Attribute
     {
-        public CodeFragmentType Type { get; private set; }
-        public string[] ReservedWords { get; private set; }
+        public CodeFragmentType Type { get; }
+        public string[] ReservedWords { get; }
 
         public CustomCodeFragment()
             : this(CodeFragmentType.Statement)

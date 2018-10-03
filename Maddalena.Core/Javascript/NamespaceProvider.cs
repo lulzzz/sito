@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Maddalena.Core.Javascript.Core;
@@ -36,12 +37,12 @@ namespace Maddalena.Core.Javascript
         static NamespaceProvider()
         {
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
-            var assms = AppDomain.CurrentDomain.GetAssemblies();
-            for (int i = 0; i < assms.Length; i++)
-                addTypes(assms[i]);
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                addTypes(assembly);
         }
 
-        static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             addTypes(args.LoadedAssembly);
         }
@@ -51,7 +52,7 @@ namespace Maddalena.Core.Javascript
         /// <summary>
         /// Contract NamespacesProvider
         /// </summary>
-        public string Namespace { get; private set; }
+        public string Namespace { get; }
 
         /// <summary>
         /// Contract NamespacesProvider
@@ -152,8 +153,7 @@ namespace Maddalena.Core.Javascript
 
         public static IEnumerable<Type> GetTypesByPrefix(string prefix)
         {
-            foreach (KeyValuePair<string, Type> type in types.StartsWith(prefix))
-                yield return type.Value;
+            return types.StartsWith(prefix).Select(type => type.Value);
         }
 
         protected internal override IEnumerator<KeyValuePair<string, JSValue>> GetEnumerator(bool pdef, EnumerationMode enumerationMode)

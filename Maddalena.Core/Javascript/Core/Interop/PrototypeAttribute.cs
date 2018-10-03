@@ -11,8 +11,8 @@ namespace Maddalena.Core.Javascript.Core.Interop
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
     public sealed class PrototypeAttribute : Attribute
     {
-        public Type PrototypeType { get; private set; }
-        public bool Replace { get; private set; }
+        public Type PrototypeType { get; }
+        public bool Replace { get; }
 
         public PrototypeAttribute(Type type)
             : this(type, false)

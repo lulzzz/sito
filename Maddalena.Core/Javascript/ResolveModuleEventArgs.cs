@@ -6,7 +6,7 @@ namespace Maddalena.Core.Javascript
 
     public class ResolveModuleEventArgs : EventArgs
     {
-        public string ModulePath { get; private set; }
+        public string ModulePath { get; }
         public Module Module { get; set; }
 
         /// <summary>
