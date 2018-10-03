@@ -42,17 +42,31 @@ namespace ConsoleApp9
 
             for (BigInteger k = 1; k <= half; k++)
             {
-                r = r * k * (n - k + 1);
+                var s = (n - k + 1);
+                r = r * k * s;
             }
 
             return r;
         }
 
+        static BigInteger RecursivetFactorial(BigInteger n)
+        {
+            var half = n / 2;
+            var fact = FastFactorial(half);
+
+            return fact*fact*(half+1);
+        }
+
         static void Main(string[] args)
         {
-            // !N + 1 = M ^ 2;
-            // !N = MOLTIPLICAZIONE DI (KN - K^2 + K) CON K DA 1 A N/2  
-            // K (N - K + 1)
+            var f = FastFactorial(5);
+            Console.WriteLine(RecursivetFactorial(5));
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"{i} {FastFactorial(i)} {RecursivetFactorial(i)}");
+            }
+
 
             for (int i = 2; i < int.MaxValue; i++)
             {

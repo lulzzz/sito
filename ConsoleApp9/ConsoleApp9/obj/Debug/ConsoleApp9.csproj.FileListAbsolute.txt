@@ -5,3 +5,10 @@ C:\Users\mf185129\source\repos\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.csp
 C:\Users\mf185129\source\repos\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.csproj.CoreCompileInputs.cache
 C:\Users\mf185129\source\repos\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.exe
 C:\Users\mf185129\source\repos\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.pdb
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\bin\Debug\ConsoleApp9.exe.config
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\bin\Debug\ConsoleApp9.exe
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\bin\Debug\ConsoleApp9.pdb
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.csprojAssemblyReference.cache
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.csproj.CoreCompileInputs.cache
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.exe
+D:\PROGETTI\sito\ConsoleApp9\ConsoleApp9\obj\Debug\ConsoleApp9.pdb
