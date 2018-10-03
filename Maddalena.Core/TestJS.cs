@@ -13,18 +13,6 @@ namespace Maddalena.Core
     {
         static void Main(string[] args)
         {
-            var dd = NpmClient.LatestVersion("express");
-            dd.Wait();
-            var verTask = NpmClient.ResolveDependenciesCascade(dd.Result,async x => 
-            {
-                await NpmClient.Download(x, @"D:\NPM");
-
-            });
-            verTask.Wait();
-
-
-
-
             var mainModule = new Module("fakedir/superscript.js", @"");
 
             Module.ResolveModule += (sender, e) =>
@@ -35,11 +23,11 @@ namespace Maddalena.Core
 
             var @delegate = new Action<GeneratorIterator>(x=>
             {
-                for (int i = 0; i < 1000; i++)
+                /*for (int i = 0; i < 1000; i++)
                 {
                     var empty = new Arguments();
                     Console.WriteLine(x.next(empty).value.toString(empty));
-                }
+                }*/
 
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream("MyFile.bin", FileMode.Create, FileAccess.Write, FileShare.None);

@@ -28,8 +28,6 @@ namespace Maddalena.Core.Npm.Converters
                 default:
                     throw new Exception();
             }
-
-            return null;
         }
 
         public override bool CanConvert(Type objectType)

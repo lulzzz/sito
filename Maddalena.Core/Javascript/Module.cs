@@ -121,10 +121,7 @@ namespace Maddalena.Core.Javascript
         /// <param name="options">Compiler options</param>
         public Module(string path, string code, CompilerMessageCallback messageCallback, Options options)
         {
-            if (code == null)
-                throw new ArgumentNullException();
-
-            Code = code;
+            Code = code ?? throw new ArgumentNullException();
             Context = new Context(Context.CurrentGlobalContext, true, null);
             Context._module = this;
             if (!string.IsNullOrWhiteSpace(path))
@@ -199,12 +196,13 @@ namespace Maddalena.Core.Javascript
             var start = Environment.TickCount;
             var oldDebugValue = Context.Debugging;
             Context.Debugging = true;
-            DebuggerCallback callback = (context, e) =>
+
+            void Callback(Context context, DebuggerCallbackEventArgs e)
             {
-                if (Environment.TickCount - start >= timeLimitInMilliseconds)
-                    throw new TimeoutException();
-            };
-            Context.DebuggerCallback += callback;
+                if (Environment.TickCount - start >= timeLimitInMilliseconds) throw new TimeoutException();
+            }
+
+            Context.DebuggerCallback += Callback;
 
             try
             {
@@ -213,7 +211,7 @@ namespace Maddalena.Core.Javascript
             finally
             {
                 Context.Debugging = oldDebugValue;
-                Context.DebuggerCallback -= callback;
+                Context.DebuggerCallback -= Callback;
             }
         }
 
