@@ -7,6 +7,16 @@ h2 {
     margin-top: 10px;
 }
 
+.mce-container-body, .mce-flow-layout, .mce-tinymce, .mce-container, .mce-panel, .mce-fullscreen {
+    z-index: 999999 !important;
+}
+
+main
+{
+    margin-bottom:52px;
+}
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

@@ -1,5 +1,6 @@
 ﻿using Maddalena.Core.Scripts;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Maddalena.Controllers
 {
@@ -12,15 +13,15 @@ namespace Maddalena.Controllers
             _service = service;
         }
 
-        public IActionResult Index() => View(_service.All());
+        public async Task<IActionResult> Index() => View(await _service.All());
 
         public IActionResult Create() => View();
 
-        public IActionResult Edit(string id) => View(_service.ById(id));
+        public async Task<IActionResult> Edit(string id) => View(await _service.ById(id));
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            _service.Delete(id);
+            await _service.Delete(id);
             return Redirect("/script");
         }
     }

@@ -15,6 +15,7 @@ using Maddalena.Core.Blog;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;
 using Maddalena.Core.Youtube;
+using Maddalena.Core.Scripts;
 
 namespace CoreUI.Web
 {
@@ -53,11 +54,13 @@ namespace CoreUI.Web
             });
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var gridFs = new GridFileSystem(connectionString, "gridFsTable");
 
             services.AddAntiforgery();
 
             services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
-            services.AddSingleton<IGridFileSystem>(new GridFileSystem(connectionString, "gridFsTable"));
+            services.AddSingleton<IGridFileSystem>(gridFs);
+            services.AddSingleton<IScriptService>(new MongoScriptService(connectionString,gridFs));
 
             var settings = new SettingsService(connectionString);
             services.AddSingleton<ISettingsService>(settings);
