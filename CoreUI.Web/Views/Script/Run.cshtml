@@ -1,0 +1,24 @@
+﻿@model Maddalena.Core.Scripts.Model.ScriptContext
+
+@{
+    ViewData["Title"] = $"Running {Model.Script.Name}";
+}
+<section>
+    <div class="row">
+        <div class="col-12">
+            <strong>Author</strong> @Model.Script.Author <br/>
+            <strong>LastModified</strong> @Model.Script.LastModified<br />
+            <strong>Language</strong> @Model.Script.Language<br />
+        </div>
+    </div>
+</section>
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h2>@Model.Script.Name</h2>
+            <div>
+                @Html.Raw(Model.Console.ToString())
+            </div>
+        </div>
+    </div>
+</section>

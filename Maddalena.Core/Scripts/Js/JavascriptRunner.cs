@@ -1,9 +1,8 @@
-﻿using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Javascript;
 using Maddalena.Core.Javascript.Core;
+using Maddalena.Core.Scripts.Model;
 
 namespace Maddalena.Core.Scripts.Js
 {
@@ -22,15 +21,22 @@ namespace Maddalena.Core.Scripts.Js
             e.Module = new Module(e.ModulePath, "");
         }
 
-        public Task Run(Script script)
+        public Task<ScriptContext> Run(Script script)
         {
             var mainModule = new Module($"maddalena:{script.Name}", @"");
-            mainModule.Context.DefineVariable("console").Assign(JSValue.Wrap(new Console()));
+
+            var context = new ScriptContext
+            {
+                Console = new Console(),
+                Script = script
+            };
+
+            mainModule.Context.DefineVariable("console").Assign(JSValue.Wrap(context.Console));
 
             mainModule.Context.DefineConstructor(typeof(TestJS));
             mainModule.Context.Eval(script.Source);
 
-            return Task.CompletedTask;
+            return Task.FromResult(context);
         }
     }
 }

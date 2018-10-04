@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Mongo;
 using Maddalena.Core.Scripts.Js;
+using Maddalena.Core.Scripts.Model;
 using MongoDB.Driver;
 
 namespace Maddalena.Core.Scripts
@@ -36,12 +37,12 @@ namespace Maddalena.Core.Scripts
 
         public Task Delete(string id) => _scripts.DeleteOneAsync(x => x.Id == id);
 
-        public Task Run(Script script)
+        public Task<ScriptContext> Run(Script script)
         {
             switch (script.Language)
             {
-                case ScriptLanguage.Javascript: return _js.Run(script);;
-                case ScriptLanguage.R: return Task.CompletedTask;
+                case ScriptLanguage.Javascript: return _js.Run(script);
+                case ScriptLanguage.R: return Task.FromResult(new ScriptContext());
                     
             }
             throw new ArgumentOutOfRangeException();

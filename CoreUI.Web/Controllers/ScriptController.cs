@@ -1,4 +1,5 @@
-﻿using Maddalena.Core.Scripts;
+﻿using System;
+using Maddalena.Core.Scripts;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,14 +16,33 @@ namespace Maddalena.Controllers
 
         public async Task<IActionResult> Index() => View(await _service.All());
 
-        public IActionResult Create() => View();
+        [HttpPost, Route("/script/edit")]
+        public IActionResult Edit(Script script)
+        {
+            script.Author = User?.Identity?.Name;
+            script.LastModified = DateTime.Now;
 
-        public async Task<IActionResult> Edit(string id) => View(await _service.ById(id));
+            if(script.Id == null) _service.Create(script); else _service.Update(script);
+
+            return Redirect("/script");
+        }
+
+        public async Task<IActionResult> Edit(string id) => id == null ? View("Edit", new Script()) : View(await _service.ById(id));
 
         public async Task<IActionResult> Delete(string id)
         {
             await _service.Delete(id);
             return Redirect("/script");
+        }
+
+        public async Task<IActionResult> Run(string id)
+        {
+            var script = await _service.ById(id);
+
+            if (script == null) return NotFound();
+
+            var console = await _service.Run(script);
+            return View(console);
         }
     }
 }
