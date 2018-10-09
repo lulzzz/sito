@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Maddalena.Core.Mongo;
+using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 
 namespace Maddalena.Core.GridFs
@@ -10,12 +11,12 @@ namespace Maddalena.Core.GridFs
     public class GridFileSystem : IGridFileSystem
     {
         private readonly GridFSBucket _bucket;
-        private readonly MongoObjectCollection<GridFile> _files;
+        private readonly IMongoCollection<GridFile> _files;
 
         public GridFileSystem(string connectionString, string collectionName)
         {
-            _files = new MongoObjectCollection<GridFile>(connectionString, collectionName);
-            _bucket = new GridFSBucket(_files.MongoCollection.Database);
+            _files = MongoUtil.FromConnectionString<GridFile>(connectionString, collectionName);
+            _bucket = new GridFSBucket(_files.Database);
         }
 
         public async Task<string> Upload(string fileName, Stream source)
@@ -28,9 +29,9 @@ namespace Maddalena.Core.GridFs
                 LastModified = DateTimeOffset.Now,
             };
 
-            await _files.CreateAsync(gf);
+            await _files.InsertOneAsync(gf);
             gf.GridName = $"{gf.Id}-{gf.FileName}";
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x=>x.Id == gf.Id, gf);
 
             _bucket.UploadFromStream(gf.GridName, source);
 
@@ -56,7 +57,7 @@ namespace Maddalena.Core.GridFs
 
             gf.Acl.Owner = owner;
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task MakePublic(string gridName)
@@ -67,7 +68,7 @@ namespace Maddalena.Core.GridFs
 
             gf.Acl.Public = true;
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task MakeNotPublic(string gridName)
@@ -78,7 +79,7 @@ namespace Maddalena.Core.GridFs
 
             gf.Acl.Public = false;
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task AllowUser(string gridName, string user)
@@ -90,7 +91,7 @@ namespace Maddalena.Core.GridFs
             gf.Acl.AllowUsers.Add(user);
             gf.Acl.DenyUsers.Remove(user);
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task DenyUser(string gridName, string user)
@@ -102,7 +103,7 @@ namespace Maddalena.Core.GridFs
             gf.Acl.DenyUsers.Add(user);
             gf.Acl.AllowUsers.Remove(user);
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task AllowRole(string gridName, string role)
@@ -114,7 +115,7 @@ namespace Maddalena.Core.GridFs
             gf.Acl.AllowRoles.Add(role);
             gf.Acl.DenyRoles.Remove(role);
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public async Task DenyRole(string gridName, string role)
@@ -126,7 +127,7 @@ namespace Maddalena.Core.GridFs
             gf.Acl.DenyRoles.Add(role);
             gf.Acl.AllowRoles.Remove(role);
 
-            await _files.UpdateAsync(gf);
+            await _files.ReplaceOneAsync(x => x.Id == gf.Id, gf);
         }
 
         public Task<Stream> Download(string gridName)

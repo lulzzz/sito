@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using AspNetCore.Identity.Mongo.Model;
+using AspNetCore.Identity.Mongo.Stores;
 using Maddalena.Core;
 using Maddalena.Core.Identity;
-using Maddalena.Core.Identity.Model;
-using Maddalena.Core.Identity.Stores;
 using Maddalena.Core.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
