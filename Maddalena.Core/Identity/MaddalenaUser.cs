@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Maddalena.Core.Identity.Model;
+﻿using AspNetCore.Identity.Mongo.Model;
 
 namespace Maddalena.Core.Identity
 {
