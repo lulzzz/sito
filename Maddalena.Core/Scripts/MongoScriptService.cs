@@ -15,10 +15,10 @@ namespace Maddalena.Core.Scripts
         private readonly JavascriptRunner _js;
         private readonly IMongoCollection<Script> _scripts;
 
-        public MongoScriptService(string connectionString, IGridFileSystem fs)
+        public MongoScriptService(string connectionString, IServiceProvider services)
         {
             _scripts = MongoUtil.FromConnectionString<Script>(connectionString, "scripts");
-            _js = new JavascriptRunner(fs);
+            _js = new JavascriptRunner(services);
         }
 
         public Task Create(Script script) => _scripts.InsertOneAsync(script);

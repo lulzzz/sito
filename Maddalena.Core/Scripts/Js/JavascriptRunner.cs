@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Maddalena.Core.GridFs;
 using Maddalena.Core.Javascript;
 using Maddalena.Core.Javascript.Core;
 using Maddalena.Core.Scripts.Model;
