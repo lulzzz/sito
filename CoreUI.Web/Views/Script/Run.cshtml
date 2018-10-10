@@ -3,10 +3,19 @@
 @{
     ViewData["Title"] = $"Running {Model.Script.Name}";
 }
+@section Head
+    {
+    <link rel="stylesheet" href="/vendors/highlight/styles/default.css">
+    <script src="/vendors/highlight/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+}
+
 <section>
     <div class="row">
         <div class="col-12">
-            <strong>Author</strong> @Model.Script.Author <br/>
+            <strong>Author</strong> @Model.Script.Author <br />
             <strong>LastModified</strong> @Model.Script.LastModified<br />
             <strong>Language</strong> @Model.Script.Language<br />
         </div>
@@ -17,8 +26,39 @@
         <div class="col-12">
             <h2>@Model.Script.Name</h2>
             <div>
-                @Html.Raw(Model.Console.ToString())
+                <pre>
+                    <code id="editor" onfocusout="highlight()" contenteditable="true" class="javascript">@Html.Raw(Model.Script.Source)</code>
+                </pre>
             </div>
         </div>
     </div>
 </section>
+@if (Model.Exception != null)
+{
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="p-3 mb-2 bg-danger text-white">
+                    <h3>Exception !</h3>
+                    <p>
+                        @Model.Exception.Message
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<section>
+    <div class="row">
+        <div class="col-12">
+            <h3>Script console output</h3>
+            @Html.Raw(Model.Console.ToString())
+        </div>
+    </div>
+</section>
+<script>
+    function highlight() {
+        hljs.initHighlighting.called = false;
+        hljs.initHighlighting();
+    }
+</script>

@@ -4,36 +4,68 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Script code editor</h2>
+@section Head
+{
+    <link rel="stylesheet" href="/vendors/highlight/styles/default.css">
+    <script src="/vendors/highlight/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+}
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <input type="hidden" name="id" value="@Model.Id"/>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control"/>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Language" class="control-label"></label>
-                <input asp-for="Language" class="form-control"/>
-                <span asp-validation-for="Language" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Source" class="control-label"></label>
-                <textarea asp-for="Source" class="form-control"></textarea>
-                <span asp-validation-for="Source" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default"/>
-            </div>
-        </form>
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Language" class="control-label"></label>
+                    <input asp-for="Language" class="form-control" />
+                    <span asp-validation-for="Language" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <pre>
+                        <code id="editor" onfocusout="highlight()" contenteditable="true" class="javascript">@Html.Raw(Model.Source)</code>
+                    </pre>
+                    <textarea asp-for="Source" id="realSource" class="form-control" style="display: none"></textarea>
+                    <span asp-validation-for="Source" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    @{
+                        var label = string.IsNullOrWhiteSpace(Model.Id) ? "Create" : "Save";
+                    }
+                    <input type="submit" value="@label" class="btn btn-lg btn-success"/>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script>
+    function highlight() {
+        hljs.initHighlighting.called = false;
+        hljs.initHighlighting();
+    }
+
+
+    (function ()
+    {
+        document.getElementById("editor").addEventListener("input", function (e) {
+            $("#realSource").val($("#editor").text());
+
+        }, false);
+
+    })();
+</script>

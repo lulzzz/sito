@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Javascript;
 using Maddalena.Core.Javascript.Core;
 using Maddalena.Core.Scripts.Model;
+using Console = Maddalena.Core.Scripts.Model.Console;
 
 namespace Maddalena.Core.Scripts.Js
 {
@@ -31,10 +33,19 @@ namespace Maddalena.Core.Scripts.Js
                 Script = script
             };
 
-            mainModule.Context.DefineVariable("console").Assign(JSValue.Wrap(context.Console));
+            try
+            {
+                mainModule.Context.DefineVariable("console").Assign(JSValue.Wrap(context.Console));
 
-            mainModule.Context.DefineConstructor(typeof(TestJS));
-            mainModule.Context.Eval(script.Source);
+                //mainModule.Context.DefineConstructor(typeof(TestJS));
+                mainModule.Context.Eval(script.Source);
+
+                return Task.FromResult(context);
+            }
+            catch (Exception e)
+            {
+                context.Exception = e;
+            }
 
             return Task.FromResult(context);
         }
