@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Maddalena.Core.Scripts.Model
 {
-    public class Console
+    public class SystemInterface
     {
         private readonly StringBuilder _builder = new StringBuilder();
         
