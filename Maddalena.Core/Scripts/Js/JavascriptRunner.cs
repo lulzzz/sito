@@ -10,11 +10,11 @@ namespace Maddalena.Core.Scripts.Js
 {
     public class JavascriptRunner
     {
-        private IGridFileSystem _fs;
+        private IServiceProvider _services;
 
-        public JavascriptRunner(IGridFileSystem fs)
+        public JavascriptRunner(IServiceProvider services)
         {
-            _fs = fs;
+            _services = services;
             Module.ResolveModule += ResolveModule;
         }
 
