@@ -6,7 +6,7 @@ namespace Maddalena.Core.Scripts.Model
     {
         public Script Script { get; set; }
 
-        public Console Console { get; set; }
+        public SystemInterface SystemInterface { get; set; }
 
         public Exception Exception { get; set; }
     }

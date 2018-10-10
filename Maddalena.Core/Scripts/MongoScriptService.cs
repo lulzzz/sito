@@ -12,13 +12,11 @@ namespace Maddalena.Core.Scripts
 {
     public class MongoScriptService : IScriptService
     {
-        private readonly JavascriptRunner _js;
         private readonly IMongoCollection<Script> _scripts;
 
-        public MongoScriptService(string connectionString, IServiceProvider services)
+        public MongoScriptService(string connectionString)
         {
             _scripts = MongoUtil.FromConnectionString<Script>(connectionString, "scripts");
-            _js = new JavascriptRunner(services);
         }
 
         public Task Create(Script script) => _scripts.InsertOneAsync(script);
@@ -39,13 +37,29 @@ namespace Maddalena.Core.Scripts
 
         public Task<ScriptContext> Run(Script script)
         {
-            switch (script.Language)
+            var context = new ScriptContext
             {
-                case ScriptLanguage.Javascript: return _js.Run(script);
-                case ScriptLanguage.R: return Task.FromResult(new ScriptContext());
-                    
+                SystemInterface = new SystemInterface(),
+                Script = script
+            };
+
+            try
+            {
+                switch (script.Language)
+                {
+                    case ScriptLanguage.Javascript:
+                        JavascriptRunner.Run(context);
+                        break;
+                    case ScriptLanguage.R:
+                        break;
+                }
             }
-            throw new ArgumentOutOfRangeException();
+            catch (Exception e)
+            {
+                context.Exception = e;
+            }
+
+            return Task.FromResult(context);
         }
     }
 }

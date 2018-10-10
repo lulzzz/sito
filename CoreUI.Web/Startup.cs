@@ -60,7 +60,7 @@ namespace CoreUI.Web
 
             services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
             services.AddSingleton<IGridFileSystem>(gridFs);
-            services.AddSingleton<IScriptService>(new MongoScriptService(connectionString,gridFs));
+            services.AddSingleton<IScriptService>(new MongoScriptService(connectionString));
 
             var settings = new SettingsService(connectionString);
             services.AddSingleton<ISettingsService>(settings);
