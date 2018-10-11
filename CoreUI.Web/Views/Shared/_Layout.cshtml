@@ -19,29 +19,29 @@
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/site.css" />
 
-    @RenderSection("Head", required: false)
-    @RenderSection("Preload", required: false)
+    @(await RenderSectionAsync("Head", required: false))
+    @(await RenderSectionAsync("Preload", required: false))
 
     <!-- Styles required by this view -->
-    @RenderSection("Styles", required: false)
+    @(await RenderSectionAsync("Styles", required: false))
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 
     <!-- *APP-HEADER* -->
-    @Html.Partial("_AppHeader")
+    @(await Html.PartialAsync("_AppHeader"))
     <!-- /*APP-HEADER* -->
 
     <div class="app-body">
         <div class="sidebar">
-            @Html.Partial("_SidebarNav")
+            @(await Html.PartialAsync("_SidebarNav"))
         </div>
 
         <!-- *MAIN CONTENT* -->
         <main class="main">
 
             <!-- *BREADCRUMB* -->
-            @Html.Partial("_BreadCrumb")
+            @(await Html.PartialAsync("_BreadCrumb"))
             <!-- /*BREADCRUMB* -->
             <!-- *CONTAINER-FLUID* -->
             <div class="container-fluid">
@@ -67,6 +67,6 @@
     <script src="~/js/app.js"></script>
     <!-- Plugins and scripts required by this views -->
     <!-- Custom scripts required by this view -->
-    @RenderSection("Scripts", required: false)
+    @(await RenderSectionAsync("Scripts", required: false))
 </body>
 </html>
