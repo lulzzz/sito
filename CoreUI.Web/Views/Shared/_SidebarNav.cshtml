@@ -1,46 +1,67 @@
 ﻿
 @using Maddalena.Core.Blog
+@using Maddalena.Core.Scripts
+
 @inject IBlogService _blog
+@inject IScriptService _scripts
 
 <!-- *SIDEBAR-NAV* -->
 <nav class="sidebar-nav">
-  <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" asp-controller="Home" asp-action="Index">
-        <i class="fa fa-home"></i> Home
-      </a>
-    </li>
-    <li class="nav-title">
-      English
-    </li>
-    @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.English, 5))
-    {
-      <li class="nav-item">
-        <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
-      </li>
-    }
-    <li class="nav-title">
-      Italian
-    </li>
-    @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.Italian, 5))
-    {
-      <li class="nav-item">
-        <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
-      </li>
-    }
-    <li class="nav-title">
-      Running code
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" asp-controller="Home" asp-action="Stat">
-        <i class="icon-puzzle"></i> Web analytics
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" asp-controller="Youtube" asp-action="Index">
-        <i class="icon-puzzle"></i> Youtube
-      </a>
-    </li>
-  </ul>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                <i class="fa fa-home"></i> Home
+            </a>
+        </li>
+        <li class="nav-title">
+            English
+        </li>
+        @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.English, 5))
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
+            </li>
+        }
+        <li class="nav-title">
+            Italian
+        </li>
+        @foreach (var item in await _blog.GetByLanguage(BlogPostLanguage.Italian, 5))
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/read/@item.Slug">@item.Title</a>
+            </li>
+        }
+        <li class="nav-title">
+            Running code
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Home" asp-action="Stat">
+                <i class="icon-puzzle"></i> Web analytics
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Youtube" asp-action="Index">
+                <i class="icon-puzzle"></i> Youtube
+            </a>
+        </li>
+        @{
+            var scripts = await _scripts.All();
+        }
+
+        @if (scripts.Any())
+        {
+            <li class="nav-title">
+                Scripts
+            </li>
+            @foreach (var item in scripts)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/script/run/@item.Id">
+                        <i class="icon-puzzle"></i> @item.Name
+                    </a>
+                </li>
+            }
+        }
+    </ul>
 </nav>
 <!-- /*SIDEBAR-NAV* -->

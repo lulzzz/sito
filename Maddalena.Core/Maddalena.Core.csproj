@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="Blog\Models\**" />
+    <Compile Remove="Scripts\Js\**" />
     <EmbeddedResource Remove="Blog\Models\**" />
+    <EmbeddedResource Remove="Scripts\Js\**" />
     <None Remove="Blog\Models\**" />
+    <None Remove="Scripts\Js\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,10 +36,6 @@
     <None Update="test.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Scripts\Js\" />
   </ItemGroup>
 
 </Project>

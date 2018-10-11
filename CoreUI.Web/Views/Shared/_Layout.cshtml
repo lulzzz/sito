@@ -29,19 +29,19 @@
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 
     <!-- *APP-HEADER* -->
-    @Html.Partial("_AppHeader")
+    @(await Html.PartialAsync("_AppHeader"))
     <!-- /*APP-HEADER* -->
 
     <div class="app-body">
         <div class="sidebar">
-            @Html.Partial("_SidebarNav")
+            @(await Html.PartialAsync("_SidebarNav"))
         </div>
 
         <!-- *MAIN CONTENT* -->
         <main class="main">
 
             <!-- *BREADCRUMB* -->
-            @Html.Partial("_BreadCrumb")
+            @(await Html.PartialAsync("_BreadCrumb"))
             <!-- /*BREADCRUMB* -->
             <!-- *CONTAINER-FLUID* -->
             <div class="container-fluid">
