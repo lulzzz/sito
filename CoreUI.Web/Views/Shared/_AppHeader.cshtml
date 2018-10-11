@@ -44,6 +44,13 @@
                         <i class="fa fa-sliders-h"></i>User management
                     </a>
                 }
+                
+                @if (User.IsInRole("feed"))
+                {
+                    <a class="dropdown-item" href="/feed">
+                        <i class="fa fa-sliders-h"></i>Feed
+                    </a>
+                }
 
                 <a class="dropdown-item" href="/manage/Index">
                     <i class="fa fa-sliders-h"></i>My Settings
