@@ -16,6 +16,7 @@ using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;
 using Maddalena.Core.Youtube;
 using Maddalena.Core.Scripts;
+using Maddalena.Core.Feeds;
 
 namespace CoreUI.Web
 {
@@ -58,6 +59,7 @@ namespace CoreUI.Web
 
             services.AddAntiforgery();
 
+            services.AddSingleton<IFeedService>(new MongoFeedService(connectionString));
             services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
             services.AddSingleton<IGridFileSystem>(gridFs);
             services.AddSingleton<IScriptService>(new MongoScriptService(connectionString));
