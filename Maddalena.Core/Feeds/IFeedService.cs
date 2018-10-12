@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Maddalena.Core.Feeds
@@ -11,6 +12,7 @@ namespace Maddalena.Core.Feeds
         Task<IEnumerable<string>> Categories();
         Task Update(Feed feed);
         Task Delete(Feed feed);
-        Task<Feed> ById(string id);
+        Task<Feed> FeedById(string id);
+        Task Retrieve(Feed feed, Action<FeedNews> action);
     }
 }

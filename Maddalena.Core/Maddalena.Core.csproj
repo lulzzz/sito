@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="Blog\Models\**" />
+    <Compile Remove="Scripts\Js\**" />
     <EmbeddedResource Remove="Blog\Models\**" />
+    <EmbeddedResource Remove="Scripts\Js\**" />
     <None Remove="Blog\Models\**" />
+    <None Remove="Scripts\Js\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +21,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.8.9" />
     <PackageReference Include="LibGit2Sharp" Version="0.25.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.3" />
+    <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="MimeMapping" Version="1.0.1.12" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.0" />
@@ -33,10 +37,6 @@
     <None Update="test.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Scripts\Js\" />
   </ItemGroup>
 
 </Project>

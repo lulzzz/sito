@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Maddalena.Core.Mongo;
+using Microsoft.SyndicationFeed;
+using Microsoft.SyndicationFeed.Rss;
 using MongoDB.Driver;
 
 namespace Maddalena.Core.Feeds
@@ -26,6 +30,42 @@ namespace Maddalena.Core.Feeds
 
         public Task Delete(Feed feed) => _feeds.DeleteOneAsync(x => x.Id == feed.Id);
 
-        public Task<Feed> ById(string id) => _feeds.FirstOrDefaultAsync(x => x.Id == id);
+        public Task<Feed> FeedById(string id) => _feeds.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task Retrieve(Feed feed, Action<FeedNews> action)
+        {
+            using (var xmlReader = XmlReader.Create(feed.Url, new XmlReaderSettings() { Async = true }))
+            {
+                var feedReader = new RssFeedReader(xmlReader);
+
+                while (await feedReader.Read())
+                {
+                    switch (feedReader.ElementType)
+                    {
+                        case SyndicationElementType.Item:
+                            var item = await feedReader.ReadItem();
+
+                            action(new FeedNews
+                            {
+                                Title = item.Title,
+                                Published = item.Published,
+                                Description = item.Description,
+                                Contributors = item.Contributors,
+                                Categories = item.Categories
+                            });
+
+                        break;
+                    }
+                }
+            }
+            /*
+                ISyndicationCategory category = await feedReader.ReadCategory();
+                ISyndicationImage image = await feedReader.ReadImage();
+                ISyndicationLink link = await feedReader.ReadLink();
+                ISyndicationPerson person = await feedReader.ReadPerson();
+                ISyndicationContent content = await feedReader.ReadContent();
+             */
+        }
+
     }
 }

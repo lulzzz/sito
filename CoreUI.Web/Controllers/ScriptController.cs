@@ -2,9 +2,11 @@
 using Maddalena.Core.Scripts;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Maddalena.Controllers
 {
+    [Authorize(Roles ="script")]
     public class ScriptController : Controller
     {
         private readonly IScriptService _service;
@@ -35,6 +37,7 @@ namespace Maddalena.Controllers
             return Redirect("/script");
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Run(string id)
         {
             var script = await _service.ById(id);

@@ -31,7 +31,7 @@ namespace CoreUI.Web.Controllers
                 return View(new Feed());
             }
 
-            var post = await _feed.ById(id);
+            var post = await _feed.FeedById(id);
 
             if (post != null)
             {
@@ -66,7 +66,7 @@ namespace CoreUI.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id)
         {
-            await _feed.Delete(await _feed.ById(id));
+            await _feed.Delete(await _feed.FeedById(id));
             return Redirect("/feed");
         }
     }
