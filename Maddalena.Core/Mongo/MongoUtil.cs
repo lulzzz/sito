@@ -48,6 +48,10 @@ namespace Maddalena.Core.Mongo
             return await (await mongoCollection.FindAsync(p)).FirstOrDefaultAsync();
         }
 
+        public static async Task ForEach<TItem>(this IMongoCollection<TItem> mongoCollection, Action<TItem> action)
+        {
+            await (await mongoCollection.FindAsync(x=>true)).ForEachAsync(action);
+        }
 
         public static async Task<IEnumerable<TItem>> WhereAsync<TItem>(this IMongoCollection<TItem> mongoCollection, Expression<Func<TItem, bool>> p)
         {

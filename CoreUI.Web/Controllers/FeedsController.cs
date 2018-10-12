@@ -6,24 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoreUI.Web.Controllers
 {
     [Authorize(Roles = "feed")]
-    public class FeedController : Controller
+    public class FeedsController : Controller
     {
         private readonly IFeedService _feed;
 
-        public FeedController(IFeedService feed)
+        public FeedsController(IFeedService feed)
         {
             _feed = feed;
         }
 
         // GET: Feed
-        public async Task<ActionResult> Index() => View(await _feed.All());
+        public async Task<ActionResult> Index() => View(await _feed.AllFeed());
 
         // GET: Feed/Create
-        [Route("feed/edit")]
-        public ActionResult Edit() => View(new Feed());
+        [HttpGet]
+        public ActionResult Create() => View("Edit",new Feed());
 
         [HttpGet]
-        [Route("feed/edit/{id}")]
         public async Task<ActionResult> Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -42,7 +41,6 @@ namespace CoreUI.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Feed feed)
         {
             if (!ModelState.IsValid)
@@ -59,15 +57,13 @@ namespace CoreUI.Web.Controllers
                 await _feed.Update(feed);
             }
 
-            return Redirect("/feed");
+            return Redirect("/feeds");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(string id)
         {
             await _feed.Delete(await _feed.FeedById(id));
-            return Redirect("/feed");
+            return Redirect("/feeds");
         }
     }
 }
