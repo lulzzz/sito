@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Maddalena.Core.GridFs;
+using Maddalena.Core.Feeds;
 using Maddalena.Core.Mongo;
 using Maddalena.Core.Scripts.Js;
 using Maddalena.Core.Scripts.Model;
@@ -12,10 +12,12 @@ namespace Maddalena.Core.Scripts
 {
     public class MongoScriptService : IScriptService
     {
+        private readonly IServiceProvider _services;
         private readonly IMongoCollection<Script> _scripts;
 
-        public MongoScriptService(string connectionString)
+        public MongoScriptService(string connectionString, IServiceProvider services)
         {
+            _services = services;
             _scripts = MongoUtil.FromConnectionString<Script>(connectionString, "scripts");
         }
 
@@ -39,7 +41,7 @@ namespace Maddalena.Core.Scripts
         {
             var context = new ScriptContext
             {
-                SystemInterface = new SystemInterface(),
+                SystemInterface = new SystemInterface(_services),
                 Script = script
             };
 

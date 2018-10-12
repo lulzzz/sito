@@ -4,17 +4,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreUI.Web.Models;
 using Maddalena.Core.GridFs;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 
 namespace CoreUI.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IServiceCollection _services;
         private readonly IGridFileSystem _grid;
 
-        public HomeController(IGridFileSystem grid)
+        public HomeController(IGridFileSystem grid, IServiceCollection services)
         {
             _grid = grid;
+            _services = services;
         }
 
         [Route("/download/{gridName}")]
@@ -43,6 +46,10 @@ namespace CoreUI.Web.Controllers
             return View();
         }
 
+        public IActionResult Services()
+        {
+            return View(_services);
+        }
 
         public async Task<IActionResult> MyNuget()
         {
