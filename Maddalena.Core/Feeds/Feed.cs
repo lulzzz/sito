@@ -11,6 +11,6 @@ namespace Maddalena.Core.Feeds
 
         public string Category { get; set; }
 
-        public DateTime LastCheck { get; set; }
+        public DateTime LastCheck { get; set; } = DateTime.Now;
     }
 }

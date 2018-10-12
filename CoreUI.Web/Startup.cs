@@ -12,6 +12,7 @@ using AspNetCore.Identity.Mongo;
 using AspNetCore.Identity.Mongo.Model;
 using Maddalena.Core;
 using Maddalena.Core.Blog;
+using Maddalena.Core.Feeds;
 using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;
 using Maddalena.Core.Youtube;
@@ -61,6 +62,7 @@ namespace CoreUI.Web
             services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
             services.AddSingleton<IGridFileSystem>(gridFs);
             services.AddSingleton<IScriptService>(new MongoScriptService(connectionString));
+            services.AddSingleton<IFeedService>(new MongoFeedService(connectionString));
 
             var settings = new SettingsService(connectionString);
             services.AddSingleton<ISettingsService>(settings);

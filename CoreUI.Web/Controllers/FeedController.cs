@@ -19,9 +19,11 @@ namespace CoreUI.Web.Controllers
         public async Task<ActionResult> Index() => View(await _feed.All());
 
         // GET: Feed/Create
-        public ActionResult Create() => View();
+        [Route("feed/edit")]
+        public ActionResult Edit() => View(new Feed());
 
         [HttpGet]
+        [Route("feed/edit/{id}")]
         public async Task<ActionResult> Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
