@@ -22,5 +22,7 @@ namespace Maddalena.Core.Feeds
             get => $"{Title} {Description}";
             set { }
         }
+
+        public string Link { get; internal set; }
     }
 }

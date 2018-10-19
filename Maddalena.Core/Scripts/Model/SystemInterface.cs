@@ -14,7 +14,11 @@ namespace Maddalena.Core.Scripts.Model
             _services = services;
         }
 
-        public object getService(string service) => _services.GetService(Type.GetType(service));
+        public object getService(string service)
+        {
+            var K = Type.GetType(service);
+            return _services.GetService(K);
+        }
 
         public void write(string str)
         {

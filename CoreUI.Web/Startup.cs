@@ -17,6 +17,7 @@ using Maddalena.Core.GridFs;
 using Maddalena.Core.Settings;
 using Maddalena.Core.Youtube;
 using Maddalena.Core.Scripts;
+using Maddalena.Core.Orleans;
 
 namespace CoreUI.Web
 {
@@ -68,6 +69,9 @@ namespace CoreUI.Web
 
             var settings = new SettingsService(connectionString);
             services.AddSingleton<ISettingsService>(settings);
+
+            var orleans = new OrleansHost();
+            services.AddSingleton<IOrleansHost>(orleans);
 
             var webSiteSetting = settings.Get<SiteSettings>();
 

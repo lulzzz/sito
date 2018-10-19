@@ -17,7 +17,7 @@ namespace Maddalena.Core.Nuget
 
         public static async Task<PackageSearch> GetAsync(string q, bool includePreRelease=false)
         {
-            var queryUrl = $"https://api-v2v3search-0.nuget.org/query?prerelease={includePreRelease}&q={Uri.EscapeDataString(q)}";
+            var queryUrl = $"https://api-v2v3search-0.nuget.org/query?prerelease={includePreRelease}&take=150&q={Uri.EscapeDataString(q)}";
             var json = await (new HttpClient()).GetStringAsync(queryUrl).ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<PackageSearch>(json);

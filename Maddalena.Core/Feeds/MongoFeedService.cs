@@ -90,8 +90,10 @@ namespace Maddalena.Core.Feeds
                                 Title = item.Title,
                                 Published = item.Published,
                                 Description = item.Description,
+                                Link = item.Links.FirstOrDefault()?.Uri?.ToString(),
                                 Contributors = item.Contributors.Select(x=>x.Name).ToArray(),
-                                Categories = item.Categories.Select(x=>x.Name).ToArray()
+                                Categories = item.Categories.Select(x=>x.Name).ToArray(),
+                                FeedId = feed.Id
                             });
 
                         break;
@@ -109,7 +111,16 @@ namespace Maddalena.Core.Feeds
 
         public async Task RetrieveAndSave()
         {
-            await _feeds.ForEach(async feed => await Retrieve(feed, async news => await Update(news)));
+            await _feeds.ForEach(async feed =>
+            {
+                await Retrieve(feed, async news =>
+                {
+                    var found = await _news.FindAsync(x => x.Link == news.Link);
+
+
+                    if (!await found.AnyAsync()) await Update(news);
+                });
+            });
         }
     }
 }

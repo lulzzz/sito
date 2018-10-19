@@ -44,22 +44,24 @@
                 <i class="icon-puzzle"></i> Youtube
             </a>
         </li>
-        @{
-            var scripts = await _scripts.All();
-        }
 
-        @if (scripts.Any())
+        @if (User.IsInRole("script"))
         {
-            <li class="nav-title">
-                Scripts
-            </li>
-            @foreach (var item in scripts)
+            var scripts = await _scripts.All();
+
+            @if (scripts.Any())
             {
-                <li class="nav-item">
-                    <a class="nav-link" href="/script/run/@item.Id">
-                        <i class="icon-puzzle"></i> @item.Name
-                    </a>
+                <li class="nav-title">
+                    Scripts
                 </li>
+                @foreach (var item in scripts)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/script/run/@item.Id">
+                            <i class="icon-puzzle"></i> @item.Name
+                        </a>
+                    </li>
+                }
             }
         }
     </ul>

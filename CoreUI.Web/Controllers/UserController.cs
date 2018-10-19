@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Maddalena.Controllers
 {
-    [Authorize()]
+    [Authorize(Roles = "user")]
     public class UserController : Controller
     {
         private readonly ISettingsService _settings;

@@ -53,10 +53,11 @@ namespace CoreUI.Web.Controllers
 
         public async Task<IActionResult> MyNuget()
         {
-            var es = (await Maddalena.Core.Nuget.PackageSearch.GetAsync("Matteo Fabbri"))
+            var es = (await Maddalena.Core.Nuget.PackageSearch.GetAsync("MatteoFabbri"))
                 .Data
                 .Where(x => x.Authors.Length == 1 && x.Authors[0] == "Matteo Fabbri")
-                .OrderBy(x => x.Title)
+                .GroupBy(x=> x.Title.Split('.').First())
+                .OrderBy(x=>x.Key)
                 .ToArray();
 
             return View(es);
