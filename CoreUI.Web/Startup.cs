@@ -18,6 +18,7 @@ using Maddalena.Core.Settings;
 using Maddalena.Core.Youtube;
 using Maddalena.Core.Scripts;
 using Maddalena.Core.Orleans;
+using Maddalena.Core.Nuget;
 
 namespace CoreUI.Web
 {
@@ -61,6 +62,7 @@ namespace CoreUI.Web
             services.AddSingleton<IServiceCollection>(services);
             services.AddAntiforgery();
 
+            services.AddSingleton<INugetHistoryService>(new NugetHistoryService(connectionString));
             services.AddSingleton<IFeedService>(new MongoFeedService(connectionString));
             services.AddSingleton<IYoutubeService>(new YoutubeService(connectionString));
             services.AddSingleton<IGridFileSystem>(gridFs);
@@ -140,6 +142,16 @@ namespace CoreUI.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "version",
+                    template: "version",
+                    defaults: new { controller = "Home", action="Version"   });
+
+                routes.MapRoute(
+                    name: "TopGrainMethods",
+                    template: "TopGrainMethods",
+                    defaults: new { controller = "Dashboard", action = "TopGrainMethods" });
             });
         }
     }

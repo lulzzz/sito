@@ -33,6 +33,23 @@ namespace Maddalena.Core.Mongo
             })).ToListAsync();
         }
 
+        public async static Task<bool> AnyAsync<TItem>(this IMongoCollection<TItem> mongoCollection)
+        {
+            return await (await mongoCollection.FindAsync(x => true, new FindOptions<TItem>
+            {
+                Limit = 1
+            })).AnyAsync();
+        }
+
+
+        public async static Task<bool> AnyAsync<TItem>(this IMongoCollection<TItem> mongoCollection, Expression<Func<TItem, bool>> p)
+        {
+            return await (await mongoCollection.FindAsync(p, new FindOptions<TItem>
+            {
+                Limit = 1
+            })).AnyAsync();
+        }
+
         public static TItem FirstOrDefault<TItem>(this IMongoCollection<TItem> mongoCollection)
         {
             return mongoCollection.Find(Builders<TItem>.Filter.Empty).FirstOrDefault();

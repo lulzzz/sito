@@ -6,6 +6,10 @@ using CoreUI.Web.Models;
 using Maddalena.Core.GridFs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
+using Maddalena.Core.Nuget;
+using System;
+using Maddalena.Core.Mongo;
+using MongoDB.Driver;
 
 namespace CoreUI.Web.Controllers
 {
@@ -13,11 +17,14 @@ namespace CoreUI.Web.Controllers
     {
         private IServiceCollection _services;
         private readonly IGridFileSystem _grid;
+        private INugetHistoryService _nuget;
+        
 
-        public HomeController(IGridFileSystem grid, IServiceCollection services)
+        public HomeController(IGridFileSystem grid, IServiceCollection services, INugetHistoryService nugetHistory)
         {
             _grid = grid;
             _services = services;
+            _nuget = nugetHistory;
         }
 
         [Route("/download/{gridName}")]
@@ -31,42 +38,24 @@ namespace CoreUI.Web.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index() => View();
+
+        public IActionResult Version() => Json(new
         {
-            return View();
-        }
+            version = typeof(HomeController).Assembly.GetName().Version.ToString()
+        });
 
-        public IActionResult Stat()
+        public IActionResult Stat() => View();
+
+        public IActionResult Contact() => View();
+
+        public IActionResult Services() => View(_services);
+
+        public async Task<IActionResult> MyNuget() => View(await _nuget.RetrieveAsync());
+
+        public IActionResult Error() => View(new ErrorViewModel
         {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        public IActionResult Services()
-        {
-            return View(_services);
-        }
-
-        public async Task<IActionResult> MyNuget()
-        {
-            var es = (await Maddalena.Core.Nuget.PackageSearch.GetAsync("MatteoFabbri"))
-                .Data
-                .Where(x => x.Authors.Length == 1 && x.Authors[0] == "Matteo Fabbri")
-                .GroupBy(x=> x.Title.Split('.').First())
-                .OrderBy(x=>x.Key)
-                .ToArray();
-
-            return View(es);
-        }
-
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        });
     }
 }

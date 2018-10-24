@@ -7,25 +7,34 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\dashboard.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.Identity.Mongo" Version="3.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
+    <PackageReference Include="AspNetCore.Identity.Mongo" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.8.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
-    <PackageReference Include="ServerSideAnalytics" Version="4.6.6" />
-    <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.5.2" />
-    <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.3.4" />
-    <PackageReference Include="YoutubeExplode" Version="4.3.3" />
+    <PackageReference Include="ServerSideAnalytics" Version="4.7.0" />
+    <PackageReference Include="ServerSideAnalytics.Extensions" Version="1.6.0" />
+    <PackageReference Include="ServerSideAnalytics.Mongo" Version="4.4.0" />
+    <PackageReference Include="YoutubeExplode" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\js\dashboard.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OrleansDashboard\OrleansDashboard.Client\OrleansDashboard.Client.csproj" />
     <ProjectReference Include="..\Maddalena.Core\Maddalena.Core.csproj" />
   </ItemGroup>
 

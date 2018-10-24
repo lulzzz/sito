@@ -7,7 +7,9 @@
     <div class="row">
         <div class="col-12">
             <h2>My Nuget</h2>
-
+            <p class="text-right">
+                Total downloads: @Model.Sum(group=>group.Sum(x=>x.TotalDownloads)) 
+            </p>
             <ul class="list-unstyled" style="margin-top:50px">
                 @foreach (var line in Model)
                 {
