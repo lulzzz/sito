@@ -44,11 +44,18 @@
                         <i class="fa fa-sliders-h"></i>User management
                     </a>
                 }
-                
+
                 @if (User.IsInRole("feed"))
                 {
                     <a class="dropdown-item" href="/feeds">
                         <i class="fa fa-sliders-h"></i>Feed
+                    </a>
+                }
+
+                @if (User.IsInRole("script"))
+                {
+                    <a class="dropdown-item" href="/script">
+                        <i class="fa fa-sliders-h"></i>Script
                     </a>
                 }
 
